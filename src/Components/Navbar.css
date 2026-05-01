@@ -1,0 +1,61 @@
+.navegacion {
+  background-color: #6afd6a;
+  margin: 10px 20px 20px;
+  border-radius: 50px;
+  padding: 5px 15px;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  gap: 20px; /* Aumenta este número para dar más distancia */
+}
+
+.btn-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #39c900;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 15px;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: 0.3s;
+}
+
+.btn-nav a { text-decoration: none; color: white; font-weight: bold; }
+.btn-nav:hover { background: #026e0b; transform: scale(1.05); }
+
+.divisor {
+  width: 2px;
+  height: 25px;
+  background: rgba(255,255,255,0.4);
+  margin: 0 15px;
+}
+
+.nav-extra-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 20px;
+}
+
+.nav-extra-item a {
+  text-decoration: none;
+  color: #1b8f0c;
+  font-weight: bold;
+}
+
+.icono-circulo {
+  background: white;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
