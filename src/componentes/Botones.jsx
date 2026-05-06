@@ -1,4 +1,3 @@
-import React from 'react';
 import './Botones.css';
 
 const Botones = () => {
