@@ -1,7 +1,245 @@
-/* Estilos para la página de Inicio - Nutrik */
-/* Responsable: Juliana */
+/* ==========================================
+   RESETEO GENERAL DE ESTILOS
+   ========================================== */
+* {
+    /* Elimina márgenes y rellenos por defecto del navegador */
+    margin: 0;
+    padding: 0;
+    /* Incluye el padding y el borde dentro del ancho/alto total del elemento */
+    box-sizing: border-box; 
+}
 
-.inicio-container {
+/* ==========================================
+   CONTENEDOR PRINCIPAL (PÁGINA COMPLETA)
+   ========================================== */
+.login-page {
+    /* Usa Flexbox para alinear el lado izquierdo y el derecho en fila */
+    display: flex;
+    flex-direction: row;
+    /* Ocupa el 100% del ancho y alto de la ventana del navegador */
+    width: 100vw;
+    height: 100vh;
+    /* Asegura que no haya espacios externos ni internos */
+    margin: 0;
+    padding: 0;
+    /* Propiedades para la imagen de fondo (aunque se use en los hijos) */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Evita que aparezcan barras de desplazamiento */
+    overflow: hidden;
+}
+
+/* ==========================================
+   VARIABLES GLOBALES (ROOT)
+   ========================================== */
+:root {
+  /* Define la ruta de la imagen de fondo para reutilizarla fácilmente */
+  --fondo-comida: url('../assets/comida.jpg'); 
+}
+
+/* ==========================================
+   SECCIÓN IZQUIERDA (CONTENIDO INFORMATIVO)
+   ========================================== */
+.info-content {
+    /* Toma una parte equitativa del espacio disponible (50% si el otro es flex:1) */
+    flex: 1;
+    /* Degradado lineal usando la paleta unificada */
+    background: linear-gradient(135deg, #C8E6C9, var(--verde-oscuro)); 
+    color: white;
+    padding: 60px;
+    /* Alinea el logo y el texto al centro de esta columna */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* Espacio entre elementos hijos (actualmente en 0) */
+    gap: 0px; 
+}
+
+.login-logo {
+    /* 1. Definimos el tamaño del círculo */
+    width: 400px;
+    height: 400px;
+    
+    /* 2. ¡La magia del círculo! Esto redondea los bordes al 50% */
+    border-radius: 50%;
+    
+    /* 3. Un borde muy fino y elegante de color blanquecino sutil */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    
+    /* 4. Le damos un fondo blanco limpio para que el logo resalte */
+    background-color: #e8fadcf5;
+    
+    /* 5. Aseguramos que el logo interno esté bien centrado en el círculo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* 6. Espaciado interno para que el logo no toque el borde */
     padding: 20px;
-    /* Los estilos globales vienen de Aplicación.css */
+    
+    /* 7. Truco para que el logo no se deforme dentro del círculo */
+    object-fit: contain;
+    
+    /* 8. Un pequeño efecto de sombra para darle profundidad (calidad) */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    /* Al pasar el mouse, el brillo se intensifica */
+    filter: drop-shadow(0 0 25px rgba(145, 201, 72, 1));
+    animation: flotar 3s ease-in-out infinite;
+  
+}
+
+/* Título principal de la sección informativa */
+.info-content h1 {
+    font-size: 2.5rem;
+    margin: 5px; 
+    /* Grosor de fuente extra negrita */
+    font-weight: 1000;
+}
+
+/* ==========================================
+   SECCIÓN DERECHA (LADO DEL FORMULARIO)
+   ========================================== */
+.login-form-side {
+    /* Ocupa la otra mitad de la pantalla */
+    flex: 1; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* CAPA DE FONDO COMPUESTA:
+       1. Aplica un degradado semi-transparente arriba para "oscurecer" o matizar.
+       2. Coloca la imagen de comida debajo del degradado. */
+    background: linear-gradient(rgba(241, 238, 238, 0.585), rgba(220, 255, 220, 0.526)), 
+                var(--fondo-comida);
+    background-size: cover;    
+    background-position: center; 
+    background-repeat: no-repeat;
+    
+    /* Color de texto por defecto para esta sección */
+    color: white; 
+}
+
+.form-content {
+    /* ... tus otras propiedades (flex, margin, etc.) ... */
+    
+    /* 1. ¡MÁS ESPACIO! Aumentamos el padding para que el contenido "respire" */
+    padding: 50px; 
+    
+    /* 2. Hacemos el cristal más claro y brillante */
+    background: rgba(255, 255, 255, 0.15); /* Más blanco, menos gris */
+    
+    /* 3. Aumentamos el desenfoque para un efecto más suave y premium */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px); /* Para Mac/Safari */
+    
+    /* 4. Un borde más sutil para el cuadro */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    
+    /* 5. Sombras más suaves y profundas para que flote mejor */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Color del título "Login" o "Bienvenido" dentro del formulario */
+.login-form-side h2 {
+    /* Usa la variable de color de título consistente */
+    color: var(--verde-oscuro) ;
+}
+
+/* ==========================================
+   DISEÑO DE LOS CAMPOS DE ENTRADA (INPUTS)
+   ========================================== */
+.input-field {
+    /* Espaciado inferior entre cada bloque de input */
+    margin-bottom: 20px;
+}
+
+.input-field input {
+    width: 100%;
+    padding: 14px;
+    /* Estética de borde gris suave y puntas redondeadas */
+    border: 1px solid #e0e0e0; 
+    border-radius: 10px;
+    /* Fondo casi blanco */
+    background-color: #f9f9f9;
+    font-size: 1rem;
+    /* Quita el borde resaltado por defecto del navegador */
+    outline: none;
+    /* Animación suave para cuando el usuario hace clic (focus) */
+    transition: all 0.3s ease;
+}
+
+/* Estilo cuando el usuario hace clic dentro del input */
+.input-field input:focus {
+    /* Cambia el borde al verde de la marca */
+    border-color: #637537;
+    background-color: #fff;
+    /* Añade una sombra tipo "halo" alrededor del input */
+    box-shadow: 0 0 0 4px rgba(99, 117, 55, 0.1);
+}
+
+/* ==========================================
+   BOTONES DE ACCIÓN
+   ========================================== */
+
+/* Botón de Iniciar Sesión (Verde Oscuro) */
+.btn-login {
+    width: 100%;
+    padding: 12px;
+    background-color: #15592e; 
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer; /* Cambia el cursor a "manito" */
+    margin-top: 10px;
+}
+
+/* Botón de Google (Color tenue con borde) */
+.btn-google {
+    width: 100%;
+    padding: 12px;
+    background-color: rgba(152, 173, 145, 0.678); 
+    border: 1px solid #334829;
+    border-radius: 8px;
+    margin-top: 10px;
+    /* Alinea el icono y el texto de Google al centro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* El título principal "Bienvenido De Nuevo" */
+.form-content h2 {
+    color: #fff; /* Blanco puro */
+    font-size: 2.2rem; /* Un poco más grande */
+    font-weight: 700; /* Más grueso */
+    margin-bottom: 30px; /* Más espacio abajo */
+    text-align: center;
+}
+
+/* Los textos pequeños ("¿No tienes cuenta?", "Email", etc.) */
+    .form-content p, 
+    .form-content label,
+    .input-field input::placeholder {
+    color: rgba(255, 255, 255, 0.8); /* Blanco transparente (gris claro) */
+    font-size: 0.95rem;
+}
+
+/* Esto selecciona el texto informativo al final del formulario */
+.form-content p {
+    color: #000000; /* Negro puro para máxima visibilidad */
+    margin-top: 10px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500; /* Un poco de grosor para que no sea tan delgado */
+}
+
+/* Y esto asegura que el enlace que va pegado también se vea */
+.form-content p a {
+    color: #15592e;
+    font-weight: 500; /* Más negrita para que resalte del resto */
+    text-decoration: none;
+    margin-left: 10px; /* Espacio entre el texto y el enlace */
 }
