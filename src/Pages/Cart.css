@@ -1,6 +1,73 @@
-/* Estilos para la página de Carrito - Nutrik */
-/* Responsable: Carlos */
-
-.carrito-container {
-    padding: 20px;
+.carrito-inicio {
+  width: 100%;
+  max-width: 100%;
+  margin-top: 40px;
+  background: white;
+  border-radius: 28px;
+  padding: 24px 28px;
+  box-shadow: 0 16px 36px rgba(27, 48, 11, 0.1);
+  border: 1px solid rgba(184, 179, 161, 0.28);
 }
+
+.carrito-inicio .titulo {
+  color: var(--verde-oscuro);
+  margin-bottom: 12px;
+}
+
+.carrito-vacio {
+  text-align: center;
+  color: #555;
+  padding: 10px 0;
+}
+
+.carrito-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e7eb;
+  gap: 16px;
+}
+
+.carrito-item span:first-child {
+  flex: 2;
+  text-align: left;
+}
+
+.carrito-item span {
+  flex: 1;
+  text-align: center;
+}
+
+.btn-quitar {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #ef4444;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+  flex-shrink: 0;
+}
+
+.btn-quitar:hover {
+  background: #dc2626;
+}
+
+.carrito-total {
+  text-align: right;
+  margin-top: 15px;
+  font-size: 18px;
+  color: rgba(145, 193, 62, 0.15);
+}
+.btn-seguir{
+background-color: #1b300b;
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+}
+/*falta el total /*
