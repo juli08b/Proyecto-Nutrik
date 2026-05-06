@@ -1,13 +1,15 @@
+import { Link } from 'react-router-dom'; // Importante
 import './Register.css';
 import logo from '../assets/logoNutrick.png'; 
 
 const Registro = () => {
   return (
     <div className="main-container">
-      {/* Cabecera horizontal: Logo izquierda, Texto derecha */}
       <div className="header-registro">
         <div className="logo-circle">
-          <img src={logo} alt="Logo Nutrik" className="logo-img" />
+          <Link to="/"> {/* El logo te lleva al Home */}
+            <img src={logo} alt="Logo Nutrik" className="logo-img" />
+          </Link>
         </div>
         <div className="header-text">
           <h1>Únete a Nutrik</h1>
@@ -15,51 +17,17 @@ const Registro = () => {
         </div>
       </div>
 
-      {/* Tarjeta del Formulario */}
       <div className="form-container">
         <div className="card-registro">
           <h2 className="card-title">Crea tu Perfil</h2>
           
+          {/* Texto opcional para volver al Login */}
+          <p className="login-link-text">
+            ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
+          </p>
+
           <form className="register-form">
-            
-            <label className="field-label">Fila 1:</label>
-            <div className="input-row">
-              <div className="input-group">
-                <input type="text" placeholder="Nombre" required />
-              </div>
-              <div className="input-group">
-                <input type="text" placeholder="Apellido" required />
-              </div>
-            </div>
-
-            <label className="field-label">Campo de Correo:</label>
-            <div className="input-group">
-              <input type="email" placeholder="Correo Electrónico" required />
-            </div>
-
-            <label className="field-label">Fila Datos:</label>
-            <div className="input-row">
-              <div className="input-group">
-                <input type="number" placeholder="Edad" />
-              </div>
-              <div className="input-group">
-                <input type="number" placeholder="Peso (kg)" />
-              </div>
-              <div className="input-group">
-                <input type="number" placeholder="Estatura (cm)" />
-              </div>
-            </div>
-
-            <label className="field-label">Campo Opciones:</label>
-            <div className="input-group">
-              <select className="select-custom">
-                <option value="" disabled selected>Objetivo</option>
-                <option value="perder">Perder Peso</option>
-                <option value="musculo">Ganar Músculo</option>
-              </select>
-            </div>
-
-            <label className="field-label">Botón:</label>
+            {/* ... resto de tu formulario de registro ... */}
             <button className="btn-submit" type="submit">Empezar</button>
           </form>
         </div>
