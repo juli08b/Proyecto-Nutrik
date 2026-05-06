@@ -2,9 +2,14 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './Components/Navbar';
 import Home from './Components/Home';
 import Header from './Components/Header';
+<<<<<<< HEAD
 import Footer from './Components/Footer'; 
 import Login from './Pages/Login';
 import Register from './Pages/Register';
+=======
+import Footer from './Components/Footer';
+import Productos from './Pages/Product';
+>>>>>>> origin/gabriel
 import './index.css';
 
 function App() {
@@ -23,8 +28,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/header" element={<Header />} />
+<<<<<<< HEAD
         <Route path="/login" element={<Login />} />
         <Route path="/Registro" element={<Register />} />
+=======
+        <Route path="/productos" element={< Productos/>} />
+>>>>>>> origin/gabriel
       </Routes>
 
       {/* También podemos ocultar el Footer en esas páginas si quieres que el Login sea pantalla completa */}
