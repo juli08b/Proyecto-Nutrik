@@ -12,6 +12,7 @@ import categoria from "../assets/Categoria.svg";
 import producto from "../assets/Producto.svg";
 import dieta from "../assets/Dieta.svg";
 
+
 function Navbar() {
   return (
     <nav className="navegacion">
@@ -65,6 +66,14 @@ function Navbar() {
         <li className="nav-extra-item">
           <span className="icono-circulo"><img src={sugerencias} alt="" /></span>
           <Link to="/sugerencias">Sugerencias</Link>
+        </li>
+        <li className="divisor-container">
+          <div className="divisor"></div>
+        </li>
+        <li>
+          <button className="btn-nav-acceder">
+            <Link to="/Registro">ACCEDER</Link>
+          </button>
         </li>
       </ul>
     </nav>
