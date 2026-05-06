@@ -1,0 +1,60 @@
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 12px 4px 4px;
+}
+
+.btn-nav {
+  appearance: none;
+  border: 1px solid rgba(47, 125, 77, 0.14);
+  background: rgba(255, 255, 255, 0.88);
+  color: #52f122;
+  padding: 14px 22px;
+  border-radius: 16px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(26, 62, 45, 0.08);
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    background-color 220ms ease,
+    border-color 220ms ease;
+  user-select: none;
+}
+
+.btn-nav:hover {
+  transform: translateY(-2px);
+  background: #ffffff;
+  border-color: rgba(47, 125, 77, 0.28);
+  box-shadow: 0 16px 30px rgba(26, 62, 45, 0.12);
+}
+
+.btn-nav:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 4px rgba(47, 125, 77, 0.16),
+    0 16px 30px rgba(26, 62, 45, 0.12);
+}
+
+.btn-nav--primary {
+  background: linear-gradient(135deg, #2f7d4d, #46a86a);
+  color: #fffdf7;
+  border-color: transparent;
+}
+
+.btn-nav--primary:hover {
+  background: linear-gradient(135deg, #286a41, #3e965f);
+}
+
+@media (max-width: 768px) {
+  .button-group {
+    gap: 12px;
+  }
+
+  .btn-nav {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}
