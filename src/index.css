@@ -23,9 +23,12 @@ body,
 }
 
 body {
+  /* Cambia min-height por min-vh para asegurar que cubra toda la pantalla visual */
+  min-height: 100vh; 
   background:
     radial-gradient(circle at top left, rgba(145, 193, 62, 0.12), transparent 28%),
     linear-gradient(180deg, #fbfcf7 0%, var(--fondo-crema) 100%);
+  background-attachment: fixed; /* Esto hace que el fondo no se corte al hacer scroll */
   font-family: var(--fuente-principal);
   color: var(--verde-oscuro);
   line-height: 1.6;
