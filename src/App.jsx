@@ -4,7 +4,7 @@ import Home from './Components/Home';
 import Header from './Components/Header';
 import Footer from './Components/Footer'; 
 
-// 👇 importa tus páginas
+// Páginas navegables
 import Login from './Pages/Login';
 import Register from './Pages/Register';
 
@@ -12,28 +12,28 @@ import './index.css';
 
 function App() {
   return (
-    <Routes>
+    <>
+      {/* 
+          Colocamos Navbar aquí si quieres que aparezca en TODAS las páginas.
+          Si el Login NO debe tener Navbar, entonces usamos la estructura de abajo.
+      */}
+      <Navbar />
 
-      {/* 🔓 Rutas SIN Navbar ni Footer */}
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Routes>
+        {/* Ruta principal: Home */}
+        <Route path="/" element={<Home />} />
 
-      {/* 🔒 Rutas CON layout normal */}
-      <Route
-        path="/*"
-        element={
-          <>
-            <Navbar />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/header" element={<Header />} />
-            </Routes>
-            <Footer />
-          </>
-        }
-      />
+        {/* Otras rutas de componentes o páginas */}
+        <Route path="/header" element={<Header />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        
+        {/* Puedes agregar aquí las rutas de tus compañeros conforme las fusiones */}
+        {/* <Route path="/carrito" element={<Cart />} /> */}
+      </Routes>
 
-    </Routes>
+      <Footer />
+    </>
   );
 }
 
