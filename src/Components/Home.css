@@ -1,7 +1,7 @@
 :root {
-  --verde: #14532d;        /* principal */
+  --verde: #c1f3b7;        /* principal */
   --verde-oscuro: #052e16; /* fondo oscuro */
-  --verde-claro: #4ade80;  /* acento */
+  --verde-claro: #052e16;  /* acento */
 }
 
 /* HERO */
@@ -148,7 +148,7 @@
 }
 
 .beneficio {
-  background: white;
+  background: rgb(252, 255, 252);
   padding: 25px;
   border-radius: 12px;
   width: 250px;
@@ -162,7 +162,7 @@
 
 .beneficio h3 {
   margin-bottom: 10px;
-  color: var(--verde);
+  color:black;
 }
 
 

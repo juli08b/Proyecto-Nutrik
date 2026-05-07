@@ -1,10 +1,10 @@
 .navegacion {
   font-family: 'Arial', sans-serif;
-  background-color: #3fe8378b;
+  background-color: #052e1680;
   margin: 15px 75px 20px;
   border-radius: 50px;
   padding: 5px 15px;
-  /* position: fixed; */
+  position: fixed;
 }
 
 .nav-list {
@@ -21,7 +21,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #39c900;
+  background: #47a124;
   border: none;
   border-radius: 20px;
   padding: 5px 15px;
@@ -68,7 +68,7 @@
 
 .nav-extra-item a {
   text-decoration: none;
-  color: #026e0b;
+  color: #ffffff;
   font-weight: bold;
 }
 
