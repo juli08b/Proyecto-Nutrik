@@ -1,7 +1,7 @@
 :root {
-  --verde: #14532d;        /* principal */
+  --verde: #d5f5ce;        /* principal */
   --verde-oscuro: #052e16; /* fondo oscuro */
-  --verde-claro: #4ade80;  /* acento */
+  --verde-claro: #052e16;  /* acento */
 }
 
 /* HERO */
@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 80px;
+  padding: 80px 100px 0PX 50PX;
   min-height: 100vh;
   background: linear-gradient(135deg, var(--verde), var(--verde-oscuro));
   color: white;
@@ -162,7 +162,7 @@
 
 .beneficio h3 {
   margin-bottom: 10px;
-  color: var(--verde);
+  color:rgb(9, 90, 17);
 }
 
 
