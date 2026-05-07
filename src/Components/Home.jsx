@@ -36,6 +36,7 @@ function Home() {
           <div className="card card3">💪 Vida saludable</div>
         </div>
       </section>
+      
 
       {/* estos son los BENEFICIOS */}
       <section className="beneficios">
@@ -65,7 +66,7 @@ function Home() {
         <p>Tu cuerpo te lo va a agradecer.</p>
 
         
-        <button className="btn-primary btn-grande">
+        <button className="btn-secundario btn-grande">
           Comenzar ahora
         </button>
 
