@@ -52,19 +52,19 @@ function Navbar() {
 
         {/* Enlaces extra a la derecha */}
         <li className="nav-extra-item">
-          <span className="icono-circulo"><img src={tienda} alt="" /></span>
+          <span className="icono-circulo"><img className='nuevo' src={tienda} alt="" /></span>
           <Link to="/tienda">Tienda</Link>
         </li>
         <li className="nav-extra-item">
-          <span className="icono-circulo"><img src={nuevo} alt="" /></span>
+          <span className="icono-circulo"><img className='nuevo' src={nuevo} alt="" /></span>
           <Link to="/nuevo">Lo nuevo</Link>
         </li>
         <li className="nav-extra-item">
-          <span className="icono-circulo"><img src={descuento} alt="" /></span>
+          <span className="icono-circulo"><img className='nuevo' src={descuento} alt="" /></span>
           <Link to="/descuentos">Descuento</Link>
         </li>
         <li className="nav-extra-item">
-          <span className="icono-circulo"><img src={sugerencias} alt="" /></span>
+          <span className="icono-circulo"><img className='nuevo' src={sugerencias} alt="" /></span>
           <Link to="/sugerencias">Sugerencias</Link>
         </li>
         <li className="divisor-container">
