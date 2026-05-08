@@ -58,12 +58,12 @@ textarea {
 }
 
 .main-content {
-  max-width: 1120px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 42px 22px 88px;
+  padding: 50px 30px 100px;
   display: flex;
   flex-direction: column;
-  gap: 34px;
+  gap: 40px;
 }
 
 .top-nav,
