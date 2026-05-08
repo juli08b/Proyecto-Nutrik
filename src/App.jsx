@@ -4,6 +4,7 @@ import Home from './Components/Home';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import Productos from './Pages/Product';
+import Vistaproducto from './Pages/Vistaproducto';
 import './index.css';
 
 function App() {
@@ -16,10 +17,13 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/header" element={<Header />} />
         <Route path="/productos" element={< Productos/>} />
+        <Route path="/vistaproducto" element={<Vistaproducto />} />
       </Routes>
 
       <Footer />
+
     </>
+    
   );
 }
 
