@@ -22,12 +22,16 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at top left, rgba(240, 140, 58, 0.16), transparent 26%),
-    radial-gradient(circle at top right, rgba(47, 125, 77, 0.14), transparent 28%),
+    radial-gradient(circle at top left, rgba(240, 140, 58, 0.16), transparent 24%),
+    radial-gradient(circle at top right, rgba(47, 125, 77, 0.14), transparent 30%),
     linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
   font-family: 'Outfit', sans-serif;
   color: var(--text-main);
@@ -35,9 +39,8 @@ body {
 
 #root {
   width: 100%;
-  max-width: none;
-  margin: 0;
   min-height: 100vh;
+  margin: 0;
   border: 0;
   text-align: left;
 }
@@ -51,15 +54,16 @@ textarea {
 
 .nutrick-app {
   min-height: 100vh;
+  background: transparent;
 }
 
 .main-content {
   max-width: 1120px;
   margin: 0 auto;
-  padding: 40px 20px 72px;
+  padding: 42px 22px 88px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 34px;
 }
 
 .top-nav,
@@ -97,7 +101,7 @@ textarea {
 .contacto-header {
   position: relative;
   z-index: 1;
-  max-width: 700px;
+  max-width: 720px;
   margin-bottom: 32px;
 }
 
@@ -127,7 +131,7 @@ textarea {
 .contacto-header p {
   margin: 0;
   font-size: 1.04rem;
-  line-height: 1.7;
+  line-height: 1.75;
   color: var(--text-soft);
 }
 
@@ -216,6 +220,17 @@ textarea {
     transform var(--transition),
     box-shadow var(--transition),
     filter var(--transition);
+}
+
+.btn-glow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 36px rgba(240, 140, 58, 0.3);
+}
+
+@media (max-width: 860px) {
+  .main-content {
+    padding: 28px 16px 60px;
+  }
 }
 
 .btn-glow:hover {
