@@ -98,3 +98,52 @@
 .nuevo{
   filter: invert(24%) sepia(89%) saturate(1355%) hue-rotate(96deg) brightness(93%) contrast(101%);
 }
+
+/* SIDEBAR */
+
+.sidebar{
+  position: fixed;
+  top: 0;
+  left: -350px;
+  width: 320px;
+  height: 100vh;
+  background: #d5f5ce;
+  z-index: 1000;
+  transition: 0.3s ease;
+  padding: 30px;
+  box-shadow: 5px 0 10px rgba(0,0,0,0.2);
+}
+
+.sidebar.activo{
+  left: 0;
+}
+
+/* FONDO OSCURO */
+
+.overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(155, 155, 155, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  z-index: 999;
+}
+
+.overlay.activo{
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* BOTÓN CERRAR */
+
+.cerrar-menu{
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
