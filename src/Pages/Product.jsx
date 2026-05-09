@@ -27,8 +27,8 @@ const Productos = () => {
 
           <h3>Creatina en Polvo </h3>
 
-          <Link to="/vistaproducto">
-          <button className="btn-producto">Ver producto </button>
+          <Link to="/vistaproducto/creatine">
+             <button className="btn-producto">Ver producto</button>
           </Link>
             
 
@@ -42,7 +42,7 @@ const Productos = () => {
 
           <h3>Yogurt Griego</h3>
 
-            <Link to="/vistaproducto">
+          <Link to="/vistaproducto/yogur">
           <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -71,7 +71,7 @@ const Productos = () => {
         </div>
 
         <div className="card-producto">
-          <img src= "https://i.pinimg.com/1200x/bf/0a/6d/bf0a6dc31db1508589493ceec6a6c512.jpg" alt="omega3" className="img-producto"  />
+          <img src= "https://i.pinimg.com/1200x/bf/0a/6d/bf0a6dc31db1508589493ceec6a6c512.jpg" alt="colageno" className="img-producto"  />
 
           <h3>Colágeno Hidrolizado</h3>
 
