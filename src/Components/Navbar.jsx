@@ -70,7 +70,8 @@ function Navbar() {
             <span className="icono-circulo">
               <img className="nuevo" src={tienda} alt="" />
             </span>
-            <Link to="/tienda">Tienda</Link>
+            {/* Ahora apunta a la vista de productos de Gabriel */}
+            <Link to="/productos">Tienda</Link>
           </li>
 
           <li className="nav-extra-item">
@@ -150,14 +151,6 @@ function Navbar() {
 
             <Link to="/suplementos"> 🏋️‍♂️ Suplementos en Polvo</Link>
             <br />
-            {/* <br />
-            <br />
-
-            <Link to="/frutas">Nececitas Ayuda 🎧</Link>
-            <br /> */}
-
-
-
           </div>
         )}
 
@@ -209,7 +202,5 @@ function Navbar() {
     </>
   );
 }
-
-
 
 export default Navbar;
