@@ -43,20 +43,20 @@ function Navbar() {
           <li>
             <button
               className="btn-nav"
-              onClick={() => setMenuAbierto("productos")}
+              onClick={() => setMenuAbierto("dietas")}
             >
-              <img src={producto} alt="" width={20} height={20} />
-              PRODUCTOS
+              <img src={dieta} alt="" width={20} height={20} />
+              DIETAS
             </button>
           </li>
 
           <li>
             <button
               className="btn-nav"
-              onClick={() => setMenuAbierto("dietas")}
+              onClick={() => setMenuAbierto("productos")}
             >
-              <img src={dieta} alt="" width={20} height={20} />
-              DIETAS
+              <img src={producto} alt="" width={20} height={20} />
+              PRODUCTOS
             </button>
           </li>
 
@@ -127,13 +127,37 @@ function Navbar() {
           <div>
             <h2>Categorías</h2>
 
-            <Link to="/congelados">Congelados</Link>
+            <Link to="/congelados"> ❄️ Congelados</Link>
             <br />
 
-            <Link to="/snacks">Snacks</Link>
+            <Link to="/snacks"> 🍫 Snacks</Link>
             <br />
 
-            <Link to="/frutas">Frutas</Link>
+            <Link to="/frutas"> 🍎 Frutas</Link>
+            <br />
+
+            <Link to="/aves-pescado"> 🍗 Aves y Pescados</Link>
+            <br />
+
+            <Link to="/lacteos-huevos"> 🥛 Lácteos y Huevos</Link>
+            <br />
+
+            <Link to="/cereales-granos"> 🥣 Cereales y Granos</Link>
+            <br />
+
+            <Link to="/vitaminas"> 💊 Vitaminas y Bienestar</Link>
+            <br />
+
+            <Link to="/suplementos"> 🏋️‍♂️ Suplementos en Polvo</Link>
+            <br />
+            {/* <br />
+            <br />
+
+            <Link to="/frutas">Nececitas Ayuda 🎧</Link>
+            <br /> */}
+
+
+
           </div>
         )}
 
@@ -141,13 +165,13 @@ function Navbar() {
           <div>
             <h2>Productos</h2>
 
-            <Link to="/proteinas">Proteínas</Link>
+            <Link to="/proteinas"> 🥩 Proteínas</Link>
             <br />
 
-            <Link to="/harinas">Harinas</Link>
+            <Link to="/harinas"> 🍞 Harinas</Link>
             <br />
 
-            <Link to="/bebidas">Bebidas</Link>
+            <Link to="/bebidas"> 🥤 Bebidas</Link>
           </div>
         )}
 
@@ -155,13 +179,29 @@ function Navbar() {
           <div>
             <h2>Dietas</h2>
 
-            <Link to="/keto">Keto</Link>
+            <Link to="/keto"> 🥑 Keto</Link>
             <br />
 
-            <Link to="/vegana">Vegana</Link>
+            <Link to="/vegana"> 🥗 Vegana</Link>
             <br />
 
-            <Link to="/fitness">Fitness</Link>
+            <Link to="/fitness"> 💪 Fitness</Link>
+            <br />
+
+            <Link to="/sin-lactosa"> 🚫🥛 Sin lactosa</Link>
+            <br />
+
+            <Link to="/padeo"> 🍖 Padeo</Link>
+            <br />
+
+            <Link to="/organico"> 🌿 Organico</Link>
+            <br />
+
+            <Link to="/sin-gluten"> 🌾🚫 Sin gluten</Link>
+            <br />
+
+            <Link to="/vegetariano"> 🥕 Vegetariano</Link>
+            <br />
           </div>
         )}
 
