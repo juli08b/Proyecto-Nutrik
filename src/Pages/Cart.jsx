@@ -1,56 +1,134 @@
-function Cart() {
+import { createContext, useContext, useState } from "react";
+import "./Cart.css";
+
+// ── CONTEXTO ──────────────────────────────────────────────
+const CartContext = createContext();
+
+export function CartProvider({ children }) {
+  const [carrito, setCarrito] = useState([]);
+  const [carritoAbierto, setCarritoAbierto] = useState(false);
+
+  const agregarProducto = (producto) => {
+    setCarrito((prev) => {
+      const existe = prev.find((p) => p.id === producto.id);
+      if (existe) {
+        return prev.map((p) =>
+          p.id === producto.id ? { ...p, cantidad: p.cantidad + 1 } : p
+        );
+      }
+      return [...prev, { ...producto, cantidad: 1 }];
+    });
+  };
+
+  const eliminarProducto = (id) => {
+    setCarrito((prev) => prev.filter((p) => p.id !== id));
+  };
+
+  const cambiarCantidad = (id, delta) => {
+    setCarrito((prev) =>
+      prev
+        .map((p) => (p.id === id ? { ...p, cantidad: p.cantidad + delta } : p))
+        .filter((p) => p.cantidad > 0)
+    );
+  };
+
+  const totalItems = carrito.reduce((acc, p) => acc + p.cantidad, 0);
+  const totalPrecio = carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
+
   return (
-    <div className="contenedor">
-
-     <h2 className="titulo">Todos Nuestros Productos</h2>
-
-      <h2 className="titulo">Nuestros Productos Saludables</h2>
-
-
-      <div className="productos">
-
-        <div className="producto">
-          <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400" />
-          <h3>Ensalada Fresh</h3>
-
-          <p>Alimentación balanceada con ingredientes naturales.</p>
-
-          <p>
-            Una deliciosa mezcla de vegetales frescos con proteínas naturales,
-            perfecta para mantener una alimentación balanceada.
-          </p>
-
-        </div>
-
-        <div className="producto">
-          <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=400" />
-          <h3>Mix de Frutas</h3>
-
-          <p>Ricas en vitaminas y antioxidantes.</p>
-
-          <p>
-            Selección de frutas naturales ricas en vitaminas y antioxidantes
-            ideales para energizar tu día.
-          </p>
-
-        </div>
-
-        <div className="producto">
-          <img src="https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=400" />
-          <h3>Jugo Detox</h3>
-
-          <p>Refrescante y saludable para tu cuerpo.</p>
-
-          <p>
-            Bebida refrescante que ayuda a limpiar tu organismo y mejorar tu
-            digestión de forma natural.
-          </p>
-
-        </div>
-
-      </div>
-    </div>
+    <CartContext.Provider
+      value={{
+        carrito,
+        carritoAbierto,
+        setCarritoAbierto,
+        agregarProducto,
+        eliminarProducto,
+        cambiarCantidad,
+        totalItems,
+        totalPrecio,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
   );
 }
 
-export default Cart;
+export function useCart() {
+  return useContext(CartContext);
+}
+
+// ── PANEL DEL CARRITO ─────────────────────────────────────
+export function CartPanel() {
+  const {
+    carrito,
+    carritoAbierto,
+    setCarritoAbierto,
+    eliminarProducto,
+    cambiarCantidad,
+    totalPrecio,
+  } = useCart();
+
+  return (
+    <>
+      {/* Overlay */}
+      <div
+        className={`cart-overlay ${carritoAbierto ? "activo" : ""}`}
+        onClick={() => setCarritoAbierto(false)}
+      />
+
+      {/* Panel lateral */}
+      <div className={`cart-panel ${carritoAbierto ? "activo" : ""}`}>
+
+        <div className="cart-header">
+          <span>🛒</span>
+          <h3>Mi Carrito</h3>
+          <button className="cart-cerrar" onClick={() => setCarritoAbierto(false)}>✕</button>
+        </div>
+
+        <div className="cart-items">
+          {carrito.length === 0 ? (
+            <div className="cart-vacio">
+              <p>🛒 Tu carrito está vacío</p>
+              <span>Agrega productos para comenzar</span>
+            </div>
+          ) : (
+            carrito.map((item) => (
+              <div className="cart-item" key={item.id}>
+                <img src={item.imagen} alt={item.nombre} className="cart-item-img" />
+                <div className="cart-item-info">
+                  <p className="cart-item-nombre">{item.nombre}</p>
+                  <p className="cart-item-precio">
+                    ${(item.precio * item.cantidad).toLocaleString("es-CO")}
+                  </p>
+                  <div className="cart-item-controles">
+                    <button onClick={() => cambiarCantidad(item.id, -1)}>−</button>
+                    <span>{item.cantidad}</span>
+                    <button onClick={() => cambiarCantidad(item.id, 1)}>+</button>
+                  </div>
+                </div>
+                <button className="cart-item-eliminar" onClick={() => eliminarProducto(item.id)}>
+                  Eliminar
+                </button>
+              </div>
+            ))
+          )}
+        </div>
+
+        {carrito.length > 0 && (
+          <div className="cart-footer">
+            <div className="cart-total">
+              <span>Total:</span>
+              <span className="cart-total-precio">${totalPrecio.toLocaleString("es-CO")}</span>
+            </div>
+            <button className="cart-btn-pagar">Pagar</button>
+            <button className="cart-btn-seguir" onClick={() => setCarritoAbierto(false)}>
+              Seguir comprando
+            </button>
+          </div>
+        )}
+      </div>
+    </>
+  );
+}
+
+export default CartPanel;
