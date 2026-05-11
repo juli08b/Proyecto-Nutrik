@@ -36,12 +36,11 @@ function Navbar() {
               <img src={dieta} alt="" width={20} height={20} />DIETAS
             </button>
           </li>
-
-          <li>
-            <button className="btn-nav" onClick={() => setMenuAbierto("productos")}>
-              <img src={producto} alt="" width={20} height={20} />PRODUCTOS
+          
+          <button className="btn-nav" onClick={() => setMenuAbierto("productos")}>
+            <img src={producto} alt="" width={20} height={20} />PRODUCTOS
             </button>
-          </li>
+
               {/* ÍCONO CARRITO */}
           <li>
             <button className="btn-carrito-nav" onClick={() => setCarritoAbierto(true)}>
@@ -99,14 +98,15 @@ function Navbar() {
             <Link to="/suplementos">🏋️‍♂️ Suplementos en Polvo</Link><br />
           </div>
         )}
-        {menuAbierto === "productos" && (
-          <div>
-            <h2>Productos</h2>
-            <Link to="/proteinas">🥩 Proteínas</Link><br />
-            <Link to="/harinas">🍞 Harinas</Link><br />
-            <Link to="/bebidas">🥤 Bebidas</Link>
-          </div>
-        )}
+       {menuAbierto === "productos" && (
+  <div>
+    <h2>Productos</h2>
+    <Link to="/productos" onClick={() => setMenuAbierto("")}>📋 Ver todos</Link><br />
+    <Link to="/proteinas">🥩 Proteínas</Link><br />
+    <Link to="/harinas">🍞 Harinas</Link><br />
+    <Link to="/bebidas">🥤 Bebidas</Link>
+  </div>
+)}  
         {menuAbierto === "dietas" && (
           <div>
             <h2>Dietas</h2>
