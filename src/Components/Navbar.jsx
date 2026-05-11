@@ -101,7 +101,7 @@ function Navbar() {
 
           <li>
             <button className="btn-nav-acceder">
-              <Link to="/Registro">ACCEDER</Link>
+              <Link to="/Login">ACCEDER</Link>
             </button>
           </li>
 
