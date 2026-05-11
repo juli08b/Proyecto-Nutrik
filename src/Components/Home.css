@@ -1,7 +1,16 @@
 :root {
-  --verde: #14532d;        /* principal */
-  --verde-oscuro: #052e16; /* fondo oscuro */
-  --verde-claro: #4ade80;  /* acento */
+  --verde: #d5f5ce;
+  /* principal */
+  --verde-oscuro: #052e16;
+  /* fondo oscuro */
+  --verde-claro: #052e16;
+  /* acento */
+  --verde-neon: #6afd6a;
+  /* Verde neón para el Navbar */
+  --blanco: #ffffff;
+  --gris-claro: #f8fafc;
+  /* Gris neutro para fondos de tarjetas */
+  --fondo-suave: #ecfdf5;
 }
 
 /* HERO */
@@ -9,14 +18,17 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 80px;
+  padding: 80px 100px 0px 50px;
   min-height: 100vh;
   background: linear-gradient(135deg, var(--verde), var(--verde-oscuro));
   color: white;
+  padding-left: 8%;
+  padding-right: 8%;
 }
 
 .hero-texto {
   max-width: 500px;
+  
 }
 
 .hero-tag {
@@ -35,8 +47,11 @@
 }
 
 .hero-desc {
-  font-size: 18px;
+  color: rgb(255, 255, 255);
+  font-size: 20px;
   margin-bottom: 30px;
+  line-height: 1.6;
+  opacity: 0.9;
 }
 
 /* BOTONES */
@@ -50,7 +65,8 @@
 }
 
 .btn-primary {
-  background: white;
+
+  background: linear-gradient(90deg, rgb(95, 136, 91) 0%, rgb(229, 255, 229) 50%);
   color: var(--verde-oscuro);
   border: none;
   font-weight: bold;
@@ -74,6 +90,20 @@
   color: var(--verde-oscuro);
 }
 
+.btn-secundario {
+
+  background: rgb(232, 255, 236);
+  color: var(--verde-oscuro);
+  border: none;
+  font-weight: bold;
+}
+
+.btn-secundario:hover {
+  transform: scale(1.05);
+  background: white;
+  color: var(--verde-oscuro);
+}
+
 
 .btn-grande {
   padding: 20px 40px;
@@ -87,12 +117,13 @@
 }
 
 .circulo {
-  width: 350px;
-  height: 350px;
+  width: 480px;
+  height: 480px;
   border-radius: 50%;
-  overflow: hidden;
-  background: white;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  overflow: hidden; /* Corta la imagen en forma circular */
+  background: var(--blanco);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+  border: 8px solid rgba(255,255,255,0.1);
 }
 
 .circulo img {
@@ -104,27 +135,50 @@
 
 .card {
   position: absolute;
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(10px);
-  padding: 10px 15px;
-  border-radius: 10px;
-  font-size: 14px;
-  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  /* Efecto de transparencia */
+  backdrop-filter: blur(12px);
+  /* Efecto de desenfoque detrás (Glassmorphism) */
+  padding: 12px 18px;
+  border-radius: 15px;
+  font-size: 18px;
+  color: var(--blanco);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  white-space: nowrap;
+  animation: float 4s ease-in-out infinite;
+  /* Activa la animación */
 }
 
+/* Posiciones individuales de las cards flotantes */
 .card1 {
   top: 20px;
-  right: -40px;
+  right: -30px;
+  animation-delay: 0s;
 }
 
 .card2 {
-  bottom: 30px;
+  bottom: 40px;
   left: -40px;
+  animation-delay: 1s;
 }
 
 .card3 {
-  top: 150px;
-  right: -80px;
+  top: 50%;
+  right: -60px;
+  animation-delay: 2s;
+}
+
+/* Animación de flotado suave */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 /* BENEFICIOS */
@@ -148,11 +202,11 @@
 }
 
 .beneficio {
-  background: white;
+  background: rgb(252, 255, 252);
   padding: 25px;
   border-radius: 12px;
   width: 250px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   transition: 0.3s;
 }
 
@@ -162,22 +216,611 @@
 
 .beneficio h3 {
   margin-bottom: 10px;
-  color: var(--verde);
+  color: rgb(9, 90, 17);
 }
 
+
+/* =========================================
+   CTA FINAL
+========================================= */
 
 .cta {
-  padding: 80px;
+  padding: 120px 8%;
+  background: linear-gradient(135deg, #052e16 0%, #0b4b24 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* EFECTOS DECORATIVOS */
+.cta::before,
+.cta::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(106, 253, 106, 0.08);
+  filter: blur(10px);
+}
+
+.cta::before {
+  width: 280px;
+  height: 280px;
+  top: -80px;
+  left: -80px;
+}
+
+.cta::after {
+  width: 350px;
+  height: 350px;
+  bottom: -120px;
+  right: -120px;
+}
+
+/* CONTENIDO */
+.cta-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: auto;
   text-align: center;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  border-radius: 35px;
+  padding: 70px 50px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+/* TAG */
+.cta-tag {
+  display: inline-block;
+  background: rgba(106, 253, 106, 0.12);
+  color: #d8ffd8;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+/* TITULO */
+.cta-content h2 {
+  font-size: 52px;
+  color: white;
+  margin-bottom: 20px;
+}
+
+/* TEXTO */
+.cta-content p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 18px;
+  line-height: 1.8;
+  max-width: 700px;
+  margin: 0 auto 40px;
+}
+
+/* BOTONES */
+.cta-botones {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* BOTON PRINCIPAL */
+.btn-grande {
+  padding: 18px 40px;
+  border-radius: 16px;
+  font-size: 18px;
+}
+
+/* BOTON OUTLINE */
+.btn-grande-outline {
+  padding: 18px 40px;
+  border-radius: 16px;
+  font-size: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  color: white;
+  transition: 0.3s;
+}
+
+.btn-grande-outline:hover {
+  background: white;
+  color: var(--verde-oscuro);
+  transform: translateY(-3px);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+  .cta {
+    padding: 90px 6%;
+  }
+
+  .cta-content {
+    padding: 50px 25px;
+  }
+
+  .cta-content h2 {
+    font-size: 38px;
+  }
+
+  .cta-content p {
+    font-size: 16px;
+  }
+
+  .cta-botones {
+    flex-direction: column;
+  }
+
+  .btn-grande,
+  .btn-grande-outline {
+    width: 100%;
+  }
+}
+
+/*lo nuevo de Jhosman*/
+/* =========================================
+   PRODUCTOS (Sección "Lo Nuevo")
+========================================= */
+.productos {
+  padding: 100px 8%;
+  background: linear-gradient(to bottom, #ffffff 0%, #f5fff7 100%);
+  text-align: center;
+}
+
+.productos h2 {
+  font-size: 42px;
+  color: var(--verde-oscuro);
+  margin-bottom: 60px;
+  position: relative;
+}
+
+.productos h2::after {
+  content: "";
+  width: 80px;
+  height: 5px;
+  background: var(--verde-neon);
+  display: block;
+  margin: 15px auto 0;
+  border-radius: 20px;
+}
+
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 35px;
+}
+
+/* CARD */
+.producto-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.35s ease;
+  position: relative;
+}
+
+.producto-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* IMAGEN */
+.producto-card img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.producto-card:hover img {
+  transform: scale(1.08);
+}
+
+/* CONTENIDO */
+.producto-card h3 {
+  font-size: 24px;
+  color: var(--verde-oscuro);
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+
+.producto-card p {
+  color: #475569;
+  line-height: 1.6;
+  padding: 0 25px;
+  margin-bottom: 30px;
+}
+
+/* BOTÓN */
+.btn-ver-mas {
+  background: linear-gradient(90deg, var(--verde-neon), #b6ffb6);
+  color: var(--verde-oscuro);
+  border: none;
+  padding: 14px 32px;
+  border-radius: 14px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+}
+
+.btn-ver-mas:hover {
+  transform: scale(1.05);
   background: var(--verde-oscuro);
   color: white;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
-.cta h2 {
-  font-size: 36px;
-  margin-bottom: 10px;
+/* =========================================
+   PASOS (Cómo funciona la tienda)
+   ========================================= */
+.pasos {
+  background: var(--blanco);
+  border-top: 1px solid #f1f5f9;
 }
 
-.cta p {
+.paso {
+  width: 250px;
+}
+
+/* El círculo con el número (1, 2, 3) */
+/* =========================================
+   PASOS
+========================================= */
+
+.pasos {
+  padding: 110px 8%;
+  background: linear-gradient(to bottom, #ffffff 0%, #f5fff7 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* HEADER */
+.pasos-header {
+  text-align: center;
+  margin-bottom: 70px;
+}
+
+.pasos-header span {
+  display: inline-block;
+  background: rgba(106, 253, 106, 0.15);
+  color: var(--verde-oscuro);
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
   margin-bottom: 20px;
+}
+
+.pasos-header h2 {
+  font-size: 42px;
+  color: var(--verde-oscuro);
+  margin-bottom: 20px;
+}
+
+.pasos-header p {
+  max-width: 700px;
+  margin: auto;
+  color: #475569;
+  line-height: 1.7;
+  font-size: 18px;
+}
+
+/* GRID */
+.pasos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 35px;
+  position: relative;
+}
+
+/* CARD */
+.paso {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(10px);
+  padding: 40px 30px;
+  border-radius: 28px;
+  text-align: center;
+  position: relative;
+  transition: all 0.35s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.paso:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* NÚMERO */
+.paso-numero {
+  width: 75px;
+  height: 75px;
+  margin: 0 auto 25px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(135deg, var(--verde-neon), #58c958);
+  box-shadow: 0 10px 25px rgba(106, 253, 106, 0.4);
+}
+
+/* TITULO */
+.paso h3 {
+  font-size: 24px;
+
+  color: var(--verde-oscuro);
+
+  margin-bottom: 18px;
+}
+
+/* TEXTO */
+.paso p {
+  color: #475569;
+
+  line-height: 1.7;
+
+  font-size: 16px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+  .pasos {
+    padding: 90px 6%;
+  }
+
+  .pasos-header h2 {
+    font-size: 32px;
+  }
+
+  .paso {
+    padding: 35px 25px;
+  }
+}
+
+/* =========================================
+   BARRA DE ESTADÍSTICAS (Stats)
+   ========================================= */
+.stats {
+  background: linear-gradient(to right, var(--verde), var(--verde-oscuro));
+  display: flex;
+  justify-content: space-around;
+  color: var(--blanco);
+  padding: 60px 10%;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.stat h2 {
+  font-size: 48px;
+  color: var(--verde-claro);
+}
+
+/* =========================================
+   NEWSLETTER
+========================================= */
+
+.newsletter {
+  padding: 110px 8%;
+
+  background:
+    linear-gradient(135deg,
+      #ecfdf5 0%,
+      #d5f5ce 100%);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* CONTENEDOR */
+.newsletter-content {
+  width: 100%;
+  max-width: 900px;
+
+  background: rgba(255, 255, 255, 0.7);
+
+  backdrop-filter: blur(12px);
+
+  border-radius: 35px;
+
+  padding: 70px 50px;
+
+  text-align: center;
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.08);
+
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* TAG SUPERIOR */
+.newsletter-tag {
+  display: inline-block;
+
+  background: rgba(106, 253, 106, 0.15);
+
+  color: var(--verde-oscuro);
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  margin-bottom: 25px;
+}
+
+/* TÍTULO */
+.newsletter-content h2 {
+  font-size: 42px;
+
+  color: var(--verde-oscuro);
+
+  margin-bottom: 20px;
+}
+
+/* TEXTO */
+.newsletter-content p {
+  color: #475569;
+
+  font-size: 18px;
+
+  line-height: 1.7;
+
+  max-width: 650px;
+
+  margin: 0 auto 40px;
+}
+
+/* FORMULARIO */
+.newsletter-form {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 15px;
+
+  flex-wrap: wrap;
+}
+
+/* INPUT */
+.newsletter-form input {
+  width: 420px;
+
+  max-width: 100%;
+
+  padding: 18px 22px;
+
+  border-radius: 16px;
+
+  border: 2px solid transparent;
+
+  background: white;
+
+  font-size: 16px;
+
+  outline: none;
+
+  transition: all 0.3s ease;
+
+  box-shadow:
+    0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.newsletter-form input:focus {
+  border-color: var(--verde-neon);
+
+  box-shadow:
+    0 0 0 5px rgba(106, 253, 106, 0.15);
+}
+
+/* BOTÓN */
+.btn-newsletter {
+  background:
+    linear-gradient(90deg,
+      var(--verde-neon),
+      #c7ffc7);
+
+  color: var(--verde-oscuro);
+
+  border: none;
+
+  padding: 18px 30px;
+
+  border-radius: 16px;
+
+  font-size: 16px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.btn-newsletter:hover {
+  transform: translateY(-3px);
+
+  background: var(--verde-oscuro);
+
+  color: white;
+
+  box-shadow:
+    0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+  .newsletter-content {
+    padding: 50px 25px;
+  }
+
+  .newsletter-content h2 {
+    font-size: 32px;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+  }
+
+  .newsletter-form input {
+    width: 100%;
+  }
+
+  .btn-newsletter {
+    width: 100%;
+  }
+}
+
+/* =========================================
+   DISEÑO RESPONSIVO (Adaptación a Móviles)
+   ========================================= */
+
+/* Tablets y Laptops pequeñas */
+@media (max-width: 1024px) {
+  .hero {
+    flex-direction: column;
+    /* Apila texto arriba e imagen abajo */
+    text-align: center;
+    padding-top: 120px;
+  }
+
+  .hero-texto {
+    max-width: 100%;
+  }
+
+  .hero-botones {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+/* Celulares */
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 38px;
+  }
+
+  .circulo {
+    width: 280px;
+    height: 280px;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+  }
 }

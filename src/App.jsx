@@ -8,6 +8,8 @@ import Register from './Pages/Register';
 import Productos from './Pages/Product';
 import './index.css';
 
+import './App.css';
+
 function App() {
   // Obtenemos la ubicación actual (la URL)
   const location = useLocation();
