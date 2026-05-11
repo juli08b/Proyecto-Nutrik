@@ -26,23 +26,26 @@ const Registro = () => {
           
           <form className="register-form">
             
-            <label className="field-label">Fila 1:</label>
-            <div className="input-row">
-              <div className="input-group">
-                <input type="text" placeholder="Nombre" required />
+            <label className="field-label">Nombres</label>
+            <div className="from-group">
+              <div className="input-row">
+                <input type="text" placeholder="Nombre1" required />
+                 <input type="text" placeholder="Nombre2" required />
               </div>
-              <div className="input-group">
-                <input type="text" placeholder="Apellido" required />
+              <label className="field-label">Apellidos</label>
+              <div className="input-row">
+                <input type="text" placeholder="Apellido1" required />
+                <input type="text" placeholder="Apellido2" required />
               </div>
             </div>
 
             <label className="field-label">Campo de Correo:</label>
-            <div className="input-group">
+            <div className="from-group">
               <input type="email" placeholder="Correo Electrónico" required />
             </div>
 
             <label className="field-label">Fila Datos:</label>
-            <div className="input-row">
+            <div className="from-group">
               <div className="input-group">
                 <input type="number" placeholder="Edad" />
               </div>
@@ -51,6 +54,9 @@ const Registro = () => {
               </div>
               <div className="input-group">
                 <input type="number" placeholder="Estatura (cm)" />
+              </div>
+              <div className="input-group">
+                <input type="text" placeholder="Género" />
               </div>
             </div>
 

@@ -30,6 +30,7 @@ const Login = () => {
           </form>
           
           <p className="forgot-pass">Olvidaste tu clave? <Link to="/forgot-password">Click aquí</Link></p>
+
         </div>
       </div>
     </div>

@@ -46,7 +46,7 @@
     flex: 1;
     /* Degradado lineal usando la paleta unificada */
     background: linear-gradient(135deg, #C8E6C9, var(--verde-oscuro)); 
-    color: white;
+    color: #1b300b;
     padding: 60px;
     /* Alinea el logo y el texto al centro de esta columna */
     display: flex;
@@ -117,8 +117,7 @@
     background-position: center; 
     background-repeat: no-repeat;
     
-    /* Color de texto por defecto para esta sección */
-    color: white; 
+
 }
 
 .form-content {
@@ -144,7 +143,7 @@
 /* Color del título "Login" o "Bienvenido" dentro del formulario */
 .login-form-side h2 {
     /* Usa la variable de color de título consistente */
-    color: var(--verde-oscuro) ;
+    color: #15592e; /* Verde oscuro para el título del formulario */;
 }
 
 /* ==========================================
@@ -159,10 +158,10 @@
     width: 100%;
     padding: 14px;
     /* Estética de borde gris suave y puntas redondeadas */
-    border: 1px solid #e0e0e0; 
+    border: 1px solid #95a096; 
     border-radius: 10px;
     /* Fondo casi blanco */
-    background-color: #f9f9f9;
+    background-color: #c5c5c53d;
     font-size: 1rem;
     /* Quita el borde resaltado por defecto del navegador */
     outline: none;
@@ -212,7 +211,7 @@
 
 /* El título principal "Bienvenido De Nuevo" */
 .form-content h2 {
-    color: #fff; /* Blanco puro */
+    color: #334829; /* Blanco puro */
     font-size: 2.2rem; /* Un poco más grande */
     font-weight: 700; /* Más grueso */
     margin-bottom: 30px; /* Más espacio abajo */
@@ -223,7 +222,7 @@
     .form-content p, 
     .form-content label,
     .input-field input::placeholder {
-    color: rgba(255, 255, 255, 0.8); /* Blanco transparente (gris claro) */
+    color: rgba(84, 84, 84, 0.8); /* Blanco transparente (gris claro) */
     font-size: 0.95rem;
 }
 
