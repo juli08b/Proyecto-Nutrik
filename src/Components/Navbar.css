@@ -23,7 +23,7 @@
 .nav-logo-min {
   display: flex;
   align-items: center;
-  min-width: 8  0px; /* Le damos un espacio mínimo al contenedor */
+  min-width: 80px; /* Le damos un espacio mínimo al contenedor */
 }
 
 .nav-logo-min .logo-img {
