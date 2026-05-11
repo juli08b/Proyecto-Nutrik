@@ -22,12 +22,12 @@ function Navbar() {
       <nav className="navegacion">
         <ul className="nav-list">
 
-          {/* LOGO */}
-          <li className="nav-logo-min">
-            <Link to="/">
-              <img src={logoPequeno} alt="Nutrik" width={150} height={90} />
-            </Link>
-          </li>
+         {/* LOGO */}
+         <li className="nav-logo-min">
+          <Link to="/">
+          <img src={logoPequeno} alt="Nutrik" className="logo-img" />
+          </Link>
+         </li>
 
           {/* BOTONES */}
           <li>
