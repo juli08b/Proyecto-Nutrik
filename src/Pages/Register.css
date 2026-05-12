@@ -1,8 +1,5 @@
 .main-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background: linear-gradient(180deg, #e9ece8 0%, #dce8d8 100%);
+  background: linear-gradient(180deg, #d2e9ca 0%, #e5f1e2 100%);
   font-family: Arial, sans-serif;
 }
 
@@ -77,7 +74,7 @@
 }
 
 /* Inputs con borde verde oliva como la imagen */
-.input-group input, .select-custom {
+.from-group input, .select-custom {
   width: 100%;
   padding: 12px;
   border: 2px solid #8ba37e; 
