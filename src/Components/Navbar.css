@@ -113,6 +113,7 @@
   z-index: 1500;
   transition: 0.3s ease;
   padding: 30px;
+  overflow-y: auto;
   box-shadow:10px 0 30px rgba(0,0,0,0.15);
 }
 
@@ -164,6 +165,19 @@
 
 .sidebar.activo{
   left: 0;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #6dbf60;
+  border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #388e3c;
 }
 
 /* FONDO OSCURO */
