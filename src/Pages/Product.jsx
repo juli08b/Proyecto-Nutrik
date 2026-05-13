@@ -27,7 +27,7 @@ const Productos = () => {
 
           <h3>Creatina en Polvo </h3>
 
-          <Link to="/vistaproducto/creatine">
+          <Link to="/product-view">
              <button className="btn-producto">Ver producto</button>
           </Link>
             
@@ -42,7 +42,7 @@ const Productos = () => {
 
           <h3>Yogurt Griego</h3>
 
-          <Link to="/vistaproducto/yogur">
+          <Link to="/product-view">
           <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -55,7 +55,7 @@ const Productos = () => {
 
           <h3>Detox</h3>
 
-          <Link to="/vistaproducto">
+          <Link to="/product-view">
           <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -64,7 +64,7 @@ const Productos = () => {
           <img src= "https://i.pinimg.com/1200x/20/85/55/208555e7cad61284b90054f29ccc0fa3.jpg" alt="omega3" className="img-producto"  />
 
           <h3>omega 3</h3>
-          <Link to="/vistaproducto">
+          <Link to="/product-view">
           <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -75,7 +75,7 @@ const Productos = () => {
 
           <h3>colageno</h3>
 
-          <Link to="/vistaproducto">
+          <Link to="/product-view">
           <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -94,7 +94,7 @@ const Productos = () => {
 
           <h3>aceite de coco</h3>
 
-          <Link to="/vistaproducto">
+          <Link to="/product-view">
           <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -104,7 +104,7 @@ const Productos = () => {
 
           <h3>Maca en Polvo</h3>
 
-          <Link to="/vistaproducto">
+          <Link to="/product-view">
           <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -114,7 +114,7 @@ const Productos = () => {
 
           <h3>Granola</h3>
 
-          <Link to="/vistaproducto">
+          <Link to="/product-view">
           <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -124,7 +124,7 @@ const Productos = () => {
 
           <h3>Frutos Secos</h3>
 
-          <Link to="/vistaproducto">
+          <Link to="/product-view">
           <button className="btn-producto">Ver producto </button>
           </Link>
 
