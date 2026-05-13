@@ -3,10 +3,13 @@ import { useState } from 'react'; // 1. IMPORTANTE: Check que esto esté aquí
 import './Register.css';
 import logo from '../assets/logoNutrick.png'; 
 
+
 const Register = () => {
   // --- 2. ESTADOS (Pizarrones de memoria) ---
   const [estatura, setEstatura] = useState("");
   const [peso, setPeso] = useState("");
+  const [opcion, setOpcion] = useState(""); 
+  const [otroDetalle, setOtroDetalle] = useState("");
 
   // --- 3. FUNCIONES (Los Secretarios) ---
 
@@ -79,28 +82,72 @@ const Register = () => {
                 <input type="number" placeholder="Edad" min="1" onKeyDown={bloquearNegativos} />
               </div>
             
+            <label clasName="">¿Cuál es tu nivel de actividad diaria?</label>
+            <div className="input-group">
+              <select className="select-custom">
+                <option value="" disabled selected>Actividad diaria</option>
+                <option value="Mujer">Sedentario</option>
+                <option value="Hombre">Activo</option>
+                <option value="Hombre">Muy Activo</option>
+              </select>
+            </div>
 
+
+            <label clasName="">¿Tienes alguna alergia o intolerancia alimentaria?</label>
+            <div className="input-group">
+              <select className="select-custom" value={opcion} onChange={(e) => setOpcion(e.target.value)}
+  >
+                <option value="" disabled selected>Alergias/Intolerancias</option>
+                <option value="Mujer">Gluten</option>
+                <option value="Hombre">lactosa</option>
+                <option value="Hombre">frutos secos</option>
+                <option value="Otro">Otro...</option>
+              </select>
+
+              {/* Si elige "Otro", se despliega este campo mágicamente */}
+              {opcion === 'Otro' && (
+                <div className="input-row" style={{ marginTop: '10px' }}>
+                  <input type="text" placeholder="Por favor, especifica cuál" value={otroDetalle} onChange={(e) => setOtroDetalle(e.target.value)} required />
+                </div>
+              )}
+            </div>
+            
+
+            <label className="field-label">¿Sigues algún tipo de alimentación especial?</label>
+            <div className="input-row">
+              <select 
+                className="select-custom" 
+                onChange={(e) => manejarCambioDieta(e.target.value)}
+                required
+              >
+                <option value="">Selecciona una opción</option>
+                <option value="omnivero">Omnívoro (como de todo)</option>
+                <option value="vegetariano">Vegetariano</option>
+                <option value="vegano">Vegano</option>
+                <option value="pescetariano">Pescetariano</option>
+                <option value="otro">Otro</option>
+              </select>
+          
+
+              {/* Si elige "Otro", se despliega este campo mágicamente */}
+              {opcion === 'Otro' && (
+                <div className="input-row" style={{ marginTop: '10px' }}>
+                  <input type="text" placeholder="Por favor, especifica cuál" value={otroDetalle} onChange={(e) => setOtroDetalle(e.target.value)} required />
+                </div>
+              )}
+            </div>
+
+          
               {/* INPUT DE PESO FORMATEADO */}
               <div className="input-group">
-                <input 
-                  type="text" 
-                  placeholder="Peso" 
-                  value={peso} 
-                  onChange={manejarPeso} 
-                />
+                <input type="text" placeholder="Peso" value={peso} onChange={manejarPeso} />
               </div>
 
               {/* INPUT DE ESTATURA FORMATEADA */}
               <div className="input-group">
-                <input 
-                  type="text" 
-                  placeholder="Estatura (cm)" 
-                  value={estatura} 
-                  onChange={manejarEstatura} 
-                  maxLength="4" 
-                />
+                <input type="text" placeholder="Estatura (cm)" value={estatura} onChange={manejarEstatura} maxLength="4" />
               </div>
-               </div>
+              </div>
 
               <label className="field-label">Campo Opciones:</label>
             <div className="input-group">
