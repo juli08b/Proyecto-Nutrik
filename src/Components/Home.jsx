@@ -32,7 +32,7 @@ function Home() {
           </div>
 
           <div className="card card1">🥑 100% natural</div>
-          <div className="card card2">🚚 Entrega rápida</div>
+          <div className="card card2">🚚 Entrega segura</div>
           <div className="card card3">💪 Vida saludable</div>
         </div>
       </section>
