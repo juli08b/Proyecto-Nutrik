@@ -1,14 +1,53 @@
 import { Link } from 'react-router-dom'; 
+<<<<<<< HEAD
+=======
+import { useState } from 'react'; // 1. IMPORTANTE: Check que esto esté aquí
+>>>>>>> origin/juliana
 import './Register.css';
 import logo from '../assets/logoNutrick.png'; 
 
-const Registro = () => {
+
+const Register = () => {
+  // --- 2. ESTADOS (Pizarrones de memoria) ---
+  const [estatura, setEstatura] = useState("");
+  const [peso, setPeso] = useState("");
+  const [opcion, setOpcion] = useState(""); 
+  const [otroDetalle, setOtroDetalle] = useState("");
+
+  // --- 3. FUNCIONES (Los Secretarios) ---
+
+  // Secretario de Estatura (Pone el punto automático: 1.55)
+  const manejarEstatura = (e) => {
+    let valor = e.target.value.replace(/\D/g, ""); 
+    if (valor.length > 1) {
+      valor = valor.charAt(0) + "." + valor.slice(1, 3);
+    }
+    setEstatura(valor);
+  };
+
+  // Secretario de Peso (Pone el "kg" automático)
+  const manejarPeso = (e) => {
+    let valor = e.target.value.replace(/\D/g, ""); 
+    if (valor.length > 0) {
+      valor = valor + " kg";
+    }
+    setPeso(valor);
+  };
+
+  // Secretario de Seguridad (Bloquea negativos y la letra 'e')
+  const bloquearNegativos = (e) => {
+    if (e.key === '-' || e.key === 'e') e.preventDefault();
+  };
+
   return (
     <div className="main-container">
-      {/* Cabecera horizontal: Logo izquierda, Texto derecha */}
+      {/* CABECERA */}
       <div className="header-registro">
         <div className="logo-circle">
+<<<<<<< HEAD
           {/* Hipervínculo al inicio envuelto en el logo */}
+=======
+>>>>>>> origin/juliana
           <Link to="/">
             <img src={logo} alt="Logo Nutrik" className="logo-img" />
           </Link>
@@ -19,7 +58,7 @@ const Registro = () => {
         </div>
       </div>
 
-      {/* Tarjeta del Formulario */}
+      {/* FORMULARIO */}
       <div className="form-container">
         <div className="card-registro">
           <h2 className="card-title">Crea tu Perfil</h2>
@@ -29,6 +68,7 @@ const Registro = () => {
             <label className="field-label">Nombres</label>
             <div className="from-group">
               <div className="input-row">
+<<<<<<< HEAD
                 <input type="text" placeholder="Nombre1" required />
                  <input type="text" placeholder="Nombre2" required />
               </div>
@@ -36,29 +76,116 @@ const Registro = () => {
               <div className="input-row">
                 <input type="text" placeholder="Apellido1" required />
                 <input type="text" placeholder="Apellido2" required />
+=======
+                <input type="text" placeholder="Primer Nombre" required />
+                <input type="text" placeholder="Segundo Nombre" />
+              </div>
+              <label className="field-label">Apellidos</label>
+              <div className="input-row">
+                <input type="text" placeholder="Primer Apellido" required />
+                <input type="text" placeholder="Segundo Apellido" required />
+>>>>>>> origin/juliana
               </div>
             </div>
 
             <label className="field-label">Campo de Correo:</label>
             <div className="from-group">
+<<<<<<< HEAD
               <input type="email" placeholder="Correo Electrónico" required />
+=======
+              <input type="email" placeholder="ejemplo@correo.com" required />
+>>>>>>> origin/juliana
             </div>
 
             <label className="field-label">Fila Datos:</label>
             <div className="from-group">
               <div className="input-group">
-                <input type="number" placeholder="Edad" />
+                <input type="number" placeholder="Edad" min="1" onKeyDown={bloquearNegativos} />
               </div>
-              <div className="input-group">
-                <input type="number" placeholder="Peso (kg)" />
-              </div>
-              <div className="input-group">
-                <input type="number" placeholder="Estatura (cm)" />
-              </div>
+<<<<<<< HEAD
               <div className="input-group">
                 <input type="text" placeholder="Género" />
               </div>
+=======
+            
+            <label clasName="">¿Cuál es tu nivel de actividad diaria?</label>
+            <div className="input-group">
+              <select className="select-custom">
+                <option value="" disabled selected>Actividad diaria</option>
+                <option value="Mujer">Sedentario</option>
+                <option value="Hombre">Activo</option>
+                <option value="Hombre">Muy Activo</option>
+              </select>
+>>>>>>> origin/juliana
             </div>
+
+
+            <label clasName="">¿Tienes alguna alergia o intolerancia alimentaria?</label>
+            <div className="input-group">
+              <select className="select-custom" value={opcion} onChange={(e) => setOpcion(e.target.value)}
+  >
+                <option value="" disabled selected>Alergias/Intolerancias</option>
+                <option value="Mujer">Gluten</option>
+                <option value="Hombre">lactosa</option>
+                <option value="Hombre">frutos secos</option>
+                <option value="Otro">Otro...</option>
+              </select>
+
+              {/* Si elige "Otro", se despliega este campo mágicamente */}
+              {opcion === 'Otro' && (
+                <div className="input-row" style={{ marginTop: '10px' }}>
+                  <input type="text" placeholder="Por favor, especifica cuál" value={otroDetalle} onChange={(e) => setOtroDetalle(e.target.value)} required />
+                </div>
+              )}
+            </div>
+            
+
+            <label className="field-label">¿Sigues algún tipo de alimentación especial?</label>
+            <div className="input-row">
+              <select 
+                className="select-custom" 
+                onChange={(e) => manejarCambioDieta(e.target.value)}
+                required
+              >
+                <option value="">Selecciona una opción</option>
+                <option value="omnivero">Omnívoro (como de todo)</option>
+                <option value="vegetariano">Vegetariano</option>
+                <option value="vegano">Vegano</option>
+                <option value="pescetariano">Pescetariano</option>
+                <option value="otro">Otro</option>
+              </select>
+          
+
+              {/* Si elige "Otro", se despliega este campo mágicamente */}
+              {opcion === 'Otro' && (
+                <div className="input-row" style={{ marginTop: '10px' }}>
+                  <input type="text" placeholder="Por favor, especifica cuál" value={otroDetalle} onChange={(e) => setOtroDetalle(e.target.value)} required />
+                </div>
+              )}
+            </div>
+
+          
+              {/* INPUT DE PESO FORMATEADO */}
+              <div className="input-group">
+                <input type="text" placeholder="Peso" value={peso} onChange={manejarPeso} />
+              </div>
+
+              {/* INPUT DE ESTATURA FORMATEADA */}
+              <div className="input-group">
+                <input type="text" placeholder="Estatura (cm)" value={estatura} onChange={manejarEstatura} maxLength="4" />
+              </div>
+              </div>
+
+              <label className="field-label">Campo Opciones:</label>
+            <div className="input-group">
+              <select className="select-custom">
+                <option value="" disabled selected>Genero</option>
+                <option value="Mujer">Femenino</option>
+                <option value="Hombre">Masculino</option>
+                <option value="Hombre">Otro</option>
+              </select>
+            </div>
+          
 
             <label className="field-label">Campo Opciones:</label>
             <div className="input-group">
@@ -69,7 +196,6 @@ const Registro = () => {
               </select>
             </div>
 
-            <label className="field-label">Botón:</label>
             <button className="btn-submit" type="submit">Empezar</button>
           </form>
         </div>
@@ -78,4 +204,4 @@ const Registro = () => {
   );
 };
 
-export default Registro;
+export default Register;
