@@ -1,8 +1,5 @@
 import { Link } from 'react-router-dom'; 
-<<<<<<< HEAD
-=======
 import { useState } from 'react'; // 1. IMPORTANTE: Check que esto esté aquí
->>>>>>> origin/juliana
 import './Register.css';
 import logo from '../assets/logoNutrick.png'; 
 
@@ -44,10 +41,6 @@ const Register = () => {
       {/* CABECERA */}
       <div className="header-registro">
         <div className="logo-circle">
-<<<<<<< HEAD
-          {/* Hipervínculo al inicio envuelto en el logo */}
-=======
->>>>>>> origin/juliana
           <Link to="/">
             <img src={logo} alt="Logo Nutrik" className="logo-img" />
           </Link>
@@ -68,15 +61,6 @@ const Register = () => {
             <label className="field-label">Nombres</label>
             <div className="from-group">
               <div className="input-row">
-<<<<<<< HEAD
-                <input type="text" placeholder="Nombre1" required />
-                 <input type="text" placeholder="Nombre2" required />
-              </div>
-              <label className="field-label">Apellidos</label>
-              <div className="input-row">
-                <input type="text" placeholder="Apellido1" required />
-                <input type="text" placeholder="Apellido2" required />
-=======
                 <input type="text" placeholder="Primer Nombre" required />
                 <input type="text" placeholder="Segundo Nombre" />
               </div>
@@ -84,17 +68,12 @@ const Register = () => {
               <div className="input-row">
                 <input type="text" placeholder="Primer Apellido" required />
                 <input type="text" placeholder="Segundo Apellido" required />
->>>>>>> origin/juliana
               </div>
             </div>
 
             <label className="field-label">Campo de Correo:</label>
             <div className="from-group">
-<<<<<<< HEAD
-              <input type="email" placeholder="Correo Electrónico" required />
-=======
               <input type="email" placeholder="ejemplo@correo.com" required />
->>>>>>> origin/juliana
             </div>
 
             <label className="field-label">Fila Datos:</label>
@@ -102,11 +81,6 @@ const Register = () => {
               <div className="input-group">
                 <input type="number" placeholder="Edad" min="1" onKeyDown={bloquearNegativos} />
               </div>
-<<<<<<< HEAD
-              <div className="input-group">
-                <input type="text" placeholder="Género" />
-              </div>
-=======
             
             <label clasName="">¿Cuál es tu nivel de actividad diaria?</label>
             <div className="input-group">
@@ -116,7 +90,6 @@ const Register = () => {
                 <option value="Hombre">Activo</option>
                 <option value="Hombre">Muy Activo</option>
               </select>
->>>>>>> origin/juliana
             </div>
 
 
