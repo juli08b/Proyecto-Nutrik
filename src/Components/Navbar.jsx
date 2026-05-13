@@ -92,7 +92,7 @@ function Navbar() {
             <span className="icono-circulo">
               <img className="nuevo" src={sugerencias} alt="" />
             </span>
-            <Link to="/sugerencias">Sugerencias</Link>
+            <Link to="/Contact">Sugerencias</Link>
           </li>
 
           <li className="divisor-container">

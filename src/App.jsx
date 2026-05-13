@@ -7,6 +7,7 @@ import Login from './Pages/Login';
 import Register from './Pages/Register';
 import Productos from './Pages/Product';
 import ProductView from './Pages/ProductView';
+import Contact from './Pages/Contact';
 import './index.css';
 
 import './App.css';
@@ -29,7 +30,8 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/Registro" element={<Register />} />
       <Route path="/productos" element={<Productos />} />
-      <Route path="/ver-productos" element={<ProductView />} /> {/* <--- Esta es la nueva */}
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/ver-productos/:id" element={<ProductView />} /> {/* <--- Esta es la nueva */}
       </Routes>
 
       {/* Solo se muestra el Footer si NO estamos en login o registro */}
