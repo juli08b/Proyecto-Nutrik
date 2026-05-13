@@ -10,6 +10,7 @@ import coco from "../assets/coco.svg";
 import maca from "../assets/maca.svg";
 import granola from "../assets/granola.svg";
 import frutos from "../assets/frutos.svg";
+import { Link } from 'react-router-dom'; 
 
 function ProductView() {
 
