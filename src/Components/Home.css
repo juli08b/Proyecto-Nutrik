@@ -1,7 +1,7 @@
 :root {
-  --verde: #d5f5ce;
+  --verde: #aecba8;
   /* principal */
-  --verde-oscuro: #052e16;
+  --verde-oscuro: #127150;
   /* fondo oscuro */
   --verde-claro: #052e16;
   /* acento */
@@ -23,11 +23,13 @@
   background: linear-gradient(135deg, var(--verde), var(--verde-oscuro));
   color: white;
   padding-left: 8%;
-  padding-right: 8%;
+  padding-right: 14%;
+  
 }
 
 .hero-texto {
-  max-width: 500px;
+  max-width: 800px;
+  font-family: 'Poppins', sans-serif;
   
 }
 
@@ -35,11 +37,14 @@
   font-size: 14px;
   opacity: 0.8;
   margin-bottom: 10px;
+  
 }
 
 .hero h1 {
-  font-size: 56px;
+  font-size: 110px;
   margin-bottom: 20px;
+  font-family: 'Playfair Display', serif;
+  
 }
 
 .hero h1 span {
@@ -66,7 +71,7 @@
 
 .btn-primary {
 
-  background: linear-gradient(90deg, rgb(95, 136, 91) 0%, rgb(229, 255, 229) 50%);
+  background: linear-gradient(90deg, rgb(145, 182, 165) 0%, rgb(229, 255, 229) 50%);
   color: var(--verde-oscuro);
   border: none;
   font-weight: bold;
@@ -117,10 +122,10 @@
 }
 
 .circulo {
-  width: 480px;
-  height: 480px;
+  width: 440px;
+  height: 455px;
   border-radius: 50%;
-  overflow: hidden; /* Corta la imagen en forma circular */
+  overflow: hidden; 
   background: var(--blanco);
   box-shadow: 0 25px 50px rgba(0,0,0,0.4);
   border: 8px solid rgba(255,255,255,0.1);
@@ -135,7 +140,7 @@
 
 .card {
   position: absolute;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(116, 115, 115, 0.169);
   /* Efecto de transparencia */
   backdrop-filter: blur(12px);
   /* Efecto de desenfoque detrás (Glassmorphism) */

@@ -8,6 +8,7 @@ import Register from './Pages/Register';
 import Productos from './Pages/Product';
 import ProductView from './Pages/ProductView';
 import Contact from './Pages/Contact';
+import Newproduct from './Pages/Newproduct';
 import './index.css';
 import './App.css';
 
