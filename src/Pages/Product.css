@@ -70,7 +70,8 @@
 
 .card-producto{
     width: 250px;
-    background: #F6F1EA;
+    background: #ECE7E1;
+     border: 1px solid #D2C8BC;
     border-radius: 12px;
     padding: 15px;
     transition: 0.3s;
