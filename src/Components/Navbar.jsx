@@ -1,9 +1,6 @@
-import { Link } from 'react-router-dom'; // Importante para la navegación de React Router
+import { Link } from 'react-router-dom';
 import "./Navbar.css";
-
-// Importación del logo pequeño que querías agregar
 import logoPequeno from "../assets/logoNutrick.png"; 
-
 import tienda from "../assets/Tienda.svg";
 import nuevo from "../assets/Nuevo.svg";
 import descuento from "../assets/Descuento.svg";
@@ -16,40 +13,35 @@ function Navbar() {
   return (
     <nav className="navegacion">
       <ul className="nav-list">
-        
-        {/* LOGO PEQUEÑO: Agregado al inicio como pediste */}
         <li className="nav-logo-min">
           <Link to="/">
             <img src={logoPequeno} alt="Nutrik" width={150} height={90} />
           </Link>
         </li>
 
-        {/* Enlaces principales con botones */}
         <li>
-          <button className="btn-nav">
+          <Link to="/categorias" className="btn-nav">
             <img src={categoria} alt="" width={20} height={20} />
-            <Link to="/categorias">CATEGORÍA</Link>
-          </button>
+            <span>CATEGORÍA</span>
+          </Link>
         </li>
         <li>
-          <button className="btn-nav">
+          <Link to="/productos" className="btn-nav">
             <img src={producto} alt="" width={20} height={20} />
-            <Link to="/productos">PRODUCTOS</Link>
-          </button>
+            <span>PRODUCTOS</span>
+          </Link>
         </li>
         <li>
-          <button className="btn-nav">
+          <Link to="/dietas" className="btn-nav">
             <img src={dieta} alt="" width={20} height={20} />
-            <Link to="/dietas">DIETAS</Link>
-          </button>
+            <span>DIETAS</span>
+          </Link>
         </li>
 
-        {/* Separador visual */}
         <li className="divisor-container">
           <div className="divisor"></div>
         </li>
 
-        {/* Enlaces extra a la derecha */}
         <li className="nav-extra-item">
           <span className="icono-circulo"><img src={tienda} alt="" /></span>
           <Link to="/tienda">Tienda</Link>
