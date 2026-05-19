@@ -1,7 +1,8 @@
 import "./Home.css";
 import { Link } from "react-router-dom";
 
-function Home() {
+// Recibimos la función modificadora desde el padre (App.jsx) para poder abrir el menú desde aquí
+function Home({ setMenuAbierto }) {
   return (
     <>
       {/* HERO */}
@@ -72,7 +73,7 @@ function Home() {
             <h3>Ensalada Fresh</h3>
             <p>Ingredientes naturales y frescos listos para consumir.</p>
             <Link to="/cart">
-            <button className="btn-ver-mas">Ver más</button>
+              <button className="btn-ver-mas">Ver más</button>
             </Link>
           </div>
           <div className="producto-card">
@@ -80,7 +81,7 @@ function Home() {
             <h3>Bowl Nutritivo</h3>
             <p>Mezcla balanceada de granos y vegetales para mantener tu energía.</p>
             <Link to="/cart">
-            <button className="btn-ver-mas">Ver más</button>
+              <button className="btn-ver-mas">Ver más</button>
             </Link>
           </div>
           <div className="producto-card">
@@ -88,7 +89,7 @@ function Home() {
             <h3>Desayuno Fit</h3>
             <p>Opciones ligeras y nutritivas para empezar bien el día.</p>
             <Link to="/cart">
-            <button className="btn-ver-mas">Ver más</button>
+              <button className="btn-ver-mas">Ver más</button>
             </Link>
           </div>
         </div>
@@ -217,7 +218,10 @@ function Home() {
               Comenzar compra
             </button>
 
-            <button className="btn-outline btn-grande-outline">
+            <button
+              className="btn-outline btn-grande-outline"
+              onClick={() => setMenuAbierto("categoria")}
+            >
               Ver catálogo
             </button>
 

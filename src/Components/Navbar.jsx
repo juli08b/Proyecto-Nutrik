@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-import { useState } from "react";
+// import { useState } from "react";
 
 import logoPequeno from "../assets/logoNutrick.png";
 
@@ -12,10 +12,11 @@ import categoria from "../assets/Categoria.svg";
 import producto from "../assets/Producto.svg";
 import dieta from "../assets/Dieta.svg";
 
-function Navbar() {
+// Recibimos la función modificadora desde el padre (App.jsx) para poder abrir el menú desde aquí
+function Navbar({ menuAbierto, setMenuAbierto }) {
 
   // ESTADO DEL MENÚ
-  const [menuAbierto, setMenuAbierto] = useState("");
+  // const [menuAbierto, setMenuAbierto] = useState("");
 
   return (
     <>
