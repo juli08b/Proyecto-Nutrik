@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import "./Home.css";
 
-function Home() {
+// Recibimos la función modificadora desde el padre (App.jsx) para poder abrir el menú desde aquí
+function Home({ setMenuAbierto }) {
   return (
     <>
       {/* HERO */}
@@ -70,7 +71,13 @@ function Home() {
             <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500" alt="Ensalada Fresh" />
             <h3>Ensalada Fresh</h3>
             <p>Ingredientes naturales y frescos listos para consumir.</p>
+<<<<<<< HEAD
             <Link to="/nuevo" className="btn-ver-mas">Ver más</Link>
+=======
+            <Link to="/cart">
+              <button className="btn-ver-mas">Ver más</button>
+            </Link>
+>>>>>>> b9d3a8c41d5e73aaf42ce43cdceabc8946dc6576
           </div>
 
           {/* Tarjeta 2 */}
@@ -78,7 +85,13 @@ function Home() {
             <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500" alt="Bowl Nutritivo" />
             <h3>Bowl Nutritivo</h3>
             <p>Mezcla balanceada de granos y vegetales para mantener tu energía.</p>
+<<<<<<< HEAD
             <Link to="/nuevo" className="btn-ver-mas">Ver más</Link>
+=======
+            <Link to="/cart">
+              <button className="btn-ver-mas">Ver más</button>
+            </Link>
+>>>>>>> b9d3a8c41d5e73aaf42ce43cdceabc8946dc6576
           </div>
 
           {/* Tarjeta 3 */}
@@ -86,7 +99,13 @@ function Home() {
             <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=500" alt="Desayuno Fit" />
             <h3>Desayuno Fit</h3>
             <p>Opciones ligeras y nutritivas para empezar bien el día.</p>
+<<<<<<< HEAD
             <Link to="/nuevo" className="btn-ver-mas">Ver más</Link>
+=======
+            <Link to="/cart">
+              <button className="btn-ver-mas">Ver más</button>
+            </Link>
+>>>>>>> b9d3a8c41d5e73aaf42ce43cdceabc8946dc6576
           </div>
 
         </div>
@@ -177,8 +196,23 @@ function Home() {
           </p>
 
           <div className="cta-botones">
+<<<<<<< HEAD
             <button className="btn-primary btn-grande">Comenzar compra</button>
             <button className="btn-outline btn-grande-outline">Ver catálogo</button>
+=======
+
+            <button className="btn-primary btn-grande">
+              Comenzar compra
+            </button>
+
+            <button
+              className="btn-outline btn-grande-outline"
+              onClick={() => setMenuAbierto("categoria")}
+            >
+              Ver catálogo
+            </button>
+
+>>>>>>> b9d3a8c41d5e73aaf42ce43cdceabc8946dc6576
           </div>
         </div>
       </section>
