@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
 import "./Home.css";
+import { Link } from "react-router-dom";
 
 // Recibimos la función modificadora desde el padre (App.jsx) para poder abrir el menú desde aquí
 function Home({ setMenuAbierto }) {
@@ -8,9 +8,9 @@ function Home({ setMenuAbierto }) {
       {/* HERO */}
       <section className="hero">
         <div className="hero-texto">
+
           <h1>
-            Alimentación <br />
-            saludable <br />
+            Alimentación saludable <br />
             <span>sin esfuerzo</span>
           </h1>
 
@@ -39,7 +39,8 @@ function Home({ setMenuAbierto }) {
         </div>
       </section>
 
-      {/* BENEFICIOS */}
+
+      {/* estos son los BENEFICIOS */}
       <section className="beneficios">
         <h2>¿Por qué elegirnos?</h2>
 
@@ -61,61 +62,47 @@ function Home({ setMenuAbierto }) {
         </div>
       </section>
 
-      {/* SECCIÓN LO NUEVO */}
+
+      {/* SECCIÓN LO NUEVO: Showcase de productos destacados del catálogo */}
       <section className="productos">
         <h2>Lo nuevo</h2>
         <div className="productos-grid">
-          
-          {/* Tarjeta 1 */}
+          {/* Card de Producto: Imagen + Título + Descripción corta */}
           <div className="producto-card">
             <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500" alt="Ensalada Fresh" />
             <h3>Ensalada Fresh</h3>
             <p>Ingredientes naturales y frescos listos para consumir.</p>
-<<<<<<< HEAD
-            <Link to="/nuevo" className="btn-ver-mas">Ver más</Link>
-=======
             <Link to="/cart">
               <button className="btn-ver-mas">Ver más</button>
             </Link>
->>>>>>> b9d3a8c41d5e73aaf42ce43cdceabc8946dc6576
           </div>
-
-          {/* Tarjeta 2 */}
           <div className="producto-card">
             <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500" alt="Bowl Nutritivo" />
             <h3>Bowl Nutritivo</h3>
             <p>Mezcla balanceada de granos y vegetales para mantener tu energía.</p>
-<<<<<<< HEAD
-            <Link to="/nuevo" className="btn-ver-mas">Ver más</Link>
-=======
             <Link to="/cart">
               <button className="btn-ver-mas">Ver más</button>
             </Link>
->>>>>>> b9d3a8c41d5e73aaf42ce43cdceabc8946dc6576
           </div>
-
-          {/* Tarjeta 3 */}
           <div className="producto-card">
             <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=500" alt="Desayuno Fit" />
             <h3>Desayuno Fit</h3>
             <p>Opciones ligeras y nutritivas para empezar bien el día.</p>
-<<<<<<< HEAD
-            <Link to="/nuevo" className="btn-ver-mas">Ver más</Link>
-=======
             <Link to="/cart">
               <button className="btn-ver-mas">Ver más</button>
             </Link>
->>>>>>> b9d3a8c41d5e73aaf42ce43cdceabc8946dc6576
           </div>
-
         </div>
       </section>
 
+      {/* SECCIÓN PASOS: Proceso de compra simplificado para el usuario */}
       {/* SECCIÓN PASOS */}
       <section className="pasos">
+
         <div className="pasos-header">
           <span>⚡ Fácil y rápido</span>
           <h2>Compra fácil y saludable</h2>
+
           <p>
             En pocos pasos podrás encontrar productos saludables
             y recibirlos directamente en tu hogar.
@@ -123,9 +110,12 @@ function Home({ setMenuAbierto }) {
         </div>
 
         <div className="pasos-grid">
+
           <div className="paso">
             <div className="paso-numero">1</div>
+
             <h3>Explora el catálogo</h3>
+
             <p>
               Navega entre nuestras categorías y encuentra
               productos naturales y saludables.
@@ -134,7 +124,9 @@ function Home({ setMenuAbierto }) {
 
           <div className="paso">
             <div className="paso-numero">2</div>
+
             <h3>Llena tu carrito</h3>
+
             <p>
               Agrega snacks, superalimentos y productos
               favoritos con un solo clic.
@@ -143,16 +135,19 @@ function Home({ setMenuAbierto }) {
 
           <div className="paso">
             <div className="paso-numero">3</div>
+
             <h3>Recibe en casa</h3>
+
             <p>
               Realiza tu pago seguro y recibe tu pedido
               rápidamente en tu hogar.
             </p>
           </div>
+
         </div>
       </section>
 
-      {/* SECCIÓN STATS */}
+      {/* SECCIÓN STATS: Indicadores de confianza de la marca */}
       <section className="stats">
         <div className="stat">
           <h2>+500</h2>
@@ -168,38 +163,56 @@ function Home({ setMenuAbierto }) {
         </div>
       </section>
 
-      {/* SECCIÓN NEWSLETTER */}
+      {/* SECCIÓN NEWSLETTER: Captación de correos para marketing */}
       <section className="newsletter">
         <div className="newsletter-content">
-          <span className="newsletter-tag">🌱 Comunidad saludable</span>
-          <h2>¿Quieres consejos de salud?</h2>
+
+          <span className="newsletter-tag">
+            🌱 Comunidad saludable
+          </span>
+
+          <h2>
+            ¿Quieres consejos de salud?
+          </h2>
+
           <p>
             Suscríbete para recibir promociones exclusivas,
             recetas saludables y tips de nutrición.
           </p>
 
           <div className="newsletter-form">
-            <input type="email" placeholder="Ingresa tu correo electrónico" />
-            <button className="btn-newsletter">Suscribirme</button>
+            <input
+              type="email"
+              placeholder="Ingresa tu correo electrónico"
+            />
+
+            <button className="btn-newsletter">
+              Suscribirme
+            </button>
           </div>
+
         </div>
       </section>
 
       {/* CTA FINAL */}
       <section className="cta">
+
         <div className="cta-content">
-          <span className="cta-tag">🌱 Empieza una vida más saludable</span>
-          <h2>Empieza hoy tu cambio</h2>
+
+          <span className="cta-tag">
+            🌱 Empieza una vida más saludable
+          </span>
+
+          <h2>
+            Empieza hoy tu cambio
+          </h2>
+
           <p>
-            Descubre productos naturales, nutritivos and deliciosos
+            Descubre productos naturales, nutritivos y deliciosos
             que te ayudarán a sentirte mejor cada día.
           </p>
 
           <div className="cta-botones">
-<<<<<<< HEAD
-            <button className="btn-primary btn-grande">Comenzar compra</button>
-            <button className="btn-outline btn-grande-outline">Ver catálogo</button>
-=======
 
             <button className="btn-primary btn-grande">
               Comenzar compra
@@ -212,12 +225,14 @@ function Home({ setMenuAbierto }) {
               Ver catálogo
             </button>
 
->>>>>>> b9d3a8c41d5e73aaf42ce43cdceabc8946dc6576
           </div>
+
         </div>
+
       </section>
     </>
   );
 }
 
 export default Home;
+
