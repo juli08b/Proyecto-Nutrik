@@ -1,6 +1,10 @@
 import "./Home.css";
 
-function Home() {
+  
+
+
+
+function Home({setMenuAbierto}) {
   return (
     <>
       {/* HERO */}
@@ -210,8 +214,8 @@ function Home() {
               Comenzar compra
             </button>
 
-            <button className="btn-outline btn-grande-outline">
-              Ver catálogo
+            <button className="btn-outline btn-grande-outline" onClick={() => setMenuAbierto ("categoria")}>
+              Ver categoria
             </button>
 
           </div>
