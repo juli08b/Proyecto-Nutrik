@@ -8,268 +8,221 @@
 }
 
 /* ==========================================
-   CONTENEDOR PRINCIPAL (PÁGINA COMPLETA)
+   VARIABLES GLOBALES
+   ========================================== */
+:root {
+  --verde-oscuro: #4c7042;
+  --verde-boton: #4e7043;
+}
+
+/* ==========================================
+   CONTENEDOR PRINCIPAL
    ========================================== */
 .login-page {
     display: flex;
     flex-direction: row;
     width: 100vw;
     height: 100vh;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  
 }
 
 /* ==========================================
-   VARIABLES GLOBALES (ROOT)
-   ========================================== */
-:root {
-  --fondo-comida: url('../assets/comida.jpg'); 
-  --verde-oscuro: #4c7042;
-  --verde-boton: #4e7043;
-  --verde-enlace: #55824c;
-}
-
-/* ==========================================
-   SECCIÓN IZQUIERDA (CONTENIDO INFORMATIVO)
+   SECCIÓN IZQUIERDA (PANEL VERDE)
    ========================================== */
 .info-content {
-    flex: 1;
-    background: linear-gradient(135deg, #a9c2a0, var(--verde-oscuro)); 
+    flex: 0.5;
+    background: linear-gradient(135deg, #aae994, #2b3928); 
     color: #ffffff;
-    padding: 60px;
-    display: flex;
-    flex-direction: column;
+    padding: 80px;
+    display: flex; /* Para centrar el contenido vertical y horizontalmente, en este caso el logo y las letras debajo del titulo */
+    flex-direction: column; /* Para colocar el logo y el texto uno debajo del otro */
     align-items: center;
     justify-content: center;
     gap: 15px; 
 }
 
 .login-logo {
-    width: 320px;
-    height: 320px;
+    width: 420px;
+    height: 420px;
     border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.3);
     background-color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 30px;
-    object-fit: contain;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.4));
+    padding: 40px;
+    object-fit: contain; /* Para asegurar que la imagen se ajuste bien dentro del círculo sin distorsionarse */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Sombra suave para darle profundidad al logo */
 }
 
 .welcome-text {
-    font-size: 2.8rem;
-    margin-top: 10px; 
+    font-size: 2.2rem;
     font-weight: 800;
-    color: #ffffff;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.info-content p {
-    font-size: 1.1rem;
-    opacity: 0.9;
-    font-weight: 400;
 }
 
 /* ==========================================
-   SECCIÓN DERECHA (LADO DEL FORMULARIO)
+   SECCIÓN DERECHA: FONDO DE FRUTAS CON DEGRADADO
    ========================================== */
 .login-form-side {
     flex: 1; 
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(rgba(245, 247, 245, 0.4), rgba(240, 245, 240, 0.4)), 
-                var(--fondo-comida);
-    background-size: cover;    
+    /* Unimos el degradado sutil blanco/claro arriba y tu imagen abajo */
+    background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.2)), url('../assets/fondo.jpg');
+    background-size: cover;  /* Para que la imagen cubra toda la sección sin distorsionarse */
     background-position: center; 
-    background-repeat: no-repeat;
-    padding: 20px;
+   
 }
 
+/* TARJETA BLANCA QUE FLOTA SOBRE EL FONDO */
 .form-content {
-    width: 100%;
-    max-width: 480px;
-    padding: 45px 40px; 
-    background: rgba(255, 255, 255, 0.85); /* Fondo blanco limpio semi-transparente */
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px); 
-    border-radius: 28px; /* Bordes suaves premium */
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+    width: 800px;
+    max-width: 640px;
+    padding: 80px; 
+    background: #ffffffc7; 
+    border-radius: 35px; 
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    
 }
 
-/* El título principal "Bienvenido de nuevo" */
 .form-content h2 {
-    color: #2b3a28; 
-    font-size: 2.2rem; 
-    font-weight: 700; 
-    margin-bottom: 8px; 
+    color: #2b3a28;
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 8px;
     text-align: center;
 }
 
-/* Texto de "¿No tienes cuenta? Crea una ahora" */
 .register-link {
-    color: #5c665a !important;
+    color: #5c665a;
     text-align: center;
     font-size: 0.95rem;
-    margin-bottom: 32px;
+    margin-bottom: 25px;
 }
 
 .register-link a {
-    color: var(--verde-enlace) !important;
+    color: var(--verde-boton);
     font-weight: 600;
     text-decoration: none;
-    margin-left: 5px;
-}
-
-.register-link a:hover {
-    text-decoration: underline;
 }
 
 /* ==========================================
-   DISEÑO DE LOS CAMPOS DE ENTRADA (INPUTS)
+   ESTILOS DE CAMPOS (INPUTS)
    ========================================== */
 .input-field {
-    position: relative;
-    margin-bottom: 18px;
-    display: flex;
-    align-items: center;
-}
-
-.input-icon {
-    position: absolute;
-    left: 16px;
-    color: #7a8a7c;
-    display: flex;
-    align-items: center;
-    pointer-events: none;
+    margin-bottom: 15px;
+    width: 100%;
 }
 
 .input-field input {
     width: 100%;
-    padding: 15px 16px 15px 48px; /* Espacio izquierdo para el icono */
-    border: 1px solid #d1d7d2; 
-    border-radius: 12px;
-    background-color: #ffffff;
-    font-size: 1rem;
+    padding: 14px 16px; 
+    border: 1px solid #e2e8e3; 
+    border-radius: 10px;
+    font-size: 0.95rem;
     outline: none;
-    color: #2b3a28;
-    transition: all 0.3s ease;
+    transition: border-color 0.2s;
 }
 
-.input-field input::placeholder {
-    color: #a0aaa1;
-}
 
-.input-field input:focus {
-    border-color: var(--verde-boton);
-    box-shadow: 0 0 0 4px rgba(78, 112, 67, 0.15);
-}
-
-/* Botón de ojito para la contraseña */
-.toggle-password {
-    position: absolute;
-    right: 16px;
-    background: none;
-    border: none;
-    color: #7a8a7c;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    padding: 0;
-}
 
 /* ==========================================
-   BOTONES DE ACCIÓN Y DIVISORES
+   BOTONES Y DIVISORES
    ========================================== */
-
-/* Botón Principal */
 .btn-login {
     width: 100%;
-    padding: 15px;
+    padding: 14px;
     background-color: var(--verde-boton); 
     color: white;
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s ease;
-    margin-top: 8px;
+    margin-top: 5px;
+    /* Transición suave para la animación */
+    transition: transform 0.2s ease, filter 0.2s ease;
 }
 
+/* Efecto al pasar el mouse por encima */
 .btn-login:hover {
-    background-color: #3d5934;
+    transform: translateY(-1px); /* Sube un pixel para dar efecto de flotado */
+    filter: brightness(1.1);     /* Se aclara un poquito */
 }
 
-/* Divisor O Continúa Con */
+/* Efecto al hacer clic */
+.btn-login:active {
+    transform: scale(0.98);      /* Se encoge ligeramente (efecto presionado) */
+}
+
+.btn-google {
+    width: 100%;
+    padding: 13px;
+    background-color: #ffffff; 
+    color: #2b3a28;
+    border: 1px solid #e2e8e3;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    /* Transición suave para la animación */
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Efecto al pasar el mouse por encima */
+.btn-google:hover {
+    transform: translateY(-1px);
+    background-color: #f9fbf9;   /* Cambia a un blanco/grisáceo muy sutil */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Sombra suave */
+}
+
+/* Efecto al hacer clic */
+.btn-google:active {
+    transform: scale(0.98);
+}
+
 .divider {
     display: flex;
     align-items: center;
     text-align: center;
-    margin: 24px 0;
-    color: #8a948b;
-    font-size: 0.9rem;
+    margin: 20px 0;
+    color: #808480;
+    font-size: 0.85rem;
 }
 
 .divider::before, .divider::after {
     content: '';
     flex: 1;
-    border-bottom: 1px solid #e0e5e1;
+    border-bottom: 1px solid #737774;
 }
 
-.divider:not(:empty)::before {
-    margin-right: .75em;
-}
-
-.divider:not(:empty)::after {
-    margin-left: .75em;
-}
-
-/* Botón de Google */
-.btn-google {
-    width: 100%;
-    padding: 14px;
-    background-color: #ffffff; 
-    color: #2b3a28;
-    border: 1px solid #d1d7d2;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: 600;
+.divider {
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    transition: background-color 0.2s ease, border-color 0.2s ease;
+    text-align: center;
+    margin: 20px 0;
+    color: #808480;
+    font-size: 0.85rem;
 }
 
-.btn-google:hover {
-    background-color: #f5f7f5;
-    border-color: #c2cac3;
+
+.divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #737774;
 }
 
-/* Enlace inferior de Olvidaste tu clave */
+
+
 .forgot-pass {
-    color: #5c665a !important;
+    color: #5c665a;
     text-align: center;
     font-size: 0.95rem;
-    margin-top: 32px !important;
-    font-weight: 500;
+    margin-top: 25px;
 }
 
 .forgot-pass a {
-    color: var(--verde-enlace) !important;
+    color: var(--verde-boton);
     text-decoration: none;
     font-weight: 600;
-    margin-left: 5px;
-}
-
-.forgot-pass a:hover {
-    text-decoration: underline;
 }
