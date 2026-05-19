@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import "./Cart.css";
+import { Link } from "react-router-dom";
 
 // ── CONTEXTO ──────────────────────────────────────────────
 const CartContext = createContext();
@@ -57,7 +58,7 @@ export function useCart() {
   return useContext(CartContext);
 }
 
-// ── PANEL DEL CARRITO ─────────────────────────────────────
+// PANEL DEL CARRITO 
 export function CartPanel() {
   const {
     carrito,

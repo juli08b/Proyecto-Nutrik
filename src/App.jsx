@@ -9,6 +9,7 @@ import Productos from './Pages/Product';
 import ProductView from './Pages/ProductView';
 import Contact from './Pages/Contact';
 import Newproduct from './Pages/Newproduct';
+import Cart from './Pages/Cart';
 import './index.css';
 import './App.css';
 
@@ -30,6 +31,7 @@ function App() {
       <Route path="/Registro" element={<Register />} />
       <Route path="/productos" element={<Productos />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/cart" element={<Cart />} />
       <Route path="/product-view" element={<ProductView />} />
       <Route path="/newproduct" element={<Newproduct />} />
 

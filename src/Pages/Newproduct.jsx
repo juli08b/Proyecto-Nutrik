@@ -1,5 +1,6 @@
-import "./Newproduct.css";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import "./Newproduct.css";
 
 const productos = [
   {
@@ -65,6 +66,10 @@ const productos = [
 ];
 
 function Newproduct() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <section className="productos">
       <div className="productos-header">

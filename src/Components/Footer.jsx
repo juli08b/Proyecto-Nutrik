@@ -42,8 +42,8 @@ function Footer() {
             <a href="#"><img src={Facebook} alt="Facebook" /></a>
           </div>
           <div className="legal-links">
-            <a href="/terminos">Términos y condiciones</a>
-            <a href="/datos">Tratamiento de datos</a>
+            <a href="/terminos"></a>
+            <a href="/datos"></a>
           </div>
         </div>
       </div>
