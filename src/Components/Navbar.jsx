@@ -9,7 +9,6 @@ import nuevo from "../assets/Nuevo.svg";
 import descuento from "../assets/Descuento.svg";
 import sugerencias from "../assets/Sugerencia.svg";
 import categoria from "../assets/Categoria.svg";
-import producto from "../assets/Producto.svg";
 import dieta from "../assets/Dieta.svg";
 
 // Recibimos la función modificadora desde el padre (App.jsx) para poder abrir el menú desde aquí
@@ -51,15 +50,6 @@ function Navbar({ menuAbierto, setMenuAbierto }) {
             </button>
           </li>
 
-          <li>
-            <button
-              className="btn-nav"
-              onClick={() => setMenuAbierto("productos")}
-            >
-              <img src={producto} alt="" width={20} height={20} />
-              PRODUCTOS
-            </button>
-          </li>
 
           {/* DIVISOR */}
           <li className="divisor-container">
