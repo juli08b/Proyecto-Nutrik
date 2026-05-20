@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-// import { useState } from "react";
+import { useState } from "react";
 
 import logoPequeno from "../assets/logoNutrick.png";
 
@@ -11,10 +11,10 @@ import sugerencias from "../assets/Sugerencia.svg";
 import categoria from "../assets/Categoria.svg";
 import dieta from "../assets/Dieta.svg";
 
-function Navbar({menuAbierto, setMenuAbierto}) {
+function Navbar() {
 
   // ESTADO DEL MENÚ
-  // const [menuAbierto, setMenuAbierto] = useState("");
+  const [menuAbierto, setMenuAbierto] = useState("");
 
   return (
     <>
