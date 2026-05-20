@@ -1,575 +1,716 @@
+/* =======================================================
+   COLORES DE LA PÁGINA
+   ======================================================= */
 :root {
-  --verde: #aecba8;
-  /* principal */
-  --verde-oscuro: #127150;
-  /* fondo oscuro */
-  --verde-claro: #052e16;
-  /* acento */
-  --verde-neon: #6afd6a;
-  /* Verde neón para el Navbar */
-  --blanco: #ffffff;
-  --gris-claro: #f8fafc;
-  /* Gris neutro para fondos de tarjetas */
-  --fondo-suave: #ecfdf5;
+  --verde: #aecba8;          /* Verde suave principal */
+  --verde-oscuro: #127150;   /* Verde oscuro para los fondos */
+  --verde-claro: #052e16;    /* Verde muy oscuro para letras */
+  --verde-neon: #6afd6a;     /* Verde brillante para resaltar */
+  --blanco: #ffffff;         /* Color blanco puro */
+  --gris-claro: #f8fafc;     /* Gris suave para tarjetas */
+  --fondo-suave: #ecfdf5;    /* Fondo verde menta clarito */
 }
 
-/* =========================================
-   HERO (Ajustado para eliminar aire central)
-   ========================================= */
+/* =======================================================
+   SECCIÓN 1: BIENVENIDA (HERO)
+   ======================================================= */
 .hero {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 100vh;
-  background: linear-gradient(135deg, var(--verde), var(--verde-oscuro));
-  color: white;
-  padding: 100px 8% 60px 8%;
-  gap: 30px;
+  display: flex;             /* Pone el texto y la imagen de lado a lado */
+  align-items: center;       /* Centra los elementos de forma vertical */
+  justify-content: space-between; /* Deja espacio libre en medio de los dos */
+  padding: 140px 8% 40px 8%; /* Márgenes internos: arriba, lados y abajo */
+  background: linear-gradient(135deg, var(--verde), var(--verde-oscuro)); /* Fondo con degradado */
+  color: white;              /* Pone todas las letras de color blanco */
+  gap: 30px;                 /* Separa el texto de la imagen por 30px */
 }
 
 .hero-texto {
-  flex: 1.4;
-  font-family: 'Poppins', sans-serif;
-}
-
-.hero-tag {
-  font-size: 14px;
-  opacity: 0.8;
-  margin-bottom: 10px;
+  flex: 1.4;                 /* Hace que el texto ocupe un poco más de ancho */
+  font-family: 'Poppins', sans-serif; /* Tipo de letra moderno para el bloque */
 }
 
 .hero h1 {
-  font-size: 95px;
-  font-weight: 800;
-  line-height: 1.05;
-  margin-bottom: 25px;
-  font-family: 'Playfair Display', serif;
-  letter-spacing: -1px;
+  font-size: 80px;           /* Tamaño de letra gigante para el título */
+  font-weight: 800;          /* Grosor de letra muy grueso y fuerte */
+  line-height: 1.1;          /* Junta un poco los renglones del título */
+  margin-bottom: 20px;       /* Separa el título del párrafo de abajo */
+  font-family: 'Playfair Display', serif; /* Tipo de letra elegante para el h1 */
+  letter-spacing: -1px;      /* Junta un poquito las letras entre sí */
 }
 
 .hero h1 span {
-  color: var(--verde-claro);
+  color: var(--verde-claro); /* Pone el texto destacado en verde oscuro */
 }
 
 .hero-desc {
-  color: rgb(255, 255, 255);
-  font-size: 21px;
-  margin-bottom: 35px;
-  line-height: 1.6;
-  opacity: 0.95;
-  max-width: 600px;
+  color: white;              /* Letras del párrafo en color blanco */
+  font-size: 18px;           /* Tamaño de letra mediano para leer bien */
+  margin-bottom: 30px;       /* Separa el párrafo de los botones */
+  line-height: 1.6;          /* Deja un espacio cómodo entre renglones */
+  opacity: 0.9;              /* Hace la letra un poquitico transparente */
+  max-width: 550px;          /* Limita el ancho para que no se estire tanto */
 }
 
-/* BOTONES */
-.hero-botones button {
-  padding: 14px 26px;
-  margin-right: 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: 0.3s;
+/* BOTONES DE BIENVENIDA */
+.hero-botones .btn-link {
+  display: inline-block;     /* Permite darle forma de botón al enlace */
+  padding: 14px 28px;        /* Tamaño del botón: arriba/abajo y lados */
+  margin-right: 12px;        /* Separa un botón del otro botón */
+  border-radius: 8px;        /* Redondea las esquinas del botón */
+  font-size: 16px;           /* Tamaño de la letra dentro del botón */
+  font-weight: bold;         /* Pone la letra del botón en negrita */
+  text-decoration: none;     /* Quita la línea de subrayado del enlace */
+  transition: all 0.3s ease; /* Hace que los cambios visuales sean suaves */
 }
 
+/* Botón Explorar */
 .btn-primary {
-  background: linear-gradient(90deg, rgb(145, 182, 165) 0%, rgb(229, 255, 229) 50%);
-  color: var(--verde-oscuro);
-  border: none;
-  font-weight: bold;
+  background: linear-gradient(90deg, #91b6a5 0%, #e5ffe1 100%); /* Fondo degradado claro */
+  color: var(--verde-oscuro); /* Letra del botón en verde oscuro */
 }
 
 .btn-primary:hover {
-  transform: scale(1.05);
-  background: white;
-  color: var(--verde-oscuro);
+  transform: translateY(-3px); /* Sube el botón un poquito al pasar el mouse */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Le pone una sombra negra suave */
 }
 
+/* Botón Ver planes */
 .btn-outline {
-  background: transparent;
-  border: 2px solid white;
-  color: white;
+  border: 2px solid white;   /* Le pone un borde de línea blanca */
+  color: white;              /* Letra del botón en color blanco */
 }
 
 .btn-outline:hover {
-  background: white;
-  color: var(--verde-oscuro);
+  background: white;         /* Pone el fondo blanco al pasar el mouse */
+  color: var(--verde-oscuro); /* Cambia la letra a verde oscuro al pasar el mouse */
+  transform: translateY(-3px); /* Sube el botón un poquito al pasar el mouse */
 }
 
-/* SECCIÓN IMAGEN HERO */
+/* FOTO PRINCIPAL Y TARJETAS FLOTANTES */
 .hero-img {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+  flex: 1;                   /* Ocupa el espacio que queda libre a la derecha */
+  display: flex;             /* Activa el diseño flexible en este contenedor */
+  justify-content: center;   /* Centra la foto de forma horizontal */
+  align-items: center;       /* Centra la foto de forma vertical */
+  position: relative;        /* Permite acomodar tarjetas encima de la foto */
 }
 
 .circulo {
-  width: 520px; 
-  height: 520px;
-  border-radius: 50%;
-  overflow: hidden; 
-  background: var(--blanco);
-  box-shadow: 0 25px 50px rgba(0,0,0,0.4);
-  border: 8px solid rgba(255,255,255,0.15);
+  width: 460px;              /* Ancho fijo para hacer el círculo */
+  height: 460px;             /* Alto fijo idéntico para que quede perfecto */
+  border-radius: 50%;        /* Transforma la caja cuadrada en un círculo */
+  overflow: hidden;          /* Corta la foto para que no se salga del círculo */
+  background: var(--blanco); /* Fondo blanco por si la foto tarda en cargar */
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3); /* Sombra grande y elegante abajo */
+  border: 6px solid rgba(255,255,255,0.2); /* Borde blanco grueso y transparente */
 }
 
 .circulo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 100%;               /* Hace que la foto ocupe todo el ancho disponible */
+  height: 100%;              /* Hace que la foto ocupe todo el alto disponible */
+  object-fit: cover;         /* Adapta la foto para que llene el círculo sin dañarse */
 }
 
+/* Estilo de las tarjetas pequeñas flotantes */
 .card {
-  position: absolute;
-  background: rgba(116, 115, 115, 0.169);
-  backdrop-filter: blur(12px);
-  padding: 12px 18px;
-  border-radius: 15px;
-  font-size: 18px;
-  color: var(--blanco);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  white-space: nowrap;
-  animation: float 4s ease-in-out infinite;
+  position: absolute;        /* Permite mover la tarjeta a cualquier lado libremente */
+  background: rgba(255, 255, 255, 0.15); /* Fondo blanco con mucha transparencia */
+  backdrop-filter: blur(12px); /* Efecto de vidrio borroso en el fondo */
+  padding: 12px 20px;        /* Espacio interno de la tarjeta */
+  border-radius: 12px;       /* Redondea las esquinas de la tarjeta */
+  font-size: 16px;           /* Tamaño del texto flotante */
+  font-weight: 600;          /* Letra semi-gruesa para resaltar */
+  color: var(--blanco);      /* Letras de color blanco */
+  border: 1px solid rgba(255, 255, 255, 0.25); /* Línea de borde delgada y clara */
+  white-space: nowrap;       /* Evita que el texto se parta en dos renglones */
+  animation: float 4s ease-in-out infinite; /* Activa la animación para siempre */
 }
 
-.card1 { top: 40px; right: 10px; animation-delay: 0s; }
-.card2 { bottom: 40px; left: 10px; animation-delay: 1s; }
-.card3 { top: 50%; right: -20px; transform: translateY(-50%); animation-delay: 2s; }
+/* Ubicación de cada tarjeta flotante */
+.card1 { top: 40px; right: 20px; animation-delay: 0s; } /* Arriba a la derecha, arranca ya */
+.card2 { bottom: 40px; left: 20px; animation-delay: 1s; } /* Abajo a la izquierda, espera 1 segundo */
+.card3 { top: 50%; right: -10px; transform: translateY(-50%); animation-delay: 2s; } /* Al medio derecho, espera 2 segundos */
 
+/* Animación para que las tarjetas suban y bajen */
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  0%, 100% { transform: translateY(0); }       /* Empieza en su posición original */
+  50% { transform: translateY(-12px); }        /* Sube 12 píxeles a la mitad del tiempo */
 }
 
-/* =========================================
-   BENEFICIOS
-   ========================================= */
+/* =======================================================
+   SECCIÓN 2: BENEFICIOS (¿POR QUÉ ELEGIRNOS?)
+   ======================================================= */
 .beneficios {
-  padding: 100px 8%;
-  text-align: center;
-  background: #ecfdf5;
+  padding: 50px 8% 80px 8%;  /* Espacio libre por dentro de la sección */
+  text-align: center;        /* Centra todos los textos e hijos */
+  background: #ecfdf5;       /* Fondo verde menta muy suave */
 }
 
 .beneficios h2 {
-  font-size: 42px; 
-  margin-bottom: 60px;
-  color: var(--verde-oscuro);
-  position: relative;
+  font-size: 36px;           /* Tamaño grande para el título de beneficios */
+  margin-bottom: 45px;       /* Deja espacio libre abajo del título */
+  color: var(--verde-oscuro); /* Letras de color verde oscuro */
+  position: relative;        /* Permite colocar la línea decorativa abajo */
 }
 
+/* Línea verde debajo del título */
 .beneficios h2::after {
-  content: "";
-  width: 80px;
-  height: 5px;
-  background: var(--verde-neon);
-  display: block;
-  margin: 15px auto 0;
-  border-radius: 20px;
+  content: "";               /* Obligatorio para que aparezca la línea */
+  width: 60px;               /* Ancho de la línea horizontal */
+  height: 4px;               /* Grosor de la línea horizontal */
+  background: var(--verde-neon); /* Color de la línea decorativa */
+  display: block;            /* Convierte la línea en un bloque sólido */
+  margin: 12px auto 0;       /* La centra horizontalmente y la separa del texto */
+  border-radius: 10px;       /* Redondea las puntas de la línea */
 }
 
+/* Distribución de las cajas de beneficios */
 .beneficios-grid {
-  display: grid; 
-  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-  gap: 35px; 
+  display: grid;             /* Activa el modo de rejilla inteligente */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Acomoda las cajas según el espacio */
+  gap: 30px;                 /* Separa las cajas entre sí por 30px */
 }
 
+/* Caja de beneficio individual */
 .beneficio {
-  background: #ffffff;
-  border: 2px solid rgba(18, 113, 80, 0.16);
-  border-radius: 28px; 
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18);
-  padding: 55px 35px; 
-  transition: all 0.35s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  background: #ffffff;       /* Fondo blanco puro para la tarjeta */
+  border: 1px solid rgba(18, 113, 80, 0.1); /* Borde verde muy clarito y sutil */
+  border-radius: 20px;       /* Esquinas bien redondeadas */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Sombra suave hacia abajo */
+  padding: 40px 25px;        /* Espacio interno amplio en la tarjeta */
+  transition: all 0.3s ease; /* Hace que el movimiento al tocarla sea suave */
+  display: flex;             /* Permite ordenar los elementos internos */
+  flex-direction: column;    /* Acomoda el contenido uno debajo del otro */
+  align-items: center;       /* Centra todo el contenido internamente */
 }
 
 .beneficio h3 {
-  font-size: 24px; 
-  margin-bottom: 15px;
-  color: #0b4b24;
-  font-weight: bold;
-}
-
-.beneficio p {
-  color: #334155;
-  line-height: 1.6;
-  font-size: 16px; 
-  padding: 0 10px;
+  font-size: 20px;           /* Tamaño del título del beneficio */
+  margin-bottom: 12px;       /* Espacio entre el título y el texto corto */
+  color: #0b4b24;            /* Color verde pino para el subtítulo */
 }
 
 .beneficio:hover {
-  transform: translateY(-12px);
-  box-shadow: 0 22px 45px rgba(18, 113, 80, 0.25);
-  border-color: #111111;
+  transform: translateY(-8px); /* Sube la tarjeta suavemente al pasar el mouse */
+  box-shadow: 0 15px 30px rgba(18, 113, 80, 0.15); /* Pone la sombra más intensa */
+  border-color: var(--verde-oscuro); /* Cambia la línea del borde a verde oscuro */
 }
 
-/* =========================================
-   PRODUCTOS
-   ========================================= */
+/* =======================================================
+   SECCIÓN 3: PRODUCTOS (LO NUEVO)
+   ======================================================= */
 .productos {
-  padding: 100px 8%;
-  background: linear-gradient(to bottom, #ffffff 0%, #f5fff7 100%);
-  text-align: center;
+  text-align: center;        /* Centra los textos y elementos */
+  padding: 60px 8% 0px 8% !important; /* Quita el margen interno inferior por completo */
+  background: #ffffff !important; /* Obliga a que el fondo sea blanco puro sin gris */
 }
 
 .productos h2 {
-  font-size: 42px;
-  color: var(--verde-oscuro);
-  margin-bottom: 60px;
-  position: relative;
+  font-size: 50px;           /* Título grande de la sección */
+  color: var(--verde-oscuro); /* Letras de color verde oscuro */
+  margin-bottom: 45px;       /* Espacio libre debajo del h2 */
+  position: relative;        /* Deja listo el lugar para la línea inferior */
 }
 
 .productos h2::after {
-  content: "";
-  width: 80px;
-  height: 5px;
-  background: var(--verde-neon);
-  display: block;
-  margin: 15px auto 0;
-  border-radius: 20px;
+  content: "";               /* Crea el espacio para la línea decorativa */
+  width: 60px;               /* Ancho de la rayita verde */
+  height: 4px;               /* Altura o grosor de la rayita */
+  background: var(--verde-neon); /* Color neón para la rayita */
+  display: block;            /* Hace que se comporte como un bloque visual */
+  margin: 12px auto 0;       /* Centra la rayita debajo del título */
+  border-radius: 10px;       /* Esquinas circulares para la rayita */
 }
 
+/* Distribución de las tarjetas de productos */
 .productos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-  gap: 35px;
+  display: grid;             /* Activa rejilla para los productos */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Ajusta las columnas automáticamente */
+  gap: 30px;                 /* Distancia de 30px entre productos */
+  margin-bottom: 0px !important; /* Asegura que no haya margen extra abajo */
+  padding-bottom: 0px !important; /* Elimina rellenos inferiores de la rejilla */
 }
 
+/* Tarjeta de producto individual */
 .producto-card {
-  background: #ffffff;
-  border: 2.5px solid rgba(18, 113, 80, 0.16);
-  border-radius: 28px;
-  overflow: hidden;
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18);
-  transition: all 0.35s ease;
-  position: relative;
+  background: #ffffff;       /* Caja con fondo blanco limpio */
+  border: 1px solid rgba(18, 113, 80, 0.1); /* Borde verde muy clarito */
+  border-radius: 20px;       /* Redondeado elegante en las esquinas */
+  overflow: hidden;          /* Corta la imagen arriba para que respete las curvas */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Sombra bonita debajo */
+  transition: all 0.3s ease; /* Efecto suave para cuando se pase el mouse */
+  margin-bottom: 0px !important; /* Quita espacios adicionales abajo */
 }
 
 .producto-card:hover {
-  transform: translateY(-12px);
-  box-shadow: 0 22px 45px rgba(18, 113, 80, 0.25);
-  border-color: #111111;
+  transform: translateY(-5px); /* Eleva la tarjeta 5 píxeles */
+  box-shadow: 0 15px 30px rgba(18, 113, 80, 0.15); /* Agranda la sombra al elevarse */
 }
 
 .producto-card img {
-  width: 100%;
-  height: 240px;
-  object-fit: cover;
-  transition: transform 0.4s ease;
+  width: 100%;               /* La imagen usa todo el ancho de la tarjeta */
+  height: 220px;             /* Altura fija para que todas las fotos midan igual */
+  object-fit: cover;         /* Centra y acomoda la foto sin jalarla feo */
+  transition: transform 0.3s ease; /* Suaviza el zoom de la foto */
 }
 
-.producto-card:hover img { transform: scale(1.08); }
-.producto-card h3 { font-size: 24px; color: var(--verde-oscuro); margin-top: 25px; margin-bottom: 15px; }
-.producto-card p { color: #334155; line-height: 1.6; padding: 0 25px; margin-bottom: 30px; }
+.producto-card:hover img {
+  transform: scale(1.04);     /* Hace un zoom muy sutil a la foto al tocar la tarjeta */
+}
 
+.producto-card h3 { 
+  font-size: 22px;           /* Tamaño del nombre del producto */
+  color: var(--verde-oscuro); /* Letra del producto en verde oscuro */
+  margin: 20px 0 10px 0;     /* Márgenes separados: arriba y abajo */
+}
+
+.producto-card p { 
+  color: #475569;            /* Color gris oscuro legible para la descripción */
+  line-height: 1.5;          /* Separación de renglones estándar */
+  padding: 0 20px;           /* Espacio libre a los lados del texto */
+  margin-bottom: 25px;       /* Separa la descripción del botón */
+  font-size: 15px;           /* Tamaño de la letra informativa */
+}
+
+/* Botón Ver más de los productos */
 .btn-ver-mas {
-  display: inline-block;
-  text-decoration: none;
-  background: linear-gradient(90deg, var(--verde-neon), #b6ffb6);
-  color: var(--verde-oscuro);
-  border: none;
-  padding: 14px 32px;
-  border-radius: 14px;
-  font-weight: bold;
-  font-size: 15px;
-  cursor: pointer;
-  margin-bottom: 30px;
-  transition: all 0.3s ease;
+  background: linear-gradient(90deg, var(--verde-neon), #b6ffb6); /* Fondo brillante degradado */
+  color: var(--verde-oscuro); /* Letras del botón en verde oscuro */
+  border: none;              /* Quita la línea de borde por defecto */
+  padding: 12px 28px;        /* Espacio interno del botón */
+  border-radius: 10px;       /* Redondea las esquinas del botón */
+  font-weight: bold;         /* Pone las letras en negrita */
+  font-size: 15px;           /* Tamaño de texto intermedio */
+  cursor: pointer;           /* Cambia el mouse a una manito de click */
+  margin-bottom: 25px;       /* Margen de separación con el fondo de la caja */
+  transition: all 0.2s ease; /* Suaviza los cambios del hover */
 }
 
 .btn-ver-mas:hover {
-  transform: scale(1.05);
-  background: var(--verde-oscuro);
-  color: white;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  background: var(--verde-oscuro); /* Convierte el fondo en verde oscuro sólido */
+  color: white;              /* Cambia las letras a blanco */
+  transform: scale(1.03);    /* Agranda el botón un milímetro */
 }
 
-/* =========================================
-   PASOS
-   ========================================= */
+/* =======================================================
+   SECCIÓN 4: PASOS (COMPRA FÁCIL Y SALUDABLE)
+   ======================================================= */
 .pasos {
-  padding: 110px 8%;
-  background: linear-gradient(to bottom, #ffffff 0%, #f5fff7 100%);
-  position: relative;
-  overflow: hidden;
+  padding: 0px 8% 60px 8% !important; /* Quita margen superior para pegarse arriba */
+  margin-top: -110px !important; /* Sube la sección con fuerza para eliminar huecos grises */
+  background: #ffffff !important; /* Fondo blanco garantizado sin cuadros raros */
+  position: relative;        /* Lo mantiene en su lugar de coordenadas */
+  z-index: 10;               /* Lo pone por encima para que no se oculte */
 }
 
-.pasos-header { text-align: center; margin-bottom: 70px; }
+.pasos-header { 
+  text-align: center;        /* Centra los textos del encabezado */
+  margin-top: 0px !important; /* Evita que empuje la sección hacia abajo */
+  margin-bottom: 35px;       /* Separa el encabezado de las cajas de abajo */
+}
+
+/* Etiqueta flotante "Fácil y rápido" */
 .pasos-header span {
-  display: inline-block;
-  background: rgba(106, 253, 106, 0.15);
-  color: var(--verde-oscuro);
-  padding: 10px 18px;
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 20px;
+  display: inline-block;     /* Permite ponerle tamaño y fondo a la etiqueta */
+  background: rgba(106, 253, 106, 0.15); /* Fondo verde traslúcido completamente limpio */
+  color: var(--verde-oscuro); /* Letra en verde oscuro */
+  padding: 10px 22px;        /* Espacio interno acolchado */
+  border-radius: 20px;       /* Vuelve la etiqueta ovalada */
+  font-size: 16px;           /* Letra grande solicitada para que resalte */
+  font-weight: 700;          /* Letra gruesa e importante */
+  margin-bottom: 15px;       /* Distancia con el h2 de abajo */
 }
 
-.pasos-header h2 { font-size: 42px; color: var(--verde-oscuro); margin-bottom: 20px; }
-.pasos-header p { max-width: 700px; margin: auto; color: #475569; line-height: 1.7; font-size: 18px; }
+.pasos-header h2 { font-size: 36px; color: var(--verde-oscuro); margin-bottom: 15px; } /* Estilo del título */
+.pasos-header p { max-width: 600px; margin: auto; color: #475569; line-height: 1.6; font-size: 16px; } /* Estilo del párrafo descriptivo */
 
+/* Distribución de las tarjetas de pasos */
 .pasos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 35px;
-  position: relative;
+  display: grid;             /* Activa el diseño de rejilla */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Columnas responsivas */
+  gap: 30px;                 /* Espacio de 30px entre cada tarjeta */
 }
 
+/* Tarjeta de paso individual */
 .paso {
-  background: #ffffff;
-  padding: 40px 30px;
-  border-radius: 28px;
-  text-align: center;
-  position: relative;
-  transition: all 0.35s ease;
-  border: 2.5px solid rgba(18, 113, 80, 0.16);
-  box-shadow: 0px 16px 40px rgba(0, 0, 0, 0.16); 
+  background: #ffffff;       /* Fondo blanco para la tarjeta */
+  padding: 35px 25px;        /* Espaciado por dentro de la tarjeta */
+  border-radius: 20px;       /* Curva suave en las esquinas */
+  text-align: center;        /* Centra todo el contenido del paso */
+  border: 1px solid rgba(18, 113, 80, 0.1); /* Borde sutil transparente */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Sombra elegante */
+  transition: all 0.3s ease; /* Suaviza el movimiento del hover */
 }
 
 .paso:hover { 
-  transform: translateY(-12px); 
-  border-color: #111111;
-  box-shadow: 0 22px 45px rgba(18, 113, 80, 0.25); 
+  transform: translateY(-8px); /* Eleva la tarjeta de paso */
+  border-color: var(--verde-oscuro); /* Cambia la línea a verde oscuro */
+  box-shadow: 0 15px 30px rgba(18, 113, 80, 0.15); /* Sombra más grande */
 }
 
+/* Círculo con el número del paso */
 .paso-numero {
-  width: 75px;
-  height: 75px;
-  margin: 0 auto 25px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 28px;
-  font-weight: bold;
-  color: white;
-  background: linear-gradient(135deg, var(--verde-neon), #58c958);
-  box-shadow: 0 10px 25px rgba(106, 253, 106, 0.4);
+  width: 60px;               /* Ancho del redondel */
+  height: 60px;              /* Alto idéntico del redondel */
+  margin: 0 auto 20px;       /* Centra el círculo y le da margen abajo */
+  border-radius: 50%;        /* Lo convierte en un círculo perfecto */
+  display: flex;             /* Activa flexbox interno */
+  justify-content: center;   /* Centra el número de forma horizontal */
+  align-items: center;       /* Centra el número de forma vertical */
+  font-size: 24px;           /* Letra grande para el número */
+  font-weight: bold;         /* Número en negrita fuerte */
+  color: white;              /* Número de color blanco */
+  background: linear-gradient(135deg, var(--verde-neon), #58c958); /* Fondo verde en degradado */
+  box-shadow: 0 8px 16px rgba(106, 253, 106, 0.3); /* Brillo verde abajo */
 }
 
-.paso h3 { font-size: 24px; color: var(--verde-oscuro); margin-bottom: 18px; font-weight: 800; }
-.paso p { color: #475569; line-height: 1.7; font-size: 16px; }
+.paso h3 { font-size: 20px; color: var(--verde-oscuro); margin-bottom: 12px; } /* Subtítulo del paso */
+.paso p { color: #475569; line-height: 1.6; font-size: 15px; margin: 0; } /* Párrafo explicativo del paso */
 
-/* =========================================
-   STATS
-   ========================================= */
+/* =======================================================
+   SECCIÓN 5: NUMERITOS / DATOS (STATS)
+   ======================================================= */
 .stats {
-  background: linear-gradient(to right, var(--verde), var(--verde-oscuro));
-  display: flex;
-  justify-content: space-around;
-  color: var(--blanco);
-  padding: 60px 10%;
-  flex-wrap: wrap;
-  gap: 30px;
-  align-items: center;
+  background: linear-gradient(to right, var(--verde), var(--verde-oscuro)); /* Fondo con degradado de la casa */
+  display: flex;             /* Pone los números uno al lado del otro */
+  justify-content: space-around; /* Reparte los datos con espacios iguales */
+  color: var(--blanco);      /* Textos en blanco puro */
+  padding: 50px 10%;         /* Relleno interno de la franja */
+  flex-wrap: wrap;           /* Si no caben, los manda para abajo */
+  gap: 25px;                 /* Separación por si se acomodan abajo */
+  text-align: center;        /* Centra las letras de cada dato */
 }
 
 .stat h2 { 
-  font-size: 54px; 
-  color: var(--blanco); 
-  font-weight: 800;
-  margin-bottom: 5px;
+  font-size: 48px;           /* Número muy grande e importante */
+  font-weight: 800;          /* Grosor de letra al máximo */
+  margin: 0 0 5px 0;         /* Quita márgenes y deja un tris abajo */
 }
 
 .stat p {
-  color: rgba(255, 255, 255, 0.9); 
-  font-size: 16px;
-  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9); /* Texto blanco ligeramente claro */
+  font-size: 15px;           /* Tamaño de texto estándar */
+  margin: 0;                 /* Quita márgenes por defecto */
 }
 
-/* =========================================
-   NEWSLETTER
-   ========================================= */
+/* =======================================================
+   SECCIÓN 6: CAJA DE REGISTRO (NEWSLETTER)
+   ======================================================= */
 .newsletter {
-  padding: 110px 8%;
-  background: linear-gradient(135deg, #ecfdf5 0%, #d5f5ce 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 80px 8%;          /* Espacio libre alrededor del bloque */
+  background: linear-gradient(135deg, #ecfdf5, #d5f5ce); /* Fondo verde menta en degradado suave */
 }
 
+/* Contenedor blanco central */
 .newsletter-content {
-  width: 100%;
-  max-width: 900px;
-  background: #ffffff; 
-  border-radius: 35px;
-  padding: 70px 50px;
-  text-align: center;
-  border: 3px solid #111111; 
-  box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.18); 
+  width: 100%;               /* Usa todo el ancho si la pantalla es chica */
+  max-width: 800px;          /* No permite que la caja mida más de 800px */
+  margin: 0 auto;            /* Centra la caja blanca en la pantalla */
+  background: #ffffff;       /* Fondo blanco limpio e iluminado */
+  border-radius: 24px;       /* Esquinas súper redondeadas */
+  padding: 50px 40px;        /* Cojín de espacio dentro de la caja */
+  text-align: center;        /* Centra todo lo que tiene adentro */
+  border: 1.5px solid var(--verde-oscuro); /* Línea de borde verde oscuro */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08); /* Sombra flotante delicada */
 }
 
 .newsletter-tag {
-  display: inline-block;
-  background: rgba(106, 253, 106, 0.15);
-  color: var(--verde-oscuro);
-  padding: 10px 18px;
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 25px;
+  display: inline-block;     /* Permite aplicar padding y formas */
+  background: rgba(106, 253, 106, 0.15); /* Fondo verde traslúcido */
+  color: var(--verde-oscuro); /* Letras verdes oscuras */
+  padding: 8px 16px;         /* Tamaño de la etiqueta */
+  border-radius: 20px;       /* Bordes curvos ovalados */
+  font-size: 13px;           /* Texto pequeñito */
+  font-weight: 600;          /* Letra semi-gruesa */
+  margin-bottom: 20px;       /* Espacio con el título de abajo */
 }
 
-.newsletter-content h2 { font-size: 42px; color: var(--verde-oscuro); margin-bottom: 20px; font-weight: 800; }
-.newsletter-content p { color: #475569; font-size: 18px; line-height: 1.7; max-width: 650px; margin: 0 auto 40px; }
+.newsletter-content h2 { font-size: 36px; color: var(--verde-oscuro); margin-bottom: 15px; } /* Estilo del título */
+.newsletter-content p { color: #475569; font-size: 16px; line-height: 1.6; max-width: 550px; margin: 0 auto 30px; } /* Estilo del texto */
 
-.newsletter-form { display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap; }
+/* Formulario de entrada */
+.newsletter-form { display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap; } /* Junta input y botón */
 
 .newsletter-form input {
-  width: 420px;
-  max-width: 100%;
-  padding: 18px 22px;
-  border-radius: 16px;
-  background: white;
-  font-size: 16px;
-  outline: none;
-  transition: all 0.3s ease;
-  border: 1.5px solid rgba(18, 113, 80, 0.25);
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  width: 380px;              /* Ancho predeterminado para el campo de texto */
+  max-width: 100%;           /* No deja que se salga en pantallas chicas */
+  padding: 14px 20px;        /* Espacio para escribir cómodo adentro */
+  border-radius: 10px;       /* Esquinas del cuadro de texto */
+  font-size: 15px;           /* Tamaño de la letra que se escribe */
+  outline: none;             /* Elimina el borde feo azul del navegador */
+  border: 1.5px solid rgba(18, 113, 80, 0.2); /* Línea de borde delgada gris-verde */
+  transition: all 0.2s ease; /* Suaviza el cambio al hacer click */
 }
 
 .newsletter-form input:focus {
-  border-color: var(--verde-neon);
-  box-shadow: 0 0 0 5px rgba(106, 253, 106, 0.15);
+  border-color: var(--verde-oscuro); /* Cambia el borde a verde oscuro al hacer click */
+  box-shadow: 0 0 0 4px rgba(18, 113, 80, 0.1); /* Brillo sutil extra alrededor */
 }
 
+/* Botón Unirme */
 .btn-newsletter {
-  background: linear-gradient(90deg, var(--verde-neon), #c7ffc7);
-  color: var(--verde-oscuro);
-  border: none;
-  padding: 18px 30px;
-  border-radius: 16px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  background: linear-gradient(90deg, var(--verde-neon), #c7ffc7); /* Fondo brillante */
+  color: var(--verde-oscuro); /* Texto en verde oscuro */
+  border: none;              /* Quita bordes extra */
+  padding: 14px 28px;        /* Tamaño del botón */
+  border-radius: 10px;       /* Esquinas redondeadas */
+  font-size: 15px;           /* Letra del mismo tamaño del input */
+  font-weight: bold;         /* Texto resaltado en negrita */
+  cursor: pointer;           /* Manito de click lista */
+  transition: all 0.2s ease; /* Transición para el hover */
 }
 
 .btn-newsletter:hover {
-  transform: translateY(-3px);
-  background: var(--verde-oscuro);
-  color: white;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px); /* Eleva el botón un poquito */
+  background: var(--verde-oscuro); /* Cambia a fondo oscuro rígido */
+  color: white;              /* Cambia las letras a blanco */
 }
 
-/* =========================================
-   CTA FINAL (Centrado optimizado)
-   ========================================= */
+/* =======================================================
+   SECCIÓN 7: LLAMADO A LA ACCIÓN (CTA - DOBLE CUADRO)
+   ======================================================= */
 .cta {
-  padding: 120px 8%;
-  background: linear-gradient(135deg, #052e16 0%, #0b4b24 100%);
-  position: relative;
-  overflow: hidden;
+  padding: 90px 8%;          /* Espacio acolchado para la gran sección */
+  background: linear-gradient(135deg, var(--verde), var(--verde-oscuro)) !important; /* Colorimetría idéntica a tu Hero */
+  position: relative;        /* Base obligatoria para las burbujas flotantes */
+  overflow: hidden;          /* Esconde las burbujas si se quieren salir de la sección */
 }
 
+/* Esferas decorativas de fondo */
 .cta::before, .cta::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(106, 253, 106, 0.08);
-  filter: blur(10px);
+  content: "";               /* Crea el elemento de la burbuja */
+  position: absolute;        /* Permite ubicarlas por coordenadas libres */
+  border-radius: 50%;        /* Las vuelve círculos gigantes */
+  background: rgba(255, 255, 255, 0.05); /* Color blanco casi invisible */
+  filter: blur(15px);        /* Desenfoca las orillas para que parezcan luces */
 }
-.cta::before { width: 280px; height: 280px; top: -80px; left: -80px; }
-.cta::after { width: 350px; height: 350px; bottom: -120px; right: -120px; }
+.cta::before { width: 200px; height: 200px; top: -50px; left: -50px; } /* Esfera superior izquierda */
+.cta::after { width: 250px; height: 250px; bottom: -80px; right: -80px; } /* Esfera inferior derecha */
 
+/* Cuadro interior translúcido */
 .cta-content {
-  position: relative;
-  z-index: 2;
-  max-width: 900px;
-  margin: auto;
-  text-align: center;
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(12px);
-  border-radius: 35px;
-  padding: 70px 50px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  position: relative;        /* Lo separa de las burbujas de fondo */
+  z-index: 2;                /* Lo empuja hacia el frente para leerse bien */
+  max-width: 800px;          /* Ancho máximo de la caja interna */
+  margin: auto;              /* Centra la caja interna perfectamente */
+  text-align: center;        /* Centra textos y botones interiores */
+  background: rgba(255, 255, 255, 0.07); /* Fondo blanco con transparencia fina */
+  backdrop-filter: blur(12px); /* Efecto vidrio esmerilado que se ve estético */
+  border-radius: 24px;       /* Esquinas redondeadas del cuadro interior */
+  padding: 50px 40px;        /* Relleno espacioso por dentro */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Línea de borde brillante muy fina */
 }
 
 .cta-tag {
-  display: inline-block;
-  background: rgba(106, 253, 106, 0.12);
-  color: #d8ffd8;
-  padding: 10px 18px;
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 25px;
+  display: inline-block;     /* Permite darle tamaño de etiqueta */
+  background: rgba(255, 255, 255, 0.15); /* Fondo blanco transparente */
+  color: #ffffff;            /* Texto blanco */
+  padding: 8px 16px;         /* Tamaño de la etiqueta */
+  border-radius: 20px;       /* Bordes redondos de cápsula */
+  font-size: 13px;           /* Texto pequeño */
+  font-weight: 600;          /* Grosor medio */
+  margin-bottom: 20px;       /* Separa del título */
 }
 
-.cta-content h2 { font-size: 52px; color: white; margin-bottom: 20px; }
-.cta-content p { color: rgba(255, 255, 255, 0.8); font-size: 18px; line-height: 1.8; max-width: 700px; margin: 0 auto 40px; }
+.cta-content h2 { font-size: 42px; color: white; margin-bottom: 15px; } /* Estilo del título */
+.cta-content p { color: rgba(255, 255, 255, 0.85); font-size: 16px; line-height: 1.7; max-width: 600px; margin: 0 auto 35px; } /* Estilo de descripción */
 
-/* El Flexbox se encarga de centrar perfectamente el único botón */
-.cta-botones { 
-  display: flex; 
-  justify-content: center; 
-  gap: 20px; 
-  flex-wrap: wrap; 
+/* Botones de la sección */
+.cta-botones { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; } /* Une los dos botones abajo */
+
+.cta-botones button {
+  padding: 14px 32px;        /* Tamaño grande para los botones de acción */
+  border-radius: 10px;       /* Esquinas de los botones */
+  font-size: 16px;           /* Letra clara */
+  font-weight: bold;         /* Letras gruesas obligatorias */
+  cursor: pointer;           /* Flecha cambia a mano de click */
+  transition: all 0.2s ease; /* Movimientos fluidos */
 }
 
+/* Botón Comprar */
+.btn-grande {
+  background: linear-gradient(90deg, var(--verde-neon), #c7ffc7); /* Verde neón en degradado */
+  color: var(--verde-oscuro); /* Letras en verde oscuro */
+  border: none;              /* Quita el borde nativo */
+}
+
+.btn-grande:hover {
+  transform: translateY(-2px); /* Flota un poquito */
+  background: white;         /* Cambia a fondo blanco sólido */
+  color: var(--verde-oscuro); /* Letras se quedan en verde oscuro */
+}
+
+/* Botón Catálogo */
 .btn-grande-outline {
-  padding: 18px 40px;
-  border-radius: 16px;
-  font-size: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  background: transparent;
-  color: white;
-  transition: 0.3s;
-  display: inline-block;
+  border: 2px solid rgba(255, 255, 255, 0.4); /* Línea de borde blanca translúcida */
+  background: transparent;   /* Sin color de fondo */
+  color: white;              /* Letras blancas */
 }
 
 .btn-grande-outline:hover {
-  background: white;
-  color: var(--verde-oscuro);
-  transform: translateY(-3px);
+  background: white;         /* Rellena de blanco al pasar el mouse */
+  color: var(--verde-oscuro); /* Letra cambia a verde oscuro */
+  transform: translateY(-2px); /* Flota un poquito */
 }
 
-/* =========================================
-   MEDIA QUERIES
-   ========================================= */
+/* =======================================================
+   SECCIÓN 8: PIE DE PÁGINA (FOOTER)
+   ======================================================= */
+.footer {
+  background: #121212;        /* Negro profundo estético de fondo */
+  color: #ffffff;            /* Letras generales en blanco */
+  padding: 60px 8% 20px 8%;  /* Rellenos superiores e inferiores */
+  font-family: 'Poppins', sans-serif; /* Letra moderna para el cierre */
+}
+
+/* Estructura del contenido principal */
+.footer-main {
+  display: flex;             /* Pone las columnas de información de lado a lado */
+  justify-content: space-between; /* Deja aire intermedio entre columnas */
+  flex-wrap: wrap;           /* Permite bajar columnas si no entran */
+  gap: 40px;                 /* Separación general de seguridad */
+  margin-bottom: 40px;       /* Margen con la barra de copyright */
+}
+
+.footer-brand {
+  flex: 1;                   /* Columna del logo toma prioridad de espacio */
+  min-width: 250px;          /* Tamaño mínimo para no romperse */
+}
+
+.footer-logo {
+  max-width: 150px;          /* Tamaño máximo del logo de la marca */
+  margin-bottom: 15px;       /* Distancia con el slogan */
+}
+
+.footer-brand p {
+  font-size: 13px;           /* Slogan en letra chiquita */
+  letter-spacing: 2px;       /* Letras del slogan bien separadas */
+  color: #a3a3a3;            /* Gris medio elegante */
+  text-transform: uppercase; /* Todo en mayúsculas cuadradas */
+}
+
+/* Grupos de enlaces */
+.footer-links-group {
+  display: flex;             /* Junta los bloques de enlaces de lado a lado */
+  gap: 80px;                 /* Gran espacio de separación entre columnas */
+  flex-wrap: wrap;           /* Flexibilidad si la pantalla se reduce */
+}
+
+.footer-col h3 {
+  color: var(--verde-neon);    /* Títulos de columnas en verde neón */
+  font-size: 18px;           /* Tamaño del título del bloque */
+  margin-bottom: 20px;       /* Distancia con los enlaces de abajo */
+  font-weight: 600;          /* Letra semi-gruesa */
+}
+
+.footer-col ul {
+  list-style: none;          /* Quita los puntitos de las listas */
+  padding: 0;                /* Resetea espacios de la lista */
+  margin: 0;                 /* Resetea márgenes de la lista */
+}
+
+.footer-col ul li {
+  margin-bottom: 12px;       /* Espacio de separación entre cada enlace vertical */
+}
+
+.footer-col ul li a {
+  color: #d4d4d4;            /* Color gris claro para los links */
+  text-decoration: none;     /* Quita el subrayado a los links */
+  font-size: 15px;           /* Tamaño del texto de navegación */
+  transition: color 0.2s ease; /* Cambio de color rápido y limpio */
+}
+
+.footer-col ul li a:hover {
+  color: var(--verde-neon);    /* Link cambia a verde brillante al tocarlo */
+}
+
+/* Íconos de redes sociales */
+.footer-socials h3 {
+  color: var(--verde-neon);    /* Título de redes en color neón */
+  font-size: 18px;           /* Mismo tamaño de los h3 anteriores */
+  margin-bottom: 20px;       /* Espacio abajo */
+}
+
+.social-icons {
+  display: flex;             /* Pone las redes en fila horizontal */
+  gap: 15px;                 /* Espacio de 15px entre íconos */
+  align-items: center;       /* Alinea los íconos al centro */
+}
+
+.social-icons img {
+  width: 32px;               /* Ancho fijo cuadrado del ícono */
+  height: 32px;              /* Alto idéntico cuadrado del ícono */
+  transition: transform 0.2s ease; /* Suaviza el brinco del hover */
+  cursor: pointer;           /* Cursor de click listo */
+}
+
+.social-icons img:hover {
+  transform: scale(1.15);    /* Crece un 15% al poner el mouse encima */
+}
+
+/* Línea de copyright final */
+.footer-bottom {
+  border-top: 1px solid #262626; /* Raya delgada gris oscuro divisoria */
+  padding-top: 20px;         /* Espacio libre arriba de la raya */
+  display: flex;             /* Separa los créditos legales de los logos extra */
+  justify-content: space-between; /* Texto legal a la izquierda, extras a la derecha */
+  align-items: center;       /* Centra de forma vertical ambos lados */
+  flex-wrap: wrap;           /* Se acomoda en fila doble si es celular */
+  gap: 15px;                 /* Distancia si se dividen */
+  font-size: 14px;           /* Texto de leyes chiquito */
+  color: #737373;            /* Gris opaco apagado */
+}
+
+.footer-credits {
+  display: flex;             /* Alinea el texto final con su respectiva marca */
+  align-items: center;       /* Centra los dos de forma vertical */
+  gap: 8px;                  /* Separación de 8px */
+}
+
+.footer-credits img {
+  height: 20px;              /* Altura controlada del logo de créditos */
+  object-fit: contain;       /* Evita que el logo se aplaste */
+}
+
+/* =======================================================
+   SECCIÓN 9: AJUSTES PARA CELULARES Y TABLETS
+   ======================================================= */
 @media (max-width: 1024px) {
   .hero {
-    flex-direction: column;
-    text-align: center;
-    padding-top: 120px;
-    gap: 50px;
+    flex-direction: column;  /* Cambia la bienvenida a diseño vertical */
+    text-align: center;      /* Centra los textos en pantallas medianas */
+    padding-top: 120px;      /* Baja un poco la zona superior */
+    gap: 40px;               /* Crece la separación de bloques */
   }
-  .hero-texto { max-width: 100%; }
-  .hero h1 { font-size: 68px; }
-  .hero-desc { margin: 0 auto 30px; }
-  .hero-botones { display: flex; justify-content: center; }
+  .hero h1 { font-size: 56px; } /* Reduce el título gigante a tamaño tablet */
+  .hero-desc { margin: 0 auto 25px; } /* Centra el párrafo del hero */
+  .hero-botones { display: flex; justify-content: center; } /* Centra la fila de botones */
+  .footer-links-group { gap: 40px; } /* Reduce la distancia de enlaces en footer */
 }
 
 @media (max-width: 768px) {
-  .cta { padding: 90px 6%; }
-  .cta-content { padding: 50px 25px; }
-  .cta-content h2 { font-size: 38px; }
-  .cta-content p { font-size: 16px; }
-  .cta-botones { flex-direction: column; }
-  .btn-grande-outline { width: 100%; }
+  .cta { padding: 70px 5%; } /* Achica los márgenes del cta final */
+  .cta-content { padding: 40px 20px; } /* Compacta el cuadro de vidrio interno */
+  .cta-content h2 { font-size: 32px; } /* Título del cta adaptable a celular */
+  .cta-botones { flex-direction: column; gap: 10px; } /* Botones del cta uno abajo del otro */
+  .cta-botones button { width: 100%; } /* Botones toman todo el ancho en celular */
 
-  .pasos { padding: 90px 6%; }
-  .pasos-header h2 { font-size: 32px; }
-  .paso { padding: 35px 25px; }
-
-  .newsletter-content { padding: 50px 25px; }
-  .newsletter-content h2 { font-size: 32px; }
-  .newsletter-form { flex-direction: column; }
-  .newsletter-form input { width: 100%; }
-  .btn-newsletter { width: 100%; }
+  .pasos-header h2, .productos h2, .beneficios h2 { font-size: 28px; } /* Títulos generales más chicos */
+  .newsletter-content { padding: 40px 20px; } /* Caja blanca de registro más delgada */
+  .newsletter-form { flex-direction: column; width: 100%; } /* Formulario pasa a ser vertical */
+  .newsletter-form input, .btn-newsletter { width: 100%; } /* Input y botón al 100% de ancho */
+  
+  .footer-main { flex-direction: column; gap: 30px; } /* Columnas del footer pasan a ser una sola fila */
+  .footer-links-group { flex-direction: column; gap: 30px; } /* Enlaces del footer verticales */
+  .footer-bottom { flex-direction: column; text-align: center; } /* Copyright centrado completo */
 }
 
 @media (max-width: 580px) {
-  .circulo { width: 340px; height: 340px; }
-  .card { font-size: 14px; padding: 8px 12px; }
+  .circulo { width: 320px; height: 320px; } /* Círculo principal mediano para celulares */
+  .card { font-size: 14px; padding: 8px 14px; } /* Tarjetas flotantes más pequeñitas */
 }
 
 @media (max-width: 480px) {
-  .hero h1 { font-size: 42px; }
-  .circulo { width: 280px; height: 280px; }
+  .hero h1 { font-size: 38px; } /* Título del hero pequeño para pantallas mini */
+  .circulo { width: 260px; height: 260px; } /* Círculo en su tamaño mínimo estable */
 }

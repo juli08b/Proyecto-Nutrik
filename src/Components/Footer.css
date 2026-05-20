@@ -1,55 +1,188 @@
+/* =======================================================
+   1. EL CONTENEDOR PRINCIPAL DE TODO EL PIE DE PÁGINA
+   ======================================================= */
 .main-footer {
-  background-color: #1a1a1a;
-  color: #e0e0e0;
-  padding: 60px 40px 20px;
-  margin-top: 50px;
+  background-color: #ffffff;   /* Pinta el fondo de color blanco limpio */
+  font-family: Arial, sans-serif; /* Tipo de letra moderno y muy fácil de leer */
+  padding: 60px 40px 0 40px;   /* Deja aire libre por dentro (arriba y a los lados, abajo no) */
+  border-top: 1px solid #e2ece1; /* Dibuja una línea gris-verdosa muy delgadita arriba */
+  box-sizing: border-box;      /* Hace que el tamaño no se dañe si cambiamos de pantalla */
 }
 
+/* =======================================================
+   2. EL CONTENEDOR QUE CREA LAS 4 COLUMNAS
+   ======================================================= */
 .footer-container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 40px;
-  max-width: 1200px;
-  margin: 0 auto;
+  display: grid;               /* Activa el modo cuadrícula para ordenar en columnas */
+  grid-template-columns: 1.2fr 1fr 1fr 1fr; /* La primera columna del logo es un poquito más ancha */
+  gap: 40px;                   /* Deja la misma distancia exacta de separación entre columnas */
+  max-width: 1200px;           /* Ancho máximo para que el diseño no se desarme en pantallas gigantes */
+  margin: 0 auto 50px auto;    /* Centra todo este bloque justo en la mitad de la pantalla */
+  align-items: flex-start;     /* Alinea los textos ordenadamente desde la parte de arriba */
 }
 
+/* =======================================================
+   3. ESTILOS INDIVIDUALES PARA LAS COLUMNAS
+   ======================================================= */
+
+/* Estilo base para cada una de las 4 secciones */
+.footer-section {
+  display: flex;
+  flex-direction: column;      /* Pone los textos uno debajo de otro, en fila hacia abajo */
+}
+
+/* Ajustes exclusivos para la primera columna (Donde está el Logo de Nutrik) */
+.brand-column {
+  align-items: flex-start;     /* Alinea el logo y su frase hacia la izquierda */
+}
+
+.logo-wrapper {
+  max-width: 150px;            /* Pone un límite al ancho del logo para que no se vea gigante */
+  margin-bottom: 10px;         /* Empuja el texto de abajo para que no quede pegado al logo */
+}
+
+.footer-logo {
+  width: 100%;                 /* Hace que la foto use todo el espacio de su cajita */
+  height: auto;                /* Mantiene las proporciones de la foto para que no se estire feo */
+}
+
+.tagline {
+  font-size: 0.75rem;          /* Letra pequeñita y delicada */
+  letter-spacing: 1.5px;       /* Separa las letras un poquito entre sí para que se vea elegante */
+  color: #6b8e5a;              /* Color verde oliva suave para el lema de la marca */
+  font-weight: bold;           /* Hace la letra un poquito más gruesa */
+  margin: 0;                   /* Borra márgenes automáticos que puedan mover el texto */
+}
+
+/* Títulos principales de cada columna (Información, Ayuda, Síguenos) */
 .footer-section h3 {
-  color: #6afd6a;
-  margin-bottom: 20px;
-  font-size: 18px;
+  color: #7fba5a;              /* El verde brillante característico de la paleta */
+  font-size: 1.15rem;          /* Tamaño de letra un poquito más grande que el resto */
+  margin-top: 0;               /* Quita espacios extras arriba */
+  margin-bottom: 20px;         /* Deja un espacio libre abajo antes de que empiecen los enlaces */
+  font-weight: bold;           /* Letra en negrita para que resalte */
 }
 
-.footer-section ul 
-  { list-style: none; padding: 0; }
-.footer-section ul li 
-  { margin-bottom: 10px; }
-.footer-section a 
-  { color: #aaa; text-decoration: none; transition: 0.3s; }
-.footer-section a:hover 
-  { color: #6afd6a; }
-
-.footer-logo 
-  { width: 120px; filter: brightness(1.2); }
-.tagline 
-  { font-size: 12px; letter-spacing: 2px; margin-top: 10px; opacity: 0.7; }
-
-.footer-socials   
-  { display: flex; gap: 15px; margin-bottom: 20px; }
-.footer-socials img 
-  { width: 24px; filter: invert(1); transition: 0.3s; }
-.footer-socials img:hover 
-  { transform: scale(1.2); }
-
-.footer-bottom {
-  border-top: 1px solid #333;
-  margin-top: 40px;
-  padding-top: 20px;
+/* Las listas que guardan los enlaces con las opciones */
+.footer-section ul {
+  list-style: none;            /* Quita los puntitos negros aburridos que traen las listas por defecto */
+  padding: 0;                  /* Quita espacios automáticos a la izquierda */
+  margin: 0;                   
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 13px;
-  color: #666;
+  flex-direction: column;      /* Pone un enlace debajo del otro */
+  gap: 12px;                   /* Deja una distancia idéntica y cómoda para hacer clic entre opciones */
 }
 
-.flag { width: 20px; margin-left: 10px; vertical-align: middle; }
+/* El texto de los enlaces de navegación */
+.footer-section ul li a {
+  color: #2d3e26;              /* Color de letra verde oscuro, casi negro, muy elegante */
+  text-decoration: none;       /* Quita la línea fea que se le dibuja debajo a los enlaces */
+  font-size: 0.95rem;          
+  transition: color 0.2s ease; /* Hace que el cambio de color sea suave, no un parpadeo brusco */
+}
+
+/* Cuando el usuario pone la flechita del mouse encima de un enlace */
+.footer-section ul li a:hover {
+  color: #6b8e5a;              /* El texto cambia mágicamente a verde oliva suave */
+}
+
+/* =======================================================
+   4. SECCIÓN DE LAS REDES SOCIALES (SÍGUENOS)
+   ======================================================= */
+
+/* La cajita que tiene guardados los 3 botones juntos */
+.footer-socials {
+  display: flex;               /* Pone los botones uno al lado del otro en una fila recta */
+  gap: 15px;                   /* Deja una separación idéntica entre cada red social */
+}
+
+/* El botón (El círculo blanco impecable que abraza a cada logo) */
+.social-icon-link {
+  display: inline-block;       
+  width: 38px;                 /* Ancho del círculo (todos miden exactamente lo mismo) */
+  height: 38px;                /* Alto del círculo (al ser igual al ancho, queda perfecto) */
+  border-radius: 50%;          /* Redondea las esquinas al 100% para crear un círculo perfecto */
+  overflow: hidden;            /* Corta los bordes de la imagen para que no se salgan del círculo */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Agrega una sombra suave abajo para dar volumen */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Suaviza los movimientos de animación */
+}
+
+/* La imagen de la red social que va dentro de tu círculo */
+.social-icon-link img {
+  width: 100%;                 /* Hace que ocupe todo el ancho disponible */
+  height: 100%;                /* Hace que ocupe todo el alto disponible */
+  object-fit: cover;           /* Acomoda la imagen de forma inteligente sin que se distorsione */
+}
+
+/* El efecto visual cuando pasas el mouse sobre un círculo de red social */
+.social-icon-link:hover {
+  transform: translateY(-3px); /* Hace que el círculo flote suavemente un poquito hacia arriba */
+  box-shadow: 0 5px 10px rgba(107, 142, 90, 0.3); /* Cambia la sombra por un brillo verde suave */
+}
+
+/* =======================================================
+   5. LA BARRA INFERIOR DE CRÉDITOS Y DERECHOS
+   ======================================================= */
+.footer-bottom {
+  border-top: 1px solid #edf4ec; /* Dibuja una línea de división muy clarita arriba */
+  border-bottom: 12px solid #2d3e26; /* Tu franja ancha y representativa verde oscura en la base */
+  padding: 20px 0;             /* Espacio libre por dentro arriba y abajo de la barra */
+  display: flex;
+  justify-content: space-between; /* Pone los derechos a la izquierda y la firma a la derecha */
+  align-items: center;         /* Centra verticalmente los elementos */
+  max-width: 1200px;           
+  margin: 0 auto;              /* Centra la barra en la pantalla */
+}
+
+/* Texto del Copyright */
+.footer-bottom p {
+  font-size: 0.85rem;          /* Letra pequeña y discreta */
+  color: #666666;              /* Color gris suave para que no compita con los textos principales */
+  margin: 0;                   
+}
+
+/* Bloque que dice quién hizo la página */
+.developer-tag {
+  display: flex;
+  align-items: center;         /* Alinea el texto con la bandera en una misma línea recta */
+  gap: 8px;                    /* Separa el texto de la banderita */
+  font-size: 0.85rem;          
+  color: #333333;              
+}
+
+.developer-tag strong {
+  color: #2d3e26;              /* Resalta el nombre de la marca en el verde oscuro */
+}
+
+/* Ajustes de diseño para tu imagen de la bandera de Colombia */
+.flag {
+  width: 22px;                 /* Controla el tamaño horizontal de la bandera */
+  height: auto;                
+  border-radius: 3px;          /* Redondea sutilmente las esquinitas para que se vea moderna */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15); /* Le da una pequeña sombra para separarla del fondo */
+}
+
+/* =======================================================
+   6. MODO CELULAR (DISEÑO RESPONSIVO)
+   ======================================================= */
+@media (max-width: 768px) {
+  /* Si la pantalla mide menos de 768 píxeles de ancho (como un celular)... */
+  .footer-container {
+    grid-template-columns: 1fr; /* Pone las 4 columnas una debajo de otra en una sola fila larga */
+    gap: 30px;                 /* Achica un poquito el espacio entre ellas */
+    text-align: center;        /* Centra todos los textos para que se lean mejor en el móvil */
+  }
+  
+  /* Centra el logo y las redes sociales en la pantalla del teléfono */
+  .brand-column, .footer-socials {
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Modifica la barra final para celulares */
+  .footer-bottom {
+    flex-direction: column;    /* Pone la bandera debajo del texto de derechos autorales */
+    gap: 10px;                 /* Añade separación entre ellos */
+    text-align: center;        
+  }
+}

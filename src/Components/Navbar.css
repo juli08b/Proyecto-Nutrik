@@ -20,19 +20,6 @@
   gap: 20px; /* Aumenta este número para dar más distancia */
 }
 
-.nav-logo-min {
-  display: flex;
-  align-items: center;
-  min-width: 80px; /* Le damos un espacio mínimo al contenedor */
-}
-
-.nav-logo-min .logo-img {
-  width: 220px !important; /* Forzamos el ancho */
-  height: 50px !important;  /* Bajamos un poco el alto para que se vea más horizontal */
-  object-fit: contain;      /* Mantiene la imagen completa dentro del espacio */
-  display: block;
-}
-
 .btn-nav {
   font-family: 'Arial', sans-serif;
   display: flex;

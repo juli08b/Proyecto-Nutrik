@@ -12,11 +12,15 @@ function Footer() {
     <footer className="main-footer">
       <div className="footer-container">
         
+        {/* Columna del Logo */}
         <div className="footer-section brand-column">
-          <img src={logoNutrik} alt="Nutrik Logo" className="footer-logo" />
+          <div className="logo-wrapper">
+            <img src={logoNutrik} alt="Nutrik Logo" className="footer-logo" />
+          </div>
           <p className="tagline">TU SALUD EMPIEZA AQUÍ</p>
         </div>
 
+        {/* Columna Información */}
         <div className="footer-section">
           <h3>Información</h3>
           <ul>
@@ -25,6 +29,7 @@ function Footer() {
           </ul>
         </div>
 
+        {/* Columna Ayuda */}
         <div className="footer-section">
           <h3>Ayuda</h3>
           <ul>
@@ -34,12 +39,13 @@ function Footer() {
           </ul>
         </div>
 
+        {/* Columna Redes Sociales */}
         <div className="footer-section socials-column">
           <h3>Síguenos</h3>
           <div className="footer-socials">
-            <a href="#"><img src={Tiktok} alt="TikTok" /></a>
-            <a href="#"><img src={Instagram} alt="Instagram" /></a>
-            <a href="#"><img src={Facebook} alt="Facebook" /></a>
+            <a href="#" className="social-icon-link"><img src={Tiktok} alt="TikTok" /></a>
+            <a href="#" className="social-icon-link"><img src={Instagram} alt="Instagram" /></a>
+            <a href="#" className="social-icon-link"><img src={Facebook} alt="Facebook" /></a>
           </div>
           <div className="legal-links">
             <a href="/terminos"></a>
@@ -48,10 +54,11 @@ function Footer() {
         </div>
       </div>
 
+      {/* Barra Inferior */}
       <div className="footer-bottom">
         <p>© 2026 Nutrik. Todos los derechos reservados.</p>
         <div className="developer-tag">
-          Hecho por <strong>@Nutrik Co</strong>
+          <span>Hecho por <strong>@Nutrik Co</strong></span>
           <img src={Colombia} alt="Colombia" className="flag" />
         </div>
       </div>

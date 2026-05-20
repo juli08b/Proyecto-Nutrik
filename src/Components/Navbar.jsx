@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-// import { useState } from "react";
+import { useState } from "react";
 
 import logoPequeno from "../assets/logoNutrick.png";
 
@@ -11,23 +11,22 @@ import sugerencias from "../assets/Sugerencia.svg";
 import categoria from "../assets/Categoria.svg";
 import dieta from "../assets/Dieta.svg";
 
-// Recibimos la función modificadora desde el padre (App.jsx) para poder abrir el menú desde aquí
-function Navbar({ menuAbierto, setMenuAbierto }) {
+function Navbar() {
 
   // ESTADO DEL MENÚ
-  // const [menuAbierto, setMenuAbierto] = useState("");
+  const [menuAbierto, setMenuAbierto] = useState("");
 
   return (
     <>
       <nav className="navegacion">
         <ul className="nav-list">
 
-         {/* LOGO */}
-         <li className="nav-logo-min">
-          <Link to="/">
-          <img src={logoPequeno} alt="Nutrik" className="logo-img" />
-          </Link>
-         </li>
+          {/* LOGO */}
+          <li className="nav-logo-min">
+            <Link to="/">
+              <img src={logoPequeno} alt="Nutrik" width={150} height={90} />
+            </Link>
+          </li>
 
           {/* BOTONES */}
           <li>
@@ -61,29 +60,28 @@ function Navbar({ menuAbierto, setMenuAbierto }) {
             <span className="icono-circulo">
               <img className="nuevo" src={tienda} alt="" />
             </span>
-            {/* Ahora apunta a la vista de productos de Gabriel */}
-            <Link to="/productos">Tienda</Link>
+            <Link to="/Product">Tienda</Link>
           </li>
 
           <li className="nav-extra-item">
             <span className="icono-circulo">
               <img className="nuevo" src={nuevo} alt="" />
             </span>
-            <Link to="/newproduct">Lo nuevo</Link>
+            <Link to="/Newproduct">Lo nuevo</Link>
           </li>
 
           <li className="nav-extra-item">
             <span className="icono-circulo">
               <img className="nuevo" src={descuento} alt="" />
             </span>
-            <Link to="/descuentos">Descuento</Link>
+            <Link to="/Discount">Descuento</Link>
           </li>
 
           <li className="nav-extra-item">
             <span className="icono-circulo">
               <img className="nuevo" src={sugerencias} alt="" />
             </span>
-            <Link to="/contact">Sugerencias</Link>
+            <Link to="/Contact">Sugerencias</Link>
           </li>
 
           <li className="divisor-container">
@@ -92,7 +90,7 @@ function Navbar({ menuAbierto, setMenuAbierto }) {
 
           <li>
             <button className="btn-nav-acceder">
-              <Link to="/login">ACCEDER</Link>
+              <Link to="/Login">ACCEDER</Link>
             </button>
           </li>
 
@@ -142,6 +140,14 @@ function Navbar({ menuAbierto, setMenuAbierto }) {
 
             <Link to="/suplementos"> 🏋️‍♂️ Suplementos en Polvo</Link>
             <br />
+            {/* <br />
+            <br />
+
+            <Link to="/frutas">Nececitas Ayuda 🎧</Link>
+            <br /> */}
+
+
+
           </div>
         )}
 
@@ -193,5 +199,7 @@ function Navbar({ menuAbierto, setMenuAbierto }) {
     </>
   );
 }
+
+
 
 export default Navbar;
