@@ -20,8 +20,12 @@ function Home({ setMenuAbierto }) {
           </p>
 
           <div className="hero-botones">
-            <button className="btn-primary">Explorar productos</button>
-            <button className="btn-outline">Ver planes</button>
+            <Link to="/productos" className="btn-primary btn-link">
+              Explorar productos
+            </Link>
+            <Link to="/newproduct" className="btn-outline btn-link">
+              Ver planes
+            </Link>
           </div>
         </div>
 
@@ -213,18 +217,8 @@ function Home({ setMenuAbierto }) {
           </p>
 
           <div className="cta-botones">
-
-            <button className="btn-primary btn-grande">
-              Comenzar compra
-            </button>
-
-            <button
-              className="btn-outline btn-grande-outline"
-              onClick={() => setMenuAbierto("categoria")}
-            >
-              Ver catálogo
-            </button>
-
+            <button className="btn-primary btn-grande">Comenzar compra</button>
+            <button className="btn-outline btn-grande-outline">Ver catálogo</button>
           </div>
 
         </div>
@@ -235,4 +229,3 @@ function Home({ setMenuAbierto }) {
 }
 
 export default Home;
-

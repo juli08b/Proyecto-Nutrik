@@ -32,7 +32,7 @@ function App() {
       <Route path="/" element={<Home setMenuAbierto={setMenuAbierto} />} />
       <Route path="/header" element={<Header />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/Registro" element={<Register />} />
+      <Route path="/registro" element={<Register />} />
       <Route path="/productos" element={<Productos />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/cart" element={<Cart />} />

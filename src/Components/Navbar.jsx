@@ -83,7 +83,7 @@ function Navbar({ menuAbierto, setMenuAbierto }) {
             <span className="icono-circulo">
               <img className="nuevo" src={sugerencias} alt="" />
             </span>
-            <Link to="/Contact">Sugerencias</Link>
+            <Link to="/contact">Sugerencias</Link>
           </li>
 
           <li className="divisor-container">
@@ -92,7 +92,7 @@ function Navbar({ menuAbierto, setMenuAbierto }) {
 
           <li>
             <button className="btn-nav-acceder">
-              <Link to="/Login">ACCEDER</Link>
+              <Link to="/login">ACCEDER</Link>
             </button>
           </li>
 

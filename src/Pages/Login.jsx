@@ -19,7 +19,7 @@ const Login = () => {
           {/* Quitamos la etiqueta <img> de aquí para que no rompa la tarjeta */}
           <h2>Bienvenido de nuevo</h2>
           <p className="register-link">
-            ¿No tienes cuenta? <Link to="/Registro">Crea una ahora</Link>
+            ¿No tienes cuenta? <Link to="/registro">Crea una ahora</Link>
           </p>
           
           <form onSubmit={(e) => e.preventDefault()}>

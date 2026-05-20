@@ -145,53 +145,65 @@
    BENEFICIOS
    ========================================= */
 .beneficios {
-  padding: 80px 8%;
+  padding: 100px 8%;
   text-align: center;
   background: #ecfdf5;
 }
 
 .beneficios h2 {
-  font-size: 36px;
-  margin-bottom: 40px;
+  font-size: 42px; 
+  margin-bottom: 60px;
   color: var(--verde-oscuro);
+  position: relative;
+}
+
+.beneficios h2::after {
+  content: "";
+  width: 80px;
+  height: 5px;
+  background: var(--verde-neon);
+  display: block;
+  margin: 15px auto 0;
+  border-radius: 20px;
 }
 
 .beneficios-grid {
-  display: flex;
-  gap: 25px;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 35px; 
 }
 
 .beneficio {
   background: #ffffff;
-  border: 2px solid rgba(18, 113, 80, 0.18);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
-  padding: 35px 25px;
-  border-radius: 20px;
-  width: 280px;
-  transition: 0.3s;
+  border: 2px solid rgba(18, 113, 80, 0.16);
+  border-radius: 28px; 
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18);
+  padding: 55px 35px; 
+  transition: all 0.35s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .beneficio h3 {
-  font-size: 20px;
-  margin-bottom: 12px;
+  font-size: 24px; 
+  margin-bottom: 15px;
   color: #0b4b24;
+  font-weight: bold;
 }
 
 .beneficio p {
   color: #334155;
   line-height: 1.6;
-  font-size: 15px;
+  font-size: 16px; 
+  padding: 0 10px;
 }
 
 .beneficio:hover {
   transform: translateY(-12px);
-  box-shadow: 0 20px 40px rgba(18, 113, 80, 0.25);
-  border-color: var(--verde-oscuro);
+  box-shadow: 0 22px 45px rgba(18, 113, 80, 0.25);
+  border-color: #111111;
 }
 
 /* =========================================
@@ -228,7 +240,7 @@
 
 .producto-card {
   background: #ffffff;
-  border: 2px solid rgba(18, 113, 80, 0.16);
+  border: 2.5px solid rgba(18, 113, 80, 0.16);
   border-radius: 28px;
   overflow: hidden;
   box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18);
@@ -239,7 +251,7 @@
 .producto-card:hover {
   transform: translateY(-12px);
   box-shadow: 0 22px 45px rgba(18, 113, 80, 0.25);
-  border-color: var(--verde-oscuro);
+  border-color: #111111;
 }
 
 .producto-card img {
@@ -276,7 +288,7 @@
 }
 
 /* =========================================
-   PASOS (Optimizado para TV/Proyector)
+   PASOS
    ========================================= */
 .pasos {
   padding: 110px 8%;
@@ -314,15 +326,13 @@
   text-align: center;
   position: relative;
   transition: all 0.35s ease;
-  
-  /* CAMBIADO: Borde negro real de esquina a esquina */
-  border: 2.5px solid #111111; 
+  border: 2.5px solid rgba(18, 113, 80, 0.16);
   box-shadow: 0px 16px 40px rgba(0, 0, 0, 0.16); 
 }
 
 .paso:hover { 
   transform: translateY(-12px); 
-  border-color: var(--verde-oscuro);
+  border-color: #111111;
   box-shadow: 0 22px 45px rgba(18, 113, 80, 0.25); 
 }
 
@@ -355,11 +365,24 @@
   padding: 60px 10%;
   flex-wrap: wrap;
   gap: 30px;
+  align-items: center;
 }
-.stat h2 { font-size: 48px; color: var(--verde-claro); }
+
+.stat h2 { 
+  font-size: 54px; 
+  color: var(--blanco); 
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+.stat p {
+  color: rgba(255, 255, 255, 0.9); 
+  font-size: 16px;
+  font-weight: 500;
+}
 
 /* =========================================
-   NEWSLETTER (Optimizado para TV/Proyector)
+   NEWSLETTER
    ========================================= */
 .newsletter {
   padding: 110px 8%;
@@ -369,7 +392,6 @@
   align-items: center;
 }
 
-/* 🟢 CAMBIADO: Bordes negros permanentes de esquina a esquina */
 .newsletter-content {
   width: 100%;
   max-width: 900px;
@@ -377,8 +399,6 @@
   border-radius: 35px;
   padding: 70px 50px;
   text-align: center;
-  
-  /* Borde negro sólido de alta definición */
   border: 3px solid #111111; 
   box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.18); 
 }
@@ -437,7 +457,7 @@
 }
 
 /* =========================================
-   CTA FINAL
+   CTA FINAL (Centrado optimizado)
    ========================================= */
 .cta {
   padding: 120px 8%;
@@ -483,9 +503,15 @@
 
 .cta-content h2 { font-size: 52px; color: white; margin-bottom: 20px; }
 .cta-content p { color: rgba(255, 255, 255, 0.8); font-size: 18px; line-height: 1.8; max-width: 700px; margin: 0 auto 40px; }
-.cta-botones { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
 
-.btn-grande { padding: 18px 40px; border-radius: 16px; font-size: 18px; }
+/* El Flexbox se encarga de centrar perfectamente el único botón */
+.cta-botones { 
+  display: flex; 
+  justify-content: center; 
+  gap: 20px; 
+  flex-wrap: wrap; 
+}
+
 .btn-grande-outline {
   padding: 18px 40px;
   border-radius: 16px;
@@ -494,6 +520,7 @@
   background: transparent;
   color: white;
   transition: 0.3s;
+  display: inline-block;
 }
 
 .btn-grande-outline:hover {
@@ -503,7 +530,7 @@
 }
 
 /* =========================================
-   MEDIA QUERIES (Responsividad Completa)
+   MEDIA QUERIES
    ========================================= */
 @media (max-width: 1024px) {
   .hero {
@@ -524,7 +551,7 @@
   .cta-content h2 { font-size: 38px; }
   .cta-content p { font-size: 16px; }
   .cta-botones { flex-direction: column; }
-  .btn-grande, .btn-grande-outline { width: 100%; }
+  .btn-grande-outline { width: 100%; }
 
   .pasos { padding: 90px 6%; }
   .pasos-header h2 { font-size: 32px; }
