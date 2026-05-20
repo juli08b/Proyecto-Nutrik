@@ -121,7 +121,6 @@ const Register = () => {
                 required
               >
                 <option value="">Selecciona una opción</option>
-                <option value="omnivero">Omnívoro (como de todo)</option>
                 <option value="vegetariano">Vegetariano</option>
                 <option value="vegano">Vegano</option>
                 <option value="pescetariano">Pescetariano</option>
