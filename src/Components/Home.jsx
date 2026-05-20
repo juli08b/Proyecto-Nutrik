@@ -177,8 +177,7 @@ function Home() {
           </p>
 
           <div className="cta-botones">
-            <button className="btn-primary btn-grande">Comenzar compra</button>
-            <button className="btn-outline btn-grande-outline">Ver catálogo</button>
+            <button className="btn-grande-outline">Ver catálogo</button>
           </div>
         </div>
       </section>
