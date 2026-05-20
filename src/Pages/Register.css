@@ -1,20 +1,16 @@
-/* --- CONTENEDOR PRINCIPAL --- */
 .main-container {
   background: linear-gradient(180deg, #d2e9ca 0%, #e5f1e2 100%);
   font-family: Arial, sans-serif;
-  min-height: 100vh;
-  padding-bottom: 60px;
-  box-sizing: border-box;
 }
 
-/* --- CABECERA --- */
+/* Cabecera horizontal */
 .header-registro {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 30px;
-  padding: 40px 20px;
-  color: #2d3e26;
+  padding: 40px;
+  color: #2d3e26; /* Un verde muy oscuro casi negro */
 }
 
 .logo-circle {
@@ -26,129 +22,79 @@
   justify-content: center;
   align-items: center;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
-  flex-shrink: 0; /* Evita que el círculo se deforme */
 }
 
 .logo-img {
   width: 100px;
-  height: auto;
 }
 
 .header-text h1 {
-  font-size: 3rem;
-  margin: 0 0 5px 0;
-}
-
-.header-text p {
+  font-size: 3.5rem;
   margin: 0;
-  font-size: 1.2rem;
 }
 
-/* --- TARJETA BLANCA (FORMULARIO) --- */
+/* Tarjeta Blanca */
 .form-container {
   display: flex;
   justify-content: center;
-  padding: 0 20px;
 }
 
 .card-registro {
   background: white;
-  padding: 40px;
+  padding: 30px;
   border-radius: 25px;
   width: 100%;
-  max-width: 750px; /* Bajado a 750px para que los campos no se estiren demasiado y se vea más estético */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  box-sizing: border-box;
+  max-width: 950px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
 .card-title {
   color: #6b8e5a;
   text-align: center;
-  margin-top: 0;
-  margin-bottom: 30px;
-  font-size: 32px;
+  margin-bottom: 20px;
+  font-size: 30px;
+}
+
+/* Etiquetas de los campos */
+.field-label {
+  display: block;
   font-weight: bold;
-}
-
-/* --- FORMULARIO Y GRUPOS DE CONTROL --- */
-.register-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px; /* Distancia uniforme y exacta entre CADA bloque del formulario */
-}
-
-/* Contenedores de inputs */
-.from-group {
-  display: flex;
-  flex-direction: column;
-  gap: 15px; /* Distancia interna uniforme cuando hay labels o filas metidas dentro */
-  width: 100%;
+  margin-bottom: 5px;
+  color: #333;
 }
 
 .input-row {
   display: flex;
-  gap: 15px; /* Espacio horizontal idéntico entre inputs de la misma fila (Nombres/Apellidos) */
-  width: 100%;
+  gap: 15px;
 }
 
 .input-group {
-  width: 100%;
+  flex: 1;
+  margin-bottom: 15px;
 }
 
-/* --- ETIQUETAS (LABELS) --- */
-.field-label, .register-form label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: -5px; /* Acerca sutilmente la etiqueta a su respectivo input */
-  color: #3b4e34;
-  font-size: 0.95rem;
-}
-
-/* --- INPUTS Y SELECTS (ESTILO UNIFICADO) --- */
-.from-group input, 
-.input-row input,
-.input-group input,
-.select-custom {
+/* Inputs con borde verde oliva como la imagen */
+.from-group input, .select-custom {
   width: 100%;
-  padding: 14px; /* Un poco más de espacio interno para comodidad de escritura */
+  padding: 12px;
   border: 2px solid #8ba37e; 
-  border-radius: 12px;
+  border-radius: 10px;
   font-size: 1rem;
-  color: #333;
-  background-color: #fff;
-  box-sizing: border-box;
-  transition: all 0.2s ease-in-out;
 }
 
-/* Efecto focus moderno al hacer clic en un cuadro */
-.from-group input:focus, 
-.input-row input:focus,
-.input-group input:focus,
-.select-custom:focus {
-  outline: none;
-  border-color: #557544;
-  box-shadow: 0 0 0 3px rgba(107, 142, 90, 0.2);
-}
-
-/* --- BOTÓN DE ENVÍO --- */
+/* El botón verde sólido */
 .btn-submit {
   width: 100%;
-  padding: 16px;
+  padding: 15px;
   background-color: #6b8e5a;
   color: white;
   border: none;
-  border-radius: 12px;
+  border-radius: 8px;
   font-weight: bold;
   font-size: 1.1rem;
   cursor: pointer;
-  margin-top: 15px;
-  transition: background-color 0.2s, transform 0.1s;
 }
 
 .btn-submit:hover {
   background-color: #4a6341;
-}
-
-.btn-submit:active {
-  transform: scale(0.98); /* Pequeño efecto de pulsado */
 }
