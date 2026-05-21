@@ -3,7 +3,7 @@ import './Product.css'
 
 import { useParams } from "react-router-dom";
 
-function productview() {
+function Vistaproducto() {
 
  const { id } = useParams();
 
@@ -150,4 +150,4 @@ function productview() {
   );
 }
 
-export default productview
+export default Vistaproducto

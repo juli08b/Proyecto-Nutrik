@@ -27,7 +27,7 @@ const Productos = () => {
 
           <h3>Creatina en Polvo </h3>
 
-          <Link to="/productview/creatine">
+          <Link to="/Vistaproducto/creatine">
               <button className="btn-producto">
                  Ver producto
               </button>
@@ -44,7 +44,7 @@ const Productos = () => {
 
           <h3>Yogur Griego Natural</h3>
 
-          <Link to="/productview/yogur">
+          <Link to="/Vistaproducto/yogur">
           <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -57,7 +57,7 @@ const Productos = () => {
 
           <h3>té detox</h3>
 
-          <Link to="/productview/detox">
+          <Link to="/Vistaproducto/detox">
           <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -66,7 +66,7 @@ const Productos = () => {
           <img src= "https://i.pinimg.com/1200x/20/85/55/208555e7cad61284b90054f29ccc0fa3.jpg" alt="omega3" className="img-producto"  />
 
           <h3>omega 3</h3>
-          <Link to="/productview/omega">
+          <Link to="/Vistaproducto/omega">
           <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -77,7 +77,7 @@ const Productos = () => {
 
           <h3>colageno</h3>
 
-          <Link to="/productview/colageno">
+          <Link to="/Vistaproducto/colageno">
             <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -86,7 +86,7 @@ const Productos = () => {
           <img src= "https://i.pinimg.com/736x/28/bf/0c/28bf0ce32dc25e1c1912e23c39653062.jpg" alt="chia" className="img-producto"  />
 
           <h3>Semillas de Chía</h3>
-            <Link to="/productview/chia">
+            <Link to="/Vistaproducto/chia">
               <button className="btn-producto">
                 Ver producto
               </button>
@@ -98,7 +98,7 @@ const Productos = () => {
 
           <h3>aceite de coco</h3>
 
-          <Link to="/productview/coco">
+          <Link to="/Vistaproducto/coco">
           <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -108,7 +108,7 @@ const Productos = () => {
 
           <h3>Maca en Polvo</h3>
 
-          <Link to="/productview/maca">
+          <Link to="/Vistaproducto/maca">
           <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -118,7 +118,7 @@ const Productos = () => {
 
           <h3>Granola</h3>
 
-          <Link to="/productview/granola">
+          <Link to="/Vistaproducto/granola">
           <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -128,7 +128,7 @@ const Productos = () => {
 
           <h3>Mix de Frutos Secoss</h3>
 
-          <Link to="/productview/frutos">
+          <Link to="/Vistaproducto/frutos">
           <button className="btn-producto">Ver producto </button>
           </Link>
 
