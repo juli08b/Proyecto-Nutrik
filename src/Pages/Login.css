@@ -1,34 +1,18 @@
-/* ==========================================
-   RESETEO GENERAL DE ESTILOS
-   ========================================== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box; 
-}
 
-/* ==========================================
-   VARIABLES GLOBALES
-   ========================================== */
+/* VARIABLES GLOBALES*/
 :root {
-  --verde-oscuro: #4c7042;
+  --verde-oscuro: #4c7042; /* botton de inisio de sesion*/
   --verde-boton: #4e7043;
 }
 
-/* ==========================================
-   CONTENEDOR PRINCIPAL
-   ========================================== */
 .login-page {
-    display: flex;
-    flex-direction: row;
-    width: 100vw;
-    height: 100vh;
-  
+    display: flex; 
+    width: 100vw; /* */
+    height: 100vh; 
 }
 
-/* ==========================================
-   SECCIÓN IZQUIERDA (PANEL VERDE)
-   ========================================== */
+/*SECCIÓN IZQUIERDA (PANEL VERDE)*/
+
 .info-content {
     flex: 0.5;
     background: linear-gradient(135deg, #aae994, #2b3928); 
@@ -59,9 +43,7 @@
     font-weight: 800;
 }
 
-/* ==========================================
-   SECCIÓN DERECHA: FONDO DE FRUTAS CON DEGRADADO
-   ========================================== */
+/*SECCIÓN DERECHA: FONDO DE FRUTAS CON DEGRADADO*/
 .login-form-side {
     flex: 1; 
     display: flex;
@@ -106,9 +88,7 @@
     text-decoration: none;
 }
 
-/* ==========================================
-   ESTILOS DE CAMPOS (INPUTS)
-   ========================================== */
+/* ESTILOS DE CAMPOS (INPUTS)*/
 .input-field {
     margin-bottom: 15px;
     width: 100%;
@@ -117,7 +97,7 @@
 .input-field input {
     width: 100%;
     padding: 14px 16px; 
-    border: 1px solid #e2e8e3; 
+    border: 1px solid #000000; 
     border-radius: 10px;
     font-size: 0.95rem;
     outline: none;
@@ -126,9 +106,7 @@
 
 
 
-/* ==========================================
-   BOTONES Y DIVISORES
-   ========================================== */
+/* BOTONES Y DIVISORES*/
 .btn-login {
     width: 100%;
     padding: 14px;
@@ -160,7 +138,7 @@
     padding: 13px;
     background-color: #ffffff; 
     color: #2b3a28;
-    border: 1px solid #e2e8e3;
+    border: 1px solid #000000;
     border-radius: 10px;
     font-size: 0.95rem;
     font-weight: 600;
