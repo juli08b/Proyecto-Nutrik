@@ -60,7 +60,7 @@ function Navbar() {
             <span className="icono-circulo">
               <img className="nuevo" src={tienda} alt="" />
             </span>
-            <Link to="/Product">Tienda</Link>
+            <Link to="/Productos">Tienda</Link>
           </li>
 
           <li className="nav-extra-item">

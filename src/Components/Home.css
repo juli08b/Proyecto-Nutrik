@@ -161,7 +161,7 @@
   background: var(--verde-neon); /* Color de la línea decorativa */
   display: block;            /* Convierte la línea en un bloque sólido */
   margin: 12px auto 0;       /* La centra horizontalmente y la separa del texto */
-  border-radius: 10px;       /* Redondea las puntas de la línea */
+  border-radius: 10px;       /* Redondeas las puntas de la línea */
 }
 
 /* Distribución de las cajas de beneficios */
@@ -201,13 +201,17 @@
    ======================================================= */
 .productos {
   text-align: center;        /* Centra los textos y elementos */
-  padding: 60px 8% 0px 8% !important; /* Quita el margen interno inferior por completo */
-  background: #ffffff !important; /* Obliga a que el fondo sea blanco puro sin gris */
+  color: var(--verde-oscuro); /* Letras de color institucional */
+  background: #eaf5ec !important; /* Fondo verde claro para la sección */
+  padding: 60px 4% 0px 2% !important; /* CORRECCIÓN: Forzado a 0px abajo para eliminar el espacio vacío */
+  margin-bottom: -20px !important;    /* CORRECCIÓN: Margen negativo para jalar la sección blanca hacia arriba */
+  position: relative;
+  z-index: 5;
 }
 
 .productos h2 {
-  font-size: 50px;           /* Título grande de la sección */
-  color: var(--verde-oscuro); /* Letras de color verde oscuro */
+  font-size: 70px;           /* Título grande de la sección */
+  color: #12280d;            /* Letras de color verde oscuro */
   margin-bottom: 45px;       /* Espacio libre debajo del h2 */
   position: relative;        /* Deja listo el lugar para la línea inferior */
 }
@@ -215,10 +219,10 @@
 .productos h2::after {
   content: "";               /* Crea el espacio para la línea decorativa */
   width: 60px;               /* Ancho de la rayita verde */
-  height: 4px;               /* Altura o grosor de la rayita */
+  height: 15px;              /* Altura o grosor de la rayita */
   background: var(--verde-neon); /* Color neón para la rayita */
   display: block;            /* Hace que se comporte como un bloque visual */
-  margin: 12px auto 0;       /* Centra la rayita debajo del título */
+  margin: 20px auto 0;       /* Centra la rayita debajo del título */
   border-radius: 10px;       /* Esquinas circulares para la rayita */
 }
 
@@ -227,19 +231,18 @@
   display: grid;             /* Activa rejilla para los productos */
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Ajusta las columnas automáticamente */
   gap: 30px;                 /* Distancia de 30px entre productos */
-  margin-bottom: 0px !important; /* Asegura que no haya margen extra abajo */
-  padding-bottom: 0px !important; /* Elimina rellenos inferiores de la rejilla */
+  padding-bottom: 0px !important; /* CORRECCIÓN: Removido completamente cualquier padding extra */
+  margin-bottom: 0px !important;  /* CORRECCIÓN: Removido margen inferior de las tarjetas */
 }
 
 /* Tarjeta de producto individual */
 .producto-card {
   background: #ffffff;       /* Caja con fondo blanco limpio */
-  border: 1px solid rgba(18, 113, 80, 0.1); /* Borde verde muy clarito */
-  border-radius: 20px;       /* Redondeado elegante en las esquinas */
+  border: 4px solid rgba(18, 113, 80, 0.1); /* Borde verde muy clarito */
+  border-radius: 50px;       /* Redondeado elegante en las esquinas */
   overflow: hidden;          /* Corta la imagen arriba para que respete las curvas */
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Sombra bonita debajo */
-  transition: all 0.3s ease; /* Efecto suave para cuando se pase el mouse */
-  margin-bottom: 0px !important; /* Quita espacios adicionales abajo */
+  transition: all 0.5s ease; /* Efecto suave para cuando se pase el mouse */
 }
 
 .producto-card:hover {
@@ -288,7 +291,7 @@
 
 .btn-ver-mas:hover {
   background: var(--verde-oscuro); /* Convierte el fondo en verde oscuro sólido */
-  color: white;              /* Cambia las letras a blanco */
+  color: white;              /* Cambia la letra a blanco para contrastar */
   transform: scale(1.03);    /* Agranda el botón un milímetro */
 }
 
@@ -296,29 +299,31 @@
    SECCIÓN 4: PASOS (COMPRA FÁCIL Y SALUDABLE)
    ======================================================= */
 .pasos {
-  padding: 0px 8% 60px 8% !important; /* Quita margen superior para pegarse arriba */
-  margin-top: -110px !important; /* Sube la sección con fuerza para eliminar huecos grises */
-  background: #ffffff !important; /* Fondo blanco garantizado sin cuadros raros */
-  position: relative;        /* Lo mantiene en su lugar de coordenadas */
-  z-index: 10;               /* Lo pone por encima para que no se oculte */
+  padding: 10px 8% 80px 8% !important; /* CORRECCIÓN: Exactamente 10px de separación superior controlada */
+  margin-top: 0px !important;        /* Forzado a iniciar pegado a la sección superior */
+  background: #ffffff !important;    /* Fondo blanco garantizado sin cuadros raros */
+  position: relative;                /* Lo mantiene en su lugar de coordenadas */
+  z-index: 10;                       /* Lo pone por encima para cubrir brechas */
 }
 
 .pasos-header { 
-  text-align: center;        /* Centra los textos del encabezado */
-  margin-top: 0px !important; /* Evita que empuje la sección hacia abajo */
-  margin-bottom: 35px;       /* Separa el encabezado de las cajas de abajo */
+  text-align: center;                /* Centra los textos del encabezado */
+  margin-top: 0px !important;        /* CORRECCIÓN: Eliminado margen por defecto del navegador */
+  padding-top: 0px !important;       /* CORRECCIÓN: Eliminado relleno por defecto */
+  margin-bottom: 55px;               /* Separa el encabezado de las cajas de abajo */
 }
 
 /* Etiqueta flotante "Fácil y rápido" */
 .pasos-header span {
-  display: inline-block;     /* Permite ponerle tamaño y fondo a la etiqueta */
+  display: inline-block;             /* Permite ponerle tamaño y fondo a la etiqueta */
   background: rgba(106, 253, 106, 0.15); /* Fondo verde traslúcido completamente limpio */
-  color: var(--verde-oscuro); /* Letra en verde oscuro */
-  padding: 10px 22px;        /* Espacio interno acolchado */
-  border-radius: 20px;       /* Vuelve la etiqueta ovalada */
-  font-size: 16px;           /* Letra grande solicitada para que resalte */
-  font-weight: 700;          /* Letra gruesa e importante */
-  margin-bottom: 15px;       /* Distancia con el h2 de abajo */
+  color: var(--verde-oscuro);         /* Letra en verde oscuro */
+  padding: 12px 22px;                /* Ajustado sutilmente el cojín interno */
+  border-radius: 20px;               /* Vuelve la etiqueta ovalada */
+  font-size: 20px;                   /* Letra grande solicitada para que resalte */
+  font-weight: 700;                  /* Letra gruesa e importante */
+  margin-top: 0px !important;        /* CORRECCIÓN: Fuerza total a pegarse arriba */
+  margin-bottom: 15px;               /* Distancia con el h2 de abajo */
 }
 
 .pasos-header h2 { font-size: 36px; color: var(--verde-oscuro); margin-bottom: 15px; } /* Estilo del título */
@@ -398,15 +403,15 @@
    ======================================================= */
 .newsletter {
   padding: 80px 8%;          /* Espacio libre alrededor del bloque */
-  background: linear-gradient(135deg, #ecfdf5, #d5f5ce); /* Fondo verde menta en degradado suave */
+  background: #ecfdf5 !important; /* Mantenido el color verde menta suave solicitado para el cuadro de afuera */
 }
 
-/* Contenedor blanco central */
+/* Contenedor blanco central - CUADRO DE ADENTRO */
 .newsletter-content {
   width: 100%;               /* Usa todo el ancho si la pantalla es chica */
   max-width: 800px;          /* No permite que la caja mida más de 800px */
   margin: 0 auto;            /* Centra la caja blanca en la pantalla */
-  background: #ffffff;       /* Fondo blanco limpio e iluminado */
+  background: #ffffff;       /* Mantenido en blanco puro como me lo pediste */
   border-radius: 24px;       /* Esquinas súper redondeadas */
   padding: 50px 40px;        /* Cojín de espacio dentro de la caja */
   text-align: center;        /* Centra todo lo que tiene adentro */
@@ -455,7 +460,7 @@
   padding: 14px 28px;        /* Tamaño del botón */
   border-radius: 10px;       /* Esquinas redondeadas */
   font-size: 15px;           /* Letra del mismo tamaño del input */
-  font-weight: bold;         /* Texto resaltado en negrita */
+  font-weight: bold;         /* Texto lanzado en negrita */
   cursor: pointer;           /* Manito de click lista */
   transition: all 0.2s ease; /* Transición para el hover */
 }
@@ -597,7 +602,7 @@
 }
 
 .footer-col h3 {
-  color: var(--verde-neon);    /* Títulos de columnas en verde neón */
+  color: var(--verde-neon);  /* Títulos de columnas en verde neón */
   font-size: 18px;           /* Tamaño del título del bloque */
   margin-bottom: 20px;       /* Distancia con los enlaces de abajo */
   font-weight: 600;          /* Letra semi-gruesa */
@@ -621,12 +626,12 @@
 }
 
 .footer-col ul li a:hover {
-  color: var(--verde-neon);    /* Link cambia a verde brillante al tocarlo */
+  color: var(--verde-neon);  /* Link cambia a verde brillante al tocarlo */
 }
 
 /* Íconos de redes sociales */
 .footer-socials h3 {
-  color: var(--verde-neon);    /* Título de redes en color neón */
+  color: var(--verde-neon);  /* Título de redes en color neón */
   font-size: 18px;           /* Mismo tamaño de los h3 anteriores */
   margin-bottom: 20px;       /* Espacio abajo */
 }
