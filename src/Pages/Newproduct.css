@@ -1,37 +1,3 @@
-.productos {
-  width: 100%;
-  min-height: 100vh;
-  padding: 80px 60px;
-  background: #f4f7f1;
-}
-
-.productos-header {
-  text-align: center;
-  margin-bottom: 60px;
-}
-
-.productos-header h1 {
-  font-size: 65px;
-  color: #14532d;
-  margin-bottom: 20px;
-  font-weight: 800;
-}
-
-.productos-header p {
-  font-size: 22px;
-  color: #4b5563;
-  max-width: 700px;
-  margin: auto;
-  line-height: 1.7;
-}
-
-.productos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-  gap: 35px;
-}
-
-/* Tarjeta optimizada con sombras fuertes para TV/Proyector */
 .producto-card {
   background: white;
   border-radius: 25px;
@@ -39,6 +5,10 @@
   border: 2px solid rgba(20, 83, 45, 0.15);
   box-shadow: 0px 14px 30px rgba(0, 0, 0, 0.16);
   transition: 0.3s;
+  
+  /* ⚡ NUEVO: Convertimos la tarjeta en Flexbox vertical */
+  display: flex;
+  flex-direction: column;
 }
 
 .producto-card:hover {
@@ -60,16 +30,32 @@
   padding: 25px;
   text-align: center;
   background: #ffffff; 
+  
+  /* ⚡ NUEVO: Hacemos que la info ocupe todo el espacio sobrante y sea Flexbox */
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* 👈 Esto empuja el botón al fondo */
+  align-items: center;
 }
 
 .producto-info h3 {
-  font-size: 24px; /* Bajado un poco de 28px para que los nombres largos no rompan el diseño */
+  font-size: 24px; 
   color: #14532d;
   margin-bottom: 20px;
-  min-height: 60px; /* Asegura que todas las tarjetas midan lo mismo aunque el nombre tenga 1 o 2 líneas */
+  min-height: 60px; 
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* ⚡ MODIFICACIÓN OPCIONAL pero recomendada */
+/* El componente Link a veces añade márgenes extraños; esto asegura que se comporte bien */
+.producto-info a {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: auto; /* Fuerza el anclaje abajo */
 }
 
 .btn-producto {
@@ -82,9 +68,4 @@
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s;
-}
-
-.btn-producto:hover {
-  background: #4ade80;
-  color: #14532d;
 }
