@@ -13,6 +13,7 @@ import Cart from './Pages/Cart';
 import './index.css';
 import './App.css';
 import { useState } from 'react';
+import CategoriasLayout from './Components/layout/CategoriasLayout';
 
 
 function App() {
@@ -33,11 +34,17 @@ function App() {
       <Route path="/header" element={<Header />} />
       <Route path="/login" element={<Login />} />
       <Route path="/registro" element={<Register />} />
-      <Route path="/productos" element={<Productos />} />
+      
+      {/* Aquí anidamos tus productos actuales sin perder tu ruta original */}
+        <Route path="/productos" element={<CategoriasLayout />}>
+          <Route index element={<Productos />} />
+        </Route>
+
       <Route path="/contact" element={<Contact />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/productview/:id" element={<ProductView />} />
       <Route path="/newproduct" element={<Newproduct />} />
+
 
         
       </Routes>

@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import Navbar from '../common/Navbar'; // Ajusta la ruta si es necesario
+import Navbar from '../Navbar';
 
 const CategoriasLayout = () => {
   return (
