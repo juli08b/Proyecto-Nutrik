@@ -75,8 +75,8 @@ function Newproduct() {
       <div className="productos-header">
         <h1>Productos Saludables</h1>
         <p>
-           Descubre nuestra selección de superalimentos y productos 100% 
-           naturales para potenciar tu bienestar diario.
+          Descubre nuestra selección de superalimentos y productos 100% 
+          naturales para potenciar tu bienestar diario.
         </p>
       </div>
 
