@@ -1,228 +1,183 @@
-/* ==========================================
-   RESETEO GENERAL DE ESTILOS
-   ========================================== */
+/* CONFIGURACIÓN BASE */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box; 
+    margin: 0;                /* Quita los márgenes por defecto del navegador */
+    padding: 0;               /* Quita los rellenos por defecto del navegador */
+    box-sizing: border-box;   /* Ajusta el cálculo del ancho total incluyendo bordes y relleno */
 }
 
-/* ==========================================
-   VARIABLES GLOBALES
-   ========================================== */
 :root {
-  --verde-oscuro: #4c7042;
-  --verde-boton: #4e7043;
+  --verde-oscuro: #4c7042;    /* Define la variable para el color verde oscuro */
+  --verde-boton: #4e7043;     /* Define la variable para el color de los botones */
 }
 
-/* ==========================================
-   CONTENEDOR PRINCIPAL
-   ========================================== */
+/* ESTRUCTURA DE LA PÁGINA */
 .login-page {
-    display: flex;
-    flex-direction: row;
-    width: 100vw;
-    height: 100vh;
-  
+    display: flex;            /* Activa el diseño de filas flexibles */
+    flex-direction: row;      /* Organiza los elementos principales horizontalmente */
+    width: 100vw;             /* Asegura que ocupe todo el ancho de la pantalla */
+    height: 100vh;            /* Asegura que ocupe toda la altura de la pantalla */
 }
 
-/* ==========================================
-   SECCIÓN IZQUIERDA (PANEL VERDE)
-   ========================================== */
+/* SECCIÓN PANEL DE INFORMACIÓN (IZQUIERDA) */
 .info-content {
-    flex: 0.5;
-    background: linear-gradient(135deg, #aae994, #2b3928); 
-    color: #ffffff;
-    padding: 80px;
-    display: flex; /* Para centrar el contenido vertical y horizontalmente, en este caso el logo y las letras debajo del titulo */
-    flex-direction: column; /* Para colocar el logo y el texto uno debajo del otro */
-    align-items: center;
-    justify-content: center;
-    gap: 15px; 
+    flex: 0.5;                /* Define que este lado ocupe el 50% del espacio */
+    background: linear-gradient(135deg, #aae994, #2b3928); /* Aplica el degradado de color */
+    color: #ffffff;           /* Establece el color de fuente en blanco */
+    padding: 80px;            /* Añade espacio interno al contenedor */
+    display: flex;            /* Permite usar alineación flexible interna */
+    flex-direction: column;   /* Ordena los elementos en columna (vertical) */
+    align-items: center;      /* Centra horizontalmente los elementos */
+    justify-content: center;  /* Centra verticalmente los elementos */
+    gap: 15px;                /* Define el espacio entre el logo y el texto */
 }
 
 .login-logo {
-    width: 420px;
-    height: 420px;
-    border-radius: 50%;
-    background-color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px;
-    object-fit: contain; /* Para asegurar que la imagen se ajuste bien dentro del círculo sin distorsionarse */
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Sombra suave para darle profundidad al logo */
+    width: 420px;             /* Fija el ancho del logo */
+    height: 420px;            /* Fija la altura del logo */
+    border-radius: 50%;       /* Redondea los bordes al 50% para formar un círculo */
+    background-color: #ffffff;/* Fondo blanco para el logo */
+    display: flex;            /* Permite centrar contenido interno */
+    justify-content: center;  /* Alinea horizontalmente el centro */
+    align-items: center;      /* Alinea verticalmente el centro */
+    padding: 40px;            /* Espacio interior para el logo */
+    object-fit: contain;      /* Asegura que la imagen no se deforme */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Crea una sombra para dar profundidad */
 }
 
 .welcome-text {
-    font-size: 2.2rem;
-    font-weight: 800;
+    font-size: 2.2rem;        /* Define el tamaño del texto de bienvenida */
+    font-weight: 800;         /* Establece el grosor de la tipografía (negrita) */
 }
 
-/* ==========================================
-   SECCIÓN DERECHA: FONDO DE FRUTAS CON DEGRADADO
-   ========================================== */
+/* SECCIÓN FORMULARIO (DERECHA) */
 .login-form-side {
-    flex: 1; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* Unimos el degradado sutil blanco/claro arriba y tu imagen abajo */
-    background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.2)), url('../assets/fondo.jpg');
-    background-size: cover;  /* Para que la imagen cubra toda la sección sin distorsionarse */
-    background-position: center; 
-   
+    flex: 1;                  /* Ocupa el espacio restante disponible */
+    display: flex;            /* Activa alineación para centrar el formulario */
+    justify-content: center;  /* Centra horizontalmente */
+    align-items: center;      /* Centra verticalmente */
+    background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.2)), url('../assets/fondo.jpg'); /* Superpone una capa clara sobre la imagen */
+    background-size: cover;   /* Hace que la imagen cubra todo el contenedor */
+    background-position: center; /* Centra la imagen de fondo */
 }
 
-/* TARJETA BLANCA QUE FLOTA SOBRE EL FONDO */
 .form-content {
-    width: 800px;
-    max-width: 640px;
-    padding: 80px; 
-    background: #ffffffc7; 
-    border-radius: 35px; 
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-    
+    width: 800px;             /* Define un ancho base para la tarjeta del formulario */
+    max-width: 640px;         /* Limita el ancho máximo para pantallas pequeñas */
+    padding: 80px;            /* Espacio interno dentro de la tarjeta */
+    background: #ffffffc7;    /* Color de fondo blanco con transparencia */
+    border-radius: 35px;      /* Redondea las esquinas de la tarjeta */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); /* Aplica una sombra suave a la tarjeta */
 }
 
 .form-content h2 {
-    color: #2b3a28;
-    font-size: 40px;
-    font-weight: 700;
-    margin-bottom: 8px;
-    text-align: center;
+    color: #2b3a28;           /* Define el color del título */
+    font-size: 40px;          /* Define el tamaño de fuente del título */
+    font-weight: 700;         /* Pone el título en negrita */
+    margin-bottom: 8px;       /* Separa el título hacia abajo */
+    text-align: center;       /* Centra el texto del título */
 }
 
 .register-link {
-    color: #5c665a;
-    text-align: center;
-    font-size: 0.95rem;
-    margin-bottom: 25px;
+    color: #5c665a;          /* Color de texto secundario */
+    text-align: center;       /* Alineación centrada */
+    font-size: 0.95rem;       /* Tamaño de fuente del enlace */
+    margin-bottom: 25px;      /* Espacio inferior para el enlace */
 }
 
 .register-link a {
-    color: var(--verde-boton);
-    font-weight: 600;
-    text-decoration: none;
+    color: var(--verde-boton); /* Aplica color de variable a los enlaces */
+    font-weight: 600;         /* Aplica grosor de fuente */
+    text-decoration: none;    /* Elimina el subrayado predeterminado */
 }
 
-/* ==========================================
-   ESTILOS DE CAMPOS (INPUTS)
-   ========================================== */
+/* ESTILOS DE CAMPOS DE ENTRADA */
 .input-field {
-    margin-bottom: 15px;
-    width: 100%;
+    margin-bottom: 15px;      /* Espacio entre cajas de entrada */
+    width: 100%;              /* Ocupa todo el ancho disponible */
 }
 
 .input-field input {
-    width: 100%;
-    padding: 14px 16px; 
-    border: 1px solid #e2e8e3; 
-    border-radius: 10px;
-    font-size: 0.95rem;
-    outline: none;
-    transition: border-color 0.2s;
+    width: 100%;              /* Ocupa el 100% de su contenedor */
+    padding: 14px 16px;       /* Espacio interno del input */
+    border: 1px solid #e2e8e3; /* Dibuja el borde externo */
+    border-radius: 10px;      /* Bordes redondeados del input */
+    font-size: 0.95rem;       /* Tamaño de fuente del texto de entrada */
+    outline: none;            /* Quita el borde azul de selección automática */
+    transition: border-color 0.2s; /* Suaviza el cambio de color al seleccionar */
 }
 
-
-
-/* ==========================================
-   BOTONES Y DIVISORES
-   ========================================== */
+/* BOTONES */
 .btn-login {
-    width: 100%;
-    padding: 14px;
-    background-color: var(--verde-boton); 
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 5px;
-    /* Transición suave para la animación */
-    transition: transform 0.2s ease, filter 0.2s ease;
+    width: 100%;              /* Ancho completo del botón */
+    padding: 14px;            /* Tamaño del botón */
+    background-color: var(--verde-boton); /* Color de fondo del botón */
+    color: white;             /* Color del texto del botón */
+    border: none;             /* Elimina el borde por defecto */
+    border-radius: 10px;      /* Bordes redondeados */
+    font-size: 1rem;          /* Tamaño de texto del botón */
+    font-weight: 600;         /* Negrita en el texto del botón */
+    cursor: pointer;          /* Muestra el puntero de mano al pasar el mouse */
+    margin-top: 5px;          /* Espacio superior */
+    transition: transform 0.2s ease, filter 0.2s ease; /* Transiciones para efectos */
 }
 
-/* Efecto al pasar el mouse por encima */
 .btn-login:hover {
-    transform: translateY(-1px); /* Sube un pixel para dar efecto de flotado */
-    filter: brightness(1.1);     /* Se aclara un poquito */
+    transform: translateY(-1px); /* Efecto de elevación al pasar el mouse */
+    filter: brightness(1.1);     /* Ilumina ligeramente el botón */
 }
 
-/* Efecto al hacer clic */
 .btn-login:active {
-    transform: scale(0.98);      /* Se encoge ligeramente (efecto presionado) */
+    transform: scale(0.98);      /* Efecto de reducir al presionar */
 }
 
 .btn-google {
-    width: 100%;
-    padding: 13px;
-    background-color: #ffffff; 
-    color: #2b3a28;
-    border: 1px solid #e2e8e3;
-    border-radius: 10px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    /* Transición suave para la animación */
-    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;              /* Ancho completo */
+    padding: 13px;            /* Espacio interno */
+    background-color: #ffffff; /* Fondo blanco */
+    color: #2b3a28;           /* Color de texto */
+    border: 1px solid #e2e8e3; /* Borde suave */
+    border-radius: 10px;      /* Bordes redondeados */
+    font-size: 0.95rem;       /* Tamaño de texto */
+    font-weight: 600;         /* Negrita */
+    cursor: pointer;          /* Cursor de interacción */
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease; /* Transiciones */
 }
 
-/* Efecto al pasar el mouse por encima */
 .btn-google:hover {
-    transform: translateY(-1px);
-    background-color: #f9fbf9;   /* Cambia a un blanco/grisáceo muy sutil */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Sombra suave */
+    transform: translateY(-1px); /* Elevación al pasar el mouse */
+    background-color: #f9fbf9;   /* Fondo con tono sutil */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Sombra ligera */
 }
 
-/* Efecto al hacer clic */
 .btn-google:active {
-    transform: scale(0.98);
+    transform: scale(0.98);      /* Reducción al hacer clic */
 }
 
+/* DIVISOR Y RECUPERACIÓN */
 .divider {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    margin: 20px 0;
-    color: #808480;
-    font-size: 0.85rem;
+    display: flex;            /* Alinea elementos para el separador */
+    align-items: center;      /* Centrado vertical */
+    text-align: center;       /* Centrado horizontal */
+    margin: 20px 0;           /* Espacio superior e inferior */
+    color: #808480;           /* Color del texto */
+    font-size: 0.85rem;       /* Tamaño pequeño de fuente */
 }
 
 .divider::before, .divider::after {
-    content: '';
-    flex: 1;
-    border-bottom: 1px solid #737774;
+    content: '';              /* Genera contenido vacío */
+    flex: 1;                  /* Expande las líneas */
+    border-bottom: 1px solid #737774; /* Dibuja la línea horizontal */
 }
-
-.divider {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    margin: 20px 0;
-    color: #808480;
-    font-size: 0.85rem;
-}
-
-
-.divider::before, .divider::after {
-    content: '';
-    flex: 1;
-    border-bottom: 1px solid #737774;
-}
-
-
 
 .forgot-pass {
-    color: #5c665a;
-    text-align: center;
-    font-size: 0.95rem;
-    margin-top: 25px;
+    color: #5c665a;           /* Color del texto */
+    text-align: center;       /* Alineación centrada */
+    font-size: 0.95rem;       /* Tamaño de fuente */
+    margin-top: 25px;         /* Espacio superior */
 }
 
 .forgot-pass a {
-    color: var(--verde-boton);
-    text-decoration: none;
-    font-weight: 600;
+    color: var(--verde-boton); /* Color del enlace */
+    text-decoration: none;    /* Sin subrayado */
+    font-weight: 600;         /* Negrita */
 }
