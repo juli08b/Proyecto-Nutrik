@@ -251,3 +251,9 @@
 .btn-carrito:hover{
   transform: scale(1.05);
 }
+.acciones-producto{
+  display: flex;
+  gap: 30px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}

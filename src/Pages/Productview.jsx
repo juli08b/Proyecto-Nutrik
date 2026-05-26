@@ -138,7 +138,8 @@ function Productview() {
             {producto.precio}
           </h2>
 
-          <button className="btn-comprar">
+          <div className="acciones-producto" >
+            <button className="btn-comprar">
             comprar ahora
          </button>
 
@@ -146,6 +147,8 @@ function Productview() {
             🛒 agregar al carrito
          </button>
 
+          </div>
+          
         </div>
 
       </div>
