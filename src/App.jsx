@@ -17,11 +17,8 @@ import { useState } from 'react'; // Importamos el Hook de estado para manejar e
 
 // Importamos el layout específico para las categorías, que incluye el Navbar y el Outlet para renderizar los componentes de cada categoría sin perder la estructura del diseño.
 import CategoriasLayout from './Components/layout/CategoriasLayout';
-
-// El componente App es el punto de entrada de tu aplicación. Aquí es donde defines las rutas y decides qué componentes mostrar en función de la URL actual.
-
 import Frozen from './Pages/Catalog/Frozen';
-import Appetizers from './Pages/Catalog/Appetizers';
+import Snacks from './Pages/Catalog/Snacks';
 
 
 function App() {
@@ -46,9 +43,8 @@ function App() {
       {/* Aquí anidamos tus productos actuales sin perder tu ruta original */}
        // 2. Tu bloque de rutas (anidadas bajo 'catalog')
       <Route path="/catalog" element={<CategoriasLayout />}>
-      <Route index element={<Catalog />} />       {/* Carga /catalog */}
       <Route path="frozen" element={<Frozen />} />   {/* Carga /catalog/frozen */}
-      <Route path="appetizers" element={<Appetizers />} /> {/* Carga /catalog/appetizers */}
+      <Route path="snacks" element={<Snacks />} /> {/* Carga /catalog/snacks */}
       </Route>
 
       <Route path="/contact" element={<Contact />} />

@@ -117,10 +117,10 @@ function Navbar() {
           <div>
             <h2>Categorías</h2>
 
-            <Link to="/congelados"> ❄️ Congelados</Link>
+            <Link to="/catalog/frozen"> ❄️ Congelados</Link>
             <br />
 
-            <Link to="/snacks"> 🍫 Snacks</Link>
+            <Link to="/catalog/snacks"> 🍫 Snacks</Link>
             <br />
 
             <Link to="/frutas"> 🍎 Frutas</Link>
