@@ -203,10 +203,10 @@
   text-align: center;        /* Centra los textos y elementos */
   color: var(--verde-oscuro); /* Letras de color institucional */
   background: #eaf5ec !important; /* Fondo verde claro para la sección */
-  padding: 60px 4% 0px 2% !important; /* CORRECCIÓN: Forzado a 0px abajo para eliminar el espacio vacío */
-  margin-bottom: -20px !important;    /* CORRECCIÓN: Margen negativo para jalar la sección blanca hacia arriba */
+  padding: 60px 4% 0px 4% ; /* CORRECCIÓN: Forzado a 0px abajo para eliminar el espacio vacío */
+  margin-bottom: 80px ;    /* CORRECCIÓN: Margen negativo para jalar la sección blanca hacia arriba */
   position: relative;
-  z-index: 5;
+  z-index: 5; /* Se asegura de que esta sección esté por debajo de la siguiente sección blanca para cubrir cualquier espacio raro */
 }
 
 .productos h2 {
@@ -231,8 +231,8 @@
   display: grid;             /* Activa rejilla para los productos */
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Ajusta las columnas automáticamente */
   gap: 30px;                 /* Distancia de 30px entre productos */
-  padding-bottom: 0px !important; /* CORRECCIÓN: Removido completamente cualquier padding extra */
-  margin-bottom: 0px !important;  /* CORRECCIÓN: Removido margen inferior de las tarjetas */
+  padding-bottom: 0px ; /*  Removido completamente cualquier padding extra */
+  margin-bottom: 0px ;  /* Removido margen inferior de las tarjetas */
 }
 
 /* Tarjeta de producto individual */
@@ -264,7 +264,7 @@
 .producto-card h3 { 
   font-size: 22px;           /* Tamaño del nombre del producto */
   color: var(--verde-oscuro); /* Letra del producto en verde oscuro */
-  margin: 20px 0 10px 0;     /* Márgenes separados: arriba y abajo */
+  margin: 20px 0 20px 0;     /* Márgenes separados: arriba y abajo */
 }
 
 .producto-card p { 
