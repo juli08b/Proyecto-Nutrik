@@ -5,7 +5,7 @@ import Header from './Components/Header';
 import Footer from './Components/Footer'; 
 import Login from './Pages/Login';
 import Register from './Pages/Register';
-import Productos from './Pages/Product';
+import Product from './Pages/Product';
 import ProductView from './Pages/ProductView';
 import Contact from './Pages/Contact';
 import Newproduct from './Pages/Newproduct';
@@ -49,6 +49,7 @@ function App() {
 
       <Route path="/contact" element={<Contact />} />
       <Route path="/cart" element={<Cart />} />
+      <Route path="/productos" element={<Product />} />
       <Route path="/productview/:id" element={<ProductView />} />
       <Route path="/newproduct" element={<Newproduct />} />
 
