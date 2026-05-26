@@ -11,7 +11,7 @@ import maca from "../assets/maca.svg";
 import granola from "../assets/granola.svg";
 import frutos from "../assets/frutos.svg";
 
-function Vistaproducto() {
+function Productview() {
 
   const productos = [
     {
@@ -131,4 +131,4 @@ function Vistaproducto() {
   )
 }
 
-export default Vistaproducto
+export default Productview
