@@ -220,19 +220,34 @@
     font-size: 18px;
     cursor: pointer;
 }
-.btn-carrito{
-  background-color: #1f1f1f;
+.btn-comprar{
+  background: black;
   color: white;
   border: none;
-  padding: 12px 22px;
-  border-radius: 10px;
-  font-size: 15px;
+  padding: 22px 50px;
+  border-radius: 40px;
+  font-size: 30px;
+  font-weight: bold;
   cursor: pointer;
-  transition: 0.3s ease;
-  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-comprar:hover{
+  transform: scale(1.05);
+}
+
+.btn-carrito{
+  background: #d9eadf;
+  color: #2f6b16;
+  border: 2px solid #1f1f1f;
+  padding: 22px 45px;
+  border-radius: 40px;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .btn-carrito:hover{
-  background-color: #4ade80;
   transform: scale(1.05);
 }
