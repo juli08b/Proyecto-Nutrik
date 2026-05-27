@@ -71,22 +71,23 @@ function Newproduct() {
   }, []);
 
   return (
-    <section className="productos">
+    <section className="productos-section">
       <div className="productos-header">
-        <h1>Productos Saludables</h1>
-        <p>
+        <h1 className="titulo-productos">Productos Saludables</h1>
+        <div className="linea-titulo"></div>
+        <p className="subtitulo-productos">
           Descubre nuestra selección de superalimentos y productos 100% 
           naturales para potenciar tu bienestar diario.
         </p>
       </div>
 
-      <div className="productos-grid">
+      <div className="contenedor-productos">
         {productos.map((producto) => (
-          <div className="producto-card" key={producto.id}>
+          <div className="card-producto" key={producto.id}>
             <img
               src={producto.imagen}
               alt={producto.nombre}
-              className="producto-img"
+              className="img-producto"
             />
             <div className="producto-info">
               <h3>{producto.nombre}</h3>

@@ -1,109 +1,148 @@
-.productos {
-  padding: 40px 20px;    /* Espaciado interno general de la sección */
+.productos-section {
+  width: 100%;
+  padding: 60px 20px;
+  background-color: #DFD3C3; /* CAMBIADO: Un beige más marcado */
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .productos-header {
   text-align: center;
-  margin-top: 30px;      /* Espacio superior respecto al menú anterior */
-  margin-bottom: 60px;   /* Distancia perfecta con las tarjetas de abajo */
+  margin-top: 0px; /* Corregido para que no deje franja blanca con el menú */
+  margin-bottom: 60px;
   padding: 0 20px;
 }
 
-.productos-header h1 {
-  font-size: 48px;       /* Tamaño grande e imponente */
-  color: #14532d;
-  margin-bottom: 18px;   /* Separa el título principal del párrafo explicativo */
-  font-weight: 800;      /* Grosor extra bold */
-  letter-spacing: -0.5px;
+/* Título principal con animación */
+.titulo-productos {
+  font-size: 3.5rem;
+  font-weight: 800;
+  text-align: center;
+  color: #2E241B; /* Letra café oscura de Gabriel */
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  animation: aparecer 1s ease forwards;
 }
 
-.productos-header p {
-  font-size: 21px;       /* Información secundaria más clara y legible */
-  color: #4b5563;        /* Gris suave profesional */
-  max-width: 750px;      /* Mantiene el texto centrado sin expandirse infinito */
-  margin: 0 auto;        /* Centra el contenedor horizontalmente */
-  line-height: 1.6;      /* Altura de línea cómoda para lectura */
+/* Línea decorativa verde olivo que te gusta */
+.linea-titulo {
+  width: 180px;
+  height: 5px;
+  background: #6B8E23;
+  margin: auto;
+  border-radius: 20px;
+  margin-bottom: 25px;
+}
+
+/* Subtítulo con animación */
+.subtitulo-productos {
+  font-size: 22px;
+  color: #2d2d0a; /* Letra verde/oscura de Gabriel */
+  max-width: 750px;
+  margin: 0 auto;
+  line-height: 1.6;
+  animation: aparecer 1.5s ease forwards;
+}
+
+/* Animación de entrada */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ==========================================================================
-   2. Grilla y Tarjetas de Productos
+   2. Grilla y Tarjetas de Productos (¡Vuelven a ser Blancas!)
    ========================================================================== */
-.productos-grid {
+.contenedor-productos {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Tu cuadrícula original */
+  gap: 35px;
   max-width: 1200px;
   margin: 0 auto;
+  justify-content: center;
 }
 
-.producto-card {
-  background: white;
-  border-radius: 25px;
+.card-producto {
+  background: #ffffff !important; /* CAMBIADO: Tu fondo blanco original para que resalte */
+  border-radius: 25px;           /* CAMBIADO: Tus bordes redondeados originales */
   overflow: hidden;
-  border: 2px solid rgba(20, 83, 45, 0.15);
-  box-shadow: 0px 14px 30px rgba(0, 0, 0, 0.16);
-  transition: 0.3s;
+  border: 2px solid rgba(20, 83, 45, 0.15); /* Tu borde original sutil */
+  padding: 0px;                  /* Quitamos el padding interno para que la imagen toque los bordes */
+  transition: 0.3s ease;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0px 14px 30px rgba(0, 0, 0, 0.16); /* Tu sombra original */
 }
 
-.producto-card:hover {
+.card-producto:hover {
   transform: translateY(-8px);
   box-shadow: 0px 20px 35px rgba(20, 83, 45, 0.25);
-  border-color: #14532d;
+  border-color: #14532d; /* Borde verde oscuro al pasar el cursor */
 }
 
-.producto-img {
+.img-producto {
   width: 100%;
-  height: 240px;
+  height: 240px;                 /* Tu altura de imagen original */
   object-fit: cover;
   display: block;
-  border-bottom: 1.5px solid rgba(20, 83, 45, 0.12); /* Línea sutil de división */
+  border-bottom: 1.5px solid rgba(20, 83, 45, 0.12); /* Tu línea divisora */
 }
 
+/* Contenedor interno de los textos dentro de la tarjeta */
 .producto-info {
-  padding: 25px;
+  padding: 25px;                 /* Tu espaciado interno original */
   text-align: center;
-  background: #ffffff; 
+  background: #ffffff !important; /* Base de la info totalmente blanca */
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Empuja el botón al final de la tarjeta */
+  justify-content: space-between;
   align-items: center;
 }
 
-.producto-info h3 {
-  font-size: 20px; 
-  color: #14532d;
+.card-producto h3 {
+  font-size: 20px;
+  color: #3f240f; /* Título del producto café de Gabriel */
   margin-bottom: 20px;
-  min-height: 60px; 
+  min-height: 60px; /* Tu balance original de altura */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.producto-info a {
+.card-producto a {
   width: 100%;
   display: flex;
   justify-content: center;
   margin-top: auto;
 }
 
+/* Botón estilizado */
 .btn-producto {
-  background: #14532d;
+  background-color: #14532d;
   color: white;
   border: none;
-  padding: 14px 30px;
-  border-radius: 40px;
+  padding: 14px 30px;            /* Tus medidas originales de botón */
+  border-radius: 40px;           /* Tus botones bien redondeados */
+  cursor: pointer;
   font-size: 16px;
   font-weight: bold;
-  cursor: pointer;
   transition: 0.3s;
   width: 100%;
   max-width: 200px;
+  display: block;
+  margin: 0 auto;
 }
 
 .btn-producto:hover {
-  background: #166534;
+  background: #166534;           /* Tu hover verde oscuro original */
   transform: scale(1.03);
 }
