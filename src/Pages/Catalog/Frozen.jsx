@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import "../../App.css"; // Ruta corregida
+import "../../App.css"; 
 
 const productosFrozen = [
   { id: 1, nombre: "Silk - almendra sin azúcar", imagen: "https://i.pinimg.com/1200x/59/7a/da/597ada481273c9ecc7b001456412b3c4.jpg", ruta: "/catalog/frozen/silk-almendra" },

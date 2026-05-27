@@ -25,20 +25,23 @@ import Snacks from './Pages/Catalog/Snacks';
 function App() {
   const location = useLocation();
   const [menuAbierto, setMenuAbierto] = useState(false);
-  const esHome = location.pathname === '/';
+
+  // CORRECCIÓN: Usamos .toLowerCase() y verificamos si la ruta incluye login o registro
+  // Esto evita fallos por barras diagonales o mayúsculas
+  const pathActual = location.pathname.toLowerCase();
+  const mostrarLayout = !pathActual.includes('login') && !pathActual.includes('registro');
 
   return (
-    // 1. Envolvemos toda la aplicación en el Provider para compartir el estado del carrito
     <CartProvider>
       
-      {/* 2. Colocamos el Panel aquí para que esté disponible globalmente */}
       <CartPanel />
 
-      {/* Solo se muestra el Navbar si esHome es true */}
-      {esHome && <Navbar menuAbierto={menuAbierto} setMenuAbierto={setMenuAbierto} />}
+      {/* Solo se muestra si NO estamos en login o registro */}
+      {mostrarLayout && (
+        <Navbar menuAbierto={menuAbierto} setMenuAbierto={setMenuAbierto} />
+      )}
 
       <Routes>
-        {/* Le pasamos la función a la Home para que pueda abrirlo */}
         <Route path="/" element={<Home setMenuAbierto={setMenuAbierto} />} />
         <Route path="/header" element={<Header />} />
         <Route path="/login" element={<Login />} />
@@ -57,8 +60,8 @@ function App() {
         <Route path="/newproduct" element={<Newproduct />} />
       </Routes>
 
-      {/* Solo se muestra el Footer si esHome es true */}
-      {esHome && <Footer />}
+      {/* Solo se muestra si NO estamos en login o registro */}
+      {mostrarLayout && <Footer />}
       
     </CartProvider>
   );

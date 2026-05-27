@@ -4,8 +4,7 @@ import Navbar from '../Navbar';
 const CategoriasLayout = () => {
   return (
     <div className="layout-container">
-      {/* El Navbar siempre se mostrará arriba */}
-      <Navbar />
+    
         
 
       <main className="main-content-wrapper">
