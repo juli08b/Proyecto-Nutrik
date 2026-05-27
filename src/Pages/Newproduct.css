@@ -1,109 +1,152 @@
-.productos {
-  padding: 40px 20px;    /* Espaciado interno general de la sección */
+.productos-section {
+  width: 100%;
+  padding: 60px 20px;
+  background-color: #DFD3C3; /* se Aplica un color beige con fuerza para marcar el fondo de la página */
+  text-align: center;
+  box-sizing: border-box; /* Aseguro que los paddings no me alteren el ancho total de la pantalla */
 }
 
 .productos-header {
   text-align: center;
-  margin-top: 30px;      /* Espacio superior respecto al menú anterior */
-  margin-bottom: 60px;   /* Distancia perfecta con las tarjetas de abajo */
+  margin-top: 0px; /* Evito que los márgenes por defecto me dejen franjas blancas debajo del menú */
+  margin-bottom: 60px; /* Espaciado cómodo antes de empezar a mostrar las tarjetas */
   padding: 0 20px;
 }
 
-.productos-header h1 {
-  font-size: 48px;       /* Tamaño grande e imponente */
-  color: #14532d;
-  margin-bottom: 18px;   /* Separa el título principal del párrafo explicativo */
-  font-weight: 800;      /* Grosor extra bold */
-  letter-spacing: -0.5px;
+/* Título principal con animación de entrada */
+.titulo-productos {
+  font-size: 3.5rem;
+  font-weight: 800;
+  text-align: center;
+  color: #2E241B; /* Color café oscuro tomado de la paleta del proyecto */
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  animation: aparecer 1s ease forwards; /* Activo la animación al cargar la página */
 }
 
-.productos-header p {
-  font-size: 21px;       /* Información secundaria más clara y legible */
-  color: #4b5563;        /* Gris suave profesional */
-  max-width: 750px;      /* Mantiene el texto centrado sin expandirse infinito */
-  margin: 0 auto;        /* Centra el contenedor horizontalmente */
-  line-height: 1.6;      /* Altura de línea cómoda para lectura */
+/* Línea decorativa verde olivo situada debajo del título principal */
+.linea-titulo {
+  width: 180px;
+  height: 5px;
+  background: #6B8E23; /* Tono verde oliva natural */
+  margin: auto; /* La centro perfectamente horizontal */
+  border-radius: 20px; /* Bordes totalmente redondeados para que parezca una píldora */
+  margin-bottom: 25px;
+}
+
+/* Subtítulo descriptivo */
+.subtitulo-productos {
+  font-size: 22px;
+  color: #2d2d0a; /* Tono verde oliva muy oscuro y legible */
+  max-width: 750px; /* Limito el ancho de lectura para que no se extienda en pantallas gigantes */
+  margin: 0 auto; /* Lo centro horizontalmente */
+  line-height: 1.6; /* Le doy un interlineado cómodo para la vista */
+  animation: aparecer 1.5s ease forwards; /* Animación ligeramente más lenta para un efecto sutil */
+}
+
+/* Animación de entrada genérica: Desplaza los elementos hacia arriba mientras pasan de transparentes a visibles */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ==========================================================================
-   2. Grilla y Tarjetas de Productos
+   2. Grilla y Tarjetas de Productos (Diseño de las Cards)
    ========================================================================== */
-.productos-grid {
+
+.contenedor-productos {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 30px;
-  max-width: 1200px;
+  /* Creo una grilla responsiva automática: las tarjetas miden mínimo 280px y se acomodan solas */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+  gap: 35px; /* Separación uniforme entre tarjetas */
+  max-width: 1200px; /* Ancho máximo de la grilla para contener el diseño */
+  margin: 0 auto; /* Centrado en pantallas grandes */
+  justify-content: center;
+}
+
+.card-producto {
+  background: #ffffff ; /* Forzo el fondo blanco puro para que las tarjetas resalten sobre el beige */
+  border-radius: 25px; /* Bordes muy redondeados y modernos para mis tarjetas */
+  overflow: hidden; /* Corto las imágenes que sobresalgan de las esquinas redondeadas */
+  border: 2px solid rgba(20, 83, 45, 0.15); /* Borde estético sutil con un toque verde */
+  padding: 0px; /* Remuevo el padding para que la imagen abarque de extremo a extremo */
+  transition: 0.3s ease; /* Transición suave para todos los efectos hover */
+  display: flex;
+  flex-direction: column; /* Organizo el contenido verticalmente */
+  justify-content: space-between; /* Distribuyo el espacio para que los botones queden alineados abajo */
+  box-shadow: 0px 14px 30px rgba(0, 0, 0, 0.16); /* Sombra pronunciada para dar efecto de elevación */
+}
+
+/* Efecto visual cuando el cursor pasa por encima de la tarjeta */
+.card-producto:hover {
+  transform: translateY(-8px); /* Elevo la tarjeta sutilmente hacia arriba */
+  box-shadow: 0px 20px 35px rgba(20, 83, 45, 0.25); /* Intensifico la sombra para simular más altura */
+  border-color: #14532d; /* El borde cambia al verde oscuro corporativo */
+}
+
+.img-producto {
+  width: 100%;
+  height: 240px; /* Altura fija para que todas las imágenes del catálogo midan igual sin importar su tamaño original */
+  object-fit: cover; /* Recorta y adapta la imagen para que llene el espacio sin distorsionarse */
+  display: block;
+  border-bottom: 1.5px solid rgba(20, 83, 45, 0.12); /* Línea divisoria fina entre la foto y los textos */
+}
+
+/* Contenedor interno de los textos dentro de la tarjeta blanca */
+.producto-info {
+  padding: 25px; /* Margen interno para que los textos no toquen los bordes de la tarjeta */
+  text-align: center;
+  background: #ffffff ;
+  flex-grow: 1; /* Permite que este bloque crezca para empujar el botón al fondo si hay títulos cortos */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-producto h3 {
+  font-size: 20px;
+  color: #3f240f; /* Título del producto en color café */
+  margin-bottom: 20px;
+  min-height: 60px; /* Altura mínima reservada para que los títulos de 1 y 2 líneas no desalineen los botones */
+  display: flex;
+  align-items: center; /* Centrado vertical del texto */
+  justify-content: center;
+}
+
+.card-producto a {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: auto; /* Empuja el enlace y el botón obligatoriamente hacia la parte inferior */
+}
+
+/* Estilos aplicados al botón de acción */
+.btn-producto {
+  background-color: #14532d; /* Verde oscuro saludable */
+  color: white;
+  border: none;
+  padding: 14px 30px; /* Botón grande y fácil de presionar */
+  border-radius: 40px; /* Botón estilo píldora completamente redondeado */
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: 0.3s;
+  width: 100%;
+  max-width: 200px; /* Ancho máximo para mantenerlo estilizado */
+  display: block;
   margin: 0 auto;
 }
 
-.producto-card {
-  background: white;
-  border-radius: 25px;
-  overflow: hidden;
-  border: 2px solid rgba(20, 83, 45, 0.15);
-  box-shadow: 0px 14px 30px rgba(0, 0, 0, 0.16);
-  transition: 0.3s;
-  display: flex;
-  flex-direction: column;
-}
-
-.producto-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0px 20px 35px rgba(20, 83, 45, 0.25);
-  border-color: #14532d;
-}
-
-.producto-img {
-  width: 100%;
-  height: 240px;
-  object-fit: cover;
-  display: block;
-  border-bottom: 1.5px solid rgba(20, 83, 45, 0.12); /* Línea sutil de división */
-}
-
-.producto-info {
-  padding: 25px;
-  text-align: center;
-  background: #ffffff; 
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* Empuja el botón al final de la tarjeta */
-  align-items: center;
-}
-
-.producto-info h3 {
-  font-size: 20px; 
-  color: #14532d;
-  margin-bottom: 20px;
-  min-height: 60px; 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.producto-info a {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: auto;
-}
-
-.btn-producto {
-  background: #14532d;
-  color: white;
-  border: none;
-  padding: 14px 30px;
-  border-radius: 40px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-  width: 100%;
-  max-width: 200px;
-}
-
+/* Efecto hover sobre el botón */
 .btn-producto:hover {
-  background: #166534;
-  transform: scale(1.03);
+  background: #166534; /* Oscurezco un poco el verde del botón al pasar el cursor */
+  transform: scale(1.03); /* Efecto leve de escala/crecimiento para dar feedback de clic */
 }
