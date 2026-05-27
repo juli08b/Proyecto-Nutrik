@@ -1,4 +1,5 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import Navbar from './Components/Navbar';
 import Home from './Components/Home';
 import Header from './Components/Header';
@@ -13,53 +14,53 @@ import Cart from './Pages/Cart';
 import './index.css';
 import './App.css';
 
-import { useState } from 'react'; // Importamos el Hook de estado para manejar el estado del menú en el componente App, que es el padre de Navbar y Home.
+// Importamos el Provider y el Panel desde tu archivo Cart.jsx
+import { CartProvider, CartPanel } from './Pages/Cart';
 
-// Importamos el layout específico para las categorías, que incluye el Navbar y el Outlet para renderizar los componentes de cada categoría sin perder la estructura del diseño.
+// Importamos el layout específico para las categorías
 import CategoriasLayout from './Components/layout/CategoriasLayout';
 import Frozen from './Pages/Catalog/Frozen';
 import Snacks from './Pages/Catalog/Snacks';
 
-
 function App() {
   const location = useLocation();
-  // El Hook de estado se declara en el padre para que Navbar y Home puedan compartirlo
   const [menuAbierto, setMenuAbierto] = useState(false);
-  // Condición de Master: Solo es verdadero si estamos en la raíz (Home)
   const esHome = location.pathname === '/';
 
   return (
-    <>
-      {/* Solo se muestra el Navbar si esHome es true */}{/* Le pasamos el estado y la función al Navbar */}
-      {esHome && <Navbar  menuAbierto={menuAbierto} setMenuAbierto={setMenuAbierto} />}
+    // 1. Envolvemos toda la aplicación en el Provider para compartir el estado del carrito
+    <CartProvider>
+      
+      {/* 2. Colocamos el Panel aquí para que esté disponible globalmente */}
+      <CartPanel />
+
+      {/* Solo se muestra el Navbar si esHome es true */}
+      {esHome && <Navbar menuAbierto={menuAbierto} setMenuAbierto={setMenuAbierto} />}
 
       <Routes>
         {/* Le pasamos la función a la Home para que pueda abrirlo */}
-      <Route path="/" element={<Home setMenuAbierto={setMenuAbierto} />} />
-      <Route path="/header" element={<Header />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/registro" element={<Register />} />
-      
-      {/* Aquí anidamos tus productos actuales sin perder tu ruta original */}
-       // 2. Tu bloque de rutas (anidadas bajo 'catalog')
-      <Route path="/catalog" element={<CategoriasLayout />}>
-      <Route path="frozen" element={<Frozen />} />   {/* Carga /catalog/frozen */}
-      <Route path="snacks" element={<Snacks />} /> {/* Carga /catalog/snacks */}
-      </Route>
-
-      <Route path="/contact" element={<Contact />} />
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/productos" element={<Product />} />
-      <Route path="/productview/:id" element={<ProductView />} />
-      <Route path="/newproduct" element={<Newproduct />} />
-
-
+        <Route path="/" element={<Home setMenuAbierto={setMenuAbierto} />} />
+        <Route path="/header" element={<Header />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Register />} />
         
+        {/* Rutas anidadas de categorías */}
+        <Route path="/catalog" element={<CategoriasLayout />}>
+          <Route path="frozen" element={<Frozen />} />
+          <Route path="snacks" element={<Snacks />} />
+        </Route>
+
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/productos" element={<Product />} />
+        <Route path="/productview/:id" element={<ProductView />} />
+        <Route path="/newproduct" element={<Newproduct />} />
       </Routes>
 
       {/* Solo se muestra el Footer si esHome es true */}
       {esHome && <Footer />}
-    </>
+      
+    </CartProvider>
   );
 }
 
