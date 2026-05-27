@@ -72,7 +72,7 @@
 }
 
 .card-producto {
-  background: #ffffff ; /* Forzo el fondo blanco puro para que las tarjetas resalten sobre el beige */
+  background: #ffffff !important; /* Forzo el fondo blanco puro para que las tarjetas resalten sobre el beige */
   border-radius: 25px; /* Bordes muy redondeados y modernos para mis tarjetas */
   overflow: hidden; /* Corto las imágenes que sobresalgan de las esquinas redondeadas */
   border: 2px solid rgba(20, 83, 45, 0.15); /* Borde estético sutil con un toque verde */
@@ -103,7 +103,7 @@
 .producto-info {
   padding: 25px; /* Margen interno para que los textos no toquen los bordes de la tarjeta */
   text-align: center;
-  background: #ffffff ;
+  background: #ffffff !important;
   flex-grow: 1; /* Permite que este bloque crezca para empujar el botón al fondo si hay títulos cortos */
   display: flex;
   flex-direction: column;

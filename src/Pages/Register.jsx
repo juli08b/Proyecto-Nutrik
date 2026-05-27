@@ -5,13 +5,14 @@ import logo from '../assets/logoNutrick.png';
 
 
 const Register = () => {
-  // --- 2. ESTADOS (Pizarrones de memoria) ---
-  const [estatura, setEstatura] = useState("");
-  const [peso, setPeso] = useState("");
-  const [opcion, setOpcion] = useState(""); 
-  const [otroDetalle, setOtroDetalle] = useState("");
+  //ESTADOS (Pizarrones de memoria)
+  // useState: Permite que el componente "recuerde" los valores escritos por el usuario
+  const [estatura, setEstatura] = useState(""); // Almacena y actualiza el valor de estatura
+  const [peso, setPeso] = useState(""); // Almacena y actualiza el valor de peso
+  const [opcion, setOpcion] = useState(""); // Controla qué opción de alergia seleccionó el usuario
+  const [otroDetalle, setOtroDetalle] = useState(""); // Guarda texto cuando seleccionan "Otro"
 
-  // --- 3. FUNCIONES (Los Secretarios) ---
+  //FUNCIONES (Los Secretarios) ---
 
   // Secretario de Estatura (Pone el punto automático: 1.55)
   const manejarEstatura = (e) => {
