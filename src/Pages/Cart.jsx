@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 import "./Cart.css";
 import { Link } from "react-router-dom";
 
@@ -42,9 +42,12 @@ export function CartProvider({ children }) {
   };
 
   //SUMA TODAS LA CANTIDAD PARA EL BADGE 
-  const totalItems = carrito.reduce((acc, p) => acc + p.cantidad, 0);
+  const totalItems = useMemo(() => carrito.reduce((acc, p) => acc + Number(p.cantidad || 1), 0), [carrito]);
   //MULTIPLICA PRECIO X CANTIDAD PARA QUE SE MIRE EL TOTAL
-  const totalPrecio = carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
+  const totalPrecio = useMemo(
+    () => carrito.reduce((acc, p) => acc + Number(p.precio || 0) * Number(p.cantidad || 1), 0),
+    [carrito]
+  );
 
   return (
     //COMPARTE TODOS LOS COMPONENTES

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import "./Newproduct.css";
+import "./Product.css";
 
 const productos = [
   {
@@ -71,9 +71,9 @@ function Newproduct() {
   }, []);
 
   return (
-    <section className="productos">
+    <section className="productos-section">
       <div className="productos-header">
-        <h1>Productos Saludables</h1>
+        <h1>Nuevo</h1>
         <p>
            Descubre nuestra selección de superalimentos y productos 100% 
            naturales para potenciar tu bienestar diario.

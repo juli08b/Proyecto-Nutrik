@@ -69,7 +69,7 @@ function Home({ setMenuAbierto }) {
 
       {/* SECCIÓN LO NUEVO: Showcase de productos destacados del catálogo */}
       <section className="productos">
-        <h2>Lo nuevo</h2>
+        <h2>Nuevo</h2>
         <div className="productos-grid">
           {/* Card de Producto: Imagen + Título + Descripción corta */}
           <div className="producto-card">

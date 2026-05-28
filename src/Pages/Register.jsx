@@ -10,8 +10,10 @@ const Register = () => {
   const [estatura, setEstatura] = useState(""); // Almacena y actualiza el valor de estatura
   const [peso, setPeso] = useState(""); // Almacena y actualiza el valor de peso
   const [opcion, setOpcion] = useState(""); // Controla qué opción de alergia seleccionó el usuario
-  const [otroDetalle, setOtroDetalle] = useState(""); // Guarda texto cuando seleccionan "Otro"
-
+  const [otroDetalle, setOtroDetalle] = useState("");// Guarda texto cuando seleccionan "Otro"
+  const [dieta, setDieta] = useState(""); // Controla la alimentación especial seleccionada
+  const [otroDieta, setOtroDieta] = useState(""); // Guarda el detalle si elige "Otro"
+  
   //FUNCIONES (Los Secretarios) ---
 
   // Secretario de Estatura (Pone el punto automático: 1.55)
@@ -117,8 +119,9 @@ const Register = () => {
             <label className="field-label">¿Sigues algún tipo de alimentación especial?</label>
             <div className="input-row">
               <select 
-                className="select-custom" 
-                onChange={(e) => manejarCambioDieta(e.target.value)}
+                className="select-custom"
+                value={dieta}
+                onChange={(e) => setDieta(e.target.value)}
                 required
               >
                 <option value="">Selecciona una opción</option>
@@ -127,13 +130,16 @@ const Register = () => {
                 <option value="pescetariano">Pescetariano</option>
                 <option value="otro">Otro</option>
               </select>
-          
 
-              {/* Si elige "Otro", se despliega este campo mágicamente */}
-              {opcion === 'Otro' && (
-                <div className="input-row" style={{ marginTop: '10px' }}>
-                  <input type="text" placeholder="Por favor, especifica cuál" value={otroDetalle} onChange={(e) => setOtroDetalle(e.target.value)} required />
-                </div>
+              {/* Solo aparece si el usuario elige "Otro" */}
+              {dieta === 'otro' && (
+                <input
+                  type="text"
+                  placeholder="Por favor, especifica cuál"
+                  value={otroDieta}
+                  onChange={(e) => setOtroDieta(e.target.value)}
+                  required
+                />
               )}
             </div>
 
