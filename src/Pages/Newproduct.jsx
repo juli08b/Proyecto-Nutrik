@@ -73,7 +73,7 @@ function Newproduct() {
   return (
     <section className="productos-section">
       <div className="productos-header">
-        <h1>Explora lo Nuevo</h1>
+        <h1 className="titulo-productos">Explora lo Nuevo</h1>
         <p>
            Descubre nuestra selección de superalimentos y productos 100% 
            naturales para potenciar tu bienestar diario.
