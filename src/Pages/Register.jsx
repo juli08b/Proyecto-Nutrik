@@ -18,18 +18,18 @@ const Register = () => {
 
   // Secretario de Estatura (Pone el punto automático: 1.55)
   const manejarEstatura = (e) => {
-    let valor = e.target.value.replace(/\D/g, ""); 
-    if (valor.length > 1) {
+    let valor = e.target.value.replace(/\D/g, ""); // Elimina todo lo que no sea número
+    if (valor.length > 1) { // Si el usuario ha ingresado más de un número, agrega el punto después del primer dígito
       valor = valor.charAt(0) + "." + valor.slice(1, 3);
     }
     setEstatura(valor);
   };
 
   // Secretario de Peso (Pone el "kg" automático)
-  const manejarPeso = (e) => {
-    let valor = e.target.value.replace(/\D/g, ""); 
-    if (valor.length > 0) {
-      valor = valor + " kg";
+  const manejarPeso = (e) => { // Elimina todo lo que no sea número
+    let valor = e.target.value.replace(/\D/g, "");  // Agrega "kg" al final si hay algún número
+    if (valor.length > 0) { // Si el usuario ha ingresado algo, agrega "kg"
+      valor = valor + " kg"; // Si el usuario borra todo, no muestra "kg"
     }
     setPeso(valor);
   };
