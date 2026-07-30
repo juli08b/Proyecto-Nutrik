@@ -218,7 +218,10 @@ function Home({ setMenuAbierto }) {
 
           <div className="cta-botones">
             <button className="btn-primary btn-grande">Comenzar compra</button>
-            <button className="btn-outline btn-grande-outline">Ver catálogo</button>
+            {/* Aquí es donde se abre el menú de categorías desde el Home, usando la función modificadora que recibimos por props */}
+            <button className="btn-outline btn-grande-outline" onClick={() => setMenuAbierto ("categoria")}>
+              Ver categoria
+            </button>
           </div>
 
         </div>
