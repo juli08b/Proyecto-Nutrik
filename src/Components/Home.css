@@ -141,13 +141,13 @@
    SECCIÓN 2: BENEFICIOS (¿POR QUÉ ELEGIRNOS?)
    ======================================================= */
 .beneficios {
-  padding: 50px 8% 80px 8%;  /* Espacio libre por dentro de la sección */
-  text-align: center;        /* Centra todos los textos e hijos */
-  background: #ecfdf5;       /* Fondo verde menta muy suave */
+  padding: 28px 8% 50px 8%;
+  text-align: center;
+  background: linear-gradient(180deg, #edf7ef 0%, #ecfdf5 52%, #f8fff9 100%);
 }
 
 .beneficios h2 {
-  font-size: 36px;           /* Tamaño grande para el título de beneficios */
+  font-size: 40px;           /* Tamaño grande para el título de beneficios */
   margin-bottom: 45px;       /* Deja espacio libre abajo del título */
   color: var(--verde-oscuro); /* Letras de color verde oscuro */
   position: relative;        /* Permite colocar la línea decorativa abajo */
@@ -200,54 +200,65 @@
    SECCIÓN 3: PRODUCTOS (LO NUEVO)
    ======================================================= */
 .productos {
-  text-align: center;        /* Centra los textos y elementos */
-  color: var(--verde-oscuro); /* Letras de color institucional */
-  background: #eaf5ec !important; /* Fondo verde claro para la sección */
-  padding: 60px 4% 0px 4% ; /* CORRECCIÓN: Forzado a 0px abajo para eliminar el espacio vacío */
-  margin-bottom: 80px ;    /* CORRECCIÓN: Margen negativo para jalar la sección blanca hacia arriba */
+  text-align: center;
+  color: var(--verde-oscuro);
+  background: linear-gradient(180deg, #ffffff 0%, #edf7ef 42%, #e8f4ea 100%);
+  padding: 34px 4% 24px 4%;
+  margin-bottom: 24px;
   position: relative;
-  z-index: 5; /* Se asegura de que esta sección esté por debajo de la siguiente sección blanca para cubrir cualquier espacio raro */
+  z-index: 2;
+  border-bottom: 1px solid rgba(18, 113, 80, 0.08);
 }
 
 .productos h2 {
-  font-size: 70px;           /* Título grande de la sección */
+  font-size: 50px;           /* Título grande de la sección */
   color: #12280d;            /* Letras de color verde oscuro */
-  margin-bottom: 45px;       /* Espacio libre debajo del h2 */
+  margin-bottom: 20px;       /* Espacio libre debajo del h2 */
   position: relative;        /* Deja listo el lugar para la línea inferior */
 }
 
 .productos h2::after {
-  content: "";               /* Crea el espacio para la línea decorativa */
-  width: 60px;               /* Ancho de la rayita verde */
-  height: 15px;              /* Altura o grosor de la rayita */
-  background: var(--verde-neon); /* Color neón para la rayita */
-  display: block;            /* Hace que se comporte como un bloque visual */
-  margin: 20px auto 0;       /* Centra la rayita debajo del título */
-  border-radius: 10px;       /* Esquinas circulares para la rayita */
+  content: "";
+  width: 60px;
+  height: 4px;
+  background: var(--verde-neon);
+  display: block;
+  margin: 12px auto 0;
+  border-radius: 10px;
 }
 
 /* Distribución de las tarjetas de productos */
 .productos-grid {
-  display: grid;             /* Activa rejilla para los productos */
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Ajusta las columnas automáticamente */
-  gap: 30px;                 /* Distancia de 30px entre productos */
-  padding-bottom: 0px ; /*  Removido completamente cualquier padding extra */
-  margin-bottom: 0px ;  /* Removido margen inferior de las tarjetas */
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  align-items: stretch;
+  width: 100%;
+  max-width: 1480px;
+  margin: 0 auto;
+  padding-bottom: 0;
 }
 
 /* Tarjeta de producto individual */
 .producto-card {
-  background: #ffffff;       /* Caja con fondo blanco limpio */
-  border: 4px solid rgba(18, 113, 80, 0.1); /* Borde verde muy clarito */
-  border-radius: 50px;       /* Redondeado elegante en las esquinas */
-  overflow: hidden;          /* Corta la imagen arriba para que respete las curvas */
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Sombra bonita debajo */
-  transition: all 0.5s ease; /* Efecto suave para cuando se pase el mouse */
+  background: #ffffff;
+  border: 2px solid rgba(18, 113, 80, 0.12);
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
+  transition: all 0.35s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
 }
 
 .producto-card:hover {
-  transform: translateY(-5px); /* Eleva la tarjeta 5 píxeles */
-  box-shadow: 0 15px 30px rgba(18, 113, 80, 0.15); /* Agranda la sombra al elevarse */
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 18px 35px rgba(17, 24, 39, 0.12);
+  border-color: #111827;
 }
 
 .producto-card img {
@@ -277,16 +288,17 @@
 
 /* Botón Ver más de los productos */
 .btn-ver-mas {
-  background: linear-gradient(90deg, var(--verde-neon), #b6ffb6); /* Fondo brillante degradado */
-  color: var(--verde-oscuro); /* Letras del botón en verde oscuro */
-  border: none;              /* Quita la línea de borde por defecto */
-  padding: 12px 28px;        /* Espacio interno del botón */
-  border-radius: 10px;       /* Redondea las esquinas del botón */
-  font-weight: bold;         /* Pone las letras en negrita */
-  font-size: 15px;           /* Tamaño de texto intermedio */
-  cursor: pointer;           /* Cambia el mouse a una manito de click */
-  margin-bottom: 25px;       /* Margen de separación con el fondo de la caja */
-  transition: all 0.2s ease; /* Suaviza los cambios del hover */
+  background: linear-gradient(90deg, var(--verde-neon), #b6ffb6);
+  color: var(--verde-oscuro);
+  border: none;
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: auto;
+  margin-bottom: 18px;
+  transition: all 0.2s ease;
 }
 
 .btn-ver-mas:hover {
@@ -299,18 +311,28 @@
    SECCIÓN 4: PASOS (COMPRA FÁCIL Y SALUDABLE)
    ======================================================= */
 .pasos {
-  padding: 10px 8% 80px 8% !important; /* CORRECCIÓN: Exactamente 10px de separación superior controlada */
-  margin-top: 0px !important;        /* Forzado a iniciar pegado a la sección superior */
-  background: #ffffff !important;    /* Fondo blanco garantizado sin cuadros raros */
-  position: relative;                /* Lo mantiene en su lugar de coordenadas */
-  z-index: 10;                       /* Lo pone por encima para cubrir brechas */
+  padding: 34px 8% 90px 8% !important;
+  margin-top: 16px !important;
+  background: linear-gradient(180deg, #edf7ef 0%, #ffffff 100%) !important;
+  position: relative;
+  z-index: 10;
+  border-top: 1px solid rgba(18, 113, 80, 0.08);
 }
 
-.pasos-header { 
-  text-align: center;                /* Centra los textos del encabezado */
-  margin-top: 0px !important;        /* CORRECCIÓN: Eliminado margen por defecto del navegador */
-  padding-top: 0px !important;       /* CORRECCIÓN: Eliminado relleno por defecto */
-  margin-bottom: 55px;               /* Separa el encabezado de las cajas de abajo */
+.pasos-header {
+  text-align: center;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  margin-bottom: 36px;
+}
+
+.separador-transicion {
+  width: 120px;
+  height: 5px;
+  border-radius: 999px;
+  margin: 0 auto 10px;
+  background: linear-gradient(90deg, #bff3c3 0%, #127150 100%);
+  opacity: 0.9;
 }
 
 /* Etiqueta flotante "Fácil y rápido" */
@@ -680,6 +702,12 @@
 /* =======================================================
    SECCIÓN 9: AJUSTES PARA CELULARES Y TABLETS
    ======================================================= */
+@media (max-width: 1100px) {
+  .productos-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 1024px) {
   .hero {
     flex-direction: column;  /* Cambia la bienvenida a diseño vertical */
@@ -694,6 +722,10 @@
 }
 
 @media (max-width: 768px) {
+  .productos-grid {
+    grid-template-columns: 1fr;
+  }
+
   .cta { padding: 70px 5%; } /* Achica los márgenes del cta final */
   .cta-content { padding: 40px 20px; } /* Compacta el cuadro de vidrio interno */
   .cta-content h2 { font-size: 32px; } /* Título del cta adaptable a celular */

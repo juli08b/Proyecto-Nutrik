@@ -69,7 +69,7 @@ function Navbar({menuAbierto, setMenuAbierto}) {
             <span className="icono-circulo">
               <img className="nuevo" src={nuevo} alt="" />
             </span>
-            <Link to="/Newproduct">Lo nuevo</Link>
+            <Link to="/Newproduct">Nuevo</Link>
           </li>
 
           <li className="nav-extra-item">

@@ -1,154 +1,183 @@
 /* --- CONTENEDOR PRINCIPAL --- */
 .main-container {
-  background: linear-gradient(180deg, #d2e9ca 0%, #e5f1e2 100%);
-  font-family: Arial, sans-serif;
   min-height: 100vh;
-  padding-bottom: 60px;
+  background: linear-gradient(180deg, #edf6eb 0%, #e3efe0 100%);
+  font-family: Arial, sans-serif;
+  color: #2f3e2c;
   box-sizing: border-box;
 }
+
+* { box-sizing: border-box; }
 
 /* --- CABECERA --- */
 .header-registro {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 30px;
-  padding: 40px 20px;
-  color: #2d3e26;
+  gap: 24px;
+  padding: 30px 18px 12px;
 }
 
 .logo-circle {
-  background-color: #f0f7ed;
-  width: 130px;
-  height: 130px;
+  width: 126px;
+  height: 126px;
   border-radius: 50%;
   display: flex;
-  justify-content: center;
   align-items: center;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
-  flex-shrink: 0; /* Evita que el círculo se deforme */
+  justify-content: center;
+  background: linear-gradient(145deg, #ffffff 0%, #eff8ee 100%);
+  box-shadow: 0 14px 28px rgba(80, 110, 80, 0.18), inset 0 0 0 2px rgba(255,255,255,0.9);
+  flex-shrink: 0;
 }
 
-.logo-img {
-  width: 100px;
-  height: auto;
+.logo-img { width: 92px; height: auto; }
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .header-text h1 {
-  font-size: 3rem;
-  margin: 0 0 5px 0;
+  margin: 0 0 4px;
+  font-size: 2.3rem;
+  color: #2f4a2d;
 }
 
 .header-text p {
   margin: 0;
-  font-size: 1.2rem;
+  color: #5e755e;
+  font-size: 1.02rem;
+  font-weight: 600;
 }
 
-/* --- TARJETA BLANCA (FORMULARIO) --- */
+/* --- TARJETA DEL FORMULARIO --- */
 .form-container {
   display: flex;
   justify-content: center;
-  padding: 0 20px;
+  padding: 0 16px 40px;
 }
 
 .card-registro {
-  background: white;
-  padding: 40px;
-  border-radius: 25px;
   width: 100%;
-  max-width: 750px; /* Bajado a 750px para que los campos no se estiren demasiado y se vea más estético */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  box-sizing: border-box;
+  max-width: 860px;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 14px 30px rgba(38, 53, 39, 0.12);
 }
 
 .card-title {
-  color: #6b8e5a;
+  margin: 0 0 18px;
   text-align: center;
-  margin-top: 0;
-  margin-bottom: 30px;
-  font-size: 32px;
-  font-weight: bold;
+  color: #5b7c4b;
+  font-size: 1.8rem;
+  font-weight: 800;
 }
 
-/* --- FORMULARIO Y GRUPOS DE CONTROL --- */
+/* --- FORMULARIO --- */
 .register-form {
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Distancia uniforme y exacta entre CADA bloque del formulario */
+  gap: 12px;
 }
 
-/* Contenedores de inputs */
-.from-group {
+.field-group {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Distancia interna uniforme cuando hay labels o filas metidas dentro */
-  width: 100%;
+  gap: 6px;
 }
 
 .input-row {
-  display: flex;
-  gap: 15px; /* Espacio horizontal idéntico entre inputs de la misma fila (Nombres/Apellidos) */
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
   width: 100%;
 }
 
 .input-group {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-/* --- ETIQUETAS (LABELS) --- */
-.field-label, .register-form label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: -5px; /* Acerca sutilmente la etiqueta a su respectivo input */
-  color: #3b4e34;
+.field-label,
+.register-form label {
   font-size: 0.95rem;
+  font-weight: 700;
+  color: #43553a;
 }
 
-/* --- INPUTS Y SELECTS (ESTILO UNIFICADO) --- */
-.from-group input, 
-.input-row input,
-.input-group input,
+/* --- INPUTS Y SELECTS --- */
+input,
+select,
 .select-custom {
   width: 100%;
-  padding: 14px; /* Un poco más de espacio interno para comodidad de escritura */
-  border: 2px solid #8ba37e; 
-  border-radius: 12px;
+  min-height: 52px;
+  height: 52px;
+  padding: 0 12px;
+  border: 1.5px solid #c3d4bf;
+  border-radius: 14px;
+  background: #fff;
+  color: #2f3e2c;
   font-size: 1rem;
-  color: #333;
-  background-color: #fff;
   box-sizing: border-box;
-  transition: all 0.2s ease-in-out;
 }
 
-/* Efecto focus moderno al hacer clic en un cuadro */
-.from-group input:focus, 
-.input-row input:focus,
-.input-group input:focus,
+input:focus,
+select:focus,
 .select-custom:focus {
   outline: none;
-  border-color: #557544;
-  box-shadow: 0 0 0 3px rgba(107, 142, 90, 0.2);
+  border-color: #6b8e5a;
+  box-shadow: 0 0 0 3px rgba(107, 142, 90, 0.18);
 }
 
-/* --- BOTÓN DE ENVÍO --- */
+/* --- BOTÓN --- */
 .btn-submit {
   width: 100%;
-  padding: 16px;
-  background-color: #6b8e5a;
-  color: white;
+  min-height: 52px;
+  margin-top: 8px;
   border: none;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 1.1rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #7aa462 0%, #5d8451 45%, #4d6a3f 100%);
+  color: #fff;
+  font-weight: 800;
+  font-size: 1rem;
   cursor: pointer;
-  margin-top: 15px;
-  transition: background-color 0.2s, transform 0.1s;
+  box-shadow: 0 12px 20px rgba(92, 122, 78, 0.28);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.btn-submit::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 20%, rgba(255,255,255,0.28) 50%, transparent 80%);
+  transform: translateX(-100%);
 }
 
 .btn-submit:hover {
-  background-color: #4a6341;
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 16px 24px rgba(92, 122, 78, 0.35);
+  filter: saturate(1.08);
+}
+
+.btn-submit:hover::after {
+  animation: shine 0.8s ease;
 }
 
 .btn-submit:active {
-  transform: scale(0.98); /* Pequeño efecto de pulsado */
+  transform: translateY(0) scale(0.99);
+}
+
+@keyframes shine {
+  100% { transform: translateX(100%); }
+}
+
+@media (max-width: 680px) {
+  .header-registro { flex-direction: column; text-align: center; }
+  .input-row { grid-template-columns: 1fr; }
+  .card-registro { padding: 18px; border-radius: 18px; }
 }

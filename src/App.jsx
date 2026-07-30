@@ -11,6 +11,7 @@ import Product from './Pages/Product';
 import ProductView from './Pages/ProductView';
 import Contact from './Pages/Contact';
 import Newproduct from './Pages/Newproduct';
+import Discount from './Pages/Discount';
 import Cart from './Pages/Cart';
 import './index.css';
 import './App.css';
@@ -57,6 +58,7 @@ function App() {
         </Route>
 
         <Route path="/contact" element={<Contact />} />
+        <Route path="/discount" element={<Discount />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/productos" element={<Product />} />
         <Route path="/productview/:id" element={<ProductView />} />
