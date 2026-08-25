@@ -1,0 +1,184 @@
+.desc-contenedor {
+  width: 100%;
+  padding: 80px 20px 100px;
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0) 30%),
+    linear-gradient(180deg, #fffaf5 0%, #efe6db 45%, #e4ddcf 100%);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* titulo*/
+.desc-titulo-bloque {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 50px;
+}
+
+.titulo2prod {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #2E241B;
+  margin-bottom: 15px;
+  text-transform: capitalize;
+  letter-spacing: -0.02em;
+  animation: aparecer 1s ease forwards;
+  position: relative;
+}
+
+.titulo2prod::after {
+  content: "";
+  width: 180px;
+  height: 6px;
+  background: #9acd32;
+  display: block;
+  margin: 15px auto 0;
+  border-radius: 10px;
+}
+
+.desc-subtitulo {
+  font-size: 1.1rem;
+  color: #5d6d2a;
+  margin: 0 0 50px;
+  line-height: 1.6;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Contenedor de tarjetas igual al de productos */
+.contenedorproductos {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+/* Tarjeta — igual a .card-producto */
+.desc-card {
+  width: 250px;
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative; /* para el badge */
+}
+
+.desc-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Badge "-20% OFF" esquina superior izquierda */
+.desc-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #ff4d4d;
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  z-index: 1;
+  box-shadow: 0 2px 6px rgba(255, 77, 77, 0.4);
+}
+
+/* Imagen igual a la de productos */
+.img-producto {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Bloque de texto */
+.desc-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 10px 0;
+}
+
+.desc-nombre {
+  margin-top: 15px;
+  font-size: 24px;
+  color: #3f240f;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  text-align: center;
+}
+
+.desc-descripcion {
+  font-size: 16px;
+  color: #555;
+  text-align: center;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Fila de precios */
+.desc-precios {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+/* Precio original tachado en gris */
+.desc-precio-original {
+  font-size: 18px;
+  color: #aaa;
+  text-decoration: line-through;
+  font-family: Arial, sans-serif;
+}
+
+/* Precio final con descuento en verde */
+.desc-precio-final {
+  font-size: 24px;
+  font-weight: bold;
+  color: #14532d;
+  font-family: Arial, sans-serif;
+}
+
+/* Grupo de botones igual al de productos */
+.btn-group-producto {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+/* Botón igual a .btn-producto y .btn-agregar de Product.css */
+.btn-producto,
+.btn-agregar,
+.botonesproductos1 {
+  background-color: #14532d;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  transition: 0.3s;
+  display: block;
+  width: 100%;
+  margin: 4px 0;
+}
+
+.btn-producto:hover,
+.btn-agregar:hover,
+.botonesproductos1:hover {
+  background: #4ade80;
+  color: #14532d;
+}

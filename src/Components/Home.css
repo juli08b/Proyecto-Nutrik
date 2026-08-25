@@ -1,3 +1,6 @@
+/* =======================================================
+   COLORES DE LA PÁGINA
+   ======================================================= */
 :root {
   --verde: #14532d;
   /* principal */
@@ -7,7 +10,9 @@
   /* acento */
 }
 
-/* HERO */
+/* =======================================================
+   SECCIÓN 1: BIENVENIDA (HERO)
+   ======================================================= */
 .hero {
   display: flex;
   align-items: center;
@@ -19,74 +24,74 @@
 }
 
 .hero-texto {
-  max-width: 500px;
-}
-
-.hero-tag {
-  font-size: 14px;
-  opacity: 0.8;
-  margin-bottom: 10px;
+  flex: 1.4;                 /* Hace que el texto ocupe un poco más de ancho */
+  font-family: 'Poppins', sans-serif; /* Tipo de letra moderno para el bloque */
 }
 
 .hero h1 {
-  font-size: 56px;
-  margin-bottom: 20px;
+  font-size: 80px;           /* Tamaño de letra gigante para el título */
+  font-weight: 800;          /* Grosor de letra muy grueso y fuerte */
+  line-height: 1.1;          /* Junta un poco los renglones del título */
+  margin-bottom: 20px;       /* Separa el título del párrafo de abajo */
+  font-family: 'Playfair Display', serif; /* Tipo de letra elegante para el h1 */
+  letter-spacing: -1px;      /* Junta un poquito las letras entre sí */
 }
 
 .hero h1 span {
-  color: var(--verde-claro);
+  color: var(--verde-claro); /* Pone el texto destacado en verde oscuro */
 }
 
 .hero-desc {
-  font-size: 18px;
-  margin-bottom: 30px;
+  color: white;              /* Letras del párrafo en color blanco */
+  font-size: 18px;           /* Tamaño de letra mediano para leer bien */
+  margin-bottom: 30px;       /* Separa el párrafo de los botones */
+  line-height: 1.6;          /* Deja un espacio cómodo entre renglones */
+  opacity: 0.9;              /* Hace la letra un poquitico transparente */
+  max-width: 550px;          /* Limita el ancho para que no se estire tanto */
 }
 
-/* BOTONES */
-.hero-botones button {
-  padding: 12px 22px;
-  margin-right: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: 0.3s;
+/* BOTONES DE BIENVENIDA */
+.hero-botones .btn-link {
+  display: inline-block;     /* Permite darle forma de botón al enlace */
+  padding: 14px 28px;        /* Tamaño del botón: arriba/abajo y lados */
+  margin-right: 12px;        /* Separa un botón del otro botón */
+  border-radius: 8px;        /* Redondea las esquinas del botón */
+  font-size: 16px;           /* Tamaño de la letra dentro del botón */
+  font-weight: bold;         /* Pone la letra del botón en negrita */
+  text-decoration: none;     /* Quita la línea de subrayado del enlace */
+  transition: all 0.3s ease; /* Hace que los cambios visuales sean suaves */
 }
 
+/* Botón Explorar */
 .btn-primary {
-  background: white;
-  color: var(--verde-oscuro);
-  border: none;
-  font-weight: bold;
+  background: linear-gradient(90deg, #91b6a5 0%, #e5ffe1 100%); /* Fondo degradado claro */
+  color: var(--verde-oscuro); /* Letra del botón en verde oscuro */
 }
-
 
 .btn-primary:hover {
-  transform: scale(1.05);
-  background: white;
-  color: var(--verde-oscuro);
+  transform: translateY(-3px); /* Sube el botón un poquito al pasar el mouse */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Le pone una sombra negra suave */
 }
 
+/* Botón Ver planes */
 .btn-outline {
-  background: transparent;
-  border: 2px solid white;
-  color: white;
+  border: 2px solid white;   /* Le pone un borde de línea blanca */
+  color: white;              /* Letra del botón en color blanco */
 }
 
 .btn-outline:hover {
-  background: white;
-  color: var(--verde-oscuro);
+  background: white;         /* Pone el fondo blanco al pasar el mouse */
+  color: var(--verde-oscuro); /* Cambia la letra a verde oscuro al pasar el mouse */
+  transform: translateY(-3px); /* Sube el botón un poquito al pasar el mouse */
 }
 
-
-.btn-grande {
-  padding: 20px 40px;
-  font-size: 22px;
-  border-radius: 12px;
-}
-
-
+/* FOTO PRINCIPAL Y TARJETAS FLOTANTES */
 .hero-img {
-  position: relative;
+  flex: 1;                   /* Ocupa el espacio que queda libre a la derecha */
+  display: flex;             /* Activa el diseño flexible en este contenedor */
+  justify-content: center;   /* Centra la foto de forma horizontal */
+  align-items: center;       /* Centra la foto de forma vertical */
+  position: relative;        /* Permite acomodar tarjetas encima de la foto */
 }
 
 .circulo {
@@ -99,12 +104,12 @@
 }
 
 .circulo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 100%;               /* Hace que la foto ocupe todo el ancho disponible */
+  height: 100%;              /* Hace que la foto ocupe todo el alto disponible */
+  object-fit: cover;         /* Adapta la foto para que llene el círculo sin dañarse */
 }
 
-
+/* Estilo de las tarjetas pequeñas flotantes */
 .card {
   position: absolute;
   background: rgba(255, 255, 255, 0.15);
@@ -115,41 +120,52 @@
   color: white;
 }
 
-.card1 {
-  top: 20px;
-  right: -40px;
+/* Ubicación de cada tarjeta flotante */
+.card1 { top: 40px; right: 20px; animation-delay: 0s; } /* Arriba a la derecha, arranca ya */
+.card2 { bottom: 40px; left: 20px; animation-delay: 1s; } /* Abajo a la izquierda, espera 1 segundo */
+.card3 { top: 50%; right: -10px; transform: translateY(-50%); animation-delay: 2s; } /* Al medio derecho, espera 2 segundos */
+
+/* Animación para que las tarjetas suban y bajen */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }       /* Empieza en su posición original */
+  50% { transform: translateY(-12px); }        /* Sube 12 píxeles a la mitad del tiempo */
 }
 
-.card2 {
-  bottom: 30px;
-  left: -40px;
-}
-
-.card3 {
-  top: 150px;
-  right: -80px;
-}
-
-/* BENEFICIOS */
+/* =======================================================
+   SECCIÓN 2: BENEFICIOS (¿POR QUÉ ELEGIRNOS?)
+   ======================================================= */
 .beneficios {
-  padding: 80px;
+  padding: 28px 8% 50px 8%;
   text-align: center;
-  background: #ecfdf5;
+  background: linear-gradient(180deg, #edf7ef 0%, #ecfdf5 52%, #f8fff9 100%);
 }
 
 .beneficios h2 {
-  font-size: 36px;
-  margin-bottom: 40px;
-  color: var(--verde-oscuro);
+  font-size: 40px;           /* Tamaño grande para el título de beneficios */
+  margin-bottom: 45px;       /* Deja espacio libre abajo del título */
+  color: var(--verde-oscuro); /* Letras de color verde oscuro */
+  position: relative;        /* Permite colocar la línea decorativa abajo */
 }
 
+/* Línea verde debajo del título */
+.beneficios h2::after {
+  content: "";               /* Obligatorio para que aparezca la línea */
+  width: 60px;               /* Ancho de la línea horizontal */
+  height: 4px;               /* Grosor de la línea horizontal */
+  background: var(--verde-neon); /* Color de la línea decorativa */
+  display: block;            /* Convierte la línea en un bloque sólido */
+  margin: 12px auto 0;       /* La centra horizontalmente y la separa del texto */
+  border-radius: 10px;       /* Redondeas las puntas de la línea */
+}
+
+/* Distribución de las cajas de beneficios */
 .beneficios-grid {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: grid;             /* Activa el modo de rejilla inteligente */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Acomoda las cajas según el espacio */
+  gap: 30px;                 /* Separa las cajas entre sí por 30px */
 }
 
+/* Caja de beneficio individual */
 .beneficio {
   background: white;
   padding: 25px;
@@ -164,25 +180,46 @@
 }
 
 .beneficio h3 {
-  margin-bottom: 10px;
-  color: var(--verde);
+  font-size: 20px;           /* Tamaño del título del beneficio */
+  margin-bottom: 12px;       /* Espacio entre el título y el texto corto */
+  color: #0b4b24;            /* Color verde pino para el subtítulo */
 }
 
+.beneficio:hover {
+  transform: translateY(-8px); /* Sube la tarjeta suavemente al pasar el mouse */
+  box-shadow: 0 15px 30px rgba(18, 113, 80, 0.15); /* Pone la sombra más intensa */
+  border-color: var(--verde-oscuro); /* Cambia la línea del borde a verde oscuro */
+}
 
-.cta {
-  padding: 80px;
+/* =======================================================
+   SECCIÓN 3: PRODUCTOS (LO NUEVO)
+   ======================================================= */
+.productos {
   text-align: center;
-  background: var(--verde-oscuro);
-  color: white;
+  color: var(--verde-oscuro);
+  background: linear-gradient(180deg, #ffffff 0%, #edf7ef 42%, #e8f4ea 100%);
+  padding: 34px 4% 24px 4%;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 2;
+  border-bottom: 1px solid rgba(18, 113, 80, 0.08);
 }
 
-.cta h2 {
-  font-size: 36px;
-  margin-bottom: 10px;
+.productos h2 {
+  font-size: 50px;           /* Título grande de la sección */
+  color: #12280d;            /* Letras de color verde oscuro */
+  margin-bottom: 20px;       /* Espacio libre debajo del h2 */
+  position: relative;        /* Deja listo el lugar para la línea inferior */
 }
 
-.cta p {
-  margin-bottom: 20px;
+.productos h2::after {
+  content: "";
+  width: 60px;
+  height: 4px;
+  background: var(--verde-neon);
+  display: block;
+  margin: 12px auto 0;
+  border-radius: 10px;
 }
 
 .feature-bar-container {
