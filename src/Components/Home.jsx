@@ -6,7 +6,7 @@ function Home() {
       {/* HERO */}
       <section className="hero">
         <div className="hero-texto">
-        
+
           <h1>
             Alimentación saludable <br />
             <span>sin esfuerzo</span>
@@ -37,6 +37,39 @@ function Home() {
         </div>
       </section>
 
+      {/* FEATURE BAR (La barra que marcaste) */}
+      <section className="feature-bar-container">
+        <div className="feature-image-banner">
+          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2070" alt="Ingredientes frescos" />
+        </div>
+
+        <div className="feature-content">
+          <div className="feature-item">
+            <span className="feature-icon">📅</span>
+            <div>
+              <h4>Plan Personalizado</h4>
+              <p>Planes de comida a tu medida</p>
+            </div>
+          </div>
+
+          <div className="feature-item divider">
+            <span className="feature-icon">👨‍🌾</span>
+            <div>
+              <h4>Ingredientes Frescos</h4>
+              <p>De la granja a tu mesa</p>
+            </div>
+          </div>
+
+          <div className="feature-item">
+            <span className="feature-icon">🚚</span>
+            <div>
+              <h4>Entrega Rápida</h4>
+              <p>Recibe en 24 horas</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* estos son los BENEFICIOS */}
       <section className="beneficios">
         <h2>¿Por qué elegirnos?</h2>
@@ -64,7 +97,7 @@ function Home() {
         <h2>Empieza hoy tu cambio</h2>
         <p>Tu cuerpo te lo va a agradecer.</p>
 
-        
+
         <button className="btn-primary btn-grande">
           Comenzar ahora
         </button>
