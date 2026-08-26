@@ -12,6 +12,8 @@ import Contact from './Pages/Contact';
 import Newproduct from './Pages/Newproduct';
 import Discount from './Pages/Discount';
 import Cart from './Pages/Cart';
+
+import Dashboard from './Pages/Dashboard/Dashboard'
 import './index.css';
 import './App.css';
 
@@ -60,6 +62,8 @@ function App() {
         <Route path="/productos" element={<Product />} />
         <Route path="/productview/:id" element={<ProductView />} />
         <Route path="/newproduct" element={<Newproduct />} />
+
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
 
       {/* Solo se muestra si NO estamos en login o registro */}
