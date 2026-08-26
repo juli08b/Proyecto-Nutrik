@@ -200,13 +200,47 @@ td {
 
 /* //Navbar */
 .dashboard-container {
-  /* Añade o actualiza este padding-top para empujar el contenido debajo del Navbar */
-  padding-top: 110px; 
-  
-  padding-left: 24px;
-  padding-right: 24px;
-  padding-bottom: 24px;
-  background-color: #f8f9fa;
-  min-height: 100vh;
-  box-sizing: border-box;
+    /* Añade o actualiza este padding-top para empujar el contenido debajo del Navbar */
+    padding-top: 110px;
+
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 24px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    box-sizing: border-box;
+
+}
+
+/* ver facturas */
+.factura-badge {
+    background-color: #d1fae5;
+    /* Verde pastel suave */
+    color: #065f46;
+    /* Texto verde oscuro */
+    border: none;
+    /* Quita el borde por defecto del botón */
+    outline: none;
+    padding: 6px 14px;
+    border-radius: 50px;
+    /* Usar '50%' si prefieres un círculo perfecto */
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    /* Muestra la mano al pasar el cursor */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+/* Efectos de interacción para el botón */
+.factura-badge:hover {
+    background-color: #a7f3d0;
+    /* Verde un poco más intenso al pasar el mouse */
+}
+
+.factura-badge:active {
+    transform: scale(0.95);
+    /* Ligero efecto de pulsación al hacer clic */
 }
