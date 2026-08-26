@@ -1,5 +1,5 @@
 //import React from 'react'
-import "./product.css";
+import "./Product.css";
 import { Link } from "react-router-dom";
 
 
@@ -27,7 +27,11 @@ const Productos = () => {
 
           <h3>Creatina en Polvo </h3>
 
+<<<<<<< HEAD
           <Link to="/Vistaproducto/creatine">
+=======
+          <Link to="/Productview/creatine">
+>>>>>>> master
               <button className="btn-producto">
                  Ver producto
               </button>
@@ -44,7 +48,11 @@ const Productos = () => {
 
           <h3>Yogur Griego Natural</h3>
 
+<<<<<<< HEAD
           <Link to="/Vistaproducto/yogur">
+=======
+          <Link to="/Productview/yogur">
+>>>>>>> master
           <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -57,7 +65,11 @@ const Productos = () => {
 
           <h3>té detox</h3>
 
+<<<<<<< HEAD
           <Link to="/Vistaproducto/detox">
+=======
+          <Link to="/Productview/detox">
+>>>>>>> master
           <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -66,7 +78,11 @@ const Productos = () => {
           <img src= "https://i.pinimg.com/1200x/20/85/55/208555e7cad61284b90054f29ccc0fa3.jpg" alt="omega3" className="img-producto"  />
 
           <h3>omega 3</h3>
+<<<<<<< HEAD
           <Link to="/Vistaproducto/omega">
+=======
+          <Link to="/Productview/omega">
+>>>>>>> master
           <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -77,7 +93,11 @@ const Productos = () => {
 
           <h3>colageno</h3>
 
+<<<<<<< HEAD
           <Link to="/Vistaproducto/colageno">
+=======
+          <Link to="/Productview/colageno">
+>>>>>>> master
             <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -86,7 +106,11 @@ const Productos = () => {
           <img src= "https://i.pinimg.com/736x/28/bf/0c/28bf0ce32dc25e1c1912e23c39653062.jpg" alt="chia" className="img-producto"  />
 
           <h3>Semillas de Chía</h3>
+<<<<<<< HEAD
             <Link to="/Vistaproducto/chia">
+=======
+            <Link to="/Productview/chia">
+>>>>>>> master
               <button className="btn-producto">
                 Ver producto
               </button>
@@ -98,7 +122,11 @@ const Productos = () => {
 
           <h3>aceite de coco</h3>
 
+<<<<<<< HEAD
           <Link to="/Vistaproducto/coco">
+=======
+          <Link to="/Productview/coco">
+>>>>>>> master
           <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -108,7 +136,11 @@ const Productos = () => {
 
           <h3>Maca en Polvo</h3>
 
+<<<<<<< HEAD
           <Link to="/Vistaproducto/maca">
+=======
+          <Link to="/Productview/maca">
+>>>>>>> master
           <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -118,7 +150,11 @@ const Productos = () => {
 
           <h3>Granola</h3>
 
+<<<<<<< HEAD
           <Link to="/Vistaproducto/granola">
+=======
+          <Link to="/Productview/granola">
+>>>>>>> master
           <button className="btn-producto">Ver producto </button>
           </Link>
 
@@ -128,7 +164,11 @@ const Productos = () => {
 
           <h3>Mix de Frutos Secoss</h3>
 
+<<<<<<< HEAD
           <Link to="/Vistaproducto/frutos">
+=======
+          <Link to="/Productview/frutos">
+>>>>>>> master
           <button className="btn-producto">Ver producto </button>
           </Link>
 

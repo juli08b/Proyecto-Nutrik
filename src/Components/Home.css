@@ -1,183 +1,753 @@
+/* =======================================================
+   COLORES DE LA PÁGINA
+   ======================================================= */
 :root {
-  --verde: #14532d;        /* principal */
-  --verde-oscuro: #052e16; /* fondo oscuro */
-  --verde-claro: #4ade80;  /* acento */
+  --verde: #aecba8;          /* Verde suave principal */
+  --verde-oscuro: #127150;   /* Verde oscuro para los fondos */
+  --verde-claro: #052e16;    /* Verde muy oscuro para letras */
+  --verde-neon: #6afd6a;     /* Verde brillante para resaltar */
+  --blanco: #ffffff;         /* Color blanco puro */
+  --gris-claro: #f8fafc;     /* Gris suave para tarjetas */
+  --fondo-suave: #ecfdf5;    /* Fondo verde menta clarito */
 }
 
-/* HERO */
+/* =======================================================
+   SECCIÓN 1: BIENVENIDA (HERO)
+   ======================================================= */
 .hero {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 80px;
-  min-height: 100vh;
-  background: linear-gradient(135deg, var(--verde), var(--verde-oscuro));
-  color: white;
+  display: flex;             /* Pone el texto y la imagen de lado a lado */
+  align-items: center;       /* Centra los elementos de forma vertical */
+  justify-content: space-between; /* Deja espacio libre en medio de los dos */
+  padding: 140px 8% 40px 8%; /* Márgenes internos: arriba, lados y abajo */
+  background: linear-gradient(135deg, var(--verde), var(--verde-oscuro)); /* Fondo con degradado */
+  color: white;              /* Pone todas las letras de color blanco */
+  gap: 30px;                 /* Separa el texto de la imagen por 30px */
 }
 
 .hero-texto {
-  max-width: 500px;
-}
-
-.hero-tag {
-  font-size: 14px;
-  opacity: 0.8;
-  margin-bottom: 10px;
+  flex: 1.4;                 /* Hace que el texto ocupe un poco más de ancho */
+  font-family: 'Poppins', sans-serif; /* Tipo de letra moderno para el bloque */
 }
 
 .hero h1 {
-  font-size: 56px;
-  margin-bottom: 20px;
+  font-size: 80px;           /* Tamaño de letra gigante para el título */
+  font-weight: 800;          /* Grosor de letra muy grueso y fuerte */
+  line-height: 1.1;          /* Junta un poco los renglones del título */
+  margin-bottom: 20px;       /* Separa el título del párrafo de abajo */
+  font-family: 'Playfair Display', serif; /* Tipo de letra elegante para el h1 */
+  letter-spacing: -1px;      /* Junta un poquito las letras entre sí */
 }
 
 .hero h1 span {
-  color: var(--verde-claro);
+  color: var(--verde-claro); /* Pone el texto destacado en verde oscuro */
 }
 
 .hero-desc {
-  font-size: 18px;
-  margin-bottom: 30px;
+  color: white;              /* Letras del párrafo en color blanco */
+  font-size: 18px;           /* Tamaño de letra mediano para leer bien */
+  margin-bottom: 30px;       /* Separa el párrafo de los botones */
+  line-height: 1.6;          /* Deja un espacio cómodo entre renglones */
+  opacity: 0.9;              /* Hace la letra un poquitico transparente */
+  max-width: 550px;          /* Limita el ancho para que no se estire tanto */
 }
 
-/* BOTONES */
-.hero-botones button {
-  padding: 12px 22px;
-  margin-right: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: 0.3s;
+/* BOTONES DE BIENVENIDA */
+.hero-botones .btn-link {
+  display: inline-block;     /* Permite darle forma de botón al enlace */
+  padding: 14px 28px;        /* Tamaño del botón: arriba/abajo y lados */
+  margin-right: 12px;        /* Separa un botón del otro botón */
+  border-radius: 8px;        /* Redondea las esquinas del botón */
+  font-size: 16px;           /* Tamaño de la letra dentro del botón */
+  font-weight: bold;         /* Pone la letra del botón en negrita */
+  text-decoration: none;     /* Quita la línea de subrayado del enlace */
+  transition: all 0.3s ease; /* Hace que los cambios visuales sean suaves */
 }
 
+/* Botón Explorar */
 .btn-primary {
-  background: white;
-  color: var(--verde-oscuro);
-  border: none;
-  font-weight: bold;
+  background: linear-gradient(90deg, #91b6a5 0%, #e5ffe1 100%); /* Fondo degradado claro */
+  color: var(--verde-oscuro); /* Letra del botón en verde oscuro */
 }
-
 
 .btn-primary:hover {
-  transform: scale(1.05);
-  background: white;
-  color: var(--verde-oscuro);
+  transform: translateY(-3px); /* Sube el botón un poquito al pasar el mouse */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Le pone una sombra negra suave */
 }
 
+/* Botón Ver planes */
 .btn-outline {
-  background: transparent;
-  border: 2px solid white;
-  color: white;
+  border: 2px solid white;   /* Le pone un borde de línea blanca */
+  color: white;              /* Letra del botón en color blanco */
 }
 
 .btn-outline:hover {
-  background: white;
-  color: var(--verde-oscuro);
+  background: white;         /* Pone el fondo blanco al pasar el mouse */
+  color: var(--verde-oscuro); /* Cambia la letra a verde oscuro al pasar el mouse */
+  transform: translateY(-3px); /* Sube el botón un poquito al pasar el mouse */
 }
 
-
-.btn-grande {
-  padding: 20px 40px;
-  font-size: 22px;
-  border-radius: 12px;
-}
-
-
+/* FOTO PRINCIPAL Y TARJETAS FLOTANTES */
 .hero-img {
-  position: relative;
+  flex: 1;                   /* Ocupa el espacio que queda libre a la derecha */
+  display: flex;             /* Activa el diseño flexible en este contenedor */
+  justify-content: center;   /* Centra la foto de forma horizontal */
+  align-items: center;       /* Centra la foto de forma vertical */
+  position: relative;        /* Permite acomodar tarjetas encima de la foto */
 }
 
 .circulo {
-  width: 350px;
-  height: 350px;
-  border-radius: 50%;
-  overflow: hidden;
-  background: white;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  width: 460px;              /* Ancho fijo para hacer el círculo */
+  height: 460px;             /* Alto fijo idéntico para que quede perfecto */
+  border-radius: 50%;        /* Transforma la caja cuadrada en un círculo */
+  overflow: hidden;          /* Corta la foto para que no se salga del círculo */
+  background: var(--blanco); /* Fondo blanco por si la foto tarda en cargar */
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3); /* Sombra grande y elegante abajo */
+  border: 6px solid rgba(255,255,255,0.2); /* Borde blanco grueso y transparente */
 }
 
 .circulo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 100%;               /* Hace que la foto ocupe todo el ancho disponible */
+  height: 100%;              /* Hace que la foto ocupe todo el alto disponible */
+  object-fit: cover;         /* Adapta la foto para que llene el círculo sin dañarse */
 }
 
-
+/* Estilo de las tarjetas pequeñas flotantes */
 .card {
-  position: absolute;
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(10px);
-  padding: 10px 15px;
-  border-radius: 10px;
-  font-size: 14px;
-  color: white;
+  position: absolute;        /* Permite mover la tarjeta a cualquier lado libremente */
+  background: rgba(255, 255, 255, 0.15); /* Fondo blanco con mucha transparencia */
+  backdrop-filter: blur(12px); /* Efecto de vidrio borroso en el fondo */
+  padding: 12px 20px;        /* Espacio interno de la tarjeta */
+  border-radius: 12px;       /* Redondea las esquinas de la tarjeta */
+  font-size: 16px;           /* Tamaño del texto flotante */
+  font-weight: 600;          /* Letra semi-gruesa para resaltar */
+  color: var(--blanco);      /* Letras de color blanco */
+  border: 1px solid rgba(255, 255, 255, 0.25); /* Línea de borde delgada y clara */
+  white-space: nowrap;       /* Evita que el texto se parta en dos renglones */
+  animation: float 4s ease-in-out infinite; /* Activa la animación para siempre */
 }
 
-.card1 {
-  top: 20px;
-  right: -40px;
+/* Ubicación de cada tarjeta flotante */
+.card1 { top: 40px; right: 20px; animation-delay: 0s; } /* Arriba a la derecha, arranca ya */
+.card2 { bottom: 40px; left: 20px; animation-delay: 1s; } /* Abajo a la izquierda, espera 1 segundo */
+.card3 { top: 50%; right: -10px; transform: translateY(-50%); animation-delay: 2s; } /* Al medio derecho, espera 2 segundos */
+
+/* Animación para que las tarjetas suban y bajen */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }       /* Empieza en su posición original */
+  50% { transform: translateY(-12px); }        /* Sube 12 píxeles a la mitad del tiempo */
 }
 
-.card2 {
-  bottom: 30px;
-  left: -40px;
-}
-
-.card3 {
-  top: 150px;
-  right: -80px;
-}
-
-/* BENEFICIOS */
+/* =======================================================
+   SECCIÓN 2: BENEFICIOS (¿POR QUÉ ELEGIRNOS?)
+   ======================================================= */
 .beneficios {
-  padding: 80px;
+  padding: 28px 8% 50px 8%;
   text-align: center;
-  background: #ecfdf5;
+  background: linear-gradient(180deg, #edf7ef 0%, #ecfdf5 52%, #f8fff9 100%);
 }
 
 .beneficios h2 {
-  font-size: 36px;
-  margin-bottom: 40px;
-  color: var(--verde-oscuro);
+  font-size: 40px;           /* Tamaño grande para el título de beneficios */
+  margin-bottom: 45px;       /* Deja espacio libre abajo del título */
+  color: var(--verde-oscuro); /* Letras de color verde oscuro */
+  position: relative;        /* Permite colocar la línea decorativa abajo */
 }
 
+/* Línea verde debajo del título */
+.beneficios h2::after {
+  content: "";               /* Obligatorio para que aparezca la línea */
+  width: 60px;               /* Ancho de la línea horizontal */
+  height: 4px;               /* Grosor de la línea horizontal */
+  background: var(--verde-neon); /* Color de la línea decorativa */
+  display: block;            /* Convierte la línea en un bloque sólido */
+  margin: 12px auto 0;       /* La centra horizontalmente y la separa del texto */
+  border-radius: 10px;       /* Redondeas las puntas de la línea */
+}
+
+/* Distribución de las cajas de beneficios */
 .beneficios-grid {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: grid;             /* Activa el modo de rejilla inteligente */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Acomoda las cajas según el espacio */
+  gap: 30px;                 /* Separa las cajas entre sí por 30px */
 }
 
+/* Caja de beneficio individual */
 .beneficio {
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-  width: 250px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  transition: 0.3s;
-}
-
-.beneficio:hover {
-  transform: translateY(-10px);
+  background: #ffffff;       /* Fondo blanco puro para la tarjeta */
+  border: 1px solid rgba(18, 113, 80, 0.1); /* Borde verde muy clarito y sutil */
+  border-radius: 20px;       /* Esquinas bien redondeadas */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Sombra suave hacia abajo */
+  padding: 40px 25px;        /* Espacio interno amplio en la tarjeta */
+  transition: all 0.3s ease; /* Hace que el movimiento al tocarla sea suave */
+  display: flex;             /* Permite ordenar los elementos internos */
+  flex-direction: column;    /* Acomoda el contenido uno debajo del otro */
+  align-items: center;       /* Centra todo el contenido internamente */
 }
 
 .beneficio h3 {
-  margin-bottom: 10px;
-  color: var(--verde);
+  font-size: 20px;           /* Tamaño del título del beneficio */
+  margin-bottom: 12px;       /* Espacio entre el título y el texto corto */
+  color: #0b4b24;            /* Color verde pino para el subtítulo */
 }
 
+.beneficio:hover {
+  transform: translateY(-8px); /* Sube la tarjeta suavemente al pasar el mouse */
+  box-shadow: 0 15px 30px rgba(18, 113, 80, 0.15); /* Pone la sombra más intensa */
+  border-color: var(--verde-oscuro); /* Cambia la línea del borde a verde oscuro */
+}
 
-.cta {
-  padding: 80px;
+/* =======================================================
+   SECCIÓN 3: PRODUCTOS (LO NUEVO)
+   ======================================================= */
+.productos {
   text-align: center;
-  background: var(--verde-oscuro);
-  color: white;
+  color: var(--verde-oscuro);
+  background: linear-gradient(180deg, #ffffff 0%, #edf7ef 42%, #e8f4ea 100%);
+  padding: 34px 4% 24px 4%;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 2;
+  border-bottom: 1px solid rgba(18, 113, 80, 0.08);
 }
 
-.cta h2 {
-  font-size: 36px;
-  margin-bottom: 10px;
+.productos h2 {
+  font-size: 50px;           /* Título grande de la sección */
+  color: #12280d;            /* Letras de color verde oscuro */
+  margin-bottom: 20px;       /* Espacio libre debajo del h2 */
+  position: relative;        /* Deja listo el lugar para la línea inferior */
 }
 
-.cta p {
-  margin-bottom: 20px;
+.productos h2::after {
+  content: "";
+  width: 60px;
+  height: 4px;
+  background: var(--verde-neon);
+  display: block;
+  margin: 12px auto 0;
+  border-radius: 10px;
+}
+
+/* Distribución de las tarjetas de productos */
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  align-items: stretch;
+  width: 100%;
+  max-width: 1480px;
+  margin: 0 auto;
+  padding-bottom: 0;
+}
+
+/* Tarjeta de producto individual */
+.producto-card {
+  background: #ffffff;
+  border: 2px solid rgba(18, 113, 80, 0.12);
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
+  transition: all 0.35s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
+}
+
+.producto-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 18px 35px rgba(17, 24, 39, 0.12);
+  border-color: #111827;
+}
+
+.producto-card img {
+  width: 100%;               /* La imagen usa todo el ancho de la tarjeta */
+  height: 220px;             /* Altura fija para que todas las fotos midan igual */
+  object-fit: cover;         /* Centra y acomoda la foto sin jalarla feo */
+  transition: transform 0.3s ease; /* Suaviza el zoom de la foto */
+}
+
+.producto-card:hover img {
+  transform: scale(1.04);     /* Hace un zoom muy sutil a la foto al tocar la tarjeta */
+}
+
+.producto-card h3 { 
+  font-size: 22px;           /* Tamaño del nombre del producto */
+  color: var(--verde-oscuro); /* Letra del producto en verde oscuro */
+  margin: 20px 0 20px 0;     /* Márgenes separados: arriba y abajo */
+}
+
+.producto-card p { 
+  color: #475569;            /* Color gris oscuro legible para la descripción */
+  line-height: 1.5;          /* Separación de renglones estándar */
+  padding: 0 20px;           /* Espacio libre a los lados del texto */
+  margin-bottom: 25px;       /* Separa la descripción del botón */
+  font-size: 15px;           /* Tamaño de la letra informativa */
+}
+
+/* Botón Ver más de los productos */
+.btn-ver-mas {
+  background: linear-gradient(90deg, var(--verde-neon), #b6ffb6);
+  color: var(--verde-oscuro);
+  border: none;
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: auto;
+  margin-bottom: 18px;
+  transition: all 0.2s ease;
+}
+
+.btn-ver-mas:hover {
+  background: var(--verde-oscuro); /* Convierte el fondo en verde oscuro sólido */
+  color: white;              /* Cambia la letra a blanco para contrastar */
+  transform: scale(1.03);    /* Agranda el botón un milímetro */
+}
+
+/* =======================================================
+   SECCIÓN 4: PASOS (COMPRA FÁCIL Y SALUDABLE)
+   ======================================================= */
+.pasos {
+  padding: 34px 8% 90px 8% !important;
+  margin-top: 16px !important;
+  background: linear-gradient(180deg, #edf7ef 0%, #ffffff 100%) !important;
+  position: relative;
+  z-index: 10;
+  border-top: 1px solid rgba(18, 113, 80, 0.08);
+}
+
+.pasos-header {
+  text-align: center;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  margin-bottom: 36px;
+}
+
+.separador-transicion {
+  width: 120px;
+  height: 5px;
+  border-radius: 999px;
+  margin: 0 auto 10px;
+  background: linear-gradient(90deg, #bff3c3 0%, #127150 100%);
+  opacity: 0.9;
+}
+
+/* Etiqueta flotante "Fácil y rápido" */
+.pasos-header span {
+  display: inline-block;             /* Permite ponerle tamaño y fondo a la etiqueta */
+  background: rgba(106, 253, 106, 0.15); /* Fondo verde traslúcido completamente limpio */
+  color: var(--verde-oscuro);         /* Letra en verde oscuro */
+  padding: 12px 22px;                /* Ajustado sutilmente el cojín interno */
+  border-radius: 20px;               /* Vuelve la etiqueta ovalada */
+  font-size: 20px;                   /* Letra grande solicitada para que resalte */
+  font-weight: 700;                  /* Letra gruesa e importante */
+  margin-top: 0px !important;        /* CORRECCIÓN: Fuerza total a pegarse arriba */
+  margin-bottom: 15px;               /* Distancia con el h2 de abajo */
+}
+
+.pasos-header h2 { font-size: 36px; color: var(--verde-oscuro); margin-bottom: 15px; } /* Estilo del título */
+.pasos-header p { max-width: 600px; margin: auto; color: #475569; line-height: 1.6; font-size: 16px; } /* Estilo del párrafo descriptivo */
+
+/* Distribución de las tarjetas de pasos */
+.pasos-grid {
+  display: grid;             /* Activa el diseño de rejilla */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Columnas responsivas */
+  gap: 30px;                 /* Espacio de 30px entre cada tarjeta */
+}
+
+/* Tarjeta de paso individual */
+.paso {
+  background: #ffffff;       /* Fondo blanco para la tarjeta */
+  padding: 35px 25px;        /* Espaciado por dentro de la tarjeta */
+  border-radius: 20px;       /* Curva suave en las esquinas */
+  text-align: center;        /* Centra todo el contenido del paso */
+  border: 1px solid rgba(18, 113, 80, 0.1); /* Borde sutil transparente */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Sombra elegante */
+  transition: all 0.3s ease; /* Suaviza el movimiento del hover */
+}
+
+.paso:hover { 
+  transform: translateY(-8px); /* Eleva la tarjeta de paso */
+  border-color: var(--verde-oscuro); /* Cambia la línea a verde oscuro */
+  box-shadow: 0 15px 30px rgba(18, 113, 80, 0.15); /* Sombra más grande */
+}
+
+/* Círculo con el número del paso */
+.paso-numero {
+  width: 60px;               /* Ancho del redondel */
+  height: 60px;              /* Alto idéntico del redondel */
+  margin: 0 auto 20px;       /* Centra el círculo y le da margen abajo */
+  border-radius: 50%;        /* Lo convierte en un círculo perfecto */
+  display: flex;             /* Activa flexbox interno */
+  justify-content: center;   /* Centra el número de forma horizontal */
+  align-items: center;       /* Centra el número de forma vertical */
+  font-size: 24px;           /* Letra grande para el número */
+  font-weight: bold;         /* Número en negrita fuerte */
+  color: white;              /* Número de color blanco */
+  background: linear-gradient(135deg, var(--verde-neon), #58c958); /* Fondo verde en degradado */
+  box-shadow: 0 8px 16px rgba(106, 253, 106, 0.3); /* Brillo verde abajo */
+}
+
+.paso h3 { font-size: 20px; color: var(--verde-oscuro); margin-bottom: 12px; } /* Subtítulo del paso */
+.paso p { color: #475569; line-height: 1.6; font-size: 15px; margin: 0; } /* Párrafo explicativo del paso */
+
+/* =======================================================
+   SECCIÓN 5: NUMERITOS / DATOS (STATS)
+   ======================================================= */
+.stats {
+  background: linear-gradient(to right, var(--verde), var(--verde-oscuro)); /* Fondo con degradado de la casa */
+  display: flex;             /* Pone los números uno al lado del otro */
+  justify-content: space-around; /* Reparte los datos con espacios iguales */
+  color: var(--blanco);      /* Textos en blanco puro */
+  padding: 50px 10%;         /* Relleno interno de la franja */
+  flex-wrap: wrap;           /* Si no caben, los manda para abajo */
+  gap: 25px;                 /* Separación por si se acomodan abajo */
+  text-align: center;        /* Centra las letras de cada dato */
+}
+
+.stat h2 { 
+  font-size: 48px;           /* Número muy grande e importante */
+  font-weight: 800;          /* Grosor de letra al máximo */
+  margin: 0 0 5px 0;         /* Quita márgenes y deja un tris abajo */
+}
+
+.stat p {
+  color: rgba(255, 255, 255, 0.9); /* Texto blanco ligeramente claro */
+  font-size: 15px;           /* Tamaño de texto estándar */
+  margin: 0;                 /* Quita márgenes por defecto */
+}
+
+/* =======================================================
+   SECCIÓN 6: CAJA DE REGISTRO (NEWSLETTER)
+   ======================================================= */
+.newsletter {
+  padding: 80px 8%;          /* Espacio libre alrededor del bloque */
+  background: #ecfdf5 !important; /* Mantenido el color verde menta suave solicitado para el cuadro de afuera */
+}
+
+/* Contenedor blanco central - CUADRO DE ADENTRO */
+.newsletter-content {
+  width: 100%;               /* Usa todo el ancho si la pantalla es chica */
+  max-width: 800px;          /* No permite que la caja mida más de 800px */
+  margin: 0 auto;            /* Centra la caja blanca en la pantalla */
+  background: #ffffff;       /* Mantenido en blanco puro como me lo pediste */
+  border-radius: 24px;       /* Esquinas súper redondeadas */
+  padding: 50px 40px;        /* Cojín de espacio dentro de la caja */
+  text-align: center;        /* Centra todo lo que tiene adentro */
+  border: 1.5px solid var(--verde-oscuro); /* Línea de borde verde oscuro */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08); /* Sombra flotante delicada */
+}
+
+.newsletter-tag {
+  display: inline-block;     /* Permite aplicar padding y formas */
+  background: rgba(106, 253, 106, 0.15); /* Fondo verde traslúcido */
+  color: var(--verde-oscuro); /* Letras verdes oscuras */
+  padding: 8px 16px;         /* Tamaño de la etiqueta */
+  border-radius: 20px;       /* Bordes curvos ovalados */
+  font-size: 13px;           /* Texto pequeñito */
+  font-weight: 600;          /* Letra semi-gruesa */
+  margin-bottom: 20px;       /* Espacio con el título de abajo */
+}
+
+.newsletter-content h2 { font-size: 36px; color: var(--verde-oscuro); margin-bottom: 15px; } /* Estilo del título */
+.newsletter-content p { color: #475569; font-size: 16px; line-height: 1.6; max-width: 550px; margin: 0 auto 30px; } /* Estilo del texto */
+
+/* Formulario de entrada */
+.newsletter-form { display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap; } /* Junta input y botón */
+
+.newsletter-form input {
+  width: 380px;              /* Ancho predeterminado para el campo de texto */
+  max-width: 100%;           /* No deja que se salga en pantallas chicas */
+  padding: 14px 20px;        /* Espacio para escribir cómodo adentro */
+  border-radius: 10px;       /* Esquinas del cuadro de texto */
+  font-size: 15px;           /* Tamaño de la letra que se escribe */
+  outline: none;             /* Elimina el borde feo azul del navegador */
+  border: 1.5px solid rgba(18, 113, 80, 0.2); /* Línea de borde delgada gris-verde */
+  transition: all 0.2s ease; /* Suaviza el cambio al hacer click */
+}
+
+.newsletter-form input:focus {
+  border-color: var(--verde-oscuro); /* Cambia el borde a verde oscuro al hacer click */
+  box-shadow: 0 0 0 4px rgba(18, 113, 80, 0.1); /* Brillo sutil extra alrededor */
+}
+
+/* Botón Unirme */
+.btn-newsletter {
+  background: linear-gradient(90deg, var(--verde-neon), #c7ffc7); /* Fondo brillante */
+  color: var(--verde-oscuro); /* Texto en verde oscuro */
+  border: none;              /* Quita bordes extra */
+  padding: 14px 28px;        /* Tamaño del botón */
+  border-radius: 10px;       /* Esquinas redondeadas */
+  font-size: 15px;           /* Letra del mismo tamaño del input */
+  font-weight: bold;         /* Texto lanzado en negrita */
+  cursor: pointer;           /* Manito de click lista */
+  transition: all 0.2s ease; /* Transición para el hover */
+}
+
+.btn-newsletter:hover {
+  transform: translateY(-2px); /* Eleva el botón un poquito */
+  background: var(--verde-oscuro); /* Cambia a fondo oscuro rígido */
+  color: white;              /* Cambia las letras a blanco */
+}
+
+/* =======================================================
+   SECCIÓN 7: LLAMADO A LA ACCIÓN (CTA - DOBLE CUADRO)
+   ======================================================= */
+.cta {
+  padding: 90px 8%;          /* Espacio acolchado para la gran sección */
+  background: linear-gradient(135deg, var(--verde), var(--verde-oscuro)) !important; /* Colorimetría idéntica a tu Hero */
+  position: relative;        /* Base obligatoria para las burbujas flotantes */
+  overflow: hidden;          /* Esconde las burbujas si se quieren salir de la sección */
+}
+
+/* Esferas decorativas de fondo */
+.cta::before, .cta::after {
+  content: "";               /* Crea el elemento de la burbuja */
+  position: absolute;        /* Permite ubicarlas por coordenadas libres */
+  border-radius: 50%;        /* Las vuelve círculos gigantes */
+  background: rgba(255, 255, 255, 0.05); /* Color blanco casi invisible */
+  filter: blur(15px);        /* Desenfoca las orillas para que parezcan luces */
+}
+.cta::before { width: 200px; height: 200px; top: -50px; left: -50px; } /* Esfera superior izquierda */
+.cta::after { width: 250px; height: 250px; bottom: -80px; right: -80px; } /* Esfera inferior derecha */
+
+/* Cuadro interior translúcido */
+.cta-content {
+  position: relative;        /* Lo separa de las burbujas de fondo */
+  z-index: 2;                /* Lo empuja hacia el frente para leerse bien */
+  max-width: 800px;          /* Ancho máximo de la caja interna */
+  margin: auto;              /* Centra la caja interna perfectamente */
+  text-align: center;        /* Centra textos y botones interiores */
+  background: rgba(255, 255, 255, 0.07); /* Fondo blanco con transparencia fina */
+  backdrop-filter: blur(12px); /* Efecto vidrio esmerilado que se ve estético */
+  border-radius: 24px;       /* Esquinas redondeadas del cuadro interior */
+  padding: 50px 40px;        /* Relleno espacioso por dentro */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Línea de borde brillante muy fina */
+}
+
+.cta-tag {
+  display: inline-block;     /* Permite darle tamaño de etiqueta */
+  background: rgba(255, 255, 255, 0.15); /* Fondo blanco transparente */
+  color: #ffffff;            /* Texto blanco */
+  padding: 8px 16px;         /* Tamaño de la etiqueta */
+  border-radius: 20px;       /* Bordes redondos de cápsula */
+  font-size: 13px;           /* Texto pequeño */
+  font-weight: 600;          /* Grosor medio */
+  margin-bottom: 20px;       /* Separa del título */
+}
+
+.cta-content h2 { font-size: 42px; color: white; margin-bottom: 15px; } /* Estilo del título */
+.cta-content p { color: rgba(255, 255, 255, 0.85); font-size: 16px; line-height: 1.7; max-width: 600px; margin: 0 auto 35px; } /* Estilo de descripción */
+
+/* Botones de la sección */
+.cta-botones { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; } /* Une los dos botones abajo */
+
+.cta-botones button {
+  padding: 14px 32px;        /* Tamaño grande para los botones de acción */
+  border-radius: 10px;       /* Esquinas de los botones */
+  font-size: 16px;           /* Letra clara */
+  font-weight: bold;         /* Letras gruesas obligatorias */
+  cursor: pointer;           /* Flecha cambia a mano de click */
+  transition: all 0.2s ease; /* Movimientos fluidos */
+}
+
+/* Botón Comprar */
+.btn-grande {
+  background: linear-gradient(90deg, var(--verde-neon), #c7ffc7); /* Verde neón en degradado */
+  color: var(--verde-oscuro); /* Letras en verde oscuro */
+  border: none;              /* Quita el borde nativo */
+}
+
+.btn-grande:hover {
+  transform: translateY(-2px); /* Flota un poquito */
+  background: white;         /* Cambia a fondo blanco sólido */
+  color: var(--verde-oscuro); /* Letras se quedan en verde oscuro */
+}
+
+/* Botón Catálogo */
+.btn-grande-outline {
+  border: 2px solid rgba(255, 255, 255, 0.4); /* Línea de borde blanca translúcida */
+  background: transparent;   /* Sin color de fondo */
+  color: white;              /* Letras blancas */
+}
+
+.btn-grande-outline:hover {
+  background: white;         /* Rellena de blanco al pasar el mouse */
+  color: var(--verde-oscuro); /* Letra cambia a verde oscuro */
+  transform: translateY(-2px); /* Flota un poquito */
+}
+
+/* =======================================================
+   SECCIÓN 8: PIE DE PÁGINA (FOOTER)
+   ======================================================= */
+.footer {
+  background: #121212;        /* Negro profundo estético de fondo */
+  color: #ffffff;            /* Letras generales en blanco */
+  padding: 60px 8% 20px 8%;  /* Rellenos superiores e inferiores */
+  font-family: 'Poppins', sans-serif; /* Letra moderna para el cierre */
+}
+
+/* Estructura del contenido principal */
+.footer-main {
+  display: flex;             /* Pone las columnas de información de lado a lado */
+  justify-content: space-between; /* Deja aire intermedio entre columnas */
+  flex-wrap: wrap;           /* Permite bajar columnas si no entran */
+  gap: 40px;                 /* Separación general de seguridad */
+  margin-bottom: 40px;       /* Margen con la barra de copyright */
+}
+
+.footer-brand {
+  flex: 1;                   /* Columna del logo toma prioridad de espacio */
+  min-width: 250px;          /* Tamaño mínimo para no romperse */
+}
+
+.footer-logo {
+  max-width: 150px;          /* Tamaño máximo del logo de la marca */
+  margin-bottom: 15px;       /* Distancia con el slogan */
+}
+
+.footer-brand p {
+  font-size: 13px;           /* Slogan en letra chiquita */
+  letter-spacing: 2px;       /* Letras del slogan bien separadas */
+  color: #a3a3a3;            /* Gris medio elegante */
+  text-transform: uppercase; /* Todo en mayúsculas cuadradas */
+}
+
+/* Grupos de enlaces */
+.footer-links-group {
+  display: flex;             /* Junta los bloques de enlaces de lado a lado */
+  gap: 80px;                 /* Gran espacio de separación entre columnas */
+  flex-wrap: wrap;           /* Flexibilidad si la pantalla se reduce */
+}
+
+.footer-col h3 {
+  color: var(--verde-neon);  /* Títulos de columnas en verde neón */
+  font-size: 18px;           /* Tamaño del título del bloque */
+  margin-bottom: 20px;       /* Distancia con los enlaces de abajo */
+  font-weight: 600;          /* Letra semi-gruesa */
+}
+
+.footer-col ul {
+  list-style: none;          /* Quita los puntitos de las listas */
+  padding: 0;                /* Resetea espacios de la lista */
+  margin: 0;                 /* Resetea márgenes de la lista */
+}
+
+.footer-col ul li {
+  margin-bottom: 12px;       /* Espacio de separación entre cada enlace vertical */
+}
+
+.footer-col ul li a {
+  color: #d4d4d4;            /* Color gris claro para los links */
+  text-decoration: none;     /* Quita el subrayado a los links */
+  font-size: 15px;           /* Tamaño del texto de navegación */
+  transition: color 0.2s ease; /* Cambio de color rápido y limpio */
+}
+
+.footer-col ul li a:hover {
+  color: var(--verde-neon);  /* Link cambia a verde brillante al tocarlo */
+}
+
+/* Íconos de redes sociales */
+.footer-socials h3 {
+  color: var(--verde-neon);  /* Título de redes en color neón */
+  font-size: 18px;           /* Mismo tamaño de los h3 anteriores */
+  margin-bottom: 20px;       /* Espacio abajo */
+}
+
+.social-icons {
+  display: flex;             /* Pone las redes en fila horizontal */
+  gap: 15px;                 /* Espacio de 15px entre íconos */
+  align-items: center;       /* Alinea los íconos al centro */
+}
+
+.social-icons img {
+  width: 32px;               /* Ancho fijo cuadrado del ícono */
+  height: 32px;              /* Alto idéntico cuadrado del ícono */
+  transition: transform 0.2s ease; /* Suaviza el brinco del hover */
+  cursor: pointer;           /* Cursor de click listo */
+}
+
+.social-icons img:hover {
+  transform: scale(1.15);    /* Crece un 15% al poner el mouse encima */
+}
+
+/* Línea de copyright final */
+.footer-bottom {
+  border-top: 1px solid #262626; /* Raya delgada gris oscuro divisoria */
+  padding-top: 20px;         /* Espacio libre arriba de la raya */
+  display: flex;             /* Separa los créditos legales de los logos extra */
+  justify-content: space-between; /* Texto legal a la izquierda, extras a la derecha */
+  align-items: center;       /* Centra de forma vertical ambos lados */
+  flex-wrap: wrap;           /* Se acomoda en fila doble si es celular */
+  gap: 15px;                 /* Distancia si se dividen */
+  font-size: 14px;           /* Texto de leyes chiquito */
+  color: #737373;            /* Gris opaco apagado */
+}
+
+.footer-credits {
+  display: flex;             /* Alinea el texto final con su respectiva marca */
+  align-items: center;       /* Centra los dos de forma vertical */
+  gap: 8px;                  /* Separación de 8px */
+}
+
+.footer-credits img {
+  height: 20px;              /* Altura controlada del logo de créditos */
+  object-fit: contain;       /* Evita que el logo se aplaste */
+}
+
+/* =======================================================
+   SECCIÓN 9: AJUSTES PARA CELULARES Y TABLETS
+   ======================================================= */
+@media (max-width: 1100px) {
+  .productos-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero {
+    flex-direction: column;  /* Cambia la bienvenida a diseño vertical */
+    text-align: center;      /* Centra los textos en pantallas medianas */
+    padding-top: 120px;      /* Baja un poco la zona superior */
+    gap: 40px;               /* Crece la separación de bloques */
+  }
+  .hero h1 { font-size: 56px; } /* Reduce el título gigante a tamaño tablet */
+  .hero-desc { margin: 0 auto 25px; } /* Centra el párrafo del hero */
+  .hero-botones { display: flex; justify-content: center; } /* Centra la fila de botones */
+  .footer-links-group { gap: 40px; } /* Reduce la distancia de enlaces en footer */
+}
+
+@media (max-width: 768px) {
+  .productos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta { padding: 70px 5%; } /* Achica los márgenes del cta final */
+  .cta-content { padding: 40px 20px; } /* Compacta el cuadro de vidrio interno */
+  .cta-content h2 { font-size: 32px; } /* Título del cta adaptable a celular */
+  .cta-botones { flex-direction: column; gap: 10px; } /* Botones del cta uno abajo del otro */
+  .cta-botones button { width: 100%; } /* Botones toman todo el ancho en celular */
+
+  .pasos-header h2, .productos h2, .beneficios h2 { font-size: 28px; } /* Títulos generales más chicos */
+  .newsletter-content { padding: 40px 20px; } /* Caja blanca de registro más delgada */
+  .newsletter-form { flex-direction: column; width: 100%; } /* Formulario pasa a ser vertical */
+  .newsletter-form input, .btn-newsletter { width: 100%; } /* Input y botón al 100% de ancho */
+  
+  .footer-main { flex-direction: column; gap: 30px; } /* Columnas del footer pasan a ser una sola fila */
+  .footer-links-group { flex-direction: column; gap: 30px; } /* Enlaces del footer verticales */
+  .footer-bottom { flex-direction: column; text-align: center; } /* Copyright centrado completo */
+}
+
+@media (max-width: 580px) {
+  .circulo { width: 320px; height: 320px; } /* Círculo principal mediano para celulares */
+  .card { font-size: 14px; padding: 8px 14px; } /* Tarjetas flotantes más pequeñitas */
+}
+
+@media (max-width: 480px) {
+  .hero h1 { font-size: 38px; } /* Título del hero pequeño para pantallas mini */
+  .circulo { width: 260px; height: 260px; } /* Círculo en su tamaño mínimo estable */
 }
