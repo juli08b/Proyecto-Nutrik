@@ -3,11 +3,6 @@ import { useState } from 'react';
 import Navbar from './Components/Navbar';
 import Home from './Components/Home';
 import Header from './Components/Header';
-<<<<<<< HEAD
-import Footer from './Components/Footer';
-import Productos from './Pages/Product';
-import Vistaproducto from './Pages/Productview';
-=======
 import Footer from './Components/Footer'; 
 import Login from './Pages/Login';
 import Register from './Pages/Register';
@@ -17,7 +12,6 @@ import Contact from './Pages/Contact';
 import Newproduct from './Pages/Newproduct';
 import Discount from './Pages/Discount';
 import Cart from './Pages/Cart';
->>>>>>> master
 import './index.css';
 import './App.css';
 
