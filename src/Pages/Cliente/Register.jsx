@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'; 
 import { useState } from 'react'; // 1. IMPORTANTE: Check que esto esté aquí
 import './Register.css';
-import logo from '../assets/logoNutrick.png'; 
+import logo from '../../assets/logoNutrick.png'; 
 
 
 const Register = () => {

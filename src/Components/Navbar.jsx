@@ -90,7 +90,7 @@ function Navbar() {
 
           <li>
             <button className="btn-nav-acceder">
-              <Link to="/Login">ACCEDER</Link>
+              <Link to="/elegir-rol">ACCEDER</Link>
             </button>
           </li>
 

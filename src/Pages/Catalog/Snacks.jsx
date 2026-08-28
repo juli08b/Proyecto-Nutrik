@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import "../Product.css";
+import "../Cliente/Product.css";
 import granola from "../../assets/granola.svg";
 import frutos from "../../assets/frutos.svg";
 import chia from "../../assets/chia.svg";
