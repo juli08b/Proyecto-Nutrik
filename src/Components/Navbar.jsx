@@ -11,10 +11,12 @@ import sugerencias from "../assets/Sugerencia.svg";
 import categoria from "../assets/Categoria.svg";
 import dieta from "../assets/Dieta.svg";
 
-function Navbar() {
+
+// Recibimos el estado del menú y la función modificadora desde el padre (App.jsx) para poder controlar el menú desde aquí
+function Navbar({menuAbierto, setMenuAbierto}) {
 
   // ESTADO DEL MENÚ
-  const [menuAbierto, setMenuAbierto] = useState("");
+  //const [menuAbierto, setMenuAbierto] = useState("");
 
   return (
     <>

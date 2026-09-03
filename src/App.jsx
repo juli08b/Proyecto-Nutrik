@@ -1,4 +1,5 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
+//agregamos el useLocation para poder detectar la ruta actual y mostrar u ocultar el layout (Navbar y Footer) según corresponda
 import { useState } from 'react';
 import Navbar from './Components/Navbar';
 import Home from './Components/Home';
@@ -30,6 +31,7 @@ import Snacks from './Pages/Catalog/Snacks';
 
 function App() {
   const location = useLocation();
+  // Estado para controlar el menú abierto (puede ser "categoria", "dietas", etc. o false si no hay menú abierto)
   const [menuAbierto, setMenuAbierto] = useState(false);
 
   // CORRECCIÓN: Usamos .toLowerCase() y verificamos si la ruta incluye login o registro
@@ -48,6 +50,7 @@ function App() {
       )}
 
       <Routes>
+        {/* se agrega el setMenuAbierto como prop al componente Home para poder abrir el menú desde ahí */}
         <Route path="/" element={<Home setMenuAbierto={setMenuAbierto} />} />
         <Route path="/header" element={<Header />} />
         <Route path="/login" element={<Login />} />
