@@ -9,12 +9,6 @@
   scroll-behavior: smooth;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 html,
 body,
 #root {
@@ -49,4 +43,12 @@ input,
 select,
 textarea {
   font-family: var(--fuente-principal);
+}
+
+.main-content-wrapper {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
 }

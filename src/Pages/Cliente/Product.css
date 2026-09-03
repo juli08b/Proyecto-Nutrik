@@ -1,0 +1,341 @@
+/* =========================================================
+   INICIO: DISEÑO PRODUCT (Product.jsx)
+   ========================================================= */
+
+/* --- 1. Contenedor principal de Product.jsx --- */
+.productos-section {
+  width: 100%;
+  padding: 80px 20px 100px;
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0) 30%),
+    linear-gradient(180deg, #fffaf5 0%, #efe6db 45%, #e4ddcf 100%);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* --- 2. Cabecera de Product.jsx --- */
+.titulo-productos {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #2E241B;
+  margin-bottom: 15px;
+  text-transform: capitalize;
+  animation: aparecer 1s ease forwards;
+  position: relative;
+}
+
+.titulo-productos::after,
+.productos-header h1::after,
+.productos-header h2::after {
+  content: "";
+  width: 120px;
+  height: 6px;
+  background: linear-gradient(90deg, #98d65b 0%, #6afd6a 100%);
+  display: block;
+  margin: 12px auto 0;
+  border-radius: 999px;
+}
+
+.subtitulo-productos {
+  font-size: 1.02rem;
+  color: #5f6d53;
+  line-height: 1.6;
+  max-width: 760px;
+  margin: 0 auto 50px;
+  font-style: normal;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* --- 3. Grilla responsiva de Product.jsx --- */
+.contenedor-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 35px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* --- 4. Tarjetas de Product.jsx --- */
+.card-producto {
+  background: #ffffff;
+  border-radius: 25px;
+  overflow: hidden;
+  border: 1px solid rgba(20, 83, 45, 0.1);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.card-producto:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 30px rgba(20, 83, 45, 0.15);
+}
+
+.img-producto {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.card-producto:hover .img-producto {
+  transform: scale(1.05);
+}
+
+/* --- 5. Información y botón de Product.jsx --- */
+.card-producto h3 {
+  font-size: 1.2rem;
+  color: #3f240f;
+  margin: 20px 0 12px;
+  padding: 0 15px;
+  min-height: 48px;
+}
+
+.card-producto a {
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  padding: 0 15px 18px;
+}
+
+.btn-producto {
+  background: linear-gradient(135deg, #14532d 0%, #1f6a3d 100%);
+  color: #fff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 18px rgba(20, 83, 45, 0.18);
+}
+
+.btn-producto:hover {
+  background: linear-gradient(135deg, #166534 0%, #22804d 100%);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 14px 22px rgba(20, 83, 45, 0.25);
+}
+
+/* =========================================================
+   INICIO: DISEÑO NEWPRODUCT (Newproduct.jsx)
+   ========================================================= */
+
+.productos-header {
+  max-width: 1100px; /* Limita el ancho del contenido para mejor lectura */
+  margin: 0 auto 34px; /* Centra el bloque y deja espacio debajo */
+  padding: 0 20px; /* Espaciado horizontal para móviles */
+  text-align: center;
+}
+
+.productos-header h1,
+.productos-header h2 {
+  font-size: 3.0rem; /* Título grande para destacar la sección */
+  color: #2e241b;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+}
+
+.productos-header p {
+  color: #5f6d53;
+  line-height: 1.6;
+  max-width: 760px; /* Limita el ancho del párrafo para mejor lectura */
+  margin: 0 auto;
+  font-size: 1rem;
+}
+
+.productos-grid,
+.contenedor-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px; /* Espacio entre tarjetas */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card-producto,
+.producto-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 16px 30px rgba(46, 36, 27, 0.10);
+  border: 1px solid rgba(20, 83, 45, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-producto:hover,
+.producto-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 34px rgba(46, 36, 27, 0.14);
+}
+
+.img-producto,
+.producto-img {
+  width: 100%;
+  height: 220px; /* Altura fija para mantener consistencia entre tarjetas */
+  object-fit: cover;
+  display: block;
+}
+
+.card-producto h3,
+.producto-info h3 {
+  font-size: 1.08rem;
+  color: #3f240f;
+  min-height: 52px; /* Altura mínima para que los títulos no se estiren demasiado */
+  margin: 16px 14px 8px;
+}
+
+.producto-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 14px 4px;
+  text-align: center;
+}
+
+.producto-info a,
+.card-producto a {
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+}
+
+/* =========================================================
+   FIN: DISEÑO NEWPRODUCT (Newproduct.jsx)
+   ========================================================= */
+
+/* --- 6. Animación de Product.jsx --- */
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================================
+   FIN: DISEÑO PRODUCT (Product.jsx)
+   ========================================================= */
+
+/* =========================================================
+   INICIO: DISEÑO PRODUCTVIEW (Productview.jsx)
+   ========================================================= */
+
+/* --- 7. Contenedor global de Productview.jsx --- */
+.contenedor-vistas {
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: #fdfbf7;
+}
+
+/* --- 8. Estructura de dos columnas de Productview.jsx --- */
+.vista-producto {
+  display: flex;
+  flex-wrap: wrap; /* Para que sea responsivo en móviles */
+  max-width: 1000px;
+  background: #ffffff;
+  border-radius: 30px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  gap: 40px;
+  padding: 40px;
+}
+
+.imagen-producto {
+  flex: 1;
+  min-width: 300px;
+}
+
+.imagen-producto img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.info-producto {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+}
+
+/* --- 9. Tipografía y precio de Productview.jsx --- */
+.info-producto h1 {
+  font-size: 2.5rem;
+  color: #2E241B;
+  margin-bottom: 15px;
+}
+
+.descripcion-producto {
+  font-size: 1.1rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+.precio-producto {
+  font-size: 2rem;
+  color: #14532d;
+  font-weight: 800;
+  margin-bottom: 30px;
+}
+
+/* --- 10. Botones de acción de Productview.jsx --- */
+.acciones-producto {
+  display: flex;
+  gap: 15px;
+}
+
+.btn-comprar, .btn-carrito {
+  padding: 15px 30px;
+  border-radius: 40px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.btn-comprar {
+  background: #2E241B;
+  color: white;
+}
+
+.btn-carrito {
+  background: #e0e7d5;
+  color: #14532d;
+}
+
+.btn-carrito:hover {
+  background: #14532d;
+  color: white;
+}
+
+/* --- 11. Responsive de Productview.jsx --- */
+@media (max-width: 768px) {
+  .vista-producto {
+    flex-direction: column;
+    text-align: center;
+  }
+  .info-producto {
+    align-items: center;
+  }
+  .acciones-producto {
+    flex-direction: column;
+    width: 100%;
+  }
+}

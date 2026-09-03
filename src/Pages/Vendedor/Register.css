@@ -1,0 +1,175 @@
+.vendedor-main {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
+  font-family: Arial, sans-serif;
+  color: #111111;
+}
+
+* { box-sizing: border-box; }
+
+.vendedor-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  padding: 32px 18px 12px;
+}
+
+.vendedor-logo-circle {
+  width: 114px;
+  height: 114px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #ffffff 0%, #eef6ec 100%);
+  box-shadow: 0 14px 28px rgba(80, 110, 80, 0.18);
+  flex-shrink: 0;
+}
+
+.vendedor-logo { width: 84px; height: auto; }
+
+.vendedor-header-text h1 {
+  margin: 0 0 4px;
+  font-size: 2.1rem;
+  color: #111111;
+}
+
+.vendedor-header-text p {
+  margin: 0;
+  color: #5e755e;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.vendedor-form-container {
+  display: flex;
+  justify-content: center;
+  padding: 0 16px 40px;
+}
+
+.vendedor-card {
+  width: 100%;
+  max-width: 620px;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 30px;
+  box-shadow: 0 14px 30px rgba(38, 53, 39, 0.12);
+}
+
+.vendedor-title {
+  margin: 0 0 18px;
+  text-align: center;
+  color: #111111;
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.vendedor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label,
+.vendedor-form label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #333333;
+}
+
+.vendedor-form input,
+.vendedor-form select,
+.vendedor-form textarea {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 12px;
+  border: 1.5px solid #dadada;
+  border-radius: 14px;
+  background: #fff;
+  color: #2f3e2c;
+  font-size: 1rem;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.vendedor-form textarea {
+  padding: 12px;
+  min-height: 70px;
+  resize: vertical;
+}
+
+.vendedor-form input:focus,
+.vendedor-form select:focus,
+.vendedor-form textarea:focus {
+  outline: none;
+  border-color: #216301;
+  box-shadow: 0 0 0 3px rgba(33, 99, 1, 0.1);
+}
+
+.vendedor-submit {
+  width: 100%;
+  min-height: 52px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 14px;
+  background: #111111;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.16);
+  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.vendedor-submit:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.2);
+  filter: saturate(1.08);
+}
+
+.vendedor-link {
+  text-align: center;
+  color: #5c665a;
+  font-size: 0.95rem;
+  margin-top: 20px;
+}
+
+.vendedor-link a {
+  color: #216301;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.form-error {
+  background: #fdecea;
+  color: #b3261e;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #f5c6c0;
+  font-weight: 600;
+  font-size: 0.92rem;
+  margin-bottom: 14px;
+}
+
+.form-ok {
+  background: #e7f6e5;
+  color: #2f6b33;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #bfe3b8;
+  font-weight: 600;
+  font-size: 0.92rem;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 680px) {
+  .vendedor-header { flex-direction: column; text-align: center; }
+  .vendedor-card { padding: 18px; border-radius: 18px; }
+}

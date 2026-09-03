@@ -1,0 +1,314 @@
+/* CONFIGURACIÓN BASE */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+  --verde-oscuro: #4c7042;
+  --verde-boton: #4e7043;
+}
+
+/* ESTRUCTURA ORIGINAL: MITAD IZQUIERDA LOGO + MITAD DERECHA IMAGEN Y CUADRO */
+.login-page {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* MITAD IZQUIERDA: PANEL VERDE CON EL LOGO DE NUTRIK */
+.info-content {
+    flex: 0.5;
+    background: linear-gradient(135deg, #aae994, #2b3928);
+    color: #ffffff;
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.login-logo {
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    object-fit: contain;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.info-content p {
+    font-size: 1.15rem;
+    opacity: 0.95;
+}
+
+.welcome-text {
+    font-size: 2.2rem;
+    font-weight: 800;
+}
+
+/* MITAD DERECHA: IMAGEN fondo.jpg DE FONDO CON EL CUADRO DELANTE */
+.login-form-side {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.25)), url('../../assets/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+/* CUADRO DE INICIO DE SESIÓN (MODERNO, TRANSLÚCIDO PARA VER LA COMIDA) */
+.form-content {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 24px;
+    padding: 38px 44px 34px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 26px;
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18);
+}
+
+.register-link {
+    color: #5c665a;
+    text-align: center;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+}
+
+.welcome-card {
+    color: #2f402c;
+    font-size: 1.7rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.register-link a {
+    color: var(--verde-boton);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+/* CAMPOS DE ENTRADA */
+.input-field {
+    position: relative;
+    margin-bottom: 14px;
+    width: 100%;
+}
+
+.campo-icono {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    color: #6f947c;
+    pointer-events: none;
+}
+
+.input-field input {
+    width: 100%;
+    padding: 14px 46px 14px 44px;
+    border: 1px solid #dde5df;
+    border-radius: 12px;
+    background: #ffffff;
+    font-size: 0.95rem;
+    color: #1f3227;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-field input::placeholder {
+    color: #9aAB9F;
+}
+
+.input-field input:focus {
+    border-color: var(--verde-boton);
+    box-shadow: 0 0 0 3px rgba(78, 112, 67, 0.12);
+}
+
+/* BOTÓN MOSTRAR CONTRASEÑA */
+.toggle-clave {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #89948c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+}
+
+.toggle-clave:hover {
+    color: var(--verde-boton);
+}
+
+.toggle-clave svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* BOTÓN PRINCIPAL */
+.btn-login {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--verde-boton);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    margin-top: 5px;
+    box-shadow: 0 10px 20px rgba(78, 112, 67, 0.25);
+    transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-login:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.08);
+    box-shadow: 0 14px 24px rgba(78, 112, 67, 0.3);
+}
+
+.btn-login:active {
+    transform: scale(0.98);
+}
+
+/* BOTÓN GOOGLE CON LOGO */
+.btn-google {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px;
+    background-color: #ffffff;
+    color: #2f4030;
+    border: 1px solid #dfe6e1;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-google:hover {
+    transform: translateY(-1px);
+    background-color: #f8fbf9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.btn-google:active {
+    transform: scale(0.98);
+}
+
+.btn-google svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* DIVISOR Y RECUPERACIÓN */
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 18px 0 14px;
+    color: #808480;
+    font-size: 0.85rem;
+}
+
+.divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #dfe6e1;
+}
+
+.divider span {
+    padding: 0 10px;
+}
+
+.forgot-pass {
+    color: #5c665a;
+    text-align: center;
+    font-size: 0.95rem;
+    margin-top: 20px;
+}
+
+.forgot-pass a {
+    color: var(--verde-boton);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.forgot-pass a:hover {
+    text-decoration: underline;
+}
+
+/* MENSAJE DE ERROR */
+.login-error {
+    background: #fdecea;
+    color: #b3261e;
+    padding: 11px 14px;
+    border-radius: 12px;
+    border: 1px solid #f5c6c0;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 14px;
+    text-align: center;
+}
+
+/* CAJA DE CUENTA DEMO */
+.demo-box {
+    margin-top: 16px;
+    padding: 11px 14px;
+    background: #eef5ec;
+    border: 1px dashed #7aa462;
+    border-radius: 12px;
+    color: #386641;
+    font-size: 0.88rem;
+    text-align: center;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .login-page {
+        flex-direction: column;
+    }
+    .info-content {
+        flex: 0 0 auto;
+        padding: 30px 20px;
+        min-height: 30vh;
+    }
+    .login-logo {
+        width: 160px;
+        height: 160px;
+        padding: 20px;
+    }
+    .welcome-text {
+        font-size: 1.5rem;
+    }
+    .form-content {
+        max-width: 440px;
+        padding: 26px 22px;
+    }
+}
