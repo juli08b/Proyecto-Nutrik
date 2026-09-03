@@ -12,6 +12,11 @@ import Contact from './Pages/Contact';
 import Newproduct from './Pages/Newproduct';
 import Discount from './Pages/Discount';
 import Cart from './Pages/Cart';
+
+// Importamos las nuevas páginas de Facturación y Clientes
+import Invoice from './Pages/Invoice';
+import Client from './Pages/Client';
+
 import './index.css';
 import './App.css';
 
@@ -60,6 +65,10 @@ function App() {
         <Route path="/productos" element={<Product />} />
         <Route path="/productview/:id" element={<ProductView />} />
         <Route path="/newproduct" element={<Newproduct />} />
+
+        {/* Nuevas rutas añadidas para Facturación y Clientes */}
+        <Route path="/facturas" element={<Invoice />} />
+        <Route path="/clientes" element={<Client />} />
       </Routes>
 
       {/* Solo se muestra si NO estamos en login o registro */}
