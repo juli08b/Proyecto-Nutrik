@@ -1,7 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import '../App.css';
 
 export default function Invoice() {
+  // Inicializamos la navegación
+  const navigate = useNavigate();
+
   const [invoices] = useState([
     { id: 'FAC-0001', client: 'Juan Pérez', date: '25/08/2026', total: '$ 150.000', status: 'Pagada' },
     { id: 'FAC-0002', client: 'Ana López', date: '24/08/2026', total: '$ 230.000', status: 'Pagada' },
@@ -60,7 +64,11 @@ export default function Invoice() {
                       </span>
                     </td>
                     <td style={{ padding: '16px', textAlign: 'center' }}>
-                      <button style={{ background: '#eff6ff', color: '#1d4ed8', border: 'none', padding: '6px 12px', borderRadius: '6px', fontSize: '13px', fontWeight: '500', cursor: 'pointer', marginRight: '8px' }}>
+                      {/* Aquí agregamos el evento onClick al botón de Ver */}
+                      <button 
+                        onClick={() => navigate(`/facturas/${inv.id}`)}
+                        style={{ background: '#eff6ff', color: '#1d4ed8', border: 'none', padding: '6px 12px', borderRadius: '6px', fontSize: '13px', fontWeight: '500', cursor: 'pointer', marginRight: '8px' }}
+                      >
                         Ver
                       </button>
                       <button style={{ background: '#f3f4f6', color: '#374151', border: 'none', padding: '6px 12px', borderRadius: '6px', fontSize: '13px', fontWeight: '500', cursor: 'pointer' }}>
