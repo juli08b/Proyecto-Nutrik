@@ -7,13 +7,18 @@ import Footer from './Components/Footer';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
 import Product from './Pages/Product';
-import ProductView from './Pages/ProductView';
+import ProductView from './Pages/Productview';
 import Contact from './Pages/Contact';
-import Newproduct from './Pages/Newproduct';
 import Discount from './Pages/Discount';
 import Cart from './Pages/Cart';
 import './index.css';
 import './App.css';
+
+// 1. Importamos el proveedor de productos
+import { ProductProvider } from './Pages/ProductContext';
+
+// 2. Importamos el gestor con el nuevo nombre
+import { GestionProductos } from './Pages/GestionProductos';
 
 // Importamos el Provider y el Panel desde tu archivo Cart.jsx
 import { CartProvider, CartPanel } from './Pages/Cart';
@@ -27,45 +32,48 @@ function App() {
   const location = useLocation();
   const [menuAbierto, setMenuAbierto] = useState(false);
 
-  // CORRECCIÓN: Usamos .toLowerCase() y verificamos si la ruta incluye login o registro
-  // Esto evita fallos por barras diagonales o mayúsculas
   const pathActual = location.pathname.toLowerCase();
   const mostrarLayout = !pathActual.includes('login') && !pathActual.includes('registro');
 
   return (
-    <CartProvider>
-      
-      <CartPanel />
-
-      {/* Solo se muestra si NO estamos en login o registro */}
-      {mostrarLayout && (
-        <Navbar menuAbierto={menuAbierto} setMenuAbierto={setMenuAbierto} />
-      )}
-
-      <Routes>
-        <Route path="/" element={<Home setMenuAbierto={setMenuAbierto} />} />
-        <Route path="/header" element={<Header />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/registro" element={<Register />} />
+    // ProductProvider va afuera de todo para que la lista de productos esté disponible en TODAS las rutas
+    <ProductProvider>
+      <CartProvider>
         
-        {/* Rutas anidadas de categorías */}
-        <Route path="/catalog" element={<CategoriasLayout />}>
-          <Route path="frozen" element={<Frozen />} />
-          <Route path="snacks" element={<Snacks />} />
-        </Route>
+        <CartPanel />
 
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/discount" element={<Discount />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/productos" element={<Product />} />
-        <Route path="/productview/:id" element={<ProductView />} />
-        <Route path="/newproduct" element={<Newproduct />} />
-      </Routes>
+        {/* Solo se muestra si NO estamos en login o registro */}
+        {mostrarLayout && (
+          <Navbar menuAbierto={menuAbierto} setMenuAbierto={setMenuAbierto} />
+        )}
 
-      {/* Solo se muestra si NO estamos en login o registro */}
-      {mostrarLayout && <Footer />}
-      
-    </CartProvider>
+        <Routes>
+          <Route path="/" element={<Home setMenuAbierto={setMenuAbierto} />} />
+          <Route path="/header" element={<Header />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/registro" element={<Register />} />
+          
+          {/* Rutas anidadas de categorías */}
+          <Route path="/catalog" element={<CategoriasLayout />}>
+            <Route path="frozen" element={<Frozen />} />
+            <Route path="snacks" element={<Snacks />} />
+          </Route>
+
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/discount" element={<Discount />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/productos" element={<Product />} />
+          <Route path="/productview/:id" element={<ProductView />} />
+          
+          {/* Tu ruta declarada exactamente igual que las demás */}
+          <Route path="/newproduct" element={<GestionProductos />} />
+        </Routes>
+
+        {/* Solo se muestra si NO estamos en login o registro */}
+        {mostrarLayout && <Footer />}
+        
+      </CartProvider>
+    </ProductProvider>
   );
 }
 

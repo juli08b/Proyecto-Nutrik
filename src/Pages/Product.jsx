@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 export const listaProductos = [
   {
     id: "creatine",
+    vendedorId: "vendor_123",
     imagen: "https://i.pinimg.com/736x/4e/1d/3d/4e1d3d2831b01988bbfbcaf7fbdeabda.jpg",
     nombre: "Creatina Monohidratada 100% Pura",
     categoria: "SUPLEMENTOS",
@@ -19,6 +20,7 @@ export const listaProductos = [
   },
   {
     id: "yogur",
+    vendedorId: "vendor_123",
     imagen: "https://i.pinimg.com/1200x/04/40/75/044075ff03f913e906dca4efbafc8821.jpg",
     nombre: "Yogur Griego Natural Artesanal",
     categoria: "LÁCTEOS / PROTEÍNA",
@@ -33,6 +35,7 @@ export const listaProductos = [
   },
   {
     id: "detox",
+    vendedorId: "vendor_123",
     imagen: "https://i.pinimg.com/736x/76/0c/30/760c30841b4c4e0313ff087ef2dcc749.jpg",
     nombre: "Té Verde Detox & Antiox Ultra Blend",
     categoria: "INFUSIONES",
