@@ -158,9 +158,12 @@ const Perfil = () => {
             </div>
 
             <div className="perfil-acciones">
-              <button className="perfil-boton editar" onClick={() => setEditando(true)}>
-                ✏️ Editar perfil
-              </button>
+              {/* El botón de editar solo aparece si hay sesión iniciada */}
+              {user && (
+                <button className="perfil-boton editar" onClick={() => setEditando(true)}>
+                  <span className="perfil-boton-icono">✏️</span> Editar
+                </button>
+              )}
               <button className="perfil-boton salir" onClick={logout}>
                 Cerrar sesión
               </button>

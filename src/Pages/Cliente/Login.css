@@ -20,10 +20,10 @@
 
 /* MITAD IZQUIERDA: PANEL VERDE CON EL LOGO DE NUTRIK */
 .info-content {
-    flex: 0.5;
+    flex: 0.55;
     background: linear-gradient(135deg, #aae994, #2b3928);
     color: #ffffff;
-    padding: 60px;
+    padding: 52px 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,8 +32,9 @@
 }
 
 .login-logo {
-    width: 420px;
-    height: 420px;
+    width: min(420px, 78%);
+    height: auto;
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
     background-color: #ffffff;
     display: flex;

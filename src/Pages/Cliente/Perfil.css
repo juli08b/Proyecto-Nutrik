@@ -141,13 +141,32 @@
   font-weight: 700;
   font-size: 0.95rem;
   cursor: pointer;
+  outline: none; /* Evita el contorno alargado del foco por defecto */
   transition: transform 0.15s ease, filter 0.2s ease, box-shadow 0.2s ease;
 }
 
+.perfil-boton:focus-visible {
+  box-shadow: 0 0 0 3px rgba(107, 142, 90, 0.35);
+}
+
 .perfil-boton.editar {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 16px;
+  border-radius: 999px;
   background: linear-gradient(135deg, #7aa462 0%, #5d8451 100%);
   color: #ffffff;
+  font-size: 0.92rem;
+  line-height: 1;
   box-shadow: 0 8px 18px rgba(93, 132, 81, 0.25);
+}
+
+.perfil-boton-icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
 }
 
 .perfil-boton.salir {

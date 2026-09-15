@@ -115,8 +115,34 @@ function AuthProvider({ children }) {
     localStorage.removeItem(STORAGE_SESSION);
   };
 
+  const existeCuenta = (email) => {
+    const correo = (email || '').trim().toLowerCase();
+    if (!correo) return { ok: false, error: 'Ingresa tu correo electrónico.' };
+    const cuenta = users.find((u) => u.email.toLowerCase() === correo);
+    if (!cuenta) return { ok: false, error: 'No existe ninguna cuenta con ese correo.' };
+    return { ok: true, cuenta: { ...cuenta } };
+  };
+
+  const resetPassword = (email, nuevaPassword) => {
+    const correo = (email || '').trim().toLowerCase();
+    if (!nuevaPassword || nuevaPassword.length < 8) {
+      return { ok: false, error: 'La contraseña debe tener mínimo 8 caracteres.' };
+    }
+    const cuenta = users.find((u) => u.email.toLowerCase() === correo);
+    if (!cuenta) return { ok: false, error: 'No existe ninguna cuenta con ese correo.' };
+
+    // Guardamos la lista actualizada (incluyendo cuentas demo) en localStorage
+    const nuevaLista = users.map((u) =>
+      u.email.toLowerCase() === correo ? { ...u, password: nuevaPassword } : u
+    );
+    persistirUsuarios(nuevaLista);
+    setUser(null);
+    localStorage.removeItem(STORAGE_SESSION);
+    return { ok: true };
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, register, updateProfile, logout }}>
+    <AuthContext.Provider value={{ user, login, register, updateProfile, logout, existeCuenta, resetPassword }}>
       {children}
     </AuthContext.Provider>
   );

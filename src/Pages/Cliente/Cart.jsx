@@ -1,6 +1,7 @@
 import { createContext, useContext, useMemo, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../../Context/authContext";
 import "./Cart.css";
-import { Link } from "react-router-dom";
 
 //CONTEXTO 
 
@@ -41,6 +42,11 @@ export function CartProvider({ children }) {
     );
   };
 
+  //VACÍA EL CARRITO COMPLETO TRAS PAGAR
+  const vaciarCarrito = () => {
+    setCarrito([]);
+  };
+
   //SUMA TODAS LA CANTIDAD PARA EL BADGE 
   const totalItems = useMemo(() => carrito.reduce((acc, p) => acc + Number(p.cantidad || 1), 0), [carrito]);
   //MULTIPLICA PRECIO X CANTIDAD PARA QUE SE MIRE EL TOTAL
@@ -59,6 +65,7 @@ export function CartProvider({ children }) {
         agregarProducto,
         eliminarProducto,
         cambiarCantidad,
+        vaciarCarrito,
         totalItems,
         totalPrecio,
       }}
@@ -68,6 +75,7 @@ export function CartProvider({ children }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useCart() {
   return useContext(CartContext);
 }
@@ -83,6 +91,20 @@ export function CartPanel() {
     totalPrecio,
   } = useCart();
 
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [mostrarAviso, setMostrarAviso] = useState(false);
+
+  const manejarPagar = () => {
+    if (user) {
+      setCarritoAbierto(false); // Cierra el panel y va al pago
+      navigate("/checkout");
+    } else {
+      //SIN SESIÓN: AVISA EN EL CENTRO QUE DEBE INICIAR SESIÓN
+      setMostrarAviso(true);
+    }
+  };
+
   return (
     <>
       {/* OVERLAY LA PARTE OSCURA */}
@@ -90,6 +112,29 @@ export function CartPanel() {
         className={`cart-overlay ${carritoAbierto ? "activo" : ""}`}
         onClick={() => setCarritoAbierto(false)}
       />
+
+      {/* LETRERO CENTRAL cuando intenta pagar sin sesión */}
+      {mostrarAviso && (
+        <div className="aviso-sesion-overlay" onClick={() => setMostrarAviso(false)}>
+          <div className="aviso-sesion" onClick={(e) => e.stopPropagation()}>
+            <span className="aviso-sesion-icono">🔒</span>
+            <h3>Debes iniciar sesión</h3>
+            <p>Para poder pagar tu pedido necesitas iniciar sesión en tu cuenta de Nutrik.</p>
+            <div className="aviso-sesion-botones">
+              <Link
+                to="/elegir-rol"
+                className="aviso-sesion-btn-primario"
+                onClick={() => setMostrarAviso(false)}
+              >
+                Iniciar sesión
+              </Link>
+              <button className="aviso-sesion-btn-cerrar" onClick={() => setMostrarAviso(false)}>
+                Ahora no
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Panel lateral */}
       <div className={`cart-panel ${carritoAbierto ? "activo" : ""}`}>
@@ -118,7 +163,10 @@ export function CartPanel() {
                   <p className="cart-item-precio">
                     ${(item.precio * item.cantidad).toLocaleString("es-CO")}
                   </p>
-                   {/* Controles de cantidad — botones + y - */}
+                  <p className="cart-item-unitario">
+                    ${item.precio.toLocaleString("es-CO")} c/u
+                  </p>
+                  {/* Controles de cantidad — botones + y - */}
                   <div className="cart-item-controles">
                     <button onClick={() => cambiarCantidad(item.id, -1)}>−</button>
                     <span>{item.cantidad}</span>
@@ -141,8 +189,10 @@ export function CartPanel() {
               <span>Total:</span>
               <span className="cart-total-precio">${totalPrecio.toLocaleString("es-CO")}</span>
             </div>
-             {/*BOTOR PAGAR (AUN SIN FUNCION) */}
-            <button className="cart-btn-pagar">Pagar</button>
+             {/*BOTON PAGAR — exige sesión iniciada */}
+            <button className="cart-btn-pagar" onClick={manejarPagar}>
+              Pagar · ${totalPrecio.toLocaleString("es-CO")}
+            </button>
 
                {/*BOTON SEGUIR COMPRANDO - CIERRA EL PANEL*/}
             <button className="cart-btn-seguir" onClick={() => setCarritoAbierto(false)}>
