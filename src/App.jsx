@@ -15,7 +15,7 @@ import Newproduct from './Pages/Cliente/Newproduct';
 import Discount from './Pages/Cliente/Discount';
 import Cart from './Pages/Cliente/Cart';
 
-// Importamos las páginas fuera de cliente (asegúrate de que estén en Pages directamente)
+// Importamos las páginas fuera de cliente
 import Invoice from './Pages/Invoice';
 import Client from './Pages/Client';
 
@@ -65,7 +65,7 @@ function App() {
         <Route path="/productview/:id" element={<ProductView />} />
         <Route path="/newproduct" element={<Newproduct />} />
 
-        {/* Nuevas rutas añadidas para Facturación y Clientes */}
+        {/* Rutas de Facturación y Clientes */}
         <Route path="/facturas" element={<Invoice />} />
         <Route path="/clientes" element={<Client />} />
       </Routes>
