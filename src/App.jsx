@@ -1,28 +1,29 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-//agregamos el useLocation para poder detectar la ruta actual y mostrar u ocultar el layout (Navbar y Footer) según corresponda
 import { useState } from 'react';
 import Navbar from './Components/Navbar';
 import Home from './Components/Home';
 import Header from './Components/Header';
 import Footer from './Components/Footer'; 
-import Login from './Pages/Login';
-import Register from './Pages/Register';
-import Product from './Pages/Product';
-import ProductView from './Pages/ProductView';
-import Contact from './Pages/Contact';
-import Newproduct from './Pages/Newproduct';
-import Discount from './Pages/Discount';
-import Cart from './Pages/Cart';
 
-// Importamos las nuevas páginas de Facturación y Clientes
+// Importaciones desde la carpeta Cliente
+import Login from './Pages/Cliente/Login';
+import Register from './Pages/Cliente/Register';
+import Product from './Pages/Cliente/Product';
+import ProductView from './Pages/Cliente/Productview';
+import Contact from './Pages/Cliente/Contact';
+import Newproduct from './Pages/Cliente/Newproduct';
+import Discount from './Pages/Cliente/Discount';
+import Cart from './Pages/Cliente/Cart';
+
+// Importamos las páginas fuera de cliente (asegúrate de que estén en Pages directamente)
 import Invoice from './Pages/Invoice';
 import Client from './Pages/Client';
 
 import './index.css';
 import './App.css';
 
-// Importamos el Provider y el Panel desde tu archivo Cart.jsx
-import { CartProvider, CartPanel } from './Pages/Cart';
+// Importamos el Provider y el Panel desde el archivo Cart en Cliente
+import { CartProvider, CartPanel } from './Pages/Cliente/Cart';
 
 // Importamos el layout específico para las categorías
 import CategoriasLayout from './Components/layout/CategoriasLayout';
@@ -31,11 +32,8 @@ import Snacks from './Pages/Catalog/Snacks';
 
 function App() {
   const location = useLocation();
-  // Estado para controlar el menú abierto (puede ser "categoria", "dietas", etc. o false si no hay menú abierto)
   const [menuAbierto, setMenuAbierto] = useState(false);
 
-  // CORRECCIÓN: Usamos .toLowerCase() y verificamos si la ruta incluye login o registro
-  // Esto evita fallos por barras diagonales o mayúsculas
   const pathActual = location.pathname.toLowerCase();
   const mostrarLayout = !pathActual.includes('login') && !pathActual.includes('registro');
 
@@ -44,13 +42,11 @@ function App() {
       
       <CartPanel />
 
-      {/* Solo se muestra si NO estamos en login o registro */}
       {mostrarLayout && (
         <Navbar menuAbierto={menuAbierto} setMenuAbierto={setMenuAbierto} />
       )}
 
       <Routes>
-        {/* se agrega el setMenuAbierto como prop al componente Home para poder abrir el menú desde ahí */}
         <Route path="/" element={<Home setMenuAbierto={setMenuAbierto} />} />
         <Route path="/header" element={<Header />} />
         <Route path="/login" element={<Login />} />
@@ -74,7 +70,6 @@ function App() {
         <Route path="/clientes" element={<Client />} />
       </Routes>
 
-      {/* Solo se muestra si NO estamos en login o registro */}
       {mostrarLayout && <Footer />}
       
     </CartProvider>
