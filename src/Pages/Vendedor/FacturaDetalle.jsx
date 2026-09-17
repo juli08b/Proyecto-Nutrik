@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../../App.css';
 
+//sirve para exportar 
 export default function FacturaDetalle() {
   const { id } = useParams();
   const navigate = useNavigate();
