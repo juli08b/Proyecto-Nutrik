@@ -27,10 +27,10 @@ const dataCategorias = [
 ];
 
 const ventasRecientes = [
-    { id: '#1052', cliente: 'Ana Martínez', fecha: '25/08/2026', total: '$ 180.000', estado: 'Completado' },
-    { id: '#1051', cliente: 'Carlos López', fecha: '25/08/2026', total: '$ 320.000', estado: 'Enviado' },
-    { id: '#1050', cliente: 'Lucía Gómez', fecha: '24/08/2026', total: '$ 95.000', estado: 'Pendiente' },
-    { id: '#1049', cliente: 'Diego Ruiz', fecha: '24/08/2026', total: '$ 210.000', estado: 'Completado' },
+    { id: '#1052', cliente: 'Ana Martínez', fecha: '25/08/2026', total: '$ 180.000', estado: 'Completado', factura: 'ver factura' },
+    { id: '#1051', cliente: 'Carlos López', fecha: '25/08/2026', total: '$ 320.000', estado: 'Enviado', factura: 'ver factura' },
+    { id: '#1050', cliente: 'Lucía Gómez', fecha: '24/08/2026', total: '$ 95.000', estado: 'Pendiente', factura: 'ver factura' },
+    { id: '#1049', cliente: 'Diego Ruiz', fecha: '24/08/2026', total: '$ 210.000', estado: 'Completado', factura: 'ver factura' },
 ];
 
 const productosTop = [
@@ -139,6 +139,9 @@ const Dashboard = () => {
                                     <th>Fecha</th>
                                     <th>Total</th>
                                     <th>Estado</th>
+                                    <th>Factura</th>
+
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -152,6 +155,18 @@ const Dashboard = () => {
                                             <span className={`status-badge ${item.estado.toLowerCase()}`}>
                                                 {item.estado}
                                             </span>
+                                        </td>
+                                        <td>
+                                            <button
+                                                type="button"
+                                                className="factura-badge"
+                                                onClick={() => {
+                                                    // Aquí podrás agregar la redirección a la ruta futura
+                                                    // ej: navigate(`/facturas/${item.factura}`)
+                                                }}
+                                            >
+                                                {item.factura}
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}
