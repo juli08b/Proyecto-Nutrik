@@ -49,6 +49,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home setMenuAbierto={setMenuAbierto} />} />
         <Route path="/header" element={<Header />} />
+
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Register />} />
         
