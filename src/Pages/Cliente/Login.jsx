@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'; // Importante para la navegación
 import './Login.css';
-import logo from '../assets/logoNutrick.png'; 
-import fondo from '../assets/fondo.jpg'; // Se queda importada por si acaso, aunque la llamaremos desde el CSS
+import logo from '../../assets/logoNutrick.png'; 
+import fondo from '../../assets/fondo.jpg'; // Se queda importada por si acaso, aunque la llamaremos desde el CSS
 
 const Login = () => {
   return (

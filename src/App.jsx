@@ -4,21 +4,29 @@ import Navbar from './Components/Navbar';
 import Home from './Components/Home';
 import Header from './Components/Header';
 import Footer from './Components/Footer'; 
-import Login from './Pages/Login';
-import Register from './Pages/Register';
-import Product from './Pages/Product';
-import ProductView from './Pages/ProductView';
-import Contact from './Pages/Contact';
-import Newproduct from './Pages/Newproduct';
-import Discount from './Pages/Discount';
-import Cart from './Pages/Cart';
 
-import Dashboard from './Pages/Dashboard/Dashboard'
+
+// Importaciones desde la carpeta Cliente (organizado por Jhosman)
+import Login from './Pages/Cliente/Login';
+import Register from './Pages/Cliente/Register';
+import Product from './Pages/Cliente/Product';
+import ProductView from './Pages/Cliente/Productview';
+import Contact from './Pages/Cliente/Contact';
+import Newproduct from './Pages/Cliente/Newproduct';
+import Discount from './Pages/Cliente/Discount';
+import Cart from './Pages/Cliente/Cart';
+
+// Importaciones de otras secciones (Dashboard tuyo + Facturas/Clientes de Jhosman)
+import Dashboard from './Pages/Dashboard/Dashboard';
+import Invoice from './Pages/Invoice';
+import Client from './Pages/Client';
+import FacturaView from './Pages/Vendedor/FacturaView'
+
 import './index.css';
 import './App.css';
 
-// Importamos el Provider y el Panel desde tu archivo Cart.jsx
-import { CartProvider, CartPanel } from './Pages/Cart';
+// Importamos el Provider y el Panel desde el archivo Cart en Cliente
+import { CartProvider, CartPanel } from './Pages/Cliente/Cart';
 
 // Importamos el layout específico para las categorías
 import CategoriasLayout from './Components/layout/CategoriasLayout';
@@ -29,8 +37,6 @@ function App() {
   const location = useLocation();
   const [menuAbierto, setMenuAbierto] = useState(false);
 
-  // CORRECCIÓN: Usamos .toLowerCase() y verificamos si la ruta incluye login o registro
-  // Esto evita fallos por barras diagonales o mayúsculas
   const pathActual = location.pathname.toLowerCase();
   const mostrarLayout = !pathActual.includes('login') && !pathActual.includes('registro');
 
@@ -39,7 +45,6 @@ function App() {
       
       <CartPanel />
 
-      {/* Solo se muestra si NO estamos en login o registro */}
       {mostrarLayout && (
         <Navbar menuAbierto={menuAbierto} setMenuAbierto={setMenuAbierto} />
       )}
@@ -47,6 +52,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home setMenuAbierto={setMenuAbierto} />} />
         <Route path="/header" element={<Header />} />
+
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Register />} />
         
@@ -62,11 +68,14 @@ function App() {
         <Route path="/productos" element={<Product />} />
         <Route path="/productview/:id" element={<ProductView />} />
         <Route path="/newproduct" element={<Newproduct />} />
+        <Route path="/FacturaView" element={<FacturaView />} />
 
+        {/* Tus rutas y las de Jhosman unidas */}
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/FacturaDetalle" element={<Invoice />} />
+        <Route path="/clientes" element={<Client />} />
       </Routes>
 
-      {/* Solo se muestra si NO estamos en login o registro */}
       {mostrarLayout && <Footer />}
       
     </CartProvider>
