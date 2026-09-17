@@ -1,13 +1,18 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+<<<<<<< HEAD:src/Pages/Cliente/Newproduct.jsx
 import "./Product.css";
+=======
+import "./Newproduct.css"; // Importo mis estilos específicos para esta página
+>>>>>>> c77f2e55be574afa7dfd73eb1e2265ef5bc047c0:src/Pages/Newproduct.jsx
 
+// Definición de mi array de objetos de productos para renderizarlos dinámicamente
 const productos = [
   {
     id: 1,
     nombre: "Silk - almendra sin azúcar",
     imagen: "https://i.pinimg.com/1200x/59/7a/da/597ada481273c9ecc7b001456412b3c4.jpg",
-    ruta: "/vistaproducto/silk-almendra",
+    ruta: "/vistaproducto/silk-almendra", // Ruta dinámica para cuando le den clic a "Ver producto"
   },
   {
     id: 2,
@@ -66,30 +71,51 @@ const productos = [
 ];
 
 function Newproduct() {
+  // Uso este useEffect para mejorar la experiencia de usuario (UX).
+  // Al entrar a la página de productos, fuerza al navegador a subir al tope (0,0) 
+  // para que no aparezca scrolleado a la mitad si venías de otra sección larga.
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
+<<<<<<< HEAD:src/Pages/Cliente/Newproduct.jsx
     <section className="productos-section">
       <div className="productos-header">
         <h1 className="titulo-productos">Explora lo Nuevo</h1>
         <p>
            Descubre nuestra selección de superalimentos y productos 100% 
            naturales para potenciar tu bienestar diario.
+=======
+    // Contenedor principal de toda la sección de la página
+    <section className="productos-section">
+      
+      {/* Bloque del encabezado: Título, línea decorativa y subtítulo */}
+      <div className="productos-header">
+        <h1 className="titulo-productos">Productos Saludables</h1>
+        <div className="linea-titulo"></div> {/* Línea decorativa verde olivo */}
+        <p className="subtitulo-productos">
+          Descubre nuestra selección de superalimentos y productos 100% 
+          naturales para potenciar tu bienestar diario.
+>>>>>>> c77f2e55be574afa7dfd73eb1e2265ef5bc047c0:src/Pages/Newproduct.jsx
         </p>
       </div>
 
-      <div className="productos-grid">
+      {/* Grilla principal que envuelve todas las tarjetas mapeadas */}
+      <div className="contenedor-productos">
+        {/* Recorro mi array de productos usando .map para renderizar cada uno dinámicamente */}
         {productos.map((producto) => (
-          <div className="producto-card" key={producto.id}>
+          // Tarjeta individual del producto. Le pongo el "key" obligatorio de React con el id único
+          <div className="card-producto" key={producto.id}>
             <img
               src={producto.imagen}
-              alt={producto.nombre}
-              className="producto-img"
+              alt={producto.nombre} // Alt adaptado al nombre para accesibilidad y SEO
+              className="img-producto"
             />
+            {/* Contenedor de la información escrita y el botón */}
             <div className="producto-info">
               <h3>{producto.nombre}</h3>
+              {/* Link de React Router para redirigir a la subvista sin recargar la página */}
               <Link to={producto.ruta}>
                 <button className="btn-producto">Ver producto</button>
               </Link>
