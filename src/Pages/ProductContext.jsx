@@ -6,26 +6,27 @@ const ProductContext = createContext();
 export const ProductProvider = ({ children }) => {
   const [productos, setProductos] = useState(datosIniciales);
 
-  // Filtrar solo los productos del vendedor actual
+  // Obtener productos de un vendedor específico
   const getProductosPorVendedor = (vendedorId) => {
     return productos.filter(p => p.vendedorId === vendedorId);
   };
 
-  // Crear producto
+  // Agregar nuevo producto con estado 'Activo' por defecto
   const agregarProducto = (nuevoProducto) => {
     const productoConId = {
       ...nuevoProducto,
       id: Date.now().toString(),
+      estado: nuevoProducto.estado || 'Activo',
       rating: 5.0,
       reviews: 0
     };
     setProductos(prev => [...prev, productoConId]);
   };
 
-  // Editar producto
+  // Editar producto existente
   const actualizarProducto = (id, datosActualizados) => {
     setProductos(prev =>
-      prev.map(p => (p.id === id ? { ...p, ...datosActualizados } : p))
+      prev.map(p => (String(p.id) === String(id) ? { ...p, ...datosActualizados } : p))
     );
   };
 

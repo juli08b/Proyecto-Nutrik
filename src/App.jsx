@@ -3,13 +3,15 @@ import { useState } from 'react';
 import Navbar from './Components/Navbar';
 import Home from './Components/Home';
 import Header from './Components/Header';
-import Footer from './Components/Footer'; 
+import Footer from './Components/Footer';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
 import Product from './Pages/Product';
 import ProductView from './Pages/Productview';
 import Contact from './Pages/Contact';
 import Discount from './Pages/Discount';
+import RegisteredProducts from "./Pages/RegisteredProducts";
+import EditProduct from "./Pages/EditProduct";
 import Cart from './Pages/Cart';
 import './index.css';
 import './App.css';
@@ -39,7 +41,7 @@ function App() {
     // ProductProvider va afuera de todo para que la lista de productos esté disponible en TODAS las rutas
     <ProductProvider>
       <CartProvider>
-        
+
         <CartPanel />
 
         {/* Solo se muestra si NO estamos en login o registro */}
@@ -52,7 +54,7 @@ function App() {
           <Route path="/header" element={<Header />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registro" element={<Register />} />
-          
+
           {/* Rutas anidadas de categorías */}
           <Route path="/catalog" element={<CategoriasLayout />}>
             <Route path="frozen" element={<Frozen />} />
@@ -64,14 +66,17 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/productos" element={<Product />} />
           <Route path="/productview/:id" element={<ProductView />} />
-          
+
           {/* Tu ruta declarada exactamente igual que las demás */}
           <Route path="/newproduct" element={<GestionProductos />} />
+
+          <Route path="/mis-productos" element={<RegisteredProducts />} />
+          <Route path="/editar-producto/:id" element={<EditProduct />} />
         </Routes>
 
         {/* Solo se muestra si NO estamos en login o registro */}
         {mostrarLayout && <Footer />}
-        
+
       </CartProvider>
     </ProductProvider>
   );
