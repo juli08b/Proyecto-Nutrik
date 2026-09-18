@@ -618,11 +618,12 @@
   margin-bottom: 12px;
 }
 .gestion-container {
-  padding: 24px;
+  padding: 140px 24px 60px 24px; /* 140px arriba para despejar el Navbar */
   max-width: 1100px;
   margin: 0 auto;
   font-family: system-ui, -apple-system, sans-serif;
   color: #333;
+  box-sizing: border-box;
 }
 
 /* Header */
@@ -631,6 +632,8 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .gestion-titulo {
