@@ -1,6 +1,6 @@
-import React from 'react';
+// import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import '../../App.css';
+
 
 //sirve para exportar 
 export default function FacturaDetalle() {
@@ -8,8 +8,10 @@ export default function FacturaDetalle() {
   const navigate = useNavigate();
 
   return (
-    <div style={{ paddingTop: '160px', paddingBottom: '60px', paddingLeft: '20px', paddingRight: '20px', backgroundColor: '#f9fafb', minHeight: '100vh' }}>
-      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+<div 
+      className="factura-view min-h-screen bg-slate-100/80 px-4 pb-12 sm:px-6 lg:px-8 print:bg-white print:p-0 flex flex-col items-center"
+      style={{ paddingTop: '160px' }}
+    >      
         
         {/* Botón para volver */}
         <button 
@@ -62,6 +64,5 @@ export default function FacturaDetalle() {
         </div>
 
       </div>
-    </div>
   );
 }
