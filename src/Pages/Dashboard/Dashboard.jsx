@@ -3,6 +3,7 @@ import {
     LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
     PieChart, Pie, Cell, Legend
 } from 'recharts';
+import { useNavigate } from "react-router-dom";
 import './Dashboard.css';
 
 // Datos de prueba basados en tu boceto
@@ -27,7 +28,7 @@ const dataCategorias = [
 ];
 
 const ventasRecientes = [
-    { id: '#1052', cliente: 'Ana Martínez', fecha: '25/08/2026', total: '$ 180.000', estado: 'Completado', factura: 'ver factura' },
+    { id: '#1052', cliente: 'Josman Chango', fecha: '25/08/2026', total: '$ 180.000', estado: 'Completado', factura: 'ver factura' },
     { id: '#1051', cliente: 'Carlos López', fecha: '25/08/2026', total: '$ 320.000', estado: 'Enviado', factura: 'ver factura' },
     { id: '#1050', cliente: 'Lucía Gómez', fecha: '24/08/2026', total: '$ 95.000', estado: 'Pendiente', factura: 'ver factura' },
     { id: '#1049', cliente: 'Diego Ruiz', fecha: '24/08/2026', total: '$ 210.000', estado: 'Completado', factura: 'ver factura' },
@@ -41,6 +42,8 @@ const productosTop = [
 ];
 
 const Dashboard = () => {
+    const navigate = useNavigate();
+
     return (
         <div className="dashboard-container">
             <header className="dashboard-header">
@@ -161,8 +164,16 @@ const Dashboard = () => {
                                                 type="button"
                                                 className="factura-badge"
                                                 onClick={() => {
-                                                    // Aquí podrás agregar la redirección a la ruta futura
-                                                    // ej: navigate(`/facturas/${item.factura}`)
+                                                    // Redirige a FacturaView y envía los datos por el estado de la ruta
+                                                    navigate(`/FacturaView`, {
+                                                        state: {
+                                                            numero: item.id,
+                                                            cliente: item.cliente,
+                                                            fecha: item.fecha,
+                                                            total: item.total,
+                                                            estado: item.estado
+                                                        }
+                                                    });
                                                 }}
                                             >
                                                 {item.factura}
