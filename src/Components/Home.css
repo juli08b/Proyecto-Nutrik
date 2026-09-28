@@ -65,25 +65,40 @@
 
 /* Botón Explorar */
 .btn-primary {
-  background: linear-gradient(90deg, #91b6a5 0%, #e5ffe1 100%); /* Fondo degradado claro */
+  background: #ffffff; /* Fondo blanco limpio */
   color: var(--verde-oscuro); /* Letra del botón en verde oscuro */
+  box-shadow: 0 10px 24px rgba(0, 46, 26, 0.25); /* Sombra verde suave */
 }
 
 .btn-primary:hover {
+  background: #eafff0; /* Verde muy claro al pasar el mouse */
   transform: translateY(-3px); /* Sube el botón un poquito al pasar el mouse */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Le pone una sombra negra suave */
+  box-shadow: 0 12px 26px rgba(0, 46, 26, 0.3); /* Sombras más notorias */
 }
 
 /* Botón Ver planes */
 .btn-outline {
-  border: 2px solid white;   /* Le pone un borde de línea blanca */
-  color: white;              /* Letra del botón en color blanco */
+  background: rgba(255, 255, 255, 0.18); /* Fondo blanco semitransparente tipo vidrio */
+  border: 1px solid rgba(255, 255, 255, 0.55); /* Borde suave bien definido */
+  color: #ffffff;            /* Letra blanca pura para máximo contraste */
+  backdrop-filter: blur(8px); /* Efecto de vidrio esmerilado */
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 8px 20px rgba(0, 46, 26, 0.2); /* Sombra integrada como la tarjeta */
+}
+
+/* Refuerzo específico: el texto siempre será blanco, nunca verde */
+.hero-botones .btn-outline,
+.hero-botones .btn-outline:link,
+.hero-botones .btn-outline:visited {
+  color: #ffffff;
 }
 
 .btn-outline:hover {
-  background: white;         /* Pone el fondo blanco al pasar el mouse */
-  color: var(--verde-oscuro); /* Cambia la letra a verde oscuro al pasar el mouse */
-  transform: translateY(-3px); /* Sube el botón un poquito al pasar el mouse */
+  background: rgba(255, 255, 255, 0.32);   /* Se enciende un poco al pasar el mouse */
+  color: #ffffff;                          /* El texto sigue blanco y legible */
+  border-color: #ffffff;
+  transform: translateY(-3px);             /* Sube el botón un poquito al pasar el mouse */
+  box-shadow: 0 12px 26px rgba(0, 46, 26, 0.28);
 }
 
 /* FOTO PRINCIPAL Y TARJETAS FLOTANTES */
@@ -109,6 +124,7 @@
   width: 100%;               /* Hace que la foto ocupe todo el ancho disponible */
   height: 100%;              /* Hace que la foto ocupe todo el alto disponible */
   object-fit: cover;         /* Adapta la foto para que llene el círculo sin dañarse */
+  object-position: 50% 28%;  /* Encuadra hacia arriba para no cortar los rostros */
 }
 
 /* Estilo de las tarjetas pequeñas flotantes */
@@ -203,7 +219,7 @@
   text-align: center;
   color: var(--verde-oscuro);
   background: linear-gradient(180deg, #ffffff 0%, #edf7ef 42%, #e8f4ea 100%);
-  padding: 34px 4% 24px 4%;
+  padding: 34px 30px 24px;
   margin-bottom: 24px;
   position: relative;
   z-index: 2;
@@ -231,12 +247,11 @@
 .productos-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 32px;
+  gap: 30px;
   align-items: stretch;
   width: 100%;
-  max-width: 1480px;
+  max-width: 1360px;
   margin: 0 auto;
-  padding-bottom: 0;
 }
 
 /* Tarjeta de producto individual */
@@ -263,13 +278,18 @@
 
 .producto-card img {
   width: 100%;               /* La imagen usa todo el ancho de la tarjeta */
-  height: 220px;             /* Altura fija para que todas las fotos midan igual */
-  object-fit: cover;         /* Centra y acomoda la foto sin jalarla feo */
+  height: 240px;             /* Altura fija y proporcionada para todas las fotos */
+  object-fit: cover;         /* Centra y acomoda la foto sin cortarla de más */
   transition: transform 0.3s ease; /* Suaviza el zoom de la foto */
 }
 
 .producto-card:hover img {
   transform: scale(1.04);     /* Hace un zoom muy sutil a la foto al tocar la tarjeta */
+}
+
+/* Tercera imagen (extremo derecho): sube el enfoque para ver bien los rostros */
+.producto-card:nth-child(3) img {
+  object-position: 50% 28%;
 }
 
 .producto-card h3 { 

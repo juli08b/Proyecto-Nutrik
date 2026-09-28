@@ -60,19 +60,23 @@
 
 /* Tarjeta — igual a .card-producto */
 .desc-card {
-  width: 250px;
+  width: 300px;
   background: white;
-  border-radius: 12px;
-  padding: 15px;
-  transition: 0.3s;
+  border-radius: 24px;
+  padding: 16px;
+  transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   position: relative; /* para el badge */
+  box-shadow: 0 12px 24px rgba(46, 36, 27, 0.10);
+  border: 1px solid rgba(20, 83, 45, 0.08);
 }
 
 .desc-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
+  box-shadow: 0 18px 32px rgba(20, 83, 45, 0.16);
+  border-color: rgba(20, 83, 45, 0.28);
 }
 
 /* Badge "-20% OFF" esquina superior izquierda */
@@ -94,8 +98,11 @@
 /* Imagen igual a la de productos */
 .img-producto {
   width: 100%;
-  height: 180px;
-  object-fit: cover;
+  height: 200px;
+  object-fit: contain;
+  background: #f7faf5;
+  padding: 16px;
+  box-sizing: border-box;
   border-radius: 10px;
 }
 
@@ -110,7 +117,7 @@
 
 .desc-nombre {
   margin-top: 15px;
-  font-size: 24px;
+  font-size: 1.3rem;
   color: #3f240f;
   font-family: Arial, sans-serif;
   font-weight: bold;
@@ -118,11 +125,25 @@
 }
 
 .desc-descripcion {
-  font-size: 16px;
+  font-size: 0.95rem;
   color: #555;
   text-align: center;
   line-height: 1.5;
   margin: 0;
+}
+
+/* Ahorro extra destacado */
+.desc-ahorro {
+  display: inline-block;
+  align-self: center;
+  background: #f0fdf4;
+  color: #15803d;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px dashed #4ade80;
+  margin: 2px 0 6px;
 }
 
 /* Fila de precios */

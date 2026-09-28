@@ -1,8 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useAuth } from "../Context/authContext";
+import { useCart } from "../Pages/Cliente/Cart";
 
 import logoPequeno from "../assets/logoNutrick.png";
+import carritoIcono from "../assets/Carrito03.svg";
 
 import tienda from "../assets/Tienda.svg";
 import nuevo from "../assets/Nuevo.svg";
@@ -15,86 +18,159 @@ function Navbar() {
 
   // ESTADO DEL MENÚ
   const [menuAbierto, setMenuAbierto] = useState("");
+  const [menuUsuario, setMenuUsuario] = useState(false);
+
+  const { user, logout } = useAuth();
+  const { totalItems, setCarritoAbierto } = useCart();
+  const navigate = useNavigate();
+  const navUsuarioRef = useRef(null);
+
+  useEffect(() => {
+    if (!menuUsuario) return undefined;
+    const alHacerClicFuera = (e) => {
+      if (navUsuarioRef.current && !navUsuarioRef.current.contains(e.target)) {
+        setMenuUsuario(false);
+      }
+    };
+    document.addEventListener('mousedown', alHacerClicFuera);
+    return () => document.removeEventListener('mousedown', alHacerClicFuera);
+  }, [menuUsuario]);
+
+  const iniciales = (user?.nombreCompleto || user?.primerNombre || (user?.role === 'vendedor' ? user?.nombreNegocio : '') || 'U')
+    .split(' ')
+    .map((p) => p[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
 
   return (
     <>
       <nav className="navegacion">
-        <ul className="nav-list">
-
-          {/* LOGO */}
-          <li className="nav-logo-min">
+        <div className="nav-mercado">
+          <div className="nav-logo-min">
             <Link to="/">
-              <img src={logoPequeno} alt="Nutrik" width={150} height={90} />
+              <img src={logoPequeno} alt="Nutrik" width={120} height={72} />
             </Link>
-          </li>
+          </div>
 
-          {/* BOTONES */}
-          <li>
-            <button
-              className="btn-nav"
-              onClick={() => setMenuAbierto("categoria")}
-            >
-              <img src={categoria} alt="" width={20} height={20} />
-              CATEGORÍA
-            </button>
-          </li>
+          <ul className="nav-list">
+            {/* BOTONES */}
+            <li className="nav-grupo-botones">
+              <button
+                className="btn-nav"
+                onClick={() => setMenuAbierto("categoria")}
+              >
+                <img src={categoria} alt="" width={18} height={18} />
+                CATEGORÍA
+              </button>
 
-          <li>
-            <button
-              className="btn-nav"
-              onClick={() => setMenuAbierto("dietas")}
-            >
-              <img src={dieta} alt="" width={20} height={20} />
-              DIETAS
-            </button>
-          </li>
+              <button
+                className="btn-nav"
+                onClick={() => setMenuAbierto("dietas")}
+              >
+                <img src={dieta} alt="" width={18} height={18} />
+                DIETAS
+              </button>
+            </li>
 
+            {/* DIVISOR */}
+            <li className="divisor-container">
+              <div className="divisor"></div>
+            </li>
 
-          {/* DIVISOR */}
-          <li className="divisor-container">
-            <div className="divisor"></div>
-          </li>
+            {/* LINKS CENTRO */}
+            <li className="nav-grupo-links">
+              <span className="nav-extra-item">
+                <span className="icono-circulo">
+                  <img className="nuevo" src={tienda} alt="" />
+                </span>
+                <Link to="/Productos">Tienda</Link>
+              </span>
 
-          {/* LINKS DERECHA */}
-          <li className="nav-extra-item">
-            <span className="icono-circulo">
-              <img className="nuevo" src={tienda} alt="" />
-            </span>
-            <Link to="/Productos">Tienda</Link>
-          </li>
+              <span className="nav-extra-item">
+                <span className="icono-circulo">
+                  <img className="nuevo" src={nuevo} alt="" />
+                </span>
+                <Link to="/Newproduct">Nuevo</Link>
+              </span>
 
-          <li className="nav-extra-item">
-            <span className="icono-circulo">
-              <img className="nuevo" src={nuevo} alt="" />
-            </span>
-            <Link to="/Newproduct">Nuevo</Link>
-          </li>
+              <span className="nav-extra-item">
+                <span className="icono-circulo">
+                  <img className="nuevo" src={descuento} alt="" />
+                </span>
+                <Link to="/discount">Descuento</Link>
+              </span>
 
-          <li className="nav-extra-item">
-            <span className="icono-circulo">
-              <img className="nuevo" src={descuento} alt="" />
-            </span>
-            <Link to="/Discount">Descuento</Link>
-          </li>
+              <span className="nav-extra-item">
+                <span className="icono-circulo">
+                  <img className="nuevo" src={sugerencias} alt="" />
+                </span>
+                <Link to="/Contact">Sugerencias</Link>
+              </span>
+            </li>
 
-          <li className="nav-extra-item">
-            <span className="icono-circulo">
-              <img className="nuevo" src={sugerencias} alt="" />
-            </span>
-            <Link to="/Contact">Sugerencias</Link>
-          </li>
+            <li className="divisor-container">
+              <div className="divisor"></div>
+            </li>
 
-          <li className="divisor-container">
-            <div className="divisor"></div>
-          </li>
+            {/* CARRITO */}
+            <li className="nav-perfil">
+              <button
+                className="btn-carrito-nav"
+                onClick={() => setCarritoAbierto(true)}
+                aria-label="Abrir carrito de compras"
+              >
+                <img src={carritoIcono} alt="Carrito" width={22} height={22} />
+                {totalItems > 0 && (
+                  <span className="carrito-badge">{totalItems}</span>
+                )}
+              </button>
+            </li>
 
-          <li>
-            <button className="btn-nav-acceder">
-              <Link to="/Login">ACCEDER</Link>
-            </button>
-          </li>
+            {/* USUARIO / ACCEDER */}
+            <li className="nav-perfil">
+              {user ? (
+                <div
+                  className="nav-usuario"
+                  ref={navUsuarioRef}
+                  onClick={() => setMenuUsuario((v) => !v)}
+                >
+                  <button className="btn-nav-usuario">
+                    <span className="nav-avatar">
+                      {user.foto ? (
+                        <img src={user.foto} alt="Usuario" className="nav-avatar-img" />
+                      ) : (
+                        iniciales
+                      )}
+                    </span>
+                    <span className="nav-usuario-nombre">
+                      {user.nombreCompleto || user.primerNombre || user.nombreNegocio || 'Usuario'}
+                    </span>
+                  </button>
 
-        </ul>
+                  {menuUsuario && (
+                    <div className="nav-usuario-menu" onClick={(e) => e.stopPropagation()}>
+                      {user.role === 'vendedor' ? (
+                        <Link to="/vendedor/dashboard" onClick={() => setMenuUsuario(false)}>
+                          🏪 Mi panel
+                        </Link>
+                      ) : (
+                        <Link to="/perfil" onClick={() => setMenuUsuario(false)}>
+                          👤 Mi perfil
+                        </Link>
+                      )}
+                      <button onClick={() => { setMenuUsuario(false); logout(); navigate('/'); }}>🚪 Cerrar sesión</button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <button className="btn-nav-acceder">
+                  <Link to="/elegir-rol">ACCEDER</Link>
+                </button>
+              )}
+            </li>
+          </ul>
+        </div>
       </nav>
 
       {/* OVERLAY */}
@@ -140,11 +216,6 @@ function Navbar() {
 
             <Link to="/suplementos"> 🏋️‍♂️ Suplementos en Polvo</Link>
             <br />
-            {/* <br />
-            <br />
-
-            <Link to="/frutas">Nececitas Ayuda 🎧</Link>
-            <br /> */}
 
 
 
