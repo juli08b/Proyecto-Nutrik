@@ -19,37 +19,58 @@ const SidebarVendedor = () => {
       </div>
 
       <nav className="sidebar-nav">
-        <NavLink to="/vendedor/dashboard" className="sidebar-item">
+        <NavLink
+          to="/vendedor/dashboard"
+          className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}
+        >
           🏠
           <span>Inicio</span>
         </NavLink>
 
-        <NavLink to="/vendedor/productos" className="sidebar-item">
+        <NavLink
+          to="/vendedor/productos"
+          className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}
+        >
           📦
           <span>Productos</span>
         </NavLink>
 
-        <NavLink to="/vendedor/pedidos" className="sidebar-item">
+        <NavLink
+          to="/vendedor/pedidos"
+          className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}
+        >
           🛒
           <span>Pedidos</span>
         </NavLink>
 
-        <NavLink to="/vendedor/facturas" className="sidebar-item">
+        <NavLink
+          to="/vendedor/facturas"
+          className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}
+        >
           🧾
           <span>Facturas</span>
         </NavLink>
 
-        <NavLink to="/vendedor/clientes" className="sidebar-item">
+        <NavLink
+          to="/vendedor/clientes"
+          className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}
+        >
           👥
           <span>Clientes</span>
         </NavLink>
 
-        <NavLink to="/vendedor/ventas" className="sidebar-item">
+        <NavLink
+          to="/vendedor/ventas"
+          className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}
+        >
           📊
           <span>Ventas</span>
         </NavLink>
 
-        <NavLink to="/vendedor/configuracion" className="sidebar-item">
+        <NavLink
+          to="/vendedor/configuracion"
+          className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}
+        >
           ⚙️
           <span>Configuración</span>
         </NavLink>

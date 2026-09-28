@@ -15,11 +15,13 @@ import Newproduct from './Pages/Cliente/Newproduct';
 import Discount from './Pages/Cliente/Discount';
 import Checkout from './Pages/Cliente/Checkout';
 import RoleSelection from "./Pages/Inicio/RoleSelection";
+import NotFound from './Pages/NotFound';
 
 // Vistas de Vendedor
 import LoginVendedor from './Pages/Vendedor/Login';
 import RegisterVendedor from './Pages/Vendedor/Register';
 import VendedorLayout from './Components/VendedorLayout';
+import PedidosVendedor from './Pages/Vendedor/Pedidos';
 
 // Dashboard de Yilmer (solo visible para vendedores)
 import Dashboard from './Pages/Dashboard/Dashboard';
@@ -28,7 +30,9 @@ import Vistaproducto from './Pages/Productview';
 import './index.css';
 import './App.css';
 
-// Importamos el Provider y el Panel desde tu archivo Cart.jsx
+// El carrito del CLIENTE es global: el Provider guarda los productos
+// y el Panel es el carrito lateral. Lo usan Navbar, el catálogo y Checkout.
+// (El panel del VENDEDOR vive en Pages/Vendedor/Pedidos.jsx)
 import { CartProvider, CartPanel } from './Pages/Cliente/Cart';
 
 // Importamos el layout específico para las categorías
@@ -80,7 +84,7 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="productos" element={<Productos rutaBase="/vendedor/productos" />} />
           <Route path="productos/:id" element={<Vistaproducto />} />
-          <Route path="pedidos" element={<div className="vendedor-page"><h1>Pedidos</h1><p>Próximamente…</p></div>} />
+          <Route path="pedidos" element={<PedidosVendedor />} />
           <Route path="facturas" element={<div className="vendedor-page"><h1>Facturas</h1><p>Próximamente…</p></div>} />
           <Route path="clientes" element={<div className="vendedor-page"><h1>Clientes</h1><p>Próximamente…</p></div>} />
           <Route path="ventas" element={<div className="vendedor-page"><h1>Ventas</h1><p>Próximamente…</p></div>} />
@@ -95,11 +99,14 @@ function App() {
 
         <Route path="/contact" element={<Contact />} />
         <Route path="/discount" element={<Discount />} />
+        <Route path="/descuentos" element={<Discount />} />
         <Route path="/checkout" element={<Checkout />} />
-        <Route path="/cart" element={<CartPanel />} />
         <Route path="/productos" element={<Product />} />
         <Route path="/Productview/:id" element={<Productview />} />
         <Route path="/newproduct" element={<Newproduct />} />
+
+        {/* Cualquier dirección que no exista cae aquí (en vez de pantalla en blanco) */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       {/* Solo se muestra si NO estamos en login, registro, selección de roles o vistas de vendedor */}
