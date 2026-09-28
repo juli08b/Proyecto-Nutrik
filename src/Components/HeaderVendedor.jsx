@@ -6,11 +6,7 @@ const HeaderVendedor = () => {
   return (
     <header className="pedidos-header">
       <div className="header-left">
-        <button className="menu-button" aria-label="Abrir menú">
-          ☰
-        </button>
         <div className="logo-nutrik">
-          🥗
           <span>Nutrik Vendedor</span>
         </div>
       </div>

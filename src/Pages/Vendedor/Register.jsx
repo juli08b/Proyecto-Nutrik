@@ -54,7 +54,7 @@ const RegisterVendedor = () => {
   };
 
   return (
-    <div className="vendedor-main">
+    <div className="vendedor-register-main">
       <div className="vendedor-header">
         <div className="vendedor-logo-circle">
           <Link to="/">

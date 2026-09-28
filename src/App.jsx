@@ -23,6 +23,8 @@ import VendedorLayout from './Components/VendedorLayout';
 
 // Dashboard de Yilmer (solo visible para vendedores)
 import Dashboard from './Pages/Dashboard/Dashboard';
+import Productos from './Pages/Product';
+import Vistaproducto from './Pages/Productview';
 import './index.css';
 import './App.css';
 
@@ -76,7 +78,8 @@ function App() {
         {/* Rutas de Vendedor protegidas (con sidebar) */}
         <Route path="/vendedor" element={<VendedorLayout />}>
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="productos" element={<div className="vendedor-page"><h1>Productos</h1><p>Próximamente…</p></div>} />
+          <Route path="productos" element={<Productos rutaBase="/vendedor/productos" />} />
+          <Route path="productos/:id" element={<Vistaproducto />} />
           <Route path="pedidos" element={<div className="vendedor-page"><h1>Pedidos</h1><p>Próximamente…</p></div>} />
           <Route path="facturas" element={<div className="vendedor-page"><h1>Facturas</h1><p>Próximamente…</p></div>} />
           <Route path="clientes" element={<div className="vendedor-page"><h1>Clientes</h1><p>Próximamente…</p></div>} />
