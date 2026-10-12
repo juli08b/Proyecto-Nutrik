@@ -4,6 +4,7 @@ import Navbar from './Components/Navbar';
 import Home from './Components/Home';
 import Header from './Components/Header';
 import Footer from './Components/Footer'; 
+import FacturaTemplate from './Components/FacturaTemplate';
 
 
 // Importaciones desde la carpeta Cliente (organizado por Jhosman)
@@ -23,7 +24,7 @@ import Client from './Pages/Client';
 import FacturaView from './Pages/Vendedor/FacturaView'
 
 import './index.css';
-import './App.css';
+
 
 // Importamos el Provider y el Panel desde el archivo Cart en Cliente
 import { CartProvider, CartPanel } from './Pages/Cliente/Cart';
@@ -52,6 +53,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home setMenuAbierto={setMenuAbierto} />} />
         <Route path="/header" element={<Header />} />
+        <Route path="/FacturaTemplate" element={<FacturaTemplate />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Register />} />
