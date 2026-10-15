@@ -1,48 +1,48 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
-import { useState } from 'react';
-import Navbar from './Components/Navbar';
-import Home from './Components/Home';
-import Header from './Components/Header';
-import Footer from './Components/Footer'; 
-
+import { Routes, Route, useLocation } from "react-router-dom";
+import { useState } from "react";
+import Navbar from "./Components/Navbar";
+import Home from "./Components/Home";
+import Header from "./Components/Header";
+import Footer from "./Components/Footer";
+import FacturaTemplate from "./Components/FacturaTemplate";
 
 // Importaciones desde la carpeta Cliente (organizado por Jhosman)
-import Login from './Pages/Cliente/Login';
-import Register from './Pages/Cliente/Register';
-import Product from './Pages/Cliente/Product';
-import ProductView from './Pages/Cliente/Productview';
-import Contact from './Pages/Cliente/Contact';
-import Newproduct from './Pages/Cliente/Newproduct';
-import Discount from './Pages/Cliente/Discount';
-import Cart from './Pages/Cliente/Cart';
+import Login from "./Pages/Cliente/Login";
+import Register from "./Pages/Cliente/Register";
+import Product from "./Pages/Cliente/Product";
+import ProductView from "./Pages/Cliente/Productview";
+import Contact from "./Pages/Cliente/Contact";
+import Newproduct from "./Pages/Cliente/Newproduct";
+import Discount from "./Pages/Cliente/Discount";
+import Cart from "./Pages/Cliente/Cart";
 
 // Importaciones de otras secciones (Dashboard tuyo + Facturas/Clientes de Jhosman)
-import Dashboard from './Pages/Dashboard/Dashboard';
-import Invoice from './Pages/Invoice';
-import Client from './Pages/Client';
-import FacturaView from './Pages/Vendedor/FacturaView'
+import Dashboard from "./Pages/Dashboard/Dashboard";
+import Invoice from "./Pages/Invoice";
+import Client from "./Pages/Client";
+import FacturaView from "./Pages/Vendedor/FacturaView";
+import Factura from "./Pages/Vendedor/Factura";
 
-import './index.css';
-import './App.css';
+import "./index.css";
 
 // Importamos el Provider y el Panel desde el archivo Cart en Cliente
-import { CartProvider, CartPanel } from './Pages/Cliente/Cart';
+import { CartProvider, CartPanel } from "./Pages/Cliente/Cart";
 
 // Importamos el layout específico para las categorías
-import CategoriasLayout from './Components/layout/CategoriasLayout';
-import Frozen from './Pages/Catalog/Frozen';
-import Snacks from './Pages/Catalog/Snacks';
+import CategoriasLayout from "./Components/layout/CategoriasLayout";
+import Frozen from "./Pages/Catalog/Frozen";
+import Snacks from "./Pages/Catalog/Snacks";
 
 function App() {
   const location = useLocation();
   const [menuAbierto, setMenuAbierto] = useState(false);
 
   const pathActual = location.pathname.toLowerCase();
-  const mostrarLayout = !pathActual.includes('login') && !pathActual.includes('registro');
+  const mostrarLayout =
+    !pathActual.includes("login") && !pathActual.includes("registro");
 
   return (
     <CartProvider>
-      
       <CartPanel />
 
       {mostrarLayout && (
@@ -52,10 +52,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home setMenuAbierto={setMenuAbierto} />} />
         <Route path="/header" element={<Header />} />
+        <Route path="/FacturaTemplate" element={<FacturaTemplate />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Register />} />
-        
+
         {/* Rutas anidadas de categorías */}
         <Route path="/catalog" element={<CategoriasLayout />}>
           <Route path="frozen" element={<Frozen />} />
@@ -73,11 +74,11 @@ function App() {
         {/* Tus rutas y las de Jhosman unidas */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/FacturaDetalle" element={<Invoice />} />
+        <Route path="/Factura" element={<Factura/>}/>
         <Route path="/clientes" element={<Client />} />
       </Routes>
 
       {mostrarLayout && <Footer />}
-      
     </CartProvider>
   );
 }
