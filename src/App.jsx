@@ -22,6 +22,7 @@ import LoginVendedor from './Pages/Vendedor/Login';
 import RegisterVendedor from './Pages/Vendedor/Register';
 import VendedorLayout from './Components/VendedorLayout';
 import PedidosVendedor from './Pages/Vendedor/Pedidos';
+import FacturaDetalle from './Pages/Vendedor/FacturaDetalle';
 
 // Dashboard de Yilmer (solo visible para vendedores)
 import Dashboard from './Pages/Dashboard/Dashboard';
@@ -39,6 +40,7 @@ import { CartProvider, CartPanel } from './Pages/Cliente/Cart';
 import CategoriasLayout from './Components/layout/CategoriasLayout';
 import Frozen from './Pages/Catalog/Frozen';
 import Snacks from './Pages/Catalog/Snacks';
+import Invoice from './Pages/Invoice';
 
 function App() {
   const location = useLocation();
@@ -85,7 +87,8 @@ function App() {
           <Route path="productos" element={<Productos rutaBase="/vendedor/productos" />} />
           <Route path="productos/:id" element={<Vistaproducto />} />
           <Route path="pedidos" element={<PedidosVendedor />} />
-          <Route path="facturas" element={<div className="vendedor-page"><h1>Facturas</h1><p>Próximamente…</p></div>} />
+          <Route path="facturas" element={<Invoice />} />
+          <Route path="facturas/:id" element={<FacturaDetalle />} />
           <Route path="clientes" element={<div className="vendedor-page"><h1>Clientes</h1><p>Próximamente…</p></div>} />
           <Route path="ventas" element={<div className="vendedor-page"><h1>Ventas</h1><p>Próximamente…</p></div>} />
           <Route path="configuracion" element={<div className="vendedor-page"><h1>Configuración</h1><p>Próximamente…</p></div>} />
