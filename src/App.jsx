@@ -8,8 +8,8 @@ import Login from './Pages/Cliente/Login';
 import Register from './Pages/Cliente/Register';
 import ForgotPassword from './Pages/Cliente/ForgotPassword';
 import Perfil from './Pages/Cliente/Perfil';
-import ProductCliente from './Pages/Cliente/Product';
-import ProductviewCliente from './Pages/Cliente/Productview';
+import Product from './Pages/Cliente/Product';
+import Productview from './Pages/Cliente/Productview';
 import Contact from './Pages/Cliente/Contact';
 import Newproduct from './Pages/Cliente/Newproduct';
 import Discount from './Pages/Cliente/Discount';
@@ -104,18 +104,8 @@ function App() {
         <Route path="/discount" element={<Discount />} />
         <Route path="/descuentos" element={<Discount />} />
         <Route path="/checkout" element={<Checkout />} />
-        <Route path="/productos" element={<Productos />} />
-        <Route path="/productos-cliente" element={<ProductCliente />} />
-        <Route
-          path="/productview/:id"
-          caseSensitive
-          element={<Vistaproducto />}
-        />
-        <Route
-          path="/Productview/:id"
-          caseSensitive
-          element={<ProductviewCliente />}
-        />
+        <Route path="/productos" element={<Product />} />
+        <Route path="/Productview/:id" element={<Productview />} />
         <Route path="/newproduct" element={<Newproduct />} />
 
         {/* Cualquier dirección que no exista cae aquí (en vez de pantalla en blanco) */}

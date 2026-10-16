@@ -1,88 +1,47 @@
-import { useState } from 'react';
-import { useParams, Link } from "react-router-dom";
-import { listaProductos } from './Product';
-import { useCart } from './Cliente/Cart';
-import './Product.css';
+import "./Product.css";
+import { useParams } from "react-router-dom";
+import { useCart } from "./Cliente/Cart";
+import {
+  buscarProducto,
+  precioFinal,
+  formatearPrecio,
+} from "../data/productosData";
 
-function Productview() {
+const Productview = () => {
   const { id } = useParams();
-  const [cantidad, setCantidad] = useState(1);
   const { agregarProducto, setCarritoAbierto } = useCart();
-
-  const producto = listaProductos.find((p) => p.id === id);
+  const producto = buscarProducto(id);
 
   if (!producto) {
-    return (
-      <div className="contenedor-vistas">
-        <h2>Producto no encontrado</h2>
-        <Link to="/productos">Volver a productos</Link>
-      </div>
-    );
+    return <h1 className="producto-no-encontrado">Producto no encontrado</h1>;
   }
 
   const manejarAgregar = () => {
-    const precio = Number(String(producto.precio).replace(/\D/g, ''));
-    for (let index = 0; index < cantidad; index += 1) {
-      agregarProducto({ ...producto, precio });
-    }
+    agregarProducto({ ...producto, precio: precioFinal(producto) });
     setCarritoAbierto(true);
   };
 
   return (
     <div className="contenedor-vistas">
       <div className="vista-producto">
-        {/* EFECTO ZOOM EN HOVER */}
-        <div className="imagen-producto-zoom">
+        <div className="imagen-producto">
           <img src={producto.imagen} alt={producto.nombre} />
         </div>
-
         <div className="info-producto">
-          {producto.stock && (
-            <span className="stock-status">
-              🟢 Disponible en Stock ({producto.stock} unidades)
-            </span>
-          )}
-
           <h1>{producto.nombre}</h1>
-
-          <div className="rating-box-detail">
-            <span className="estrellas">★★★★★</span>
-            <span className="score">{producto.rating}</span>
-            <span className="opiniones-link">({producto.reviews} opiniones verificadas)</span>
-          </div>
-
-          <div className="precio-seccion-ml">
-            <div className="precio-principal">
-              <span className="monto">{producto.precio}</span>
-              {producto.precioAnterior && <span className="precio-viejo">{producto.precioAnterior}</span>}
-              {producto.descuento && <span className="descuento-badge">{producto.descuento}</span>}
-            </div>
-            <p className="cuotas-texto">💳 Paga en hasta 3 cuotas sin interés</p>
-          </div>
-
           <p className="descripcion-producto">{producto.descripcion}</p>
-
-          <div className="selector-cantidad">
-            <label>Cantidad:</label>
-            <div className="controles-cantidad">
-              <button onClick={() => setCantidad(Math.max(1, cantidad - 1))}>-</button>
-              <span>{cantidad}</span>
-              <button onClick={() => setCantidad(cantidad + 1)}>+</button>
-            </div>
-          </div>
-
+          <h2 className="precio-producto">
+            ${formatearPrecio(precioFinal(producto))}
+          </h2>
           <div className="acciones-producto">
-            <button className="btn-comprar-ya" onClick={manejarAgregar}>
-              ⚡COMPRAR AHORA
-            </button>
-            <button className="btn-agregar-carrito" onClick={manejarAgregar}>
-              🛒 AGREGAR AL CARRITO
+            <button className="btn-carrito" onClick={manejarAgregar}>
+              Agregar al carrito
             </button>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Productview;
