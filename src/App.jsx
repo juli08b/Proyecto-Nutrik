@@ -27,8 +27,9 @@ import { GestionProductos } from './Pages/GestionProductos'; // <-- Vista con el
 import LoginVendedor from './Pages/Vendedor/Login';
 import RegisterVendedor from './Pages/Vendedor/Register';
 import VendedorLayout from './Components/VendedorLayout';
-import PedidosVendedor from './Pages/Vendedor/Pedidos';
+
 import Dashboard from './Pages/Dashboard/Dashboard';
+import SellerProduct from './Pages/Vendedor/SellerProduct';
 
 // Contextos Globales
 import { CartProvider, CartPanel } from './Pages/Cliente/Cart';
@@ -104,7 +105,10 @@ function App() {
             <Route path="productos" element={<GestionProductos />} />
             <Route path="productos/:id" element={<Productview />} />
             <Route path="productos/registrados" element={<RegisteredProducts />} />
-            <Route path="pedidos" element={<PedidosVendedor />} />
+            
+            <Route path="productos-vendedor" element={<SellerProduct />} />
+            <Route path="productos-vendedor/:id" element={<Productview />} />
+            <Route path="productos-vendedor/registrados" element={<RegisteredProducts />} />
             <Route path="facturas" element={<div className="vendedor-page"><h1>Facturas</h1><p>Próximamente…</p></div>} />
             <Route path="clientes" element={<div className="vendedor-page"><h1>Clientes</h1><p>Próximamente…</p></div>} />
             <Route path="ventas" element={<div className="vendedor-page"><h1>Ventas</h1><p>Próximamente…</p></div>} />
