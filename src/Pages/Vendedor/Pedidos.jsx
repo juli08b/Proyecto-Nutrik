@@ -29,6 +29,7 @@ const pedidosBase = [
     estado: "Enviado",
     items: [{ id: "detox", cantidad: 3 }],
   },
+  //algo suave 
   {
     id: "#1050",
     cliente: "Lucía Gómez",
