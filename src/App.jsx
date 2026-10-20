@@ -1,5 +1,5 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from './Components/Navbar';
 import Home from './Components/Home';
 import Header from './Components/Header';
@@ -23,10 +23,9 @@ import RegisterVendedor from './Pages/Vendedor/Register';
 import VendedorLayout from './Components/VendedorLayout';
 import PedidosVendedor from './Pages/Vendedor/Pedidos';
 import FacturaDetalle from './Pages/Vendedor/FacturaDetalle';
-
-// Dashboard de Yilmer (solo visible para vendedores)
 import Dashboard from './Pages/Dashboard/Dashboard';
-import Productos from './Pages/Product';
+import SellerProduct from './Pages/Vendedor/SellerProduct';
+import ConfiguracionVendedor from './Pages/Vendedor/Configuracion';
 import Vistaproducto from './Pages/Productview';
 import './index.css';
 import './App.css';
@@ -35,6 +34,10 @@ import './App.css';
 // y el Panel es el carrito lateral. Lo usan Navbar, el catálogo y Checkout.
 // (El panel del VENDEDOR vive en Pages/Vendedor/Pedidos.jsx)
 import { CartProvider, CartPanel } from './Pages/Cliente/Cart';
+
+// El catálogo de productos del VENDEDOR es global: el Provider lo comparte
+// entre el panel de productos (SellerProduct) y cualquier otra vista.
+import ProductProvider from './Context/ProductProvider';
 
 // Importamos el layout específico para las categorías
 import CategoriasLayout from './Components/layout/CategoriasLayout';
@@ -46,6 +49,11 @@ function App() {
   const location = useLocation();
   const [menuAbierto, setMenuAbierto] = useState(false);
 
+  // Al cambiar de ruta, subir siempre al inicio de la página.
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [location.pathname]);
+
   // CORRECCIÓN: Usamos .toLowerCase() y verificamos si la ruta incluye login, registro, elegir rol o vendedor para ocultar layout principal
   const pathActual = location.pathname.toLowerCase();
   const mostrarLayout = !pathActual.includes('login') && 
@@ -55,7 +63,8 @@ function App() {
                         !pathActual.includes('vendedor');
 
   return (
-    <CartProvider>
+    <ProductProvider>
+      <CartProvider>
       
       <CartPanel />
 
@@ -83,15 +92,16 @@ function App() {
 
         {/* Rutas de Vendedor protegidas (con sidebar) */}
         <Route path="/vendedor" element={<VendedorLayout />}>
+          <Route index element={<SellerProduct />} />
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="productos" element={<Productos rutaBase="/vendedor/productos" />} />
+          <Route path="productos" element={<SellerProduct />} />
           <Route path="productos/:id" element={<Vistaproducto />} />
           <Route path="pedidos" element={<PedidosVendedor />} />
           <Route path="facturas" element={<Invoice />} />
           <Route path="facturas/:id" element={<FacturaDetalle />} />
           <Route path="clientes" element={<div className="vendedor-page"><h1>Clientes</h1><p>Próximamente…</p></div>} />
           <Route path="ventas" element={<div className="vendedor-page"><h1>Ventas</h1><p>Próximamente…</p></div>} />
-          <Route path="configuracion" element={<div className="vendedor-page"><h1>Configuración</h1><p>Próximamente…</p></div>} />
+          <Route path="configuracion" element={<ConfiguracionVendedor />} />
         </Route>
         
         {/* Rutas anidadas de categorías */}
@@ -115,7 +125,8 @@ function App() {
       {/* Solo se muestra si NO estamos en login, registro, selección de roles o vistas de vendedor */}
       {mostrarLayout && <Footer />}
       
-    </CartProvider>
+      </CartProvider>
+    </ProductProvider>
   );
 }
 

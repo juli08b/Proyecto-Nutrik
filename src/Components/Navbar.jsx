@@ -6,19 +6,26 @@ import { useCart } from "../Pages/Cliente/Cart";
 
 import logoPequeno from "../assets/logoNutrick.png";
 import carritoIcono from "../assets/Carrito03.svg";
+import busquedaIcono from "../assets/Busqueda.svg";
+import usuarioIcono from "../assets/Usuario.svg";
+import deseoIcono from "../assets/Deseo.svg";
 
-import tienda from "../assets/Tienda.svg";
-import nuevo from "../assets/Nuevo.svg";
-import descuento from "../assets/Descuento.svg";
-import sugerencias from "../assets/Sugerencia.svg";
 import categoria from "../assets/Categoria.svg";
 import dieta from "../assets/Dieta.svg";
 
-function Navbar() {
+const ENLACES = [
+  { to: "/productos", texto: "Productos" },
+  { texto: "Categorías", menu: "categoria" },
+  { to: "/#beneficios", texto: "Beneficios" },
+  { to: "/#nosotros", texto: "Nosotros" },
+];
 
-  // ESTADO DEL MENÚ
+function Navbar() {
   const [menuAbierto, setMenuAbierto] = useState("");
   const [menuUsuario, setMenuUsuario] = useState(false);
+  const [menuMovil, setMenuMovil] = useState(false);
+  const [buscadorAbierto, setBuscadorAbierto] = useState(false);
+  const [busqueda, setBusqueda] = useState("");
 
   const { user, logout } = useAuth();
   const { totalItems, setCarritoAbierto } = useCart();
@@ -32,157 +39,285 @@ function Navbar() {
         setMenuUsuario(false);
       }
     };
-    document.addEventListener('mousedown', alHacerClicFuera);
-    return () => document.removeEventListener('mousedown', alHacerClicFuera);
+    document.addEventListener("mousedown", alHacerClicFuera);
+    return () => document.removeEventListener("mousedown", alHacerClicFuera);
   }, [menuUsuario]);
 
-  const iniciales = (user?.nombreCompleto || user?.primerNombre || (user?.role === 'vendedor' ? user?.nombreNegocio : '') || 'U')
-    .split(' ')
+  const iniciales = (
+    user?.nombreCompleto ||
+    user?.primerNombre ||
+    (user?.role === "vendedor" ? user?.nombreNegocio : "") ||
+    "U"
+  )
+    .split(" ")
     .map((p) => p[0])
     .slice(0, 2)
-    .join('')
+    .join("")
     .toUpperCase();
+
+  const cerrarMovil = () => setMenuMovil(false);
+
+  const abrirSidebar = (menu) => {
+    setMenuAbierto(menu);
+    setMenuMovil(false);
+  };
+
+  const enviarBusqueda = (e) => {
+    e.preventDefault();
+    setBuscadorAbierto(false);
+    navigate(`/productos?q=${encodeURIComponent(busqueda.trim())}`);
+  };
 
   return (
     <>
       <nav className="navegacion">
         <div className="nav-mercado">
           <div className="nav-logo-min">
-            <Link to="/">
-              <img src={logoPequeno} alt="Nutrik" width={120} height={72} />
+            <Link to="/" aria-label="Nutrik — Tu salud empieza aquí">
+              <img src={logoPequeno} alt="Nutrik" />
             </Link>
+            <div className="nav-logo-texto">
+              <strong>NUTRIK</strong>
+              <span>TU SALUD EMPIEZA AQUÍ</span>
+            </div>
           </div>
 
-          <ul className="nav-list">
-            {/* BOTONES */}
-            <li className="nav-grupo-botones">
-              <button
-                className="btn-nav"
-                onClick={() => setMenuAbierto("categoria")}
-              >
-                <img src={categoria} alt="" width={18} height={18} />
-                CATEGORÍA
-              </button>
-
-              <button
-                className="btn-nav"
-                onClick={() => setMenuAbierto("dietas")}
-              >
-                <img src={dieta} alt="" width={18} height={18} />
-                DIETAS
-              </button>
-            </li>
-
-            {/* DIVISOR */}
-            <li className="divisor-container">
-              <div className="divisor"></div>
-            </li>
-
-            {/* LINKS CENTRO */}
-            <li className="nav-grupo-links">
-              <span className="nav-extra-item">
-                <span className="icono-circulo">
-                  <img className="nuevo" src={tienda} alt="" />
-                </span>
-                <Link to="/Productos">Tienda</Link>
-              </span>
-
-              <span className="nav-extra-item">
-                <span className="icono-circulo">
-                  <img className="nuevo" src={nuevo} alt="" />
-                </span>
-                <Link to="/Newproduct">Nuevo</Link>
-              </span>
-
-              <span className="nav-extra-item">
-                <span className="icono-circulo">
-                  <img className="nuevo" src={descuento} alt="" />
-                </span>
-                <Link to="/discount">Descuento</Link>
-              </span>
-
-              <span className="nav-extra-item">
-                <span className="icono-circulo">
-                  <img className="nuevo" src={sugerencias} alt="" />
-                </span>
-                <Link to="/Contact">Sugerencias</Link>
-              </span>
-            </li>
-
-            <li className="divisor-container">
-              <div className="divisor"></div>
-            </li>
-
-            {/* CARRITO */}
-            <li className="nav-perfil">
-              <button
-                className="btn-carrito-nav"
-                onClick={() => setCarritoAbierto(true)}
-                aria-label="Abrir carrito de compras"
-              >
-                <img src={carritoIcono} alt="Carrito" width={22} height={22} />
-                {totalItems > 0 && (
-                  <span className="carrito-badge">{totalItems}</span>
-                )}
-              </button>
-            </li>
-
-            {/* USUARIO / ACCEDER */}
-            <li className="nav-perfil">
-              {user ? (
-                <div
-                  className="nav-usuario"
-                  ref={navUsuarioRef}
-                  onClick={() => setMenuUsuario((v) => !v)}
-                >
-                  <button className="btn-nav-usuario">
-                    <span className="nav-avatar">
-                      {user.foto ? (
-                        <img src={user.foto} alt="Usuario" className="nav-avatar-img" />
-                      ) : (
-                        iniciales
-                      )}
-                    </span>
-                    <span className="nav-usuario-nombre">
-                      {user.nombreCompleto || user.primerNombre || user.nombreNegocio || 'Usuario'}
-                    </span>
+          <div className="nav-centro">
+            <div className="nav-grupo-links">
+              {ENLACES.map((enlace) =>
+                enlace.menu ? (
+                  <button
+                    key={enlace.texto}
+                    type="button"
+                    className="nav-link"
+                    onClick={() => setMenuAbierto(enlace.menu)}
+                  >
+                    {enlace.texto}
                   </button>
-
-                  {menuUsuario && (
-                    <div className="nav-usuario-menu" onClick={(e) => e.stopPropagation()}>
-                      {user.role === 'vendedor' ? (
-                        <Link to="/vendedor/dashboard" onClick={() => setMenuUsuario(false)}>
-                          🏪 Mi panel
-                        </Link>
-                      ) : (
-                        <Link to="/perfil" onClick={() => setMenuUsuario(false)}>
-                          👤 Mi perfil
-                        </Link>
-                      )}
-                      <button onClick={() => { setMenuUsuario(false); logout(); navigate('/'); }}>🚪 Cerrar sesión</button>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <button className="btn-nav-acceder">
-                  <Link to="/elegir-rol">ACCEDER</Link>
-                </button>
+                ) : (
+                  <Link key={enlace.texto} to={enlace.to} className="nav-link">
+                    {enlace.texto}
+                  </Link>
+                )
               )}
-            </li>
-          </ul>
+            </div>
+          </div>
+
+          <div className="nav-acciones">
+            <div className="nav-busqueda">
+              {buscadorAbierto && (
+                <form className="nav-busqueda-form" onSubmit={enviarBusqueda}>
+                  <input
+                    type="search"
+                    value={busqueda}
+                    autoFocus
+                    placeholder="Buscar productos…"
+                    onChange={(e) => setBusqueda(e.target.value)}
+                    aria-label="Buscar productos"
+                  />
+                </form>
+              )}
+              <button
+                type="button"
+                className="nav-icono-btn"
+                onClick={() => setBuscadorAbierto((v) => !v)}
+                aria-label="Buscar"
+                aria-expanded={buscadorAbierto}
+              >
+                <img src={busquedaIcono} alt="" />
+              </button>
+            </div>
+
+            <Link
+              to="/productos"
+              className="nav-icono-btn"
+              aria-label="Favoritos"
+            >
+              <img src={deseoIcono} alt="" />
+            </Link>
+
+            {user ? (
+              <div
+                className="nav-usuario"
+                ref={navUsuarioRef}
+                onClick={() => setMenuUsuario((v) => !v)}
+              >
+                <button
+                  type="button"
+                  className="nav-icono-btn nav-icono-btn--usuario"
+                  aria-haspopup="menu"
+                  aria-expanded={menuUsuario}
+                  aria-label="Perfil de usuario"
+                >
+                  {user.foto ? (
+                    <img src={user.foto} alt="Usuario" />
+                  ) : (
+                    <span className="nav-avatar-texto">{iniciales}</span>
+                  )}
+                </button>
+
+                {menuUsuario && (
+                  <div
+                    className="nav-usuario-menu"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {user.role === "vendedor" ? (
+                      <Link
+                        to="/vendedor/dashboard"
+                        onClick={() => setMenuUsuario(false)}
+                      >
+                        🏪 Mi panel
+                      </Link>
+                    ) : (
+                      <Link
+                        to="/perfil"
+                        onClick={() => setMenuUsuario(false)}
+                      >
+                        👤 Mi perfil
+                      </Link>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setMenuUsuario(false);
+                        logout();
+                        navigate("/");
+                      }}
+                    >
+                      🚪 Cerrar sesión
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link
+                to="/elegir-rol"
+                className="nav-icono-btn"
+                aria-label="Perfil de usuario"
+              >
+                <img src={usuarioIcono} alt="" />
+              </Link>
+            )}
+
+            <button
+              type="button"
+              className="nav-icono-btn nav-icono-btn--carrito"
+              onClick={() => setCarritoAbierto(true)}
+              aria-label="Abrir carrito de compras"
+            >
+              <img src={carritoIcono} alt="Carrito" />
+              {totalItems > 0 && (
+                <span className="carrito-badge">{totalItems}</span>
+              )}
+            </button>
+
+            <button
+              type="button"
+              className="nav-hamburguesa"
+              onClick={() => setMenuMovil((v) => !v)}
+              aria-label={menuMovil ? "Cerrar menú" : "Abrir menú"}
+              aria-expanded={menuMovil}
+            >
+              {menuMovil ? (
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                  <path
+                    d="M6 6l12 12M18 6L6 18"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                  <path
+                    d="M4 7h16M4 12h16M4 17h16"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
       </nav>
+
+      {/* MENÚ MÓVIL */}
+      {menuMovil && (
+        <>
+          <div className="nav-movil-backdrop" onClick={cerrarMovil} />
+          <div className="nav-movil">
+            <div className="nav-movil-links">
+              {ENLACES.map((enlace) =>
+                enlace.menu ? (
+                  <button
+                    key={enlace.texto}
+                    type="button"
+                    className="nav-movil-link"
+                    onClick={() => abrirSidebar(enlace.menu)}
+                  >
+                    <span className="icono-circulo">
+                      <img className="nuevo" src={categoria} alt="" />
+                    </span>
+                    {enlace.texto}
+                  </button>
+                ) : (
+                  <Link
+                    key={enlace.texto}
+                    to={enlace.to}
+                    className="nav-movil-link"
+                    onClick={cerrarMovil}
+                  >
+                    {enlace.texto}
+                  </Link>
+                )
+              )}
+            </div>
+
+            <div className="nav-movil-grupo">
+              <button
+                type="button"
+                className="nav-movil-btn"
+                onClick={() => abrirSidebar("categoria")}
+              >
+                <img src={categoria} alt="" width={16} height={16} />
+                CATEGORÍA
+              </button>
+              <button
+                type="button"
+                className="nav-movil-btn"
+                onClick={() => abrirSidebar("dietas")}
+              >
+                <img src={dieta} alt="" width={16} height={16} />
+                DIETAS
+              </button>
+            </div>
+
+            {!user && (
+              <Link
+                to="/elegir-rol"
+                className="nav-movil-acceder"
+                onClick={cerrarMovil}
+              >
+                ACCEDER
+              </Link>
+            )}
+          </div>
+        </>
+      )}
 
       {/* OVERLAY */}
       <div
         className={`overlay ${menuAbierto ? "activo" : ""}`}
         onClick={() => setMenuAbierto("")}
-      ></div>
+      />
 
       {/* SIDEBAR */}
       <div className={`sidebar ${menuAbierto ? "activo" : ""}`}>
-
         <button
+          type="button"
           className="cerrar-menu"
           onClick={() => setMenuAbierto("")}
         >
@@ -194,31 +329,13 @@ function Navbar() {
             <h2>Categorías</h2>
 
             <Link to="/catalog/frozen"> ❄️ Congelados</Link>
-            <br />
-
             <Link to="/catalog/snacks"> 🍫 Snacks</Link>
-            <br />
-
             <Link to="/frutas"> 🍎 Frutas</Link>
-            <br />
-
             <Link to="/aves-pescado"> 🍗 Aves y Pescados</Link>
-            <br />
-
             <Link to="/lacteos-huevos"> 🥛 Lácteos y Huevos</Link>
-            <br />
-
             <Link to="/cereales-granos"> 🥣 Cereales y Granos</Link>
-            <br />
-
             <Link to="/vitaminas"> 💊 Vitaminas y Bienestar</Link>
-            <br />
-
             <Link to="/suplementos"> 🏋️‍♂️ Suplementos en Polvo</Link>
-            <br />
-
-
-
           </div>
         )}
 
@@ -227,11 +344,7 @@ function Navbar() {
             <h2>Productos</h2>
 
             <Link to="/proteinas"> 🥩 Proteínas</Link>
-            <br />
-
             <Link to="/harinas"> 🍞 Harinas</Link>
-            <br />
-
             <Link to="/bebidas"> 🥤 Bebidas</Link>
           </div>
         )}
@@ -241,36 +354,18 @@ function Navbar() {
             <h2>Dietas</h2>
 
             <Link to="/keto"> 🥑 Keto</Link>
-            <br />
-
             <Link to="/vegana"> 🥗 Vegana</Link>
-            <br />
-
             <Link to="/fitness"> 💪 Fitness</Link>
-            <br />
-
             <Link to="/sin-lactosa"> 🚫🥛 Sin lactosa</Link>
-            <br />
-
             <Link to="/padeo"> 🍖 Padeo</Link>
-            <br />
-
             <Link to="/organico"> 🌿 Organico</Link>
-            <br />
-
             <Link to="/sin-gluten"> 🌾🚫 Sin gluten</Link>
-            <br />
-
             <Link to="/vegetariano"> 🥕 Vegetariano</Link>
-            <br />
           </div>
         )}
-
       </div>
     </>
   );
 }
-
-
 
 export default Navbar;

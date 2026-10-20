@@ -1,230 +1,650 @@
 import "./Home.css";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { useCart } from "../Pages/Cliente/Cart";
 
-// Recibimos la función modificadora desde el padre (App.jsx) para poder abrir el menú desde aquí
-function Home({ setMenuAbierto }) {
+import hero1 from "../assets/hero1.png";
+import hero2 from "../assets/hero2.png";
+import hero3 from "../assets/hero3.png";
+import comida from "../assets/comida.jpg";
+
+const FALLBACK = comida;
+
+const HEROES = [
+  {
+    img: hero1,
+    kicker: "ALIMENTACIÓN CONSCIENTE",
+    titulo: "ALIMENTA TU VIDA",
+    titulo2: "DE FORMA NATURAL",
+    sub: "Fresco · Natural · Equilibrado",
+  },
+  {
+    img: hero2,
+    kicker: "PRODUCTOS FRESCOS",
+    titulo: "DIRECTO DEL CAMPO",
+    titulo2: "A TU MESA",
+    sub: "Calidad · Origen · Bienestar",
+  },
+  {
+    img: hero3,
+    kicker: "COMER BIEN ES VIVIR BIEN",
+    titulo: "NUTRE TU CUERPO",
+    titulo2: "CON LO MEJOR",
+    sub: "Sabor · Energía · Salud",
+  },
+];
+
+const BENEFICIOS = [
+  {
+    texto: "Productos frescos y de calidad",
+    icono: (
+      <>
+        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z" />
+        <path d="M2 21c0-3 1.9-5.4 5.1-6C9.5 14.5 12 13 13 12" />
+      </>
+    ),
+  },
+  {
+    texto: "Envíos a todo el país",
+    icono: (
+      <>
+        <path d="M1 6h13v10H1z" />
+        <path d="M14 9h4l3 3v4h-7" />
+        <circle cx="6" cy="18" r="2" />
+        <circle cx="17" cy="18" r="2" />
+      </>
+    ),
+  },
+  {
+    texto: "Pagos seguros y confiables",
+    icono: (
+      <>
+        <path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5Z" />
+        <path d="m9 12 2 2 4-4" />
+      </>
+    ),
+  },
+  {
+    texto: "Alimentación saludable para tu bienestar",
+    icono: (
+      <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1L12 21l7.7-7.6 1.1-1a5.5 5.5 0 0 0 0-7.8Z" />
+    ),
+  },
+  {
+    texto: "Comprometidos con el medio ambiente",
+    icono: (
+      <>
+        <circle cx="12" cy="12" r="9" />
+        <path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z" />
+      </>
+    ),
+  },
+];
+
+const CATEGORIAS = [
+  {
+    nombre: "Frutas",
+    img: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?q=80&w=800&auto=format&fit=crop",
+  },
+  {
+    nombre: "Verduras",
+    img: "https://images.unsplash.com/photo-1518843875459-f738682238a6?q=80&w=800&auto=format&fit=crop",
+  },
+  {
+    nombre: "Yogures",
+    img: "https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=800&auto=format&fit=crop",
+  },
+  {
+    nombre: "Cereales",
+    img: "https://images.unsplash.com/photo-1586201375761-83865001e31c?q=80&w=800&auto=format&fit=crop",
+  },
+  {
+    nombre: "Frutos secos",
+    img: "https://images.unsplash.com/photo-1508061253366-f7da158b6d46?q=80&w=800&auto=format&fit=crop",
+  },
+  {
+    nombre: "Semillas",
+    img: "https://images.unsplash.com/photo-1508747703725-719777637510?q=80&w=800&auto=format&fit=crop",
+  },
+];
+
+const DESTACADOS = [
+  {
+    id: "banano",
+    nombre: "Banano orgánico",
+    peso: "1 kg",
+    precio: 6900,
+    anterior: 8900,
+    badge: "Más vendido",
+    img: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?q=80&w=700&auto=format&fit=crop",
+  },
+  {
+    id: "fresa",
+    nombre: "Fresa fresca",
+    peso: "500 g",
+    precio: 9900,
+    anterior: null,
+    badge: "Nuevo",
+    img: "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?q=80&w=700&auto=format&fit=crop",
+  },
+  {
+    id: "yogur",
+    nombre: "Yogur griego natural",
+    peso: "900 g",
+    precio: 14200,
+    anterior: 16900,
+    badge: "Oferta",
+    img: "https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=700&auto=format&fit=crop",
+  },
+  {
+    id: "aguacate",
+    nombre: "Aguacate Hass",
+    peso: "4 unidades",
+    precio: 11900,
+    anterior: null,
+    badge: "Más vendido",
+    img: "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?q=80&w=700&auto=format&fit=crop",
+  },
+  {
+    id: "berries",
+    nombre: "Mix de berries",
+    peso: "300 g",
+    precio: 15500,
+    anterior: 18900,
+    badge: "Oferta",
+    img: "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?q=80&w=700&auto=format&fit=crop",
+  },
+  {
+    id: "espinaca",
+    nombre: "Espinaca fresca",
+    peso: "250 g",
+    precio: 5900,
+    anterior: null,
+    badge: "Nuevo",
+    img: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?q=80&w=700&auto=format&fit=crop",
+  },
+  {
+    id: "almendras",
+    nombre: "Almendras naturales",
+    peso: "500 g",
+    precio: 17900,
+    anterior: 19900,
+    badge: "Más vendido",
+    img: "https://images.unsplash.com/photo-1508061253366-f7da158b6d46?q=80&w=700&auto=format&fit=crop",
+  },
+  {
+    id: "miel",
+    nombre: "Miel de abejas pura",
+    peso: "375 g",
+    precio: 16900,
+    anterior: null,
+    badge: "Nuevo",
+    img: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=700&auto=format&fit=crop",
+  },
+  {
+    id: "quinoa",
+    nombre: "Quinoa orgánica",
+    peso: "1 kg",
+    precio: 21500,
+    anterior: 24900,
+    badge: "Oferta",
+    img: "https://images.unsplash.com/photo-1586201375761-83865001e31c?q=80&w=700&auto=format&fit=crop",
+  },
+];
+
+const PASOS = [
+  {
+    titulo: "Elige tus productos",
+    texto: "Explora el catálogo y agrega tus favoritos al carrito.",
+    icono: (
+      <>
+        <circle cx="9" cy="21" r="1.6" />
+        <circle cx="18" cy="21" r="1.6" />
+        <path d="M2 3h3l2.4 12.4a2 2 0 0 0 2 1.6h8.9a2 2 0 0 0 2-1.6L22 7H6" />
+      </>
+    ),
+  },
+  {
+    titulo: "Realiza el pago",
+    texto: "Paga de forma segura con los métodos que prefieras.",
+    icono: (
+      <>
+        <rect x="2" y="5" width="20" height="14" rx="2" />
+        <path d="M2 10h20" />
+      </>
+    ),
+  },
+  {
+    titulo: "Recibe en casa",
+    texto: "Enviamos a todo el país con empaque responsable.",
+    icono: (
+      <>
+        <path d="M3 9 12 3l9 6v11H3z" />
+        <path d="M9 21v-7h6v7" />
+      </>
+    ),
+  },
+  {
+    titulo: "Disfruta",
+    texto: "Aliméntate rico y balanceado cada día. ¡Buen provecho!",
+    icono: (
+      <>
+        <circle cx="12" cy="12" r="9" />
+        <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+        <path d="M9 9h.01M15 9h.01" />
+      </>
+    ),
+  },
+];
+
+const CONSEJOS = [
+  {
+    icono: (
+      <>
+        <path d="M12 2v20" />
+        <path d="M4.9 7.1A13.4 13.4 0 0 1 12 5c2.6 0 5.1.7 7.1 2.1" />
+        <path d="M4.9 16.9A13.4 13.4 0 0 0 12 19c2.6 0 5.1-.7 7.1-2.1" />
+      </>
+    ),
+    titulo: "Come con color",
+    texto:
+      "Llena tu plato de frutas y verduras variadas. Cada color aporta vitaminas y antioxidantes distintos que tu cuerpo agradece.",
+  },
+  {
+    icono: (
+      <>
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 7v5l3 2" />
+      </>
+    ),
+    titulo: "Hidrátate y respeta horarios",
+    texto:
+      "Beber agua y comer a horas regulares mantiene tu energía estable y ayuda a tu metabolismo a trabajar mejor cada día.",
+  },
+  {
+    icono: (
+      <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1L12 21l7.7-7.6 1.1-1a5.5 5.5 0 0 0 0-7.8Z" />
+    ),
+    titulo: "Cuida tu bienestar",
+    texto:
+      "Una alimentación equilibrada reduce el riesgo de enfermedades y mejora tu ánimo, tu sueño y tu concentración.",
+  },
+];
+
+const formatoPrecio = (valor) =>
+  new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 }).format(valor);
+
+function Home() {
+  const { agregarProducto, setCarritoAbierto } = useCart();
+  const [slide, setSlide] = useState(0);
+  const destacadosRef = useRef(null);
+  const categoriasRef = useRef(null);
+
+  useEffect(() => {
+    const id = setInterval(
+      () => setSlide((prev) => (prev + 1) % HEROES.length),
+      6500
+    );
+    return () => clearInterval(id);
+  }, []);
+
+  // Auto-scroll infinito del carrusel de categorías
+  useEffect(() => {
+    const track = categoriasRef.current;
+    if (!track) return undefined;
+
+    const paso = () => {
+      const tarjeta = track.querySelector(".categoria-card");
+      const estilo = getComputedStyle(track);
+      const gap = parseFloat(estilo.columnGap || estilo.gap) || 24;
+      return tarjeta ? tarjeta.offsetWidth + gap : track.clientWidth * 0.9;
+    };
+
+    const id = setInterval(() => {
+      const hayScroll = track.scrollWidth - track.clientWidth > 8;
+      if (!hayScroll) return;
+      const fin = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+      if (fin) {
+        track.scrollTo({ left: 0, behavior: "auto" });
+      } else {
+        track.scrollBy({ left: paso(), behavior: "smooth" });
+      }
+    }, 2800);
+
+    return () => clearInterval(id);
+  }, []);
+
+  const hero = HEROES[slide];
+
+  const desplazarDestacados = (direccion) => {
+    const track = destacadosRef.current;
+    if (!track) return;
+    const tarjeta = track.querySelector(".producto-card");
+    const paso = tarjeta ? tarjeta.offsetWidth + 24 : track.clientWidth * 0.8;
+    track.scrollBy({ left: direccion * paso, behavior: "smooth" });
+  };
+
+  const manejarAgregar = (producto) => {
+    agregarProducto({ ...producto, precio: producto.precio, cantidad: 1 });
+    setCarritoAbierto(true);
+  };
+
   return (
-    <>
-      {/* HERO */}
-      <section className="hero">
-        <div className="hero-texto">
-
-          <h1>
-            Alimentación saludable <br />
-            <span>sin esfuerzo</span>
+    <div className="home-nutrik">
+      {/* 1 & 2 · HERO CARRUSEL */}
+      <section
+        className="hero-banner"
+        style={{
+          backgroundImage: `linear-gradient(180deg, rgba(9,32,20,0.62) 0%, rgba(9,32,20,0.74) 55%, rgba(9,32,20,0.86) 100%), url(${hero.img})`,
+        }}
+      >
+        <div className="hero-content" key={slide}>
+          <span className="hero-kicker">{hero.kicker}</span>
+          <h1 className="hero-titulo">
+            <span>{hero.titulo}</span>
+            <span>{hero.titulo2}</span>
           </h1>
-
-          <p className="hero-desc">
-            Descubre comidas nutritivas, deliciosas y listas para mejorar tu
-            estilo de vida sin complicaciones.
-          </p>
-
-          <div className="hero-botones">
-            <Link to="/productos" className="btn-primary btn-link">
-              Explorar productos
+          <p className="hero-subtitulo">{hero.sub}</p>
+          <div className="hero-ctas">
+            <Link to="/productos" className="home-cta home-cta--primario">
+              EXPLORAR PRODUCTOS
             </Link>
-            <Link to="/newproduct" className="btn-outline btn-link">
-              Ver planes
+            <Link to="/catalog/frozen" className="home-cta home-cta--secundario">
+              VER CATEGORÍAS
             </Link>
           </div>
         </div>
 
-        <div className="hero-img">
-          <div className="circulo">
-            <img
-              src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600"
-              alt="comida saludable"
+        <div className="hero-dots" role="tablist" aria-label="Diapositivas">
+          {HEROES.map((h, i) => (
+            <button
+              key={h.titulo}
+              type="button"
+              role="tab"
+              aria-selected={slide === i}
+              aria-label={`Ir a la diapositiva ${i + 1}`}
+              className={`hero-dot ${slide === i ? "activo" : ""}`}
+              onClick={() => setSlide(i)}
             />
-          </div>
-
-          <div className="card card1">🥑 100% natural</div>
-          <div className="card card2">🚚 Entrega segura</div>
-          <div className="card card3">💪 Vida saludable</div>
+          ))}
         </div>
+
+        <span className="hero-copyright">© NUTRIK 2026</span>
       </section>
 
-
-      {/* estos son los BENEFICIOS */}
-      <section className="beneficios">
-        <h2>¿Por qué elegirnos?</h2>
-
-        <div className="beneficios-grid">
-          <div className="beneficio">
-            <h3>🌱 Ingredientes frescos</h3>
-            <p>Seleccionamos productos naturales de la mejor calidad.</p>
-          </div>
-
-          <div className="beneficio">
-            <h3>⚡ Rápido y fácil</h3>
-            <p>Compra en minutos y recibe en la puerta de tu casa.</p>
-          </div>
-
-          <div className="beneficio">
-            <h3>❤️ Cuida tu salud</h3>
-            <p>Alimentos diseñados para mejorar tu bienestar diario.</p>
-          </div>
-        </div>
+      {/* 3 · FRANJA DE BENEFICIOS */}
+      <section className="features-strip">
+        <ul className="features-list">
+          {BENEFICIOS.map((item) => (
+            <li key={item.texto}>
+              <span className="feature-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="22"
+                  height="22"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.7"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  {item.icono}
+                </svg>
+              </span>
+              <span className="feature-texto">{item.texto}</span>
+            </li>
+          ))}
+        </ul>
       </section>
 
+      {/* 4 · CATEGORÍAS */}
+      <section className="home-seccion" id="categorias">
+        <div className="seccion-head">
+          <div>
+            <span className="seccion-kicker">EXPLORA</span>
+            <h2>Encuentra lo mejor para ti</h2>
+          </div>
+          <Link to="/catalog/frozen" className="seccion-ver">
+            Ver todas las categorías →
+          </Link>
+        </div>
 
-      {/* SECCIÓN LO NUEVO: Showcase de productos destacados del catálogo */}
-      <section className="productos">
-        <h2>Explora lo Nuevo</h2>
-        <div className="productos-grid">
-          {/* Card de Producto: Imagen + Título + Descripción corta */}
-          <div className="producto-card">
-            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500" alt="Ensalada Fresh" />
-            <h3>Ensalada Fresh</h3>
-            <p>Ingredientes naturales y frescos listos para consumir.</p>
-            <Link to="/productos">
-              <button className="btn-ver-mas">Ver más</button>
+        <div className="categorias-track" ref={categoriasRef}>
+          {CATEGORIAS.map((cat) => (
+            <Link
+              to="/catalog/frozen"
+              className="categoria-card"
+              key={cat.nombre}
+            >
+              <img
+                src={cat.img}
+                alt={cat.nombre}
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.src = FALLBACK;
+                }}
+              />
+              <span className="categoria-nombre">{cat.nombre}</span>
             </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* 4.5 · SOBRE NOSOTROS / CONSEJOS PARA TU DIETA */}
+      <section className="home-seccion home-seccion--crema" id="sobre-nosotros">
+        <div className="sobre-layout">
+          <div className="sobre-intro">
+            <span className="seccion-kicker">SOBRE NOSOTROS</span>
+            <h2>Comer bien también es cuidarte</h2>
+            <p className="sobre-parrafo">
+              En Nutrik creemos que la salud no se improvisa: se cultiva día a
+              día, bocado a bocado. Por eso seleccionamos alimentos frescos,
+              naturales y de origen local, revisando cada producto para que
+              llegue a tu mesa con el sabor y los nutrientes intactos.
+            </p>
+            <p className="sobre-parrafo">
+              Más que una tienda, somos tu aliado para armar una dieta
+              balanceada sin complicaciones. Te acompañamos con opciones
+              accesibles, consejos prácticos y productos pensados para toda la
+              familia, para que comer sano sea fácil, rico y sostenible en el
+              tiempo.
+            </p>
+
+            <ul className="sobre-stats">
+              <li>
+                <strong>+120</strong>
+                <span>productos naturales</span>
+              </li>
+              <li>
+                <strong>100%</strong>
+                <span>origen local</span>
+              </li>
+              <li>
+                <strong>4.9★</strong>
+                <span>clientes felices</span>
+              </li>
+            </ul>
           </div>
-          <div className="producto-card">
-            <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500" alt="Bowl Nutritivo" />
-            <h3>Bowl Nutritivo</h3>
-            <p>Mezcla balanceada de granos y vegetales para mantener tu energía.</p>
-            <Link to="/productos">
-              <button className="btn-ver-mas">Ver más</button>
-            </Link>
-          </div>
-          <div className="producto-card">
-            <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=500" alt="Desayuno Fit" />
-            <h3>Desayuno Fit</h3>
-            <p>Opciones ligeras y nutritivas para empezar bien el día.</p>
-            <Link to="/productos">
-              <button className="btn-ver-mas">Ver más</button>
-            </Link>
+
+          <div className="consejos-panel">
+            <span className="consejos-panel-titulo">Consejos para tu dieta</span>
+            <ul className="consejos-grid">
+              {CONSEJOS.map((consejo) => (
+                <li className="consejo-card" key={consejo.titulo}>
+                  <span className="consejo-icono">
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.7"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      {consejo.icono}
+                    </svg>
+                  </span>
+                  <div className="consejo-texto">
+                    <h3>{consejo.titulo}</h3>
+                    <p>{consejo.texto}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
 
-      {/* SECCIÓN PASOS: Proceso de compra simplificado para el usuario */}
-      {/* SECCIÓN PASOS */}
-      <section className="pasos">
-
-        <div className="pasos-header">
-          <span>⚡ Fácil y rápido</span>
-          <h2>Compra fácil y saludable</h2>
-
-          <p>
-            En pocos pasos podrás encontrar productos saludables
-            y recibirlos directamente en tu hogar.
-          </p>
-        </div>
-
-        <div className="pasos-grid">
-
-          <div className="paso">
-            <div className="paso-numero">1</div>
-
-            <h3>Explora el catálogo</h3>
-
-            <p>
-              Navega entre nuestras categorías y encuentra
-              productos naturales y saludables.
-            </p>
+      {/* 5 · PRODUCTOS DESTACADOS */}
+      <section className="home-seccion home-seccion--blanca">
+        <div className="seccion-head">
+          <div>
+            <span className="seccion-kicker">FAVORITOS DE LA SEMANA</span>
+            <h2>Lo más elegido</h2>
           </div>
-
-          <div className="paso">
-            <div className="paso-numero">2</div>
-
-            <h3>Llena tu carrito</h3>
-
-            <p>
-              Agrega snacks, superalimentos y productos
-              favoritos con un solo clic.
-            </p>
-          </div>
-
-          <div className="paso">
-            <div className="paso-numero">3</div>
-
-            <h3>Recibe en casa</h3>
-
-            <p>
-              Realiza tu pago seguro y recibe tu pedido
-              rápidamente en tu hogar.
-            </p>
-          </div>
-
-        </div>
-      </section>
-
-      {/* SECCIÓN STATS: Indicadores de confianza de la marca */}
-      <section className="stats">
-        <div className="stat">
-          <h2>+500</h2>
-          <p>Clientes felices</p>
-        </div>
-        <div className="stat">
-          <h2>+120</h2>
-          <p>Productos de catálogo</p>
-        </div>
-        <div className="stat">
-          <h2>24/7</h2>
-          <p>Soporte en línea</p>
-        </div>
-      </section>
-
-      {/* SECCIÓN NEWSLETTER: Captación de correos para marketing */}
-      <section className="newsletter">
-        <div className="newsletter-content">
-
-          <span className="newsletter-tag">
-            🌱 Comunidad saludable
-          </span>
-
-          <h2>
-            ¿Quieres consejos de salud?
-          </h2>
-
-          <p>
-            Suscríbete para recibir promociones exclusivas,
-            recetas saludables y tips de nutrición.
-          </p>
-
-          <div className="newsletter-form">
-            <input
-              type="email"
-              placeholder="Ingresa tu correo electrónico"
-            />
-
-            <button className="btn-newsletter">
-              Suscribirme
+          <div className="destacados-controles">
+            <button
+              type="button"
+              className="destacados-flecha"
+              onClick={() => desplazarDestacados(-1)}
+              aria-label="Ver productos anteriores"
+            >
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                <path
+                  d="M15 6l-6 6 6 6"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </button>
+            <button
+              type="button"
+              className="destacados-flecha"
+              onClick={() => desplazarDestacados(1)}
+              aria-label="Ver siguientes productos"
+            >
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                <path
+                  d="M9 6l6 6-6 6"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+            <Link to="/productos" className="seccion-ver">
+              Ver todo el catálogo →
+            </Link>
           </div>
+        </div>
 
+        <div className="destacados-track" ref={destacadosRef}>
+          {DESTACADOS.map((producto) => (
+            <article className="producto-card" key={producto.id}>
+              <span
+                className={`producto-badge producto-badge--${producto.badge
+                  .toLowerCase()
+                  .replace(/\s+/g, "-")}`}
+              >
+                {producto.badge}
+              </span>
+              <div className="producto-media">
+                <img
+                  src={producto.img}
+                  alt={producto.nombre}
+                  loading="lazy"
+                  onError={(e) => {
+                    e.currentTarget.src = FALLBACK;
+                  }}
+                />
+              </div>
+              <div className="producto-info">
+                <h3>{producto.nombre}</h3>
+                <span className="producto-peso">{producto.peso}</span>
+                <div className="producto-precios">
+                  <strong className="producto-precio">
+                    ${formatoPrecio(producto.precio)}
+                  </strong>
+                  {producto.anterior ? (
+                    <span className="producto-precio-original">
+                      ${formatoPrecio(producto.anterior)}
+                    </span>
+                  ) : null}
+                </div>
+                <button
+                  type="button"
+                  className="producto-agregar"
+                  onClick={() => manejarAgregar(producto)}
+                >
+                  AGREGAR
+                </button>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
-      {/* CTA FINAL */}
-      <section className="cta">
-
-        <div className="cta-content">
-
-          <span className="cta-tag">
-            🌱 Empieza una vida más saludable
-          </span>
-
-          <h2>
-            Empieza hoy tu cambio
-          </h2>
-
+      {/* 6 · BANNER RECETAS Y CONSEJOS */}
+      <section className="recetas-banner">
+        <div className="recetas-overlay" />
+        <div className="recetas-contenido">
+          <span className="recetas-kicker">RECETAS Y CONSEJOS</span>
+          <h2>DISFRUTA DE UNA ALIMENTACIÓN BALANCEADA</h2>
           <p>
-            Descubre productos naturales, nutritivos y deliciosos
-            que te ayudarán a sentirte mejor cada día.
+            Ideas, recetas e inspiración para comer rico y saludable todos los
+            días.
           </p>
+          <Link to="/productos" className="recetas-cta">
+            VER RECETAS →
+          </Link>
+        </div>
+        <span className="recetas-hoja recetas-hoja--1" aria-hidden="true" />
+        <span className="recetas-hoja recetas-hoja--2" aria-hidden="true" />
+      </section>
 
-          <div className="cta-botones">
-            <button className="btn-primary btn-grande">Comenzar compra</button>
-            <button className="btn-outline btn-grande-outline">Ver catálogo</button>
+      {/* 7 · CÓMO FUNCIONA */}
+      <section className="home-seccion" id="nosotros">
+        <div className="seccion-head seccion-head--centrado">
+          <div>
+            <span className="seccion-kicker">ASÍ DE FÁCIL</span>
+            <h2>Tu compra en 4 pasos</h2>
           </div>
-
         </div>
 
+        <ol className="pasos-grid">
+          {PASOS.map((paso, i) => (
+            <li className="paso-card" key={paso.titulo}>
+              <span className="paso-numero">{i + 1}</span>
+              <span className="paso-icono">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="26"
+                  height="26"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  {paso.icono}
+                </svg>
+              </span>
+              <h3>{paso.titulo}</h3>
+              <p>{paso.texto}</p>
+            </li>
+          ))}
+        </ol>
       </section>
-    </>
+    </div>
   );
 }
 

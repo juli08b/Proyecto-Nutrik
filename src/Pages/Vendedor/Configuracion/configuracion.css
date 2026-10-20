@@ -1,0 +1,437 @@
+/* ============================================================
+   CONFIGURACIÓN DEL VENDEDOR
+   Todas las clases están limitadas a .config-vendedor para no
+   chocar con nombres genéricos del resto de la app (.card, .grid,
+   .row, .btn, .sub, etc.).
+   ============================================================ */
+
+.config-vendedor {
+  width: 100%;
+  margin: 0;
+  min-width: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #333;
+}
+
+/* Reset local: evita que paddings/bordes desborden las columnas */
+.config-vendedor,
+.config-vendedor *,
+.config-vendedor *::before,
+.config-vendedor *::after {
+  box-sizing: border-box;
+}
+
+/* ── CABECERA DE LA PÁGINA ── */
+.config-vendedor .config-header {
+  margin-bottom: 22px;
+}
+
+.config-vendedor .config-header h1 {
+  margin: 0 0 4px;
+  color: #1a1a2e;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.config-vendedor .config-header p {
+  margin: 0;
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+/* ── LAYOUT: NAV LATERAL + CONTENIDO ── */
+.config-vendedor .config-layout {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.config-vendedor .config-nav {
+  flex: 0 0 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(16, 40, 24, 0.05);
+}
+
+.config-vendedor .config-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  color: #4a5568;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.config-vendedor .config-nav-item:hover {
+  background: #f5f7fa;
+  color: #1a1a2e;
+}
+
+.config-vendedor .config-nav-item.active {
+  background: #e8f3ec;
+  color: #1e5631;
+}
+
+.config-vendedor .config-nav-icono {
+  font-size: 1rem;
+}
+
+.config-vendedor .config-contenido {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+}
+
+/* ── AVISO DE GUARDADO ── */
+.config-vendedor .config-toast {
+  margin-bottom: 16px;
+  padding: 11px 14px;
+  background: #e6f4ea;
+  border: 1px solid #bfe3c2;
+  border-radius: 10px;
+  color: #1e7e34;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+/* ── TARJETAS ── */
+.config-vendedor .card {
+  position: static;
+  display: block;
+  width: 100%;
+  margin: 0 0 16px;
+  padding: 22px;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(16, 40, 24, 0.05);
+  color: #333;
+  white-space: normal;
+  backdrop-filter: none;
+  transform: none;
+  animation: none;
+}
+
+.config-vendedor .card h2 {
+  margin: 0 0 4px;
+  color: #1a1a2e;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.config-vendedor .sub {
+  margin: 0 0 16px;
+  color: #718096;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+/* ── FOTO / AVATAR ── */
+.config-vendedor .photo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.config-vendedor .av {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #2f855a, #1e5631);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+/* ── FORMULARIOS ── */
+.config-vendedor .grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 16px;
+}
+
+.config-vendedor .f {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.config-vendedor .f.w {
+  grid-column: 1 / -1;
+}
+
+.config-vendedor .f label {
+  color: #2d3748;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.config-vendedor .f input,
+.config-vendedor .f select {
+  width: 100%;
+  padding: 10px 12px;
+  background: #fff;
+  border: 1px solid #d8dee5;
+  border-radius: 9px;
+  outline: none;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: #2d3748;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.config-vendedor .f input:focus,
+.config-vendedor .f select:focus {
+  border-color: #1e5631;
+  box-shadow: 0 0 0 3px rgba(30, 86, 49, 0.12);
+}
+
+/* ── FILAS CON INTERRUPTOR ── */
+.config-vendedor .row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 0;
+  border-top: 1px solid #eef1ec;
+}
+
+.config-vendedor .row p {
+  margin: 0 0 2px;
+  color: #1a202c;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.config-vendedor .row span {
+  color: #718096;
+  font-size: 0.8rem;
+}
+
+/* ── INTERRUPTOR (Switch) ── */
+.config-vendedor .sw {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.config-vendedor .sw input {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.config-vendedor .sw i {
+  position: absolute;
+  inset: 0;
+  background: #cbd5e0;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.config-vendedor .sw i::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.config-vendedor .sw input:checked + i {
+  background: #1e5631;
+}
+
+.config-vendedor .sw input:checked + i::before {
+  transform: translateX(20px);
+}
+
+.config-vendedor .sw input:focus-visible + i {
+  box-shadow: 0 0 0 3px rgba(30, 86, 49, 0.25);
+}
+
+/* ── TABLA (sesiones activas) ── */
+.config-vendedor .tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.config-vendedor .tbl th {
+  padding: 10px 12px;
+  background: #fafafa;
+  border-bottom: 1px solid #eaeaea;
+  color: #718096;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+.config-vendedor .tbl td {
+  padding: 12px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #4a5568;
+  vertical-align: middle;
+}
+
+.config-vendedor .tbl tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.config-vendedor .pill {
+  display: inline-block;
+  padding: 4px 10px;
+  background: #e6f4ea;
+  border-radius: 999px;
+  color: #1e7e34;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+/* ── BARRA DE BOTONES ── */
+.config-vendedor .bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.config-vendedor .btn {
+  padding: 10px 18px;
+  background: #1e5631;
+  border: 1.5px solid #1e5631;
+  border-radius: 9px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.config-vendedor .btn:hover {
+  background: #164225;
+  border-color: #164225;
+}
+
+.config-vendedor .btn.o {
+  background: #fff;
+  border-color: #cbd5e0;
+  color: #4a5568;
+}
+
+.config-vendedor .btn.o:hover {
+  background: #f5f7fa;
+  border-color: #a0aec0;
+}
+
+.config-vendedor .btn.d {
+  background: #d93025;
+  border-color: #d93025;
+}
+
+.config-vendedor .btn.d:hover {
+  background: #b3261e;
+  border-color: #b3261e;
+}
+
+/* ── MODO OSCURO ── */
+[data-theme="dark"] .config-vendedor {
+  color: #e2e8f0;
+}
+
+[data-theme="dark"] .config-vendedor .config-nav,
+[data-theme="dark"] .config-vendedor .card {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+[data-theme="dark"] .config-vendedor .config-header h1,
+[data-theme="dark"] .config-vendedor .card h2,
+[data-theme="dark"] .config-vendedor .f label,
+[data-theme="dark"] .config-vendedor .row p {
+  color: #f1f5f9;
+}
+
+[data-theme="dark"] .config-vendedor .config-nav-item {
+  color: #cbd5e0;
+}
+
+[data-theme="dark"] .config-vendedor .config-nav-item:hover,
+[data-theme="dark"] .config-vendedor .config-nav-item.active {
+  background: #374151;
+  color: #fff;
+}
+
+[data-theme="dark"] .config-vendedor .f input,
+[data-theme="dark"] .config-vendedor .f select {
+  background: #111827;
+  border-color: #374151;
+  color: #e2e8f0;
+}
+
+[data-theme="dark"] .config-vendedor .tbl th {
+  background: #111827;
+  border-color: #374151;
+}
+
+[data-theme="dark"] .config-vendedor .tbl td {
+  border-color: #374151;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .config-vendedor .config-layout {
+    flex-direction: column;
+  }
+
+  .config-vendedor .config-nav {
+    width: 100%;
+    flex: 0 0 auto;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .config-vendedor .config-nav-item {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 640px) {
+  .config-vendedor .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .config-vendedor .row {
+    flex-wrap: wrap;
+  }
+}

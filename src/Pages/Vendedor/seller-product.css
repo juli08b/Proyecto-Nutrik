@@ -1,0 +1,407 @@
+/* ============================================================
+   GESTIÓN DE PRODUCTOS DEL VENDEDOR
+   Basado en el diseño de gestión del merge (GestionProductos),
+   limitado a .seller-product para no chocar con el catálogo del
+   cliente (Cliente/Product.css) ni con los modales de Pedidos.
+   ============================================================ */
+
+.seller-product {
+  width: 100%;
+  min-width: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #333;
+}
+
+/* ── TARJETA CONTENEDORA ── */
+.seller-product .gestion-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 26px;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(16, 40, 24, 0.06);
+  box-sizing: border-box;
+}
+
+/* ── CABECERA ── */
+.seller-product .gestion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.seller-product .gestion-titulo {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.seller-product .gestion-subtitulo {
+  margin: 4px 0 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.seller-product .btn-nuevo-producto {
+  flex-shrink: 0;
+  padding: 11px 18px;
+  background-color: #1e5631;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.seller-product .btn-nuevo-producto:hover {
+  background-color: #164225;
+  transform: translateY(-1px);
+}
+
+/* ── FILTROS ── */
+.seller-product .controles-tabla {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.seller-product .search-input-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.seller-product .search-icon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 0.85rem;
+  pointer-events: none;
+}
+
+.seller-product .input-busqueda {
+  width: 100%;
+  padding: 10px 12px 10px 34px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  outline: none;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.seller-product .input-busqueda:focus {
+  border-color: #1e5631;
+  box-shadow: 0 0 0 3px rgba(30, 86, 49, 0.12);
+}
+
+.seller-product .select-filtro {
+  padding: 10px 12px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  outline: none;
+  font-size: 0.9rem;
+  color: #333;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.seller-product .select-filtro:focus {
+  border-color: #1e5631;
+  box-shadow: 0 0 0 3px rgba(30, 86, 49, 0.12);
+}
+
+/* ── TABLA ── */
+.seller-product .tabla-contenedor {
+  background: #fff;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+.seller-product .gestion-tabla {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.seller-product .gestion-tabla th {
+  padding: 12px 16px;
+  background-color: #fafafa;
+  border-bottom: 1px solid #eaeaea;
+  color: #666;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.seller-product .gestion-tabla td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 14px;
+  color: #444;
+  vertical-align: middle;
+}
+
+.seller-product .gestion-tabla tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.seller-product .gestion-tabla tbody tr:hover {
+  background: #fafcf9;
+}
+
+.seller-product .col-producto {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  color: #1a202c;
+}
+
+.seller-product .img-tabla {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #f5f2ed;
+}
+
+.seller-product .img-tabla-vacia {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.seller-product .th-acciones,
+.seller-product .acciones-td {
+  text-align: center;
+}
+
+.seller-product .badge-estado {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.seller-product .badge-estado.activo {
+  background-color: #e6f4ea;
+  color: #1e7e34;
+}
+
+.seller-product .badge-estado.inactivo {
+  background-color: #fce8e6;
+  color: #d93025;
+}
+
+.seller-product .acciones-td {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.seller-product .btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.seller-product .btn-icon:hover {
+  background-color: #f0f0f0;
+}
+
+.seller-product .btn-icon.btn-eliminar {
+  color: #d93025;
+}
+
+.seller-product .btn-icon.btn-eliminar:hover {
+  background-color: #fce8e6;
+}
+
+.seller-product .sin-resultados {
+  padding: 40px 16px;
+  text-align: center;
+  color: #a0aec0;
+  font-size: 0.9rem;
+}
+
+/* ── MODAL ── */
+.seller-product .modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(2px);
+}
+
+.seller-product .modal-contenido {
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 24px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.18);
+}
+
+.seller-product .modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.seller-product .modal-header h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.seller-product .btn-cerrar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 50%;
+  font-size: 16px;
+  color: #555;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.seller-product .btn-cerrar:hover {
+  background: #e2e2e2;
+}
+
+.seller-product .gestion-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.seller-product .gestion-input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: #2d3748;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.seller-product .gestion-input:focus {
+  border-color: #1e5631;
+  box-shadow: 0 0 0 3px rgba(30, 86, 49, 0.12);
+}
+
+.seller-product .gestion-textarea {
+  resize: vertical;
+  min-height: 84px;
+}
+
+.seller-product .form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.seller-product .form-row .gestion-input {
+  flex: 1;
+}
+
+.seller-product .modal-acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.seller-product .btn-cancelar {
+  padding: 10px 18px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #4a5568;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.seller-product .btn-cancelar:hover {
+  background: #e2e2e2;
+}
+
+.seller-product .btn-guardar {
+  padding: 10px 18px;
+  background: #1e5631;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.seller-product .btn-guardar:hover {
+  background: #164225;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .seller-product .gestion-container {
+    padding: 18px;
+  }
+
+  .seller-product .gestion-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .seller-product .controles-tabla {
+    flex-direction: column;
+  }
+
+  .seller-product .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}

@@ -2,187 +2,334 @@
    1. EL CONTENEDOR PRINCIPAL DE TODO EL PIE DE PÁGINA
    ======================================================= */
 .main-footer {
-  background-color: #ffffff;   /* Pinta el fondo de color blanco limpio */
-  font-family: Arial, sans-serif; /* Tipo de letra moderno y muy fácil de leer */
-  padding: 60px 40px 0 40px;   /* Deja aire libre por dentro (arriba y a los lados, abajo no) */
-  border-top: 1px solid #e2ece1; /* Dibuja una línea gris-verdosa muy delgadita arriba */
-  box-sizing: border-box;      /* Hace que el tamaño no se dañe si cambiamos de pantalla */
+  background-color: #ffffff;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.footer-cuerpo {
+  padding: 64px clamp(20px, 4vw, 40px) 0;
+  border-top: 1px solid #e6efe3;
 }
 
 /* =======================================================
-   2. EL CONTENEDOR QUE CREA LAS 4 COLUMNAS
+   2. FRANJA DE MARCA Y CONFIANZA (ancho completo, verde)
+   ======================================================= */
+.footer-marca {
+  width: 100%;
+  padding: clamp(40px, 5vw, 64px) clamp(20px, 4vw, 40px);
+  background: linear-gradient(160deg, #0f4c2a 0%, #14532d 55%, #1f6a3d 100%);
+  color: #ffffff;
+}
+
+.footer-marca-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer-marca-head {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.footer-marca-kicker {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: rgba(227, 163, 59, 0.18);
+  border: 1px solid rgba(227, 163, 59, 0.4);
+  color: #f2c777;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.footer-marca-head h2 {
+  margin: 0 0 14px;
+  color: #ffffff;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
+.footer-marca-head p {
+  margin: 0 0 16px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.footer-marca-parrafo {
+  max-width: 660px;
+  margin: 0 auto 34px !important;
+  color: rgba(255, 255, 255, 0.76) !important;
+  font-size: 0.95rem !important;
+  line-height: 1.8 !important;
+}
+
+.footer-confianza {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  gap: 18px 34px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-confianza li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 120px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.confianza-icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+}
+
+/* =======================================================
+   3. EL CONTENEDOR QUE CREA LAS 5 COLUMNAS
    ======================================================= */
 .footer-container {
-  display: grid;               /* Activa el modo cuadrícula para ordenar en columnas */
-  grid-template-columns: 1.2fr 1fr 1fr 1fr; /* La primera columna del logo es un poquito más ancha */
-  gap: 40px;                   /* Deja la misma distancia exacta de separación entre columnas */
-  max-width: 1200px;           /* Ancho máximo para que el diseño no se desarme en pantallas gigantes */
-  margin: 0 auto 50px auto;    /* Centra todo este bloque justo en la mitad de la pantalla */
-  align-items: flex-start;     /* Alinea los textos ordenadamente desde la parte de arriba */
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto 52px;
+  align-items: flex-start;
 }
 
 /* =======================================================
-   3. ESTILOS INDIVIDUALES PARA LAS COLUMNAS
+   4. ESTILOS INDIVIDUALES PARA LAS COLUMNAS
    ======================================================= */
-
-/* Estilo base para cada una de las 4 secciones */
 .footer-section {
   display: flex;
-  flex-direction: column;      /* Pone los textos uno debajo de otro, en fila hacia abajo */
+  flex-direction: column;
 }
 
 /* Ajustes exclusivos para la primera columna (Donde está el Logo de Nutrik) */
 .brand-column {
-  align-items: flex-start;     /* Alinea el logo y su frase hacia la izquierda */
+  align-items: flex-start;
 }
 
 .logo-wrapper {
-  max-width: 150px;            /* Pone un límite al ancho del logo para que no se vea gigante */
-  margin-bottom: 10px;         /* Empuja el texto de abajo para que no quede pegado al logo */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 84px;
+  max-width: 168px;
+  margin-bottom: 14px;
 }
 
 .footer-logo {
-  width: 100%;                 /* Hace que la foto use todo el espacio de su cajita */
-  height: auto;                /* Mantiene las proporciones de la foto para que no se estire feo */
+  width: 100%;
+  height: auto;
 }
 
 .tagline {
-  font-size: 0.75rem;          /* Letra pequeñita y delicada */
-  letter-spacing: 1.5px;       /* Separa las letras un poquito entre sí para que se vea elegante */
-  color: #6b8e5a;              /* Color verde oliva suave para el lema de la marca */
-  font-weight: bold;           /* Hace la letra un poquito más gruesa */
-  margin: 0;                   /* Borra márgenes automáticos que puedan mover el texto */
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  color: #1f6a3d;
+  font-weight: 800;
+  margin: 0;
 }
 
 /* Títulos principales de cada columna (Información, Ayuda, Síguenos) */
 .footer-section h3 {
-  color: #7fba5a;              /* El verde brillante característico de la paleta */
-  font-size: 1.15rem;          /* Tamaño de letra un poquito más grande que el resto */
-  margin-top: 0;               /* Quita espacios extras arriba */
-  margin-bottom: 20px;         /* Deja un espacio libre abajo antes de que empiecen los enlaces */
-  font-weight: bold;           /* Letra en negrita para que resalte */
+  color: #0f4c2a;
+  font-size: 1.05rem;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
 }
 
-/* Las listas que guardan los enlaces con las opciones */
 .footer-section ul {
-  list-style: none;            /* Quita los puntitos negros aburridos que traen las listas por defecto */
-  padding: 0;                  /* Quita espacios automáticos a la izquierda */
-  margin: 0;                   
+  list-style: none;
+  padding: 0;
+  margin: 0;
   display: flex;
-  flex-direction: column;      /* Pone un enlace debajo del otro */
-  gap: 12px;                   /* Deja una distancia idéntica y cómoda para hacer clic entre opciones */
+  flex-direction: column;
+  gap: 12px;
 }
 
-/* El texto de los enlaces de navegación */
 .footer-section ul li a {
-  color: #2d3e26;              /* Color de letra verde oscuro, casi negro, muy elegante */
-  text-decoration: none;       /* Quita la línea fea que se le dibuja debajo a los enlaces */
-  font-size: 0.95rem;          
-  transition: color 0.2s ease; /* Hace que el cambio de color sea suave, no un parpadeo brusco */
+  color: #2d3e26;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s ease, padding-left 0.2s ease;
 }
 
-/* Cuando el usuario pone la flechita del mouse encima de un enlace */
 .footer-section ul li a:hover {
-  color: #6b8e5a;              /* El texto cambia mágicamente a verde oliva suave */
+  color: #1f6a3d;
+  padding-left: 4px;
 }
 
 /* =======================================================
    4. SECCIÓN DE LAS REDES SOCIALES (SÍGUENOS)
    ======================================================= */
-
-/* La cajita que tiene guardados los 3 botones juntos */
 .footer-socials {
-  display: flex;               /* Pone los botones uno al lado del otro en una fila recta */
-  gap: 15px;                   /* Deja una separación idéntica entre cada red social */
+  display: flex;
+  gap: 14px;
 }
 
-/* El botón (El círculo blanco impecable que abraza a cada logo) */
 .social-icon-link {
-  display: inline-block;       
-  width: 38px;                 /* Ancho del círculo (todos miden exactamente lo mismo) */
-  height: 38px;                /* Alto del círculo (al ser igual al ancho, queda perfecto) */
-  border-radius: 50%;          /* Redondea las esquinas al 100% para crear un círculo perfecto */
-  overflow: hidden;            /* Corta los bordes de la imagen para que no se salgan del círculo */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Agrega una sombra suave abajo para dar volumen */
-  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Suaviza los movimientos de animación */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f3f7ef;
+  box-shadow: 0 2px 8px rgba(16, 40, 24, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* La imagen de la red social que va dentro de tu círculo */
 .social-icon-link img {
-  width: 100%;                 /* Hace que ocupe todo el ancho disponible */
-  height: 100%;                /* Hace que ocupe todo el alto disponible */
-  object-fit: cover;           /* Acomoda la imagen de forma inteligente sin que se distorsione */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-/* El efecto visual cuando pasas el mouse sobre un círculo de red social */
 .social-icon-link:hover {
-  transform: translateY(-3px); /* Hace que el círculo flote suavemente un poquito hacia arriba */
-  box-shadow: 0 5px 10px rgba(107, 142, 90, 0.3); /* Cambia la sombra por un brillo verde suave */
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(15, 76, 42, 0.28);
 }
 
 /* =======================================================
    5. LA BARRA INFERIOR DE CRÉDITOS Y DERECHOS
    ======================================================= */
 .footer-bottom {
-  border-top: 1px solid #edf4ec; /* Dibuja una línea de división muy clarita arriba */
-  border-bottom: 12px solid #2d3e26; /* Tu franja ancha y representativa verde oscura en la base */
-  padding: 20px 0;             /* Espacio libre por dentro arriba y abajo de la barra */
+  border-top: 1px solid #edf4ec;
+  border-bottom: 12px solid #0f4c2a;
+  padding: 22px 0;
   display: flex;
-  justify-content: space-between; /* Pone los derechos a la izquierda y la firma a la derecha */
-  align-items: center;         /* Centra verticalmente los elementos */
-  max-width: 1200px;           
-  margin: 0 auto;              /* Centra la barra en la pantalla */
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Texto del Copyright */
 .footer-bottom p {
-  font-size: 0.85rem;          /* Letra pequeña y discreta */
-  color: #666666;              /* Color gris suave para que no compita con los textos principales */
-  margin: 0;                   
+  font-size: 0.85rem;
+  color: #6b7568;
+  margin: 0;
 }
 
-/* Bloque que dice quién hizo la página */
 .developer-tag {
   display: flex;
-  align-items: center;         /* Alinea el texto con la bandera en una misma línea recta */
-  gap: 8px;                    /* Separa el texto de la banderita */
-  font-size: 0.85rem;          
-  color: #333333;              
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #333333;
 }
 
 .developer-tag strong {
-  color: #2d3e26;              /* Resalta el nombre de la marca en el verde oscuro */
+  color: #0f4c2a;
 }
 
-/* Ajustes de diseño para tu imagen de la bandera de Colombia */
 .flag {
-  width: 22px;                 /* Controla el tamaño horizontal de la bandera */
-  height: auto;                
-  border-radius: 3px;          /* Redondea sutilmente las esquinitas para que se vea moderna */
-  box-shadow: 0 1px 3px rgba(0,0,0,0.15); /* Le da una pequeña sombra para separarla del fondo */
+  width: 22px;
+  height: auto;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
 /* =======================================================
-   6. MODO CELULAR (DISEÑO RESPONSIVO)
+   6. WHATSAPP FLOTANTE
    ======================================================= */
-@media (max-width: 768px) {
-  /* Si la pantalla mide menos de 768 píxeles de ancho (como un celular)... */
+.footer-whatsapp {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1800;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 20px;
+  background: #25d366;
+  border-radius: 999px;
+  color: #082615;
+  font-size: 0.84rem;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.26);
+  transition: background-color 0.2s ease, transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.footer-whatsapp:hover {
+  background: #1fbe5a;
+  transform: translateY(-3px);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.32);
+}
+
+/* =======================================================
+   7. MODO CELULAR (DISEÑO RESPONSIVO)
+   ======================================================= */
+@media (max-width: 1024px) {
   .footer-container {
-    grid-template-columns: 1fr; /* Pone las 4 columnas una debajo de otra en una sola fila larga */
-    gap: 30px;                 /* Achica un poquito el espacio entre ellas */
-    text-align: center;        /* Centra todos los textos para que se lean mejor en el móvil */
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
   }
-  
-  /* Centra el logo y las redes sociales en la pantalla del teléfono */
-  .brand-column, .footer-socials {
+
+  .brand-column {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-cuerpo {
+    padding-top: 48px;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    text-align: center;
+  }
+
+  .brand-column {
     align-items: center;
-    justify-content: center;
   }
-  
-  /* Modifica la barra final para celulares */
+
+  .footer-section {
+    align-items: center;
+  }
+
   .footer-bottom {
-    flex-direction: column;    /* Pone la bandera debajo del texto de derechos autorales */
-    gap: 10px;                 /* Añade separación entre ellos */
-    text-align: center;        
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .footer-whatsapp span {
+    display: none;
+  }
+
+  .footer-whatsapp {
+    right: 16px;
+    bottom: 16px;
+    padding: 14px;
   }
 }

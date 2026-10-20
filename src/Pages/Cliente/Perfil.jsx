@@ -85,7 +85,9 @@ const Perfil = () => {
   return (
     <div className="perfil-contenedor py-4">
       <div className="perfil-tarjeta">
-        <Link to="/" className="perfil-volver">← Volver a la tienda</Link>
+        <div className="perfil-banner">
+          <Link to="/" className="perfil-volver">← Volver a la tienda</Link>
+        </div>
 
         <div className="perfil-cabecera">
           <div className="perfil-avatar">
@@ -100,7 +102,7 @@ const Perfil = () => {
               <span className="perfil-iniciales">{iniciales}</span>
             )}
           </div>
-          <div>
+          <div className="perfil-identidad">
             <h1 className="perfil-nombre">{user.nombreCompleto || user.primerNombre || 'Usuario'}</h1>
             <p className="perfil-correo">{user.email}</p>
             <span className={`perfil-rol ${user.role}`}>
@@ -108,6 +110,32 @@ const Perfil = () => {
             </span>
           </div>
         </div>
+
+        {!editando && (
+          <div className="perfil-resumen">
+            <div className="perfil-resumen-item">
+              <span className="perfil-resumen-icono">📏</span>
+              <div>
+                <span className="perfil-resumen-valor">{etiqueta(form.estatura, '—')}</span>
+                <span className="perfil-resumen-etiqueta">Estatura</span>
+              </div>
+            </div>
+            <div className="perfil-resumen-item">
+              <span className="perfil-resumen-icono">⚖️</span>
+              <div>
+                <span className="perfil-resumen-valor">{etiqueta(form.peso, '—')}</span>
+                <span className="perfil-resumen-etiqueta">Peso</span>
+              </div>
+            </div>
+            <div className="perfil-resumen-item">
+              <span className="perfil-resumen-icono">🎯</span>
+              <div>
+                <span className="perfil-resumen-valor capitalizado">{etiqueta(form.objetivo, '—')}</span>
+                <span className="perfil-resumen-etiqueta">Objetivo</span>
+              </div>
+            </div>
+          </div>
+        )}
 
         {mensaje && <div className="perfil-mensaje">{mensaje}</div>}
 

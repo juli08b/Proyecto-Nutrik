@@ -50,7 +50,7 @@ const RegisterVendedor = () => {
       return;
     }
     setExito(true);
-    setTimeout(() => navigate('/vendedor/dashboard'), 1200);
+    setTimeout(() => navigate('/vendedor'), 1200);
   };
 
   return (

@@ -47,7 +47,7 @@ const LoginVendedor = () => {
       setError('Esta cuenta es de cliente. Usa la opción "Quiero Comprar".');
       return;
     }
-    navigate('/vendedor/dashboard');
+    navigate('/vendedor');
   };
 
   return (
