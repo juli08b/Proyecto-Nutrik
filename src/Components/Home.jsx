@@ -2,7 +2,7 @@ import "./Home.css";
 import { Link } from "react-router-dom";
 
 // Recibimos la función modificadora desde el padre (App.jsx) para poder abrir el menú desde aquí
-function Home() {
+function Home({ setMenuAbierto }) {
   return (
     <>
       {/* HERO */}
@@ -43,38 +43,6 @@ function Home() {
         </div>
       </section>
 
-      {/* FEATURE BAR (La barra que marcaste) */}
-      <section className="feature-bar-container">
-        <div className="feature-image-banner">
-          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2070" alt="Ingredientes frescos" />
-        </div>
-
-        <div className="feature-content">
-          <div className="feature-item">
-            <span className="feature-icon">📅</span>
-            <div>
-              <h4>Plan Personalizado</h4>
-              <p>Planes de comida a tu medida</p>
-            </div>
-          </div>
-
-          <div className="feature-item divider">
-            <span className="feature-icon">👨‍🌾</span>
-            <div>
-              <h4>Ingredientes Frescos</h4>
-              <p>De la granja a tu mesa</p>
-            </div>
-          </div>
-
-          <div className="feature-item">
-            <span className="feature-icon">🚚</span>
-            <div>
-              <h4>Entrega Rápida</h4>
-              <p>Recibe en 24 horas</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* estos son los BENEFICIOS */}
       <section className="beneficios">
@@ -233,10 +201,27 @@ function Home() {
       {/* CTA FINAL */}
       <section className="cta">
 
+        <div className="cta-content">
 
-        <button className="btn-primary btn-grande">
-          Comenzar ahora
-        </button>
+          <span className="cta-tag">
+            🌱 Empieza una vida más saludable
+          </span>
+
+          <h2>
+            Empieza hoy tu cambio
+          </h2>
+
+          <p>
+            Descubre productos naturales, nutritivos y deliciosos
+            que te ayudarán a sentirte mejor cada día.
+          </p>
+
+          <div className="cta-botones">
+            <button className="btn-primary btn-grande">Comenzar compra</button>
+            <button className="btn-outline btn-grande-outline">Ver catálogo</button>
+          </div>
+
+        </div>
 
       </section>
     </>

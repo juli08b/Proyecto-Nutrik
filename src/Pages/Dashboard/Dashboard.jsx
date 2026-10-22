@@ -1,9 +1,9 @@
-// import React from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import {
     LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
     PieChart, Pie, Cell, Legend
 } from 'recharts';
-import { useNavigate } from "react-router-dom";
+import { useAuth } from '../../Context/authContext';
 import './Dashboard.css';
 
 // Datos de prueba basados en tu boceto
@@ -19,6 +19,7 @@ const dataVentasDia = [
     { fecha: '27/08', venta: 700 },
     { fecha: '28/08', venta: 880 },
 ];
+const handlePrintPDF = () => window.print();
 
 const dataCategorias = [
     { name: 'Proteínas', value: 40, color: '#2e7d32' },
@@ -28,7 +29,7 @@ const dataCategorias = [
 ];
 
 const ventasRecientes = [
-    { id: '#1052', cliente: 'Josman Chango', fecha: '25/08/2026', total: '$ 180.000', estado: 'Completado', factura: 'ver factura' },
+    { id: '#1052', cliente: 'Joshman Andres', fecha: '25/08/2026', total: '$ 180.000', estado: 'Completado', factura: 'ver factura' },
     { id: '#1051', cliente: 'Carlos López', fecha: '25/08/2026', total: '$ 320.000', estado: 'Enviado', factura: 'ver factura' },
     { id: '#1050', cliente: 'Lucía Gómez', fecha: '24/08/2026', total: '$ 95.000', estado: 'Pendiente', factura: 'ver factura' },
     { id: '#1049', cliente: 'Diego Ruiz', fecha: '24/08/2026', total: '$ 210.000', estado: 'Completado', factura: 'ver factura' },
@@ -43,6 +44,9 @@ const productosTop = [
 
 const Dashboard = () => {
     const navigate = useNavigate();
+    const { user } = useAuth();
+    if (!user) return <Navigate to="/elegir-rol" replace />;
+    if (user.role !== 'vendedor') return <Navigate to="/perfil" replace />;
 
     return (
         <div className="dashboard-container">
@@ -162,21 +166,22 @@ const Dashboard = () => {
                                         <td>
                                             <button
                                                 type="button"
-                                                className="factura-badge"
+                                                className="flex-1 sm:flex-none px-6 py-2.5 text-sm font-bold text-white bg-emerald-600 rounded-lg hover:bg-emerald-700 shadow-md shadow-emerald-600/20 transition-colors"
                                                 onClick={() => {
-                                                    // Redirige a FacturaView y envía los datos por el estado de la ruta
+                                                    // La ruta que envía los datos y la orden oculta de imprimir
                                                     navigate(`/FacturaView`, {
                                                         state: {
                                                             numero: item.id,
                                                             cliente: item.cliente,
                                                             fecha: item.fecha,
                                                             total: item.total,
-                                                            estado: item.estado
+                                                            estado: item.estado,
+                                                            autoImprimir: true // <--- Esta es la orden para descargar el PDF
                                                         }
                                                     });
                                                 }}
                                             >
-                                                {item.factura}
+                                                Descargar PDF
                                             </button>
                                         </td>
                                     </tr>

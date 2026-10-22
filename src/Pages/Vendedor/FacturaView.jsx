@@ -1,20 +1,29 @@
-import { useRef } from "react";
-import logoPequeno from "../../assets/logoNutrick.png";
-// 1. IMPORTA useLocation y useNavigate de react-router-dom
+import { useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FacturaTemplate from "../../Components/FacturaTemplate";
 
 export default function FacturaView() {
   const facturaRef = useRef(null);
-  const location = useLocation(); // 2. ATRAPA LOS DATOS AQUÍ
+  const location = useLocation();
   const navigate = useNavigate();
 
-  const handlePrintPDF = () => {
-    window.print();
+  const handlePrintPDF = () => window.print();
+
+  const parsearTotal = (valor) => {
+    if (!valor) return 0;
+    const numeroLimpio = valor.toString().replace(/[^0-9]/g, '');
+    const resultado = Number(numeroLimpio);
+    return isNaN(resultado) ? 0 : resultado;
   };
 
-  // 3. ADAPTAMOS LOS DATOS que llegaron del botón al formato que exige FacturaTemplate
-  // Si entramos directo sin pulsar el botón (location.state es null), esto será null y usará los de prueba
+  // En tu FacturaView.jsx (asegúrate de importar useEffect arriba)
+  useEffect(() => {
+    if (location.state && location.state.autoImprimir) {
+      setTimeout(() => {
+        window.print();
+      }, 500);
+    }
+  }, [location.state]);
   const datosRecibidos = location.state ? {
     numero: `F-${location.state.numero}`,
     fecha: location.state.fecha,
@@ -28,9 +37,9 @@ export default function FacturaView() {
     items: [
       {
         id: 1,
-        descripcion: "Compra registrada en sistema", // Puedes mandar los productos reales desde el botón luego
+        descripcion: "Compra registrada en sistema",
         cantidad: 1,
-        precio: location.state.total,
+        precio: parsearTotal(location.state.total),
       }
     ],
     impuesto: 0,
@@ -38,62 +47,49 @@ export default function FacturaView() {
   } : null;
 
   return (
-    <div
-      className="factura-view min-h-screen bg-slate-100/80 px-4 pb-12 sm:px-6 lg:px-8 print:bg-white print:p-0 flex flex-col items-center"
-      style={{ paddingTop: '160px' }}
-    >
-      <div className="relative z-10 mx-auto mb-6 w-full max-w-6xl print:hidden">
-        <div className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white px-6 py-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
-              {/* Ícono */}
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <img src={logoPequeno} alt="Nutrik" width={150} height={90} />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9 14l2 2 4-4m6-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <div>
-              <h1 className="text-base font-bold text-slate-800 sm:text-lg">Vista previa de factura</h1>
-              <p className="text-xs text-slate-500 sm:text-sm">Revisa el comprobante antes de descargarlo.</p>
-            </div>
-          </div>
+    <div className="min-h-screen bg-slate-100 pt-[120px] pb-16 px-4 print:bg-white print:p-0 flex flex-col items-center">
 
-          <div className="flex w-full gap-4 sm:w-auto">
+      {/* Contenedor estricto para mantener el ancho de la factura */}
+      <div className="w-full max-w-4xl flex flex-col gap-6 print:gap-0">
+
+        {/* Barra de herramientas superior */}
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col sm:flex-row justify-between items-center gap-4 print:hidden">
+          <div>
+            <h1 className="text-slate-800 font-bold text-lg">Vista previa del documento</h1>
+            <p className="text-xs text-slate-500">Revisa la factura antes de imprimir o guardar.</p>
+          </div>
+          <div className="flex w-full sm:w-auto gap-3">
             <button
-              type="button"
-              onClick={() => navigate(-1)} // Mejoramos el botón volver usando react-router-dom
-              className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 transition-all hover:bg-slate-50 hover:text-slate-800 sm:flex-none"
+              onClick={() => navigate(-1)}
+              className="flex-1 sm:flex-none px-6 py-2.5 text-sm font-bold text-slate-600 bg-slate-100 rounded-lg hover:bg-slate-200 transition-colors"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
               Volver
             </button>
-
             <button
-              type="button"
               onClick={handlePrintPDF}
-              className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-emerald-600/20 transition-all hover:bg-emerald-700 active:scale-[0.98] sm:flex-none"
+              className="flex-1 sm:flex-none px-6 py-2.5 text-sm font-bold text-white bg-emerald-600 rounded-lg hover:bg-emerald-700 shadow-md shadow-emerald-600/20 transition-colors"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" />
-              </svg>
               Descargar PDF
             </button>
           </div>
         </div>
+
+        {/* Factura Renderizada */}
+        <div className="w-full">
+          <FacturaTemplate ref={facturaRef} facturaData={datosRecibidos} />
+        </div>
+
       </div>
 
-      <div className="relative z-0 mx-auto w-full max-w-6xl">
-        <FacturaTemplate ref={facturaRef} facturaData={datosRecibidos} />
-      </div>
       <style>{`
         @media print {
-          @page { size: A4; margin: 10mm; }
-          html, body { background: white !important; width: 100% !important; height: 100% !important; }
-          body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-          header, nav, .navegacion, .sidebar, .overlay, footer, .print\\:hidden { display: none !important; }
-          .factura-view { padding: 0 !important; background: white !important; }
+          @page { size: A4 portrait; margin: 10mm; }
+          html, body { 
+            background-color: white !important; 
+            -webkit-print-color-adjust: exact !important; 
+            print-color-adjust: exact !important;
+          }
+          header, nav, .navegacion, .sidebar { display: none !important; }
         }
       `}</style>
     </div>

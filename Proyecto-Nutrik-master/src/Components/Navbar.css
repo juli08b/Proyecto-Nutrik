@@ -1,0 +1,119 @@
+.navegacion {
+  font-family: 'Arial', sans-serif;
+  background-color: #15620a38;
+  margin: 15px 75px 20px;
+  border-radius: 50px;
+  padding: 5px 15px;
+  position: fixed;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  gap: 20px; /* Aumenta este número para dar más distancia */
+}
+
+.btn-nav {
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #39c900;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 15px;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: 0.3s;
+}
+
+.btn-nav-acceder {
+  font-family: 'Arial', sans-serif;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 15px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  margin-right: 10px;
+  transition: 0.3s;
+}
+
+.btn-nav a { text-decoration: none; color: rgb(255, 255, 255); font-weight: bold; }
+.btn-nav-acceder a { text-decoration: none; color: rgb(27, 91, 39); font-weight: bold; }
+.btn-nav:hover { background: #026e0b; transform: scale(1.05); }
+.btn-nav-acceder:hover { background: #fffffffc; transform: scale(1.05); box-shadow: 0px 4px 8px rgba(214, 215, 214, 0.248); }
+
+
+.divisor {
+  width: 2px;
+  height: 25px;
+  background: rgba(255,255,255,0.4);
+  margin: 0 15px;
+}
+
+.nav-extra-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 20px;
+}
+
+.nav-extra-item a {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.icono-circulo {
+  background: white;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn-nav-carrito {
+  position: relative;
+  background: #39c900;
+  border: none;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.25s;
+}
+
+.btn-nav-carrito:hover {
+  transform: scale(1.08);
+  opacity: 0.9;
+}
+
+.carrito-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ef4444;
+  color: white;
+  font-size: 10px;
+  font-weight: 800;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+}

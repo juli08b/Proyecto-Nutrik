@@ -75,8 +75,11 @@
 
 .img-producto {
   width: 100%;
-  height: 220px;
-  object-fit: cover;
+  height: 230px;
+  object-fit: contain;
+  background: #f7faf5;
+  padding: 18px 18px 6px;
+  box-sizing: border-box;
   transition: transform 0.5s ease;
 }
 
@@ -182,7 +185,9 @@
 .producto-img {
   width: 100%;
   height: 220px; /* Altura fija para mantener consistencia entre tarjetas */
-  object-fit: cover;
+  object-fit: contain; /* Muestra la imagen completa sin cortarla */
+  background: #f7faf5;
+  box-sizing: border-box;
   display: block;
 }
 
@@ -214,6 +219,192 @@
 /* =========================================================
    FIN: DISEÑO NEWPRODUCT (Newproduct.jsx)
    ========================================================= */
+
+/* =========================================================
+   TARJETAS UNIFICADAS: TIENDA, LO NUEVO, SNACKS, CONGELADOS
+   ========================================================= */
+
+.contenedor-productos,
+.productos-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+  max-width: 1280px;
+}
+
+.card-producto,
+.producto-card {
+  position: relative;
+  border-radius: 24px;
+}
+
+.card-producto h3,
+.producto-info h3 {
+  min-height: auto;
+  margin: 14px 4px 8px;
+}
+
+/* Etiqueta superior (Nuevo / Snack / -OFF) */
+.producto-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  padding: 6px 13px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+
+.producto-badge.nuevo {
+  background: linear-gradient(135deg, #14532d, #2e9e5b);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+.producto-badge.descuento {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+/* Cuerpo de la tarjeta (Tienda) */
+.producto-cuerpo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 16px 16px;
+}
+
+/* Descripción corta */
+.producto-descripcion {
+  color: #5f6d53;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0 8px 10px;
+  text-align: center;
+  flex: 1;
+}
+
+/* Precios */
+.producto-precios {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 10px 0 14px;
+}
+
+.producto-precio {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #14532d;
+}
+
+.producto-precio-original {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #a5a5a5;
+  text-decoration: line-through;
+}
+
+/* Acciones: ver producto + agregar al carrito */
+.producto-acciones {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin-top: auto;
+}
+
+.producto-acciones .btn-ver,
+.producto-acciones .btn-agregar {
+  flex: 1;
+  padding: 11px 6px;
+  border-radius: 999px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.producto-acciones .btn-ver {
+  background: #ffffff;
+  color: #14532d;
+  border: 1.5px solid #14532d;
+}
+
+.producto-acciones .btn-ver:hover {
+  background: #eaf3e4;
+}
+
+.producto-acciones .btn-agregar {
+  background: linear-gradient(135deg, #14532d 0%, #1f6a3d 100%);
+  color: #ffffff;
+  border: 1.5px solid transparent;
+  box-shadow: 0 8px 16px rgba(20, 83, 45, 0.2);
+}
+
+.producto-acciones .btn-agregar:hover {
+  background: linear-gradient(135deg, #166534 0%, #22804d 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 20px rgba(20, 83, 45, 0.28);
+}
+
+/* Etiquetas en la vista de producto */
+.producto-tag-nuevo {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  background: rgba(106, 253, 106, 0.18);
+  color: #14532d;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 7px 14px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+.producto-tag-nuevo.descuento {
+  background: rgba(239, 68, 68, 0.12);
+  color: #b91c1c;
+}
+
+.precio-original-producto {
+  color: #9a9a9a;
+  text-decoration: line-through;
+  font-size: 1.05rem;
+  margin-bottom: 0;
+}
+
+.firma-badge {
+  top: 16px;
+  left: 16px;
+}
+
+.producto-no-encontrado {
+  text-align: center;
+  padding: 100px 20px;
+  color: #14532d;
+}
+
+/* Badge "-OFF" (reutilizado en la vista de producto) */
+.desc-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #ff4d4d;
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  z-index: 1;
+  box-shadow: 0 2px 6px rgba(255, 77, 77, 0.4);
+}
 
 /* --- 6. Animación de Product.jsx --- */
 @keyframes aparecer {
@@ -261,7 +452,10 @@
 .imagen-producto img {
   width: 100%;
   height: 400px;
-  object-fit: cover;
+  object-fit: contain;
+  background: #f7faf5;
+  padding: 24px;
+  box-sizing: border-box;
   border-radius: 20px;
 }
 
