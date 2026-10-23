@@ -1,127 +1,150 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ProductContext } from './productContext';
+import {
+  listarProductos,
+  crearProducto,
+  actualizarProducto as actualizarProductoApi,
+  eliminarProducto as eliminarProductoApi,
+  listarCategorias,
+  crearCategoria,
+} from '../api/productos';
 
-const STORAGE_PRODUCTOS = 'nutrik_productos';
+// Convierte un producto de Laravel (tabla productos) al formato que usa React.
+function desdeApi(p) {
+  return {
+    id: p.Id_producto,
+    nombre: p.Nombre_producto,
+    precio: Number(p.Precio),
+    categoria: p.categoria?.Nombre_categoria ?? '',
+    estado: p.Estado ?? 'Activo',
+    stock: p.Stock ?? 0,
+    imagen: p.Imagen ?? '',
+    descripcion: p.Descripcion ?? '',
+    vendedorId: p.Vendedor ?? '',
+  };
+}
 
-// Productos de ejemplo para la tienda demo (tienda@nutrik.com).
-// Sirven como catálogo inicial del vendedor; luego se editan desde el panel.
-const DEMO_VENDEDOR_ID = 'tienda@nutrik.com';
+// Convierte lo que llena el formulario de React al formato de Laravel.
+async function aApi(datos, vendedorId, categorias) {
+  const texto = (datos.categoria || '').trim();
+  let Id_categoria = null;
 
-const PRODUCTOS_DEMO = [
-  {
-    id: 'creatine',
-    vendedorId: DEMO_VENDEDOR_ID,
-    nombre: 'Creatina Monohidratada 100% Pura',
-    categoria: 'SUPLEMENTOS',
-    precio: 85000,
-    stock: 12,
-    estado: 'Activo',
-    imagen:
-      'https://i.pinimg.com/736x/4e/1d/3d/4e1d3d2831b01988bbfbcaf7fbdeabda.jpg',
-    descripcion:
-      'Potencia tu fuerza muscular, acelera la recuperación y mejora el rendimiento atlético.',
-  },
-  {
-    id: 'yogur',
-    vendedorId: DEMO_VENDEDOR_ID,
-    nombre: 'Yogur Griego Natural Artesanal',
-    categoria: 'LÁCTEOS / PROTEÍNA',
-    precio: 12000,
-    stock: 8,
-    estado: 'Activo',
-    imagen:
-      'https://i.pinimg.com/1200x/04/40/75/044075ff03f913e906dca4efbafc8821.jpg',
-    descripcion: 'Fuente natural de proteína sin azúcar añadida ni conservantes.',
-  },
-  {
-    id: 'detox',
-    vendedorId: DEMO_VENDEDOR_ID,
-    nombre: 'Té Verde Detox & Antiox Ultra Blend',
-    categoria: 'INFUSIONES',
-    precio: 18000,
-    stock: 20,
-    estado: 'Activo',
-    imagen:
-      'https://i.pinimg.com/736x/76/0c/30/760c30841b4c4e0313ff087ef2dcc749.jpg',
-    descripcion:
-      'Bebida natural antioxidante para desintoxicar tu organismo diariamente.',
-  },
-  {
-    id: 'omega',
-    vendedorId: DEMO_VENDEDOR_ID,
-    nombre: 'Omega 3 Fish Oil Concentrate',
-    categoria: 'SALUD / VITAMINAS',
-    precio: 35000,
-    stock: 15,
-    estado: 'Activo',
-    imagen:
-      'https://i.pinimg.com/1200x/20/85/55/208555e7cad61284b90054f29ccc0fa3.jpg',
-    descripcion: 'Ayuda a la salud cardiovascular y al funcionamiento cerebral.',
-  },
-  {
-    id: 'colageno',
-    vendedorId: DEMO_VENDEDOR_ID,
-    nombre: 'Colágeno Hidrolizado Avanzado',
-    categoria: 'SUPLEMENTOS',
-    precio: 79900,
-    stock: 10,
-    estado: 'Inactivo',
-    imagen:
-      'https://i.pinimg.com/1200x/bf/0a/6d/bf0a6dc31db1508589493ceec6a6c512.jpg',
-    descripcion: 'Ayuda al cuidado de articulaciones, piel, cabello y uñas.',
-  },
-];
+  if (texto) {
+    const existente = categorias.find(
+      (c) => c.Nombre_categoria.toLowerCase() === texto.toLowerCase()
+    );
 
-function cargarProductos() {
-  try {
-    const guardados = JSON.parse(localStorage.getItem(STORAGE_PRODUCTOS));
-    if (Array.isArray(guardados)) return guardados;
-  } catch {
-    /* localStorage vacío o corrupto: usamos los productos demo */
+    if (existente) {
+      Id_categoria = existente.Id_categoria;
+    } else {
+      // Si la categoría no existe todavía, la creamos en Laravel.
+      const nueva = await crearCategoria({
+        Nombre_categoria: texto.slice(0, 50),
+        Tipo_producto: 'General',
+      });
+      Id_categoria = nueva.data.Id_categoria;
+    }
   }
-  return PRODUCTOS_DEMO;
+
+  return {
+    Nombre_producto: datos.nombre,
+    Precio: datos.precio,
+    Id_categoria,
+    Descripcion: datos.descripcion || null,
+    Stock: datos.stock ?? 0,
+    Imagen: datos.imagen || null,
+    Estado: datos.estado || 'Activo',
+    Vendedor: vendedorId,
+  };
 }
 
 function ProductProvider({ children }) {
-  const [productos, setProductos] = useState(() => cargarProductos());
+  const [productos, setProductos] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState('');
 
-  const persistir = (lista) => {
-    setProductos(lista);
-    localStorage.setItem(STORAGE_PRODUCTOS, JSON.stringify(lista));
+  const recargar = async () => {
+    const [prods, cats] = await Promise.all([
+      listarProductos(),
+      listarCategorias(),
+    ]);
+    setProductos(prods.map(desdeApi));
+    setCategorias(cats);
   };
+
+  // Al abrir la app, traemos los datos desde Laravel/MySQL.
+  useEffect(() => {
+    let activo = true;
+    (async () => {
+      try {
+        const [prods, cats] = await Promise.all([
+          listarProductos(),
+          listarCategorias(),
+        ]);
+        if (!activo) return;
+        setProductos(prods.map(desdeApi));
+        setCategorias(cats);
+      } catch (e) {
+        if (activo) setError(e.message);
+      } finally {
+        if (activo) setCargando(false);
+      }
+    })();
+    return () => {
+      activo = false;
+    };
+  }, []);
 
   const getProductosPorVendedor = (vendedorId) =>
     productos.filter((producto) => producto.vendedorId === vendedorId);
 
-  const agregarProducto = (nuevoProducto) => {
-    const producto = {
-      ...nuevoProducto,
-      id: nuevoProducto.id || `prod_${Date.now()}`,
-      estado: nuevoProducto.estado || 'Activo',
-    };
-    persistir([...productos, producto]);
+  const agregarProducto = async (nuevoProducto) => {
+    try {
+      await crearProducto(
+        await aApi(nuevoProducto, nuevoProducto.vendedorId, categorias)
+      );
+      await recargar();
+    } catch (e) {
+      setError(e.message);
+      throw e;
+    }
   };
 
-  const actualizarProducto = (id, cambios) => {
-    persistir(
-      productos.map((producto) =>
-        String(producto.id) === String(id) ? { ...producto, ...cambios } : producto
-      )
-    );
+  const actualizarProducto = async (id, cambios) => {
+    try {
+      const actual = productos.find((p) => String(p.id) === String(id));
+      const vendedorId = cambios.vendedorId ?? actual?.vendedorId;
+      await actualizarProductoApi(id, await aApi(cambios, vendedorId, categorias));
+      await recargar();
+    } catch (e) {
+      setError(e.message);
+      throw e;
+    }
   };
 
-  const eliminarProducto = (id) => {
-    persistir(productos.filter((producto) => String(producto.id) !== String(id)));
+  const eliminarProducto = async (id) => {
+    try {
+      await eliminarProductoApi(id);
+      await recargar();
+    } catch (e) {
+      setError(e.message);
+      throw e;
+    }
   };
 
   return (
     <ProductContext.Provider
       value={{
         productos,
+        categorias,
+        cargando,
+        error,
         getProductosPorVendedor,
         agregarProducto,
         actualizarProducto,
         eliminarProducto,
+        recargar,
       }}
     >
       {children}

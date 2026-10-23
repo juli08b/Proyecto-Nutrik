@@ -1,4 +1,5 @@
 import { useAuth } from '../Context/authContext';
+import NotificationsMenu from './NotificationsMenu';
 
 const HeaderVendedor = () => {
   const { user } = useAuth();
@@ -12,10 +13,7 @@ const HeaderVendedor = () => {
       </div>
 
       <div className="header-right">
-        <div className="notificacion">
-          🔔
-          <span>3</span>
-        </div>
+        <NotificationsMenu />
 
         <div className="header-usuario">
           <span className="header-usuario-nombre">

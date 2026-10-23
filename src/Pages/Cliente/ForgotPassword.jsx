@@ -31,9 +31,9 @@ const ForgotPassword = () => {
   const [error, setError] = useState('');
   const [completado, setCompletado] = useState(false);
 
-  const verificarCorreo = (e) => {
+  const verificarCorreo = async (e) => {
     e.preventDefault();
-    const res = existeCuenta(correo);
+    const res = await existeCuenta(correo);
     if (!res.ok) {
       setError(res.error);
       return;
@@ -42,7 +42,7 @@ const ForgotPassword = () => {
     setPaso(2);
   };
 
-  const guardarNueva = (e) => {
+  const guardarNueva = async (e) => {
     e.preventDefault();
     if (nueva.length < 8) {
       setError('La contraseña debe tener mínimo 8 caracteres.');
@@ -52,7 +52,7 @@ const ForgotPassword = () => {
       setError('Las contraseñas no coinciden.');
       return;
     }
-    const res = resetPassword(correo, nueva);
+    const res = await resetPassword(correo, nueva);
     if (!res.ok) {
       setError(res.error);
       return;

@@ -1,113 +1,65 @@
 import { useState } from 'react';
 import { AuthContext } from './authContext';
+import {
+  actualizarUsuario,
+  desdeApi,
+  iniciarSesion,
+  registrarUsuario,
+  restablecerContrasena,
+  verificarCorreo,
+} from '../api/usuarios';
 
-const STORAGE_USERS = 'nutrik_users';
-const STORAGE_SESSION = 'nutrik_session';
+const STORAGE_SESSION = 'nutrik_session_user';
 
-const DEMO_ACCOUNTS = [
-  {
-    id: 'juliana@nutrik.com',
-    role: 'cliente',
-    primerNombre: 'Juliana',
-    segundoNombre: '',
-    primerApellido: 'Gómez',
-    segundoApellido: 'Ríos',
-    email: 'juliana@nutrik.com',
-    password: 'juliana123',
-    telefono: '',
-    fechaNacimiento: '',
-    genero: 'femenino',
-    estatura: '1.62',
-    peso: '58 kg',
-    actividad: 'activo',
-    objetivo: 'perder',
-    alergia: '',
-    dieta: '',
-    restricciones: '',
-    foto: null,
-  },
-  {
-    id: 'tienda@nutrik.com',
-    role: 'vendedor',
-    nombreNegocio: 'Tienda Nutrik',
-    nit: '901234567-8',
-    email: 'tienda@nutrik.com',
-    password: 'tienda123',
-    telefono: '3001234567',
-    direccion: 'Calle 10 # 5-12, Bogotá',
-    ciudad: 'Bogotá',
-    tipoProductos: 'Suplementos y snacks saludables',
-    descripcion: 'Vendemos productos sanos para una vida equilibrada.',
-    foto: null,
-  },
-];
-
-function cargarUsuarios() {
+function usuarioGuardado() {
   try {
-    const guardados = JSON.parse(localStorage.getItem(STORAGE_USERS));
-    if (Array.isArray(guardados) && guardados.length > 0) return guardados;
+    const guardado = JSON.parse(localStorage.getItem(STORAGE_SESSION));
+    if (guardado && guardado.email) return guardado;
   } catch {
-    /* localStorage vacío o corrupto: usamos los demo */
-  }
-  return DEMO_ACCOUNTS;
-}
-
-function usuarioDeSesion() {
-  const emailSesion = localStorage.getItem(STORAGE_SESSION);
-  if (emailSesion) {
-    const encontrado = cargarUsuarios().find((u) => u.email === emailSesion);
-    if (encontrado) {
-      const copia = { ...encontrado };
-      delete copia.password;
-      return copia;
-    }
+    /* sesión vacía o corrupta */
   }
   return null;
 }
 
 function AuthProvider({ children }) {
-  const [users, setUsers] = useState(() => cargarUsuarios());
-  const [user, setUser] = useState(() => usuarioDeSesion());
+  const [user, setUser] = useState(() => usuarioGuardado());
 
-  const persistirUsuarios = (nuevaLista) => {
-    setUsers(nuevaLista);
-    localStorage.setItem(STORAGE_USERS, JSON.stringify(nuevaLista));
+  const guardarSesion = (usuarioApi) => {
+    const mapped = desdeApi(usuarioApi);
+    setUser(mapped);
+    localStorage.setItem(STORAGE_SESSION, JSON.stringify(mapped));
+    return mapped;
   };
 
-  const guardarSesion = (cuenta) => {
-    const copia = { ...cuenta };
-    delete copia.password;
-    setUser(copia);
-    localStorage.setItem(STORAGE_SESSION, cuenta.email);
-  };
-
-  const login = (email, password) => {
-    const cuenta = users.find(
-      (u) => u.email.toLowerCase() === email.trim().toLowerCase()
-    );
-    if (!cuenta) return { ok: false, error: 'No existe una cuenta con ese correo.' };
-    if (cuenta.password !== password) return { ok: false, error: 'Contraseña incorrecta.' };
-    guardarSesion(cuenta);
-    return { ok: true, user: { ...cuenta } };
-  };
-
-  const register = (role, data) => {
-    const email = data.email.trim().toLowerCase();
-    if (users.some((u) => u.email.toLowerCase() === email)) {
-      return { ok: false, error: 'Ya existe una cuenta con ese correo.' };
+  const login = async (email, password) => {
+    try {
+      const res = await iniciarSesion(email.trim(), password);
+      const usuario = guardarSesion(res.data);
+      return { ok: true, user: usuario };
+    } catch (error) {
+      return { ok: false, error: error.message };
     }
-    const nueva = { id: email, role, ...data, email, foto: null };
-    persistirUsuarios([...users, nueva]);
-    guardarSesion(nueva);
-    return { ok: true, user: { ...nueva } };
   };
 
-  const updateProfile = (cambios) => {
-    const lista = users.map((u) =>
-      u.email === user.email ? { ...u, ...cambios, foto: cambios.foto ?? u.foto } : u
-    );
-    persistirUsuarios(lista);
-    setUser((prev) => ({ ...prev, ...cambios }));
+  const register = async (role, data) => {
+    try {
+      const res = await registrarUsuario(role, data);
+      const usuario = guardarSesion(res.data);
+      return { ok: true, user: usuario };
+    } catch (error) {
+      return { ok: false, error: error.message };
+    }
+  };
+
+  const updateProfile = async (cambios) => {
+    if (!user?.id) return { ok: false, error: 'No hay una sesión activa.' };
+    try {
+      const res = await actualizarUsuario(user.id, cambios);
+      guardarSesion(res.data);
+      return { ok: true };
+    } catch (error) {
+      return { ok: false, error: error.message };
+    }
   };
 
   const logout = () => {
@@ -115,34 +67,39 @@ function AuthProvider({ children }) {
     localStorage.removeItem(STORAGE_SESSION);
   };
 
-  const existeCuenta = (email) => {
+  const existeCuenta = async (email) => {
     const correo = (email || '').trim().toLowerCase();
     if (!correo) return { ok: false, error: 'Ingresa tu correo electrónico.' };
-    const cuenta = users.find((u) => u.email.toLowerCase() === correo);
-    if (!cuenta) return { ok: false, error: 'No existe ninguna cuenta con ese correo.' };
-    return { ok: true, cuenta: { ...cuenta } };
+    try {
+      const res = await verificarCorreo(correo);
+      if (!res.existe) {
+        return { ok: false, error: 'No existe ninguna cuenta con ese correo.' };
+      }
+      return { ok: true };
+    } catch (error) {
+      return { ok: false, error: error.message };
+    }
   };
 
-  const resetPassword = (email, nuevaPassword) => {
+  const resetPassword = async (email, nuevaPassword) => {
     const correo = (email || '').trim().toLowerCase();
     if (!nuevaPassword || nuevaPassword.length < 8) {
       return { ok: false, error: 'La contraseña debe tener mínimo 8 caracteres.' };
     }
-    const cuenta = users.find((u) => u.email.toLowerCase() === correo);
-    if (!cuenta) return { ok: false, error: 'No existe ninguna cuenta con ese correo.' };
-
-    // Guardamos la lista actualizada (incluyendo cuentas demo) en localStorage
-    const nuevaLista = users.map((u) =>
-      u.email.toLowerCase() === correo ? { ...u, password: nuevaPassword } : u
-    );
-    persistirUsuarios(nuevaLista);
-    setUser(null);
-    localStorage.removeItem(STORAGE_SESSION);
-    return { ok: true };
+    try {
+      await restablecerContrasena(correo, nuevaPassword);
+      setUser(null);
+      localStorage.removeItem(STORAGE_SESSION);
+      return { ok: true };
+    } catch (error) {
+      return { ok: false, error: error.message };
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, updateProfile, logout, existeCuenta, resetPassword }}>
+    <AuthContext.Provider
+      value={{ user, login, register, updateProfile, logout, existeCuenta, resetPassword }}
+    >
       {children}
     </AuthContext.Provider>
   );

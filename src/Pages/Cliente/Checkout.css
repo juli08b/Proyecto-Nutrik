@@ -1,15 +1,15 @@
 .checkout {
   width: 100%;
-  max-width: 1180px;
+  max-width: 1120px;
   margin: 0 auto;
-  padding: 116px 24px 72px;
+  padding: 108px clamp(16px, 3vw, 30px) 64px;
   box-sizing: border-box;
   color: var(--verde-oscuro, #14532d);
 }
 
 .checkout-titulo {
   text-align: center;
-  font-size: 34px;
+  font-size: clamp(1.8rem, 3.2vw, 2.25rem);
   line-height: 1.2;
   margin: 0 0 28px;
   color: #14532d;
@@ -17,8 +17,8 @@
 
 .checkout-contenido {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  gap: 24px;
+  grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
+  gap: clamp(16px, 2vw, 24px);
   align-items: start;
 }
 
@@ -27,8 +27,8 @@
   min-width: 0;
   background: #ffffff;
   border: 1px solid rgba(20, 83, 45, 0.12);
-  border-radius: 18px;
-  padding: 24px;
+  border-radius: 20px;
+  padding: clamp(18px, 2.4vw, 26px);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
 }
 
@@ -44,7 +44,7 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-  max-height: 320px;
+  max-height: min(420px, 48vh);
   overflow-y: auto;
 }
 
@@ -181,6 +181,11 @@
   background: #f2f9f0;
 }
 
+.checkout-metodo.seleccionado {
+  border-color: #72965f;
+  background: #f4f7ef;
+}
+
 .checkout-metodo input {
   width: 16px;
   height: 16px;
@@ -193,7 +198,7 @@
   padding: 12px 16px;
   border: none;
   border-radius: 10px;
-  background: linear-gradient(135deg, #4caf50, #1f6a3d);
+  background: linear-gradient(135deg, #477b4d, #245c39);
   color: #ffffff;
   font-size: 1.05rem;
   font-weight: 800;
@@ -204,6 +209,24 @@
 .checkout-pagar-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 22px rgba(31, 106, 61, 0.35);
+}
+
+.checkout-demo-aviso {
+  margin: 2px 0;
+  color: #798179;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.checkout-error {
+  margin: 0;
+  padding: 11px 13px;
+  border: 1px solid #f0c9c4;
+  border-radius: 10px;
+  background: #fff5f3;
+  color: #a12c23;
+  font-size: 0.86rem;
+  line-height: 1.45;
 }
 
 /* Éxito vacío y sin sesión */
@@ -242,6 +265,10 @@
 .checkout-vacio p {
   color: #4a5d4f;
   line-height: 1.5;
+  margin: 0 0 22px;
+}
+
+.checkout-exito .checkout-demo-aviso {
   margin: 0 0 22px;
 }
 
@@ -347,10 +374,14 @@
     grid-template-columns: 1fr;
     gap: 18px;
   }
+
+  .checkout-items {
+    max-height: 360px;
+  }
 }
 
 @media (max-width: 480px) {
-  .checkout { padding: 102px 14px 40px; }
+  .checkout { padding: 96px 14px 40px; }
   .checkout-titulo { font-size: 28px; margin-bottom: 20px; }
   .checkout-resumen, .checkout-form { padding: 18px; border-radius: 14px; }
   .checkout-item { align-items: flex-start; gap: 10px; }

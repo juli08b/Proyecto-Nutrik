@@ -1,60 +1,196 @@
-/* Estilos para la página de Contacto - Nutrik */
+/* ============================================================
+   CENTRO DE AYUDA / SUGERENCIAS · NUTRIK
+   ============================================================ */
 
 .contacto-section {
-  min-height: 100vh;
+  min-height: auto;
   box-sizing: border-box;
-  padding: 116px 24px 72px;
+  padding: 104px clamp(20px, 4vw, 48px) 64px;
   background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 25%),
-    linear-gradient(135deg, #edf6ee 0%, #e3efe5 45%, #f7fbf7 100%);
-  box-sizing: border-box;
+    radial-gradient(760px 300px at 12% 0%, rgba(223, 235, 214, 0.62) 0%, transparent 72%),
+    linear-gradient(180deg, #fbfcf9 0%, #f4f5f1 100%);
 }
 
+/* ===== HERO ===== */
+.contacto-hero {
+  max-width: 660px;
+  margin: 0 auto clamp(28px, 4vw, 42px);
+  text-align: center;
+}
+
+.contacto-hero .section-tag {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: #e7f3e4;
+  color: #1f6a3d;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.contacto-hero h1 {
+  margin: 14px 0 10px;
+  color: #0f4c2a;
+  font-size: clamp(1.85rem, 3.5vw, 2.65rem);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.contacto-hero p {
+  margin: 0 auto;
+  max-width: 60ch;
+  color: #5b6b5f;
+  font-size: clamp(0.98rem, 1.2vw, 1.08rem);
+  line-height: 1.7;
+}
+
+/* ===== LAYOUT DE DOS COLUMNAS ===== */
+.contacto-grid {
+  display: grid;
+  grid-template-columns: minmax(245px, 0.78fr) minmax(0, 1.22fr);
+  gap: clamp(18px, 2.5vw, 30px);
+  max-width: 980px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+/* ===== COLUMNA INFO ===== */
+.contacto-info {
+  position: relative;
+  padding: clamp(26px, 3vw, 36px);
+  border: 1px solid #e8e9e2;
+  border-radius: 20px;
+  background: #fff;
+  color: #334136;
+  box-shadow: 0 14px 34px rgba(33, 47, 35, 0.07);
+}
+
+.contacto-info h2 {
+  margin: 0 0 10px;
+  color: #23492e;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.contacto-info-intro {
+  margin: 0 0 24px;
+  color: #68746a;
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+.contacto-datos {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0 0 26px;
+  padding: 0;
+  list-style: none;
+}
+
+.contacto-datos li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.contacto-dato-icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: #f2f5ee;
+  color: #386641;
+  font-size: 1.05rem;
+}
+
+.contacto-datos li div {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.contacto-datos strong {
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #567b4d;
+}
+
+.contacto-datos span {
+  font-size: 0.96rem;
+  color: #334136;
+  overflow-wrap: anywhere;
+}
+
+.contacto-nota {
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: #fbf5e9;
+  border: 1px solid #f1e4c9;
+}
+
+.contacto-nota strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #986b2f;
+}
+
+.contacto-nota p {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #6c685b;
+}
+
+/* ===== TARJETA DEL FORMULARIO ===== */
 .card-glass {
   width: 100%;
-  max-width: 780px;
-  margin: 0 auto;
-  padding: 32px 36px;
+  padding: clamp(24px, 2.8vw, 34px);
   box-sizing: border-box;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(20, 83, 45, 0.12);
-  box-shadow: 0 18px 40px rgba(20, 37, 18, 0.12);
-  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid #e8e9e2;
+  box-shadow: 0 16px 38px rgba(33, 47, 35, 0.07);
 }
 
 .contacto-header {
-  text-align: center;
-  margin-bottom: 26px;
+  margin-bottom: 24px;
 }
 
-.section-tag {
+.contacto-kicker {
   display: inline-block;
-  padding: 6px 11px;
-  border-radius: 999px;
-  background: #eaf5eb;
-  color: #2f5d37;
-  font-size: 0.92rem;
-  font-weight: 700;
+  margin-bottom: 8px;
+  color: #1f6a3d;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  letter-spacing: 0;
 }
 
 .contacto-header h2 {
-  margin: 14px 0 8px;
-  font-size: 2.15rem;
-  line-height: 1.2;
-  color: #14532d;
+  margin: 0 0 6px;
+  color: #0f4c2a;
+  font-size: 1.5rem;
+  font-weight: 900;
 }
 
 .contacto-header p {
-  margin: 0 auto;
-  max-width: 650px;
-  color: #5f7166;
-  line-height: 1.55;
-  font-size: 1rem;
+  margin: 0;
+  color: #6b7d70;
+  font-size: 0.94rem;
 }
 
+/* ===== FORMULARIO ===== */
 .pqr-form {
   display: flex;
   flex-direction: column;
@@ -64,7 +200,7 @@
 .input-group {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
+  gap: 16px;
 }
 
 .field {
@@ -73,10 +209,11 @@
   gap: 7px;
 }
 
-.field label {
-  color: #274d2f;
+.field label,
+.field-label {
+  color: #2f4a2d;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
 }
 
 .field input,
@@ -84,52 +221,110 @@
 .field textarea {
   width: 100%;
   min-height: 48px;
-  padding: 11px 14px;
-  border: 1.5px solid #c9ddcb;
-  border-radius: 10px;
-  background: #fff;
-  color: #274d2f;
-  font-size: 0.98rem;
+  padding: 12px 14px;
+  border: 1.5px solid #dfe6df;
+  border-radius: 12px;
+  background: #fbfdfa;
+  color: #2f3e2c;
+  font-size: 0.96rem;
+  font-family: inherit;
   box-sizing: border-box;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #a6b3a0;
 }
 
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
   outline: none;
-  border-color: #4c8b53;
-  box-shadow: 0 0 0 4px rgba(76, 139, 83, 0.18);
+  background: #ffffff;
+  border-color: #1f6a3d;
+  box-shadow: 0 0 0 3px rgba(31, 106, 61, 0.16);
 }
 
 .field textarea {
   resize: vertical;
   min-height: 150px;
-  line-height: 1.5;
+  line-height: 1.55;
+}
+
+/* Chips de tipo de solicitud */
+.tipo-opciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tipo-chip {
+  position: relative;
+  padding: 9px 16px;
+  border: 1.5px solid #dfe6df;
+  border-radius: 999px;
+  background: #fbfdfa;
+  color: #43553a;
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease,
+    color 0.2s ease, transform 0.15s ease;
+}
+
+.tipo-chip input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tipo-chip:hover {
+  border-color: #b8cbb0;
+  transform: translateY(-1px);
+}
+
+.tipo-chip.activo {
+  background: linear-gradient(135deg, #1f6a3d 0%, #0f4c2a 100%);
+  border-color: #0f4c2a;
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(15, 76, 42, 0.24);
 }
 
 .hidden-field {
   display: none;
 }
 
+/* ===== ACCIONES ===== */
+.contacto-acciones {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
 .btn-glow {
-  width: 100%;
+  flex: 1;
+  min-width: 180px;
   min-height: 50px;
-  padding: 12px 16px;
+  padding: 13px 24px;
   border: none;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #14532d 0%, #2f7a45 100%);
+  border-radius: 999px;
+  background: linear-gradient(135deg, #1f6a3d 0%, #0f4c2a 100%);
   color: #fff;
+  font-family: inherit;
   font-weight: 800;
-  font-size: 1rem;
+  font-size: 0.94rem;
+  letter-spacing: 0.02em;
   cursor: pointer;
-  box-shadow: 0 12px 18px rgba(20, 83, 45, 0.22);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 12px 22px rgba(15, 76, 42, 0.26);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.2s ease;
 }
 
 .btn-glow:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 14px 22px rgba(20, 83, 45, 0.28);
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+  box-shadow: 0 16px 28px rgba(15, 76, 42, 0.3);
 }
 
 .btn-glow:disabled {
@@ -137,43 +332,87 @@
   cursor: wait;
 }
 
+.btn-secundario {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  padding: 13px 24px;
+  border-radius: 999px;
+  border: 1.5px solid #d3e0cd;
+  background: #f1f5ee;
+  color: #43553a;
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: transform 0.15s ease, background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.btn-secundario:hover {
+  transform: translateY(-2px);
+  background: #e7efe2;
+  border-color: #b8cbb0;
+}
+
+/* ===== ALERTAS ===== */
 .alerta-success,
 .alerta-error {
-  margin-top: 10px;
-  padding: 12px 14px;
+  margin-top: 16px;
+  padding: 13px 16px;
   border-radius: 12px;
-  font-size: 0.95rem;
+  font-size: 0.94rem;
+  font-weight: 600;
 }
 
 .alerta-success {
-  background: #edf9ef;
-  color: #245c31;
-  border: 1px solid #cce8d2;
+  background: #e7f6e5;
+  color: #2f6b33;
+  border: 1px solid #bfe3b8;
 }
 
 .alerta-error {
-  background: #fff4f4;
-  color: #8a3030;
-  border: 1px solid #f2c6c6;
+  background: #fdf1ef;
+  color: #b3261e;
+  border: 1px solid #f3cfc9;
 }
 
-@media (max-width: 760px) {
-  .contacto-section { padding: 104px 16px 40px; }
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .contacto-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contacto-info {
+    order: 2;
+  }
 
   .card-glass {
-    padding: 24px 20px;
-    border-radius: 18px;
+    order: 1;
+  }
+}
+
+@media (max-width: 620px) {
+  .contacto-section {
+    padding: 96px 16px 44px;
+  }
+
+  .contacto-hero h1 {
+    font-size: 1.8rem;
   }
 
   .input-group {
     grid-template-columns: 1fr;
-    gap: 16px;
   }
-}
 
-@media (max-width: 420px) {
-  .contacto-section { padding-right: 12px; padding-left: 12px; }
-  .card-glass { padding: 22px 16px; }
-  .contacto-header h2 { font-size: 1.8rem; }
-  .contacto-header p { font-size: 0.94rem; }
+  .contacto-acciones {
+    flex-direction: column;
+  }
+
+  .btn-glow,
+  .btn-secundario {
+    width: 100%;
+  }
 }

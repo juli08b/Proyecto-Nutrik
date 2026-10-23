@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { useState, useRef, useEffect } from "react";
 import { useAuth } from "../Context/authContext";
@@ -12,16 +12,19 @@ import deseoIcono from "../assets/Deseo.svg";
 
 import categoria from "../assets/Categoria.svg";
 import dieta from "../assets/Dieta.svg";
+import NotificationsMenu from "./NotificationsMenu";
 
 const ENLACES = [
   { to: "/productos", texto: "Productos" },
   { texto: "Categorías", menu: "categoria" },
-  { to: "/#beneficios", texto: "Beneficios" },
-  { to: "/#nosotros", texto: "Nosotros" },
+  { to: "/contact", texto: "Sugerencias", soloSesion: true },
+  { to: "/nosotros", texto: "Nosotros" },
 ];
 
 function Navbar() {
+  const location = useLocation();
   const [menuAbierto, setMenuAbierto] = useState("");
+  const [rutaMenuAbierto, setRutaMenuAbierto] = useState(location.pathname);
   const [menuUsuario, setMenuUsuario] = useState(false);
   const [menuMovil, setMenuMovil] = useState(false);
   const [buscadorAbierto, setBuscadorAbierto] = useState(false);
@@ -57,10 +60,16 @@ function Navbar() {
 
   const cerrarMovil = () => setMenuMovil(false);
 
-  const abrirSidebar = (menu) => {
+  const alternarSidebar = (menu) => {
+    if (menuVisible && menuAbierto === menu) {
+      setMenuAbierto("");
+      return;
+    }
     setMenuAbierto(menu);
+    setRutaMenuAbierto(location.pathname);
     setMenuMovil(false);
   };
+  const menuVisible = Boolean(menuAbierto) && rutaMenuAbierto === location.pathname;
 
   const enviarBusqueda = (e) => {
     e.preventDefault();
@@ -84,21 +93,24 @@ function Navbar() {
 
           <div className="nav-centro">
             <div className="nav-grupo-links">
-              {ENLACES.map((enlace) =>
-                enlace.menu ? (
-                  <button
-                    key={enlace.texto}
-                    type="button"
-                    className="nav-link"
-                    onClick={() => setMenuAbierto(enlace.menu)}
-                  >
-                    {enlace.texto}
-                  </button>
-                ) : (
-                  <Link key={enlace.texto} to={enlace.to} className="nav-link">
-                    {enlace.texto}
-                  </Link>
-                )
+              {ENLACES.filter((enlace) => !enlace.soloSesion || user).map(
+                (enlace) =>
+                  enlace.menu ? (
+                    <button
+                      key={enlace.texto}
+                      type="button"
+                      className="nav-link"
+                      aria-expanded={menuVisible && menuAbierto === enlace.menu}
+                      aria-controls="categorias-sidebar"
+                      onClick={() => alternarSidebar(enlace.menu)}
+                    >
+                      {enlace.texto}
+                    </button>
+                  ) : (
+                    <Link key={enlace.texto} to={enlace.to} className="nav-link">
+                      {enlace.texto}
+                    </Link>
+                  )
               )}
             </div>
           </div>
@@ -135,6 +147,8 @@ function Navbar() {
             >
               <img src={deseoIcono} alt="" />
             </Link>
+
+            <NotificationsMenu />
 
             {user ? (
               <div
@@ -250,29 +264,32 @@ function Navbar() {
           <div className="nav-movil-backdrop" onClick={cerrarMovil} />
           <div className="nav-movil">
             <div className="nav-movil-links">
-              {ENLACES.map((enlace) =>
-                enlace.menu ? (
-                  <button
-                    key={enlace.texto}
-                    type="button"
-                    className="nav-movil-link"
-                    onClick={() => abrirSidebar(enlace.menu)}
-                  >
-                    <span className="icono-circulo">
-                      <img className="nuevo" src={categoria} alt="" />
-                    </span>
-                    {enlace.texto}
-                  </button>
-                ) : (
-                  <Link
-                    key={enlace.texto}
-                    to={enlace.to}
-                    className="nav-movil-link"
-                    onClick={cerrarMovil}
-                  >
-                    {enlace.texto}
-                  </Link>
-                )
+              {ENLACES.filter((enlace) => !enlace.soloSesion || user).map(
+                (enlace) =>
+                  enlace.menu ? (
+                    <button
+                      key={enlace.texto}
+                      type="button"
+                      className="nav-movil-link"
+                      aria-expanded={menuVisible && menuAbierto === enlace.menu}
+                      aria-controls="categorias-sidebar"
+                      onClick={() => alternarSidebar(enlace.menu)}
+                    >
+                      <span className="icono-circulo">
+                        <img className="nuevo" src={categoria} alt="" />
+                      </span>
+                      {enlace.texto}
+                    </button>
+                  ) : (
+                    <Link
+                      key={enlace.texto}
+                      to={enlace.to}
+                      className="nav-movil-link"
+                      onClick={cerrarMovil}
+                    >
+                      {enlace.texto}
+                    </Link>
+                  )
               )}
             </div>
 
@@ -280,7 +297,9 @@ function Navbar() {
               <button
                 type="button"
                 className="nav-movil-btn"
-                onClick={() => abrirSidebar("categoria")}
+                aria-expanded={menuVisible && menuAbierto === "categoria"}
+                aria-controls="categorias-sidebar"
+                onClick={() => alternarSidebar("categoria")}
               >
                 <img src={categoria} alt="" width={16} height={16} />
                 CATEGORÍA
@@ -288,7 +307,9 @@ function Navbar() {
               <button
                 type="button"
                 className="nav-movil-btn"
-                onClick={() => abrirSidebar("dietas")}
+                aria-expanded={menuVisible && menuAbierto === "dietas"}
+                aria-controls="categorias-sidebar"
+                onClick={() => alternarSidebar("dietas")}
               >
                 <img src={dieta} alt="" width={16} height={16} />
                 DIETAS
@@ -310,12 +331,17 @@ function Navbar() {
 
       {/* OVERLAY */}
       <div
-        className={`overlay ${menuAbierto ? "activo" : ""}`}
+        className={`overlay ${menuVisible ? "activo" : ""}`}
         onClick={() => setMenuAbierto("")}
       />
 
       {/* SIDEBAR */}
-      <div className={`sidebar ${menuAbierto ? "activo" : ""}`}>
+      <div
+        id="categorias-sidebar"
+        className={`sidebar ${menuVisible ? "activo" : ""}`}
+        aria-hidden={!menuVisible}
+        inert={!menuVisible}
+      >
         <button
           type="button"
           className="cerrar-menu"

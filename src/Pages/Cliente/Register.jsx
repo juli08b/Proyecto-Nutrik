@@ -85,7 +85,7 @@ const Register = () => {
     setPaso((p) => p - 1);
   };
 
-  const enviar = (e) => {
+  const enviar = async (e) => {
     e.preventDefault();
     const msg = validarPaso();
     if (msg) {
@@ -95,7 +95,7 @@ const Register = () => {
     const nombreCompleto = [form.primerNombre, form.segundoNombre, form.primerApellido, form.segundoApellido]
       .filter(Boolean).join(' ').trim();
 
-    const res = register('cliente', {
+    const res = await register('cliente', {
       ...form,
       nombreCompleto,
       alergia: form.alergia === 'otro' ? form.otroAlergia : form.alergia,

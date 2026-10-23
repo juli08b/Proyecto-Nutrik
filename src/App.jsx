@@ -1,6 +1,7 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Navbar from './Components/Navbar';
+import AsistenteNutrik from './Components/AsistenteNutrik';
 import Home from './Components/Home';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
@@ -11,6 +12,7 @@ import Perfil from './Pages/Cliente/Perfil';
 import Product from './Pages/Cliente/Product';
 import Productview from './Pages/Cliente/Productview';
 import Contact from './Pages/Cliente/Contact';
+import About from './Pages/Cliente/About';
 import Newproduct from './Pages/Cliente/Newproduct';
 import Discount from './Pages/Cliente/Discount';
 import Checkout from './Pages/Cliente/Checkout';
@@ -111,6 +113,7 @@ function App() {
         </Route>
 
         <Route path="/contact" element={<Contact />} />
+        <Route path="/nosotros" element={<About />} />
         <Route path="/discount" element={<Discount />} />
         <Route path="/descuentos" element={<Discount />} />
         <Route path="/checkout" element={<Checkout />} />
@@ -124,6 +127,9 @@ function App() {
 
       {/* Solo se muestra si NO estamos en login, registro, selección de roles o vistas de vendedor */}
       {mostrarLayout && <Footer />}
+
+      {/* Asistente Nutrik: avatar flotante con retos, recordatorios y sugerencias */}
+      {mostrarLayout && <AsistenteNutrik />}
       
       </CartProvider>
     </ProductProvider>

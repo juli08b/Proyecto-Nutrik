@@ -5,14 +5,6 @@ import { useProductos } from "../../Context/productContext";
 import { formatearPrecio } from "../../data/productosData";
 import "./seller-product.css";
 
-const CATEGORIAS = [
-  "SUPLEMENTOS",
-  "LÁCTEOS / PROTEÍNA",
-  "INFUSIONES",
-  "SALUD / VITAMINAS",
-  "SNACKS",
-];
-
 const FORM_VACIO = {
   nombre: "",
   categoria: "",
@@ -26,6 +18,8 @@ const FORM_VACIO = {
 const SellerProduct = () => {
   const { user } = useAuth();
   const {
+    categorias,
+    error,
     getProductosPorVendedor,
     agregarProducto,
     actualizarProducto,
@@ -82,7 +76,7 @@ const SellerProduct = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const guardarProducto = (e) => {
+  const guardarProducto = async (e) => {
     e.preventDefault();
 
     const datos = {
@@ -95,24 +89,44 @@ const SellerProduct = () => {
       descripcion: form.descripcion.trim(),
     };
 
-    if (editId) {
-      actualizarProducto(editId, datos);
-    } else {
-      agregarProducto({ ...datos, id: `prod_${Date.now()}`, vendedorId });
+    try {
+      if (editId) {
+        await actualizarProducto(editId, datos);
+      } else {
+        await agregarProducto({ ...datos, vendedorId });
+      }
+      cerrarModal();
+    } catch (err) {
+      window.alert(err.message);
     }
-
-    cerrarModal();
   };
 
-  const confirmarEliminar = (id) => {
-    if (window.confirm("¿Seguro que deseas eliminar este producto?")) {
-      eliminarProducto(id);
+  const confirmarEliminar = async (id) => {
+    if (!window.confirm("¿Seguro que deseas eliminar este producto?")) return;
+    try {
+      await eliminarProducto(id);
+    } catch (err) {
+      window.alert(err.message);
     }
   };
 
   return (
     <div className="seller-product">
       <div className="gestion-container">
+        {error && (
+          <p
+            role="alert"
+            style={{
+              background: "#fde2e2",
+              color: "#9b1c1c",
+              padding: "10px 14px",
+              borderRadius: 8,
+              marginBottom: 12,
+            }}
+          >
+            {error}
+          </p>
+        )}
         <div className="gestion-header">
           <div>
             <h1 className="gestion-titulo">Productos</h1>
@@ -143,9 +157,12 @@ const SellerProduct = () => {
             onChange={(e) => setCategoriaFiltro(e.target.value)}
           >
             <option value="">Todas las categorías</option>
-            {CATEGORIAS.map((categoria) => (
-              <option key={categoria} value={categoria}>
-                {categoria}
+            {categorias.map((categoria) => (
+              <option
+                key={categoria.Id_categoria}
+                value={categoria.Nombre_categoria}
+              >
+                {categoria.Nombre_categoria}
               </option>
             ))}
           </select>
@@ -254,9 +271,12 @@ const SellerProduct = () => {
                   required
                 >
                   <option value="">Seleccionar Categoría</option>
-                  {CATEGORIAS.map((categoria) => (
-                    <option key={categoria} value={categoria}>
-                      {categoria}
+                  {categorias.map((categoria) => (
+                    <option
+                      key={categoria.Id_categoria}
+                      value={categoria.Nombre_categoria}
+                    >
+                      {categoria.Nombre_categoria}
                     </option>
                   ))}
                 </select>

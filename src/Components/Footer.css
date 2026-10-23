@@ -261,7 +261,7 @@
 .footer-whatsapp {
   position: fixed;
   right: 24px;
-  bottom: 24px;
+  bottom: 104px;
   z-index: 1800;
   display: inline-flex;
   align-items: center;
@@ -329,7 +329,7 @@
 
   .footer-whatsapp {
     right: 16px;
-    bottom: 16px;
+    bottom: 96px;
     padding: 14px;
   }
 }

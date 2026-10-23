@@ -53,8 +53,21 @@ const pedidosBase = [
   },
 ];
 
+function cargarPedidosGuardados() {
+  try {
+    const pedidos = JSON.parse(localStorage.getItem("nutrik_orders") || "[]");
+    if (!Array.isArray(pedidos)) {
+      throw new Error("El historial de pedidos guardado no tiene un formato válido.");
+    }
+    return pedidos;
+  } catch (error) {
+    console.error("No se pudieron cargar los pedidos registrados por clientes.", error);
+    return [];
+  }
+}
+
 // Suma el dinero de un pedido: subtotal sin descuento, ahorro y total real
-const calcularDinero = (items) =>
+const calcularDinero = (items, envio = 0) =>
   items.reduce(
     (acc, item) => {
       const original = Number(item.precioOriginal || 0) * Number(item.cantidad || 1);
@@ -64,7 +77,7 @@ const calcularDinero = (items) =>
       acc.total += final;
       return acc;
     },
-    { subtotal: 0, descuento: 0, total: 0 }
+    { subtotal: 0, descuento: 0, total: Number(envio) || 0 }
   );
 
 // El precio y el descuento SIEMPRE se leen del catálogo, nunca se escriben a mano,
@@ -92,6 +105,7 @@ const Pedidos = () => {
   const [busqueda, setBusqueda] = useState("");
   const [pedidoSeleccionado, setPedidoSeleccionado] = useState(null);
   const [enviados, setEnviados] = useState([]);
+  const [pedidosGuardados] = useState(cargarPedidosGuardados);
 
   const pedidos = useMemo(() => {
     // EL PEDIDO EN CURSO: es el carrito del cliente, resuelto contra el catálogo
@@ -116,8 +130,34 @@ const Pedidos = () => {
         .filter(Boolean),
     }));
 
-    return carrito.length > 0 ? [enCurso, ...historicos] : historicos;
-  }, [carrito, user]);
+    const pedidosClientes = pedidosGuardados
+      .map((pedido) => ({
+        ...pedido,
+        id: pedido.numero || pedido.id,
+        cliente: pedido.cliente || "Cliente",
+        fecha: pedido.createdAt
+          ? new Date(pedido.createdAt).toLocaleDateString("es-CO")
+          : "Fecha no disponible",
+        metodo: {
+          contraentrega: "Contra entrega",
+          nequi: "Nequi",
+          tarjeta: "Tarjeta",
+        }[pedido.metodo] || pedido.metodo || "No especificado",
+        direccion: [pedido.direccion, pedido.ciudad].filter(Boolean).join(", "),
+        estado: pedido.estado || "Pendiente",
+        items: (pedido.items || []).map((item) => ({
+          ...item,
+          precioOriginal: Number(item.precio || 0),
+          precio: Number(item.precio || 0),
+          descuento: 0,
+        })),
+      }))
+      .reverse();
+
+    return carrito.length > 0
+      ? [enCurso, ...pedidosClientes, ...historicos]
+      : [...pedidosClientes, ...historicos];
+  }, [carrito, user, pedidosGuardados]);
 
   // SOLO PEDE VER ESTA VISTA SI ES VENDEDOR CON SESIÓN
   if (!user) return <Navigate to="/elegir-rol" replace />;
@@ -147,7 +187,7 @@ const Pedidos = () => {
   // ── VISTA ──
   const detallePedidoActivo = pedidos.find((p) => p.id === pedidoSeleccionado);
   const dineroDetalle = detallePedidoActivo
-    ? calcularDinero(detallePedidoActivo.items)
+    ? calcularDinero(detallePedidoActivo.items, detallePedidoActivo.envio)
     : null;
 
   return (
@@ -206,7 +246,7 @@ const Pedidos = () => {
               </thead>
               <tbody>
                 {pedidosFiltrados.map((pedido) => {
-                  const dinero = calcularDinero(pedido.items);
+                  const dinero = calcularDinero(pedido.items, pedido.envio);
                   const estado = estadoReal(pedido);
 
                   return (
@@ -347,6 +387,13 @@ const Pedidos = () => {
                 <div className="total-fila total-descuento">
                   <span>Descuentos aplicados</span>
                   <span>− ${formatearPrecio(dineroDetalle.descuento)}</span>
+                </div>
+              )}
+
+              {detallePedidoActivo.envio > 0 && (
+                <div className="total-fila">
+                  <span>Envío</span>
+                  <span>${formatearPrecio(detallePedidoActivo.envio)}</span>
                 </div>
               )}
 

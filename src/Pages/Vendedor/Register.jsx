@@ -25,7 +25,7 @@ const RegisterVendedor = () => {
 
   const cambiar = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const enviar = (e) => {
+  const enviar = async (e) => {
     e.preventDefault();
     if (!form.nombreNegocio || !form.email || !form.telefono || !form.password) {
       setError('Completa los campos obligatorios de tu tienda.');
@@ -44,7 +44,7 @@ const RegisterVendedor = () => {
       return;
     }
 
-    const res = register('vendedor', { ...form, password: form.password });
+    const res = await register('vendedor', { ...form, password: form.password });
     if (!res.ok) {
       setError(res.error);
       return;
