@@ -84,7 +84,7 @@
 /* ── MENÚ CENTRAL ── */
 .nav-centro {
   display: flex;
-  flex: 1;
+  flex: 1 1 auto;
   align-items: center;
   justify-content: center;
   min-width: 0;
@@ -93,12 +93,17 @@
 .nav-grupo-links {
   display: flex;
   align-items: center;
-  gap: clamp(6px, 1.6vw, 26px);
+  justify-content: space-between;
+  gap: clamp(12px, 4vw, 48px);
+  width: 100%;
+  flex: 1;
 }
 
 .nav-link {
   position: relative;
-  padding: 8px 4px;
+  flex: 1 1 0;
+  text-align: center;
+  padding: 8px 0;
   background: none;
   border: none;
   color: #2f4a35;

@@ -3,6 +3,7 @@ import { Link, Navigate } from 'react-router-dom';
 import './Perfil.css';
 import { useAuth } from '../../Context/authContext';
 
+
 const Perfil = () => {
   const { user, updateProfile, logout } = useAuth();
   const inputFotoRef = useRef(null);
@@ -89,311 +90,334 @@ const Perfil = () => {
 
   return (
     <div className="perfil-contenedor py-4">
-      <div className="perfil-tarjeta">
-        <div className="perfil-banner">
-          <Link to="/" className="perfil-volver">← Volver a la tienda</Link>
-        </div>
+      <div className="perfil-layout">
+        
+        {/* ================= COLUMNA IZQUIERDA (SIDEBAR) ================= */}
+        <div className="perfil-columna-izq">
+          <div className="perfil-tarjeta-lateral">
+            <div className="perfil-banner">
+              <Link to="/" className="perfil-volver">← Volver a la tienda</Link>
+            </div>
 
-        <div className="perfil-cabecera">
-          <div className="perfil-avatar">
-            {user.foto ? (
-              <img
-                src={user.foto}
-                alt="Foto de perfil"
-                className="perfil-foto"
-                style={{ objectPosition: posicionAvatar }}
-              />
-            ) : (
-              <span className="perfil-iniciales">{iniciales}</span>
+            <div className="perfil-cabecera">
+              <div className="perfil-avatar">
+                {user.foto ? (
+                  <img
+                    src={user.foto}
+                    alt="Foto de perfil"
+                    className="perfil-foto"
+                    style={{ objectPosition: posicionAvatar }}
+                  />
+                ) : (
+                  <span className="perfil-iniciales">{iniciales}</span>
+                )}
+              </div>
+              <div className="perfil-identidad">
+                <h1 className="perfil-nombre">{user.nombreCompleto || user.primerNombre || 'Usuario'}</h1>
+                <p className="perfil-correo">{user.email}</p>
+                <span className={`perfil-rol ${user.role}`}>
+                  {user.role === 'vendedor' ? '🏪 Vendedor' : '🛒 Cliente Nutrik Pro'}
+                </span>
+              </div>
+            </div>
+
+            {!editando && (
+              <div className="perfil-resumen">
+                <div className="perfil-resumen-item">
+                  <span className="perfil-resumen-icono">📏</span>
+                  <div>
+                    <span className="perfil-resumen-valor">{etiqueta(form.estatura, '—')}</span>
+                    <span className="perfil-resumen-etiqueta">Estatura</span>
+                  </div>
+                </div>
+                <div className="perfil-resumen-item">
+                  <span className="perfil-resumen-icono">⚖️</span>
+                  <div>
+                    <span className="perfil-resumen-valor">{etiqueta(form.peso, '—')}</span>
+                    <span className="perfil-resumen-etiqueta">Peso</span>
+                  </div>
+                </div>
+                <div className="perfil-resumen-item">
+                  <span className="perfil-resumen-icono">🎯</span>
+                  <div>
+                    <span className="perfil-resumen-valor capitalizado">{etiqueta(form.objetivo, '—')}</span>
+                    <span className="perfil-resumen-etiqueta">Objetivo</span>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
-          <div className="perfil-identidad">
-            <h1 className="perfil-nombre">{user.nombreCompleto || user.primerNombre || 'Usuario'}</h1>
-            <p className="perfil-correo">{user.email}</p>
-            <span className={`perfil-rol ${user.role}`}>
-              {user.role === 'vendedor' ? '🏪 Vendedor' : '🛒 Cliente'}
-            </span>
-          </div>
+
+          {/* ACCIONES RÁPIDAS (Debajo de la tarjeta izquierda en modo ver) */}
+          {!editando && (
+            <div className="perfil-acciones-rapidas">
+              <h3 className="perfil-seccion-subtitulo">ACCIONES RÁPIDAS</h3>
+              <div className="perfil-acciones-botones">
+                <Link to="/menu" className="perfil-accion-btn">
+                  <span>🍽️</span> Ver Menú Hoy
+                </Link>
+                <button className="perfil-accion-btn" onClick={() => setEditando(true)}>
+                  <span>✏️</span> Editar Perfil
+                </button>
+              </div>
+              <button className="perfil-boton salir w-100 mt-3" onClick={logout}>
+                Cerrar sesión
+              </button>
+            </div>
+          )}
         </div>
 
-        {!editando && (
-          <div className="perfil-resumen">
-            <div className="perfil-resumen-item">
-              <span className="perfil-resumen-icono">📏</span>
-              <div>
-                <span className="perfil-resumen-valor">{etiqueta(form.estatura, '—')}</span>
-                <span className="perfil-resumen-etiqueta">Estatura</span>
-              </div>
-            </div>
-            <div className="perfil-resumen-item">
-              <span className="perfil-resumen-icono">⚖️</span>
-              <div>
-                <span className="perfil-resumen-valor">{etiqueta(form.peso, '—')}</span>
-                <span className="perfil-resumen-etiqueta">Peso</span>
-              </div>
-            </div>
-            <div className="perfil-resumen-item">
-              <span className="perfil-resumen-icono">🎯</span>
-              <div>
-                <span className="perfil-resumen-valor capitalizado">{etiqueta(form.objetivo, '—')}</span>
-                <span className="perfil-resumen-etiqueta">Objetivo</span>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* ================= COLUMNA DERECHA (CONTENIDO PRINCIPAL) ================= */}
+        <div className="perfil-columna-der">
+          {mensaje && <div className="perfil-mensaje">{mensaje}</div>}
 
-        {mensaje && <div className="perfil-mensaje">{mensaje}</div>}
-
-        {/* MODO VER */}
-        {!editando && (
-          <>
+          {/* MODO VER */}
+          {!editando && (
             <div className="perfil-secciones">
               {/* INFORMACIÓN PERSONAL */}
               <article className="perfil-bloque">
-                <h3 className="perfil-bloque-titulo">
-                  <span className="perfil-bloque-icono">👤</span> Información personal
-                </h3>
+                <div className="perfil-bloque-encabezado">
+                  <div className="perfil-bloque-titulo-wrap">
+                    <span className="perfil-bloque-icono">👤</span>
+                    <div>
+                      <h3 className="perfil-bloque-titulo">Información Personal</h3>
+                      <p className="perfil-bloque-desc">Datos generales y de contacto registrados</p>
+                    </div>
+                  </div>
+                  <button className="perfil-icon-edit" onClick={() => setEditando(true)}>✏️</button>
+                </div>
                 <div className="perfil-bloque-grid">
                   <div className="perfil-dato">
                     <span className="perfil-etiqueta">Teléfono</span>
-                    <span>{etiqueta(form.telefono)}</span>
+                    <span className="perfil-valor-texto">{etiqueta(form.telefono)}</span>
                   </div>
                   <div className="perfil-dato">
-                    <span className="perfil-etiqueta">Fecha de nacimiento</span>
-                    <span>{etiqueta(form.fechaNacimiento)}</span>
+                    <span className="perfil-etiqueta">Nacimiento</span>
+                    <span className="perfil-valor-texto">{etiqueta(form.fechaNacimiento)}</span>
                   </div>
                   <div className="perfil-dato">
                     <span className="perfil-etiqueta">Género</span>
-                    <span className="capitalizado">{etiqueta(form.genero)}</span>
+                    <span className="perfil-valor-texto capitalizado">{etiqueta(form.genero)}</span>
                   </div>
                 </div>
               </article>
 
               {/* ESTILO DE VIDA Y HÁBITOS */}
               <article className="perfil-bloque">
-                <h3 className="perfil-bloque-titulo">
-                  <span className="perfil-bloque-icono">🏃</span> Estilo de vida & hábitos
-                </h3>
+                <div className="perfil-bloque-encabezado">
+                  <div className="perfil-bloque-titulo-wrap">
+                    <span className="perfil-bloque-icono">🏃</span>
+                    <div>
+                      <h3 className="perfil-bloque-titulo">Estilo de Vida & Hábitos</h3>
+                      <p className="perfil-bloque-desc">Factores diarios que influyen en tu plan</p>
+                    </div>
+                  </div>
+                </div>
                 <div className="perfil-bloque-grid">
                   <div className="perfil-dato">
-                    <span className="perfil-etiqueta">Actividad</span>
-                    <span className="capitalizado">{etiqueta(form.actividad)}</span>
+                    <span className="perfil-etiqueta">Actividad física</span>
+                    <span className="perfil-valor-texto capitalizado">{etiqueta(form.actividad)}</span>
                   </div>
                   <div className="perfil-dato">
-                    <span className="perfil-etiqueta">Objetivo</span>
-                    <span className="capitalizado">{etiqueta(form.objetivo)}</span>
+                    <span className="perfil-etiqueta">Objetivo principal</span>
+                    <span className="perfil-valor-texto capitalizado">{etiqueta(form.objetivo)}</span>
                   </div>
                 </div>
               </article>
 
               {/* SALUD Y RESTRICCIONES */}
               <article className="perfil-bloque">
-                <h3 className="perfil-bloque-titulo">
-                  <span className="perfil-bloque-icono">🥗</span> Salud & restricciones
-                </h3>
+                <div className="perfil-bloque-encabezado">
+                  <div className="perfil-bloque-titulo-wrap">
+                    <span className="perfil-bloque-icono">🥗</span>
+                    <div>
+                      <h3 className="perfil-bloque-titulo">Salud & Restricciones Dietéticas</h3>
+                      <p className="perfil-bloque-desc">Alergias y observaciones médicas consideradas</p>
+                    </div>
+                  </div>
+                </div>
                 <div className="perfil-bloque-grid">
                   <div className="perfil-dato">
-                    <span className="perfil-etiqueta">Alergia / intolerancia</span>
-                    <span className="capitalizado">{etiqueta(form.alergia)}</span>
+                    <span className="perfil-etiqueta">Alergias conocidas</span>
+                    <span className="perfil-valor-texto capitalizado">{etiqueta(form.alergia)}</span>
                   </div>
                   <div className="perfil-dato">
                     <span className="perfil-etiqueta">Dieta especial</span>
-                    <span className="capitalizado">{etiqueta(form.dieta)}</span>
+                    <span className="perfil-valor-texto capitalizado">{etiqueta(form.dieta)}</span>
                   </div>
                   <div className="perfil-dato ancho">
                     <span className="perfil-etiqueta">Restricciones / preferencias</span>
-                    <span>{etiqueta(form.restricciones)}</span>
+                    <span className="perfil-valor-texto">{etiqueta(form.restricciones)}</span>
                   </div>
                 </div>
               </article>
             </div>
+          )}
 
-            <div className="perfil-acciones">
-              {/* El botón de editar solo aparece si hay sesión iniciada */}
-              {user && (
-                <button className="perfil-boton editar" onClick={() => setEditando(true)}>
-                  <span className="perfil-boton-icono">✏️</span> Editar perfil
-                </button>
-              )}
-              <button className="perfil-boton salir" onClick={logout}>
-                Cerrar sesión
-              </button>
-            </div>
-          </>
-        )}
+          {/* MODO EDICIÓN */}
+          {editando && (
+            <div className="perfil-tarjeta-edicion">
+              <form onSubmit={guardar} className="perfil-form">
+                
+                {/* SECCIÓN: FOTO DE PERFIL */}
+                <section className="perfil-seccion foto">
+                  <h3 className="perfil-seccion-titulo">📷 Foto de perfil</h3>
+                  <div className="perfil-foto-ajuste">
+                    <div className="perfil-avatar perfil-avatar-prev">
+                      {fotoPrev ? (
+                        <img
+                          src={fotoPrev}
+                          alt="Vista previa"
+                          className="perfil-foto"
+                          style={{ objectPosition: posicionFoto }}
+                        />
+                      ) : (
+                        <span className="perfil-iniciales">{iniciales}</span>
+                      )}
+                    </div>
 
-        {/* MODO EDICIÓN */}
-        {editando && (
-          <form onSubmit={guardar} className="perfil-form">
-            {/* SECCIÓN: FOTO DE PERFIL */}
-            <section className="perfil-seccion foto">
-              <h3 className="perfil-seccion-titulo">📷 Foto de perfil</h3>
+                    <div className="perfil-foto-controles">
+                      <p className="perfil-foto-hint">
+                        Ajusta la posición de la foto (arriba / abajo) para que no se corte.
+                      </p>
+                      <input
+                        ref={inputFotoRef}
+                        type="file"
+                        accept="image/*"
+                        className="perfil-input-file"
+                        onChange={manejarFoto}
+                      />
+                      <button
+                        type="button"
+                        className="perfil-boton-foto"
+                        onClick={() => inputFotoRef.current?.click()}
+                      >
+                        📂 Elegir otra foto
+                      </button>
 
-              <div className="perfil-foto-ajuste">
-                <div className="perfil-avatar perfil-avatar-prev">
-                  {fotoPrev ? (
-                    <img
-                      src={fotoPrev}
-                      alt="Vista previa"
-                      className="perfil-foto"
-                      style={{ objectPosition: posicionFoto }}
-                    />
-                  ) : (
-                    <span className="perfil-iniciales">{iniciales}</span>
-                  )}
-                </div>
+                      <label className="perfil-rango">
+                        <span>Posición vertical</span>
+                        <input
+                          type="range"
+                          min="0"
+                          max="100"
+                          value={fotoPos}
+                          onChange={(e) => setFotoPos(e.target.value)}
+                        />
+                        <span className="perfil-rango-valor">{Math.round(Math.abs(fotoPos - 50) / 5)}%</span>
+                      </label>
+                    </div>
+                  </div>
+                </section>
 
-                <div className="perfil-foto-controles">
-                  <p className="perfil-foto-hint">
-                    Ajusta la posición de la foto (arriba / abajo) para que no se corte.
-                  </p>
+                {/* SECCIÓN: DATOS PERSONALES */}
+                <section className="perfil-seccion">
+                  <h3 className="perfil-seccion-titulo">👤 Datos personales</h3>
+                  <div className="perfil-seccion-grid">
+                    <div className="campo">
+                      <label>Primer nombre</label>
+                      <input name="primerNombre" value={form.primerNombre} onChange={cambiar} placeholder="Tu primer nombre" />
+                    </div>
+                    <div className="campo">
+                      <label>Segundo nombre</label>
+                      <input name="segundoNombre" value={form.segundoNombre} onChange={cambiar} placeholder="Opcional" />
+                    </div>
+                    <div className="campo">
+                      <label>Primer apellido</label>
+                      <input name="primerApellido" value={form.primerApellido} onChange={cambiar} placeholder="Tu primer apellido" />
+                    </div>
+                    <div className="campo">
+                      <label>Segundo apellido</label>
+                      <input name="segundoApellido" value={form.segundoApellido} onChange={cambiar} placeholder="Opcional" />
+                    </div>
+                    <div className="campo">
+                      <label>Teléfono</label>
+                      <input name="telefono" value={form.telefono} onChange={cambiar} placeholder="Ej: 3001234567" />
+                    </div>
+                    <div className="campo">
+                      <label>Fecha de nacimiento</label>
+                      <input type="date" name="fechaNacimiento" value={form.fechaNacimiento} onChange={cambiar} />
+                    </div>
+                    <div className="campo">
+                      <label>Género</label>
+                      <select name="genero" value={form.genero} onChange={cambiar}>
+                        <option value="">Selecciona</option>
+                        <option value="femenino">Femenino</option>
+                        <option value="masculino">Masculino</option>
+                        <option value="otro">Otro</option>
+                        <option value="prefiero-no">Prefiero no decirlo</option>
+                      </select>
+                    </div>
+                  </div>
+                </section>
 
-                  <input
-                    ref={inputFotoRef}
-                    type="file"
-                    accept="image/*"
-                    className="perfil-input-file"
-                    onChange={manejarFoto}
-                  />
-                  <button
-                    type="button"
-                    className="perfil-boton-foto"
-                    onClick={() => inputFotoRef.current?.click()}
-                  >
-                    📂 Elegir otra foto
+                {/* SECCIÓN: CUERPO Y ACTIVIDAD */}
+                <section className="perfil-seccion">
+                  <h3 className="perfil-seccion-titulo">💪 Cuerpo y actividad</h3>
+                  <div className="perfil-seccion-grid">
+                    <div className="campo">
+                      <label>Estatura (m)</label>
+                      <input name="estatura" value={form.estatura} onChange={cambiar} placeholder="Ej: 1.70" />
+                    </div>
+                    <div className="campo">
+                      <label>Peso (kg)</label>
+                      <input name="peso" value={form.peso} onChange={cambiar} placeholder="Ej: 65" />
+                    </div>
+                    <div className="campo">
+                      <label>Actividad diaria</label>
+                      <select name="actividad" value={form.actividad} onChange={cambiar}>
+                        <option value="">Selecciona</option>
+                        <option value="sedentario">Sedentario</option>
+                        <option value="ligero">Ligero</option>
+                        <option value="activo">Activo</option>
+                        <option value="muy-activo">Muy activo</option>
+                      </select>
+                    </div>
+                    <div className="campo">
+                      <label>Objetivo</label>
+                      <select name="objetivo" value={form.objetivo} onChange={cambiar}>
+                        <option value="">Selecciona</option>
+                        <option value="perder">Perder peso</option>
+                        <option value="musculo">Ganar músculo</option>
+                        <option value="mantener">Mantener</option>
+                        <option value="energia">Más energía</option>
+                      </select>
+                    </div>
+                  </div>
+                </section>
+
+                {/* SECCIÓN: ALIMENTACIÓN */}
+                <section className="perfil-seccion">
+                  <h3 className="perfil-seccion-titulo">🥗 Alimentación</h3>
+                  <div className="perfil-seccion-grid">
+                    <div className="campo">
+                      <label>Alergia / intolerancia</label>
+                      <input name="alergia" value={form.alergia} onChange={cambiar} placeholder="Ej: lactosa" />
+                    </div>
+                    <div className="campo">
+                      <label>Dieta especial</label>
+                      <input name="dieta" value={form.dieta} onChange={cambiar} placeholder="Ej: vegano" />
+                    </div>
+                    <div className="campo completo">
+                      <label>Restricciones / preferencias</label>
+                      <textarea name="restricciones" rows="2" value={form.restricciones} onChange={cambiar} placeholder="Cuéntanos tus preferencias…" />
+                    </div>
+                  </div>
+                </section>
+
+                <div className="perfil-acciones">
+                  <button type="submit" className="perfil-boton editar">💾 Guardar cambios</button>
+                  <button type="button" className="perfil-boton cancelar" onClick={() => setEditando(false)}>
+                    Cancelar
                   </button>
-
-                  <label className="perfil-rango">
-                    <span>Posición vertical</span>
-                    <input
-                      type="range"
-                      min="0"
-                      max="100"
-                      value={fotoPos}
-                      onChange={(e) => setFotoPos(e.target.value)}
-                    />
-                    <span className="perfil-rango-valor">{Math.round(Math.abs(fotoPos - 50) / 5)}%</span>
-                  </label>
                 </div>
-              </div>
-            </section>
-
-            {/* SECCIÓN: DATOS PERSONALES */}
-            <section className="perfil-seccion">
-              <h3 className="perfil-seccion-titulo">👤 Datos personales</h3>
-              <div className="perfil-seccion-grid">
-                <div className="campo">
-                  <label>Primer nombre</label>
-                  <input name="primerNombre" value={form.primerNombre} onChange={cambiar} placeholder="Tu primer nombre" />
-                </div>
-                <div className="campo">
-                  <label>Segundo nombre</label>
-                  <input name="segundoNombre" value={form.segundoNombre} onChange={cambiar} placeholder="Opcional" />
-                </div>
-                <div className="campo">
-                  <label>Primer apellido</label>
-                  <input name="primerApellido" value={form.primerApellido} onChange={cambiar} placeholder="Tu primer apellido" />
-                </div>
-                <div className="campo">
-                  <label>Segundo apellido</label>
-                  <input name="segundoApellido" value={form.segundoApellido} onChange={cambiar} placeholder="Opcional" />
-                </div>
-                <div className="campo">
-                  <label>Teléfono</label>
-                  <input name="telefono" value={form.telefono} onChange={cambiar} placeholder="Ej: 3001234567" />
-                </div>
-                <div className="campo">
-                  <label>Fecha de nacimiento</label>
-                  <input type="date" name="fechaNacimiento" value={form.fechaNacimiento} onChange={cambiar} />
-                </div>
-                <div className="campo">
-                  <label>Género</label>
-                  <select name="genero" value={form.genero} onChange={cambiar}>
-                    <option value="">Selecciona</option>
-                    <option value="femenino">Femenino</option>
-                    <option value="masculino">Masculino</option>
-                    <option value="otro">Otro</option>
-                    <option value="prefiero-no">Prefiero no decirlo</option>
-                  </select>
-                </div>
-              </div>
-            </section>
-
-            {/* SECCIÓN: CUERPO Y ACTIVIDAD */}
-            <section className="perfil-seccion">
-              <h3 className="perfil-seccion-titulo">💪 Cuerpo y actividad</h3>
-              <div className="perfil-seccion-grid">
-                <div className="campo">
-                  <label>Estatura (m)</label>
-                  <input name="estatura" value={form.estatura} onChange={cambiar} placeholder="Ej: 1.70" />
-                </div>
-                <div className="campo">
-                  <label>Peso (kg)</label>
-                  <input name="peso" value={form.peso} onChange={cambiar} placeholder="Ej: 65" />
-                </div>
-                <div className="campo">
-                  <label>Actividad diaria</label>
-                  <select name="actividad" value={form.actividad} onChange={cambiar}>
-                    <option value="">Selecciona</option>
-                    <option value="sedentario">Sedentario</option>
-                    <option value="ligero">Ligero</option>
-                    <option value="activo">Activo</option>
-                    <option value="muy-activo">Muy activo</option>
-                  </select>
-                </div>
-                <div className="campo">
-                  <label>Objetivo</label>
-                  <select name="objetivo" value={form.objetivo} onChange={cambiar}>
-                    <option value="">Selecciona</option>
-                    <option value="perder">Perder peso</option>
-                    <option value="musculo">Ganar músculo</option>
-                    <option value="mantener">Mantener</option>
-                    <option value="energia">Más energía</option>
-                  </select>
-                </div>
-              </div>
-            </section>
-
-            {/* SECCIÓN: ALIMENTACIÓN */}
-            <section className="perfil-seccion">
-              <h3 className="perfil-seccion-titulo">🥗 Alimentación</h3>
-              <div className="perfil-seccion-grid">
-                <div className="campo">
-                  <label>Alergia / intolerancia</label>
-                  <input name="alergia" value={form.alergia} onChange={cambiar} placeholder="Ej: lactosa" />
-                </div>
-                <div className="campo">
-                  <label>Dieta especial</label>
-                  <input name="dieta" value={form.dieta} onChange={cambiar} placeholder="Ej: vegano" />
-                </div>
-                <div className="campo completo">
-                  <label>Restricciones / preferencias</label>
-                  <textarea name="restricciones" rows="2" value={form.restricciones} onChange={cambiar} placeholder="Cuéntanos tus preferencias…" />
-                </div>
-              </div>
-            </section>
-
-            <div className="perfil-acciones">
-              <button type="submit" className="perfil-boton editar">💾 Guardar cambios</button>
-              <button type="button" className="perfil-boton cancelar" onClick={() => setEditando(false)}>
-                Cancelar
-              </button>
+              </form>
             </div>
-          </form>
-        )}
+          )}
+        </div>
+
       </div>
 
-      <a
-        className="perfil-whatsapp"
-        href="https://wa.me/?text=Hola%20Nutrik%2C%20necesito%20ayuda%20con%20mi%20cuenta."
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Ayuda por WhatsApp"
-      >
-        <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
-        </svg>
-      </a>
     </div>
   );
 };
