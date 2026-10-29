@@ -59,12 +59,12 @@ export const PRODUCTOS = [
     etiqueta: "",
   },
   {
-    id: "coco",
-    nombre: "Aceite de Coco Natural",
+    id: "Galletas",
+    nombre: "Galletas de Arroz y Chips Algarrobo x150gr Dushi",
     descripcion:
-      "Ideal para cocinar y preparar recetas saludables. Aporta grasas buenas y un sabor delicioso.",
-    precio: 24000,
-    imagen: "https://i.pinimg.com/736x/29/75/6f/29756f11865e9f4c61fe532cdfe48f39.jpg",
+      "Deliciosas galletas veganas, libre de azúcar y elaboradas con ingredientes saludables. Son perfectas para acompañar tus tardes o convertirlas en tu snack preferido, disfruta de su gran sabor y textura.",
+    precio: 22000,
+    imagen: "https://vistaintegral.co/wp-content/uploads/2023/09/12768-Galletas-Chips-Algarrobo-Dushi-Frente.jpg-595x785.jpeg",
     etiqueta: "",
   },
   {
@@ -95,99 +95,89 @@ export const PRODUCTOS = [
     etiqueta: "",
   },
 
-  // ─────────────────────────── LO NUEVO ───────────────────────────
-  {
-    id: "silk",
-    nombre: "Silk - Almendra sin Azúcar",
-    descripcion:
-      "Bebida vegetal de almendras sin azúcar añadida. Lacteofree, ligera y rica en sabor, ideal para el desayuno.",
-    precio: 6200,
-    imagen: "https://i.pinimg.com/1200x/59/7a/da/597ada481273c9ecc7b001456412b3c4.jpg",
-    etiqueta: "nuevo",
-  },
-  {
-    id: "yogurt-smoothie",
-    nombre: "Yogurt Smoothie",
-    descripcion:
-      "Smoothie cremoso de yogurt con frutas, listo para tomar. Una dosis rápida de energía y nutrientes.",
-    precio: 7500,
-    imagen: "https://i.pinimg.com/736x/98/f5/df/98f5dff3ee7d44b0d7df193a046eb42e.jpg",
-    etiqueta: "nuevo",
-  },
-  {
-    id: "sandia",
-    nombre: "Sandía Fresca",
-    descripcion:
-      "Sandía hidratante y refrescante, rica en vitaminas y antioxidantes. Tu snack perfecto para el calor.",
-    precio: 8000,
-    imagen: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=800&auto=format&fit=crop",
-    etiqueta: "nuevo",
-  },
-  {
-    id: "batido",
-    nombre: "Batido Energético",
-    descripcion:
-      "Batido nutritivo con superalimentos para recargar energía antes o después del ejercicio.",
-    precio: 9500,
-    imagen: "https://images.unsplash.com/photo-1610970881699-44a5587cabec?q=80&w=800&auto=format&fit=crop",
-    etiqueta: "nuevo",
-  },
-  {
-    id: "milkaut",
-    nombre: "Milkaut Yogurt",
-    descripcion:
-      "Yogurt cremoso de alta calidad, fuente de calcio y proteínas para toda la familia.",
-    precio: 6800,
-    imagen: "https://i.pinimg.com/736x/c0/0a/71/c00a71ead8fa8dac1cefdcc2467e8f72.jpg",
-    etiqueta: "nuevo",
-  },
-  {
-    id: "especias",
-    nombre: "Especias Naturales",
-    descripcion:
-      "Mezcla de especias seleccionadas para dar sabor a tus platillos sin conservantes ni aditivos.",
-    precio: 5900,
-    imagen: "https://images.unsplash.com/photo-1532336414038-cf19250c5757?q=80&w=800&auto=format&fit=crop",
-    etiqueta: "nuevo",
-  },
-  {
-    id: "arroz",
-    nombre: "Arroz Blanco Integral",
-    descripcion:
-      "Arroz integral de grano completo, alto en fibra y nutrientes. La base perfecta de comidas balanceadas.",
-    precio: 7200,
-    imagen: "https://images.unsplash.com/photo-1586201375761-83865001e31c?q=80&w=800&auto=format&fit=crop",
-    etiqueta: "nuevo",
-  },
-  {
-    id: "tostadas",
-    nombre: "Tostadas Sanísimo Horneadas",
-    descripcion:
-      "Tostadas 100% integrales horneadas, crujientes y sin frituras. El acompañante ideal para tu desayuno.",
-    precio: 6400,
-    imagen: "https://i.pinimg.com/1200x/f9/e1/3f/f9e13fec1d60672de852b1cb6a33514c.jpg",
-    etiqueta: "nuevo",
-  },
-  {
-    id: "aceite-oliva",
-    nombre: "Aceite de Oliva Extra Virgen",
-    descripcion:
-      "Aceite de oliva extra virgen de primera presión, rico en antioxidantes y grasas saludables.",
-    precio: 24000,
-    imagen: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?q=80&w=800&auto=format&fit=crop",
-    etiqueta: "nuevo",
-  },
-  {
-    id: "yogur-fresas",
-    nombre: "Yogur con Fresas",
-    descripcion:
-      "Yogur cremoso con trozos naturales de fresa. El equilibrio perfecto entre sabor y nutrición.",
-    precio: 7800,
-    imagen: "https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=800&auto=format&fit=crop",
-    etiqueta: "nuevo",
-  },
 
   // ─────────────────────────── DESCUENTOS ───────────────────────────
+
+
+
+  {
+    id: "wild-choco-mani",
+    nombre: "wild protein chocolate con maní",
+    descripcion: "Barra proteica sabor chocolate con maní. Presentación de 15 gr.",
+    precio: 9900,
+    descuento: 20,
+    imagen: "https://www.thewildfoods.com.co/cdn/shop/files/CHOCO_CACAHUATE_BARRITA.png?v=1707514803&width=480",
+    etiqueta: "descuento",
+  },
+  {
+    id: "wild-choco",
+    nombre: "wild protein chocolate",
+    descripcion: "Barra proteica sabor chocolate. Presentación de 15 gr.",
+    precio: 9900,
+    imagen: "https://www.thewildfoods.com.co/cdn/shop/files/CHOCOLATE_BARRITA.png?v=1707514722&width=840",
+    etiqueta: "nuevo",
+  },
+  {
+    id: "frubite-frutos-rojos",
+    nombre: "frubite Yogur de frutos rojos",
+    descripcion: "Yogur con frutos rojos. Presentación de 220 g.",
+    precio: 26900,
+    descuento: 29,
+    imagen: "https://vitaintegral.co/wp-content/uploads/2026/08/1597-Bocadillo-de-frutos-rojos-x220-gr-Frubite-Atras.jpg.jpeg",
+    etiqueta: "descuento",
+  },
+  {
+    id: "puroverde-sopa",
+    nombre: "Sopa de verduras Puro Verde",
+    descripcion: "Sopa de verduras lista para preparar. Presentación de 400 gr.",
+    precio: 15300,
+    imagen: "https://vitaintegral.co/wp-content/uploads/2026/09/14308-Sopa-de-verduras-x-400gr-Puro-Verde-Frente.jpg-595x693.jpg",
+    etiqueta: "",
+  },
+  {
+    id: "notco-zero",
+    nombre: "Bebida vegetal NOTCO Zero",
+    descripcion: "Bebida vegetal sin azúcar. Presentación de 1 LT.",
+    precio: 20400,
+    descuento: 20,
+    imagen: "https://vitaintegral.co/wp-content/uploads/2026/04/13720-Bebida-vegetal-zero-x-1LT-NOTCO-Frente.jpg-595x744.png",
+    etiqueta: "descuento",
+  },
+  {
+    id: "blondie-balance",
+    nombre: "Blondie Arequipe y Chocolate 60gr Es Un Balance",
+    descripcion: "Blondie de arequipe y chocolate. Presentación de 60 g.",
+    precio: 12900,
+    imagen: "https://vitaintegral.co/wp-content/uploads/2026/10/14319-Blondie-Arequipe-y-Chocolate-60gr-Es-Un-Balance-Frente.jpg-595x595.jpeg",
+    etiqueta: "nuevo",
+  },
+  {
+    id: "puroverde-ajiaco",
+    nombre: "Ajiaco con pollo 400gr Puro Verde",
+    descripcion: "Ajiaco con pollo listo para preparar. Presentación de 400 gr.",
+    precio: 19900,
+    descuento: 19,
+    imagen: "https://vitaintegral.co/wp-content/uploads/2026/09/14309-Ajiaco-con-pollo-400gr-Puro-Verde-Frente.jpg-595x595.jpg",
+    etiqueta: "descuento",
+  },
+  {
+    id: "whey-cookies-225",
+    nombre: "Whey protein cookies 225gr Radical Nutrition",
+    descripcion: "Galletas con proteína whey. Presentación de 225 g.",
+    precio: 21900,
+    imagen: "https://vitaintegral.co/wp-content/uploads/2026/09/14280-Whey-protein-cookies-225gr-Radical-Nutrition-Frente.jpg-595x793.jpeg",
+    etiqueta: "nuevo",
+  },
+  {
+    id: "whey-cookies-900",
+    nombre: "Whey protein cookies 900gr Radical Nutrition",
+    descripcion: "Galletas con proteína whey. Presentación de 1 kg.",
+    precio: 105900,
+    descuento: 30,
+    imagen: "https://vitaintegral.co/wp-content/uploads/2026/09/14281-Whey-protein-cookies-900gr-Radical-Nutrition-Frente.jpg-595x793.jpeg",
+    etiqueta: "descuento",
+  },
+
   {
     id: "colageno-premium",
     nombre: "Colágeno Hidrolizado PREMIUM",
@@ -219,10 +209,8 @@ export const formatearPrecio = (valor) =>
   Number(valor || 0).toLocaleString("es-CO");
 
 // Componentes de catálogo
-export const productosTienda = PRODUCTOS.filter(
-  (p) => !p.etiqueta || p.etiqueta === ""
-);
-export const productosNuevos = PRODUCTOS.filter((p) => p.etiqueta === "nuevo");
+export const productosTienda = PRODUCTOS;
+
 export const productosDescuento = PRODUCTOS.filter(
   (p) => p.etiqueta === "descuento"
 );

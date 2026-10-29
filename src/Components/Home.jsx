@@ -83,48 +83,50 @@ const BENEFICIOS = [
 
 const CATEGORIAS = [
   {
-    nombre: "Frutas",
-    img: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?q=80&w=800&auto=format&fit=crop",
+    nombre: "Snacks",
+    img: "https://i.pinimg.com/1200x/11/5d/d2/115dd21987671c96653e064d0e729ccd.jpg",
   },
   {
-    nombre: "Verduras",
-    img: "https://images.unsplash.com/photo-1518843875459-f738682238a6?q=80&w=800&auto=format&fit=crop",
+    nombre: "Lácteos",
+    img: "https://i.pinimg.com/736x/64/10/ad/6410ad6b63996945be07c809559299b4.jpg",
   },
   {
-    nombre: "Yogures",
-    img: "https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=800&auto=format&fit=crop",
+    nombre: "Cereales y granos",
+    img: "https://i.pinimg.com/236x/dc/6f/9c/dc6f9ccb19f75c917d6d3bf0fd165af8.jpg",
   },
   {
-    nombre: "Cereales",
-    img: "https://images.unsplash.com/photo-1586201375761-83865001e31c?q=80&w=800&auto=format&fit=crop",
+    nombre: "Vitaminas y bienestar",
+    img: "https://i.pinimg.com/1200x/2f/85/a9/2f85a9e19c7e427ebf65d7623e060fe9.jpg",
   },
   {
-    nombre: "Frutos secos",
-    img: "https://images.unsplash.com/photo-1508061253366-f7da158b6d46?q=80&w=800&auto=format&fit=crop",
+    nombre: "Suplementos en polvo",
+    img: "https://i.pinimg.com/1200x/c4/a1/d5/c4a1d52cb3638dd539bba6d331b794bb.jpg",
   },
   {
-    nombre: "Semillas",
-    img: "https://images.unsplash.com/photo-1508747703725-719777637510?q=80&w=800&auto=format&fit=crop",
+    nombre: "Frutos secos y semillas",
+    img: "https://i.pinimg.com/736x/2b/49/fb/2b49fb1cbab3746086b4748758254a9a.jpg",
   },
 ];
 
 const DESTACADOS = [
   {
-    id: "",
+    id: "wild-mani",
     nombre: "wild protein chocolate con maní",
     peso: "15gr",
     precio: 7900,
     anterior: 9900,
-    badge: "Más vendido",
+    badge: "Oferta",
+    textoBoton: "Comprar",
     img: "https://www.thewildfoods.com.co/cdn/shop/files/CHOCO_CACAHUATE_BARRITA.png?v=1707514803&width=480",
   },
   {
     id: "caramelo",
     nombre: "wild protein chocolate",
     peso: "15gr",
-    precio: 9900,
-    anterior: null,
-    badge: "Nuevo",
+    precio: 7900,
+    anterior: 9900,
+    badge: "Oferta",
+    textoBoton: "Comprar",
     img: "https://www.thewildfoods.com.co/cdn/shop/files/CHOCOLATE_BARRITA.png?v=1707514722&width=840",
   },
   {
@@ -134,15 +136,17 @@ const DESTACADOS = [
     precio: 19200,
     anterior: 26900,
     badge: "Oferta",
+    textoBoton: "Comprar",
     img: "https://vitaintegral.co/wp-content/uploads/2026/08/1597-Bocadillo-de-frutos-rojos-x220-gr-Frubite-Atras.jpg.jpeg",
   },
   {
-    id: "PUROVERDE",
+    id: "PUROVERDE_SOPA",
     nombre: "Sopa de verduras Puro Verde",
     peso: "400 gr",
-    precio: 15300,
-    anterior: null,
-    badge: "Más vendido",
+    precio: 12900,
+    anterior: 15300,
+    badge: "Oferta",
+    textoBoton: "Comprar",
     img: "https://vitaintegral.co/wp-content/uploads/2026/09/14308-Sopa-de-verduras-x-400gr-Puro-Verde-Frente.jpg-595x693.jpg",
   },
   {
@@ -152,44 +156,50 @@ const DESTACADOS = [
     precio: 16320,
     anterior: 20400,
     badge: "Oferta",
+    textoBoton: "Comprar",
     img: "https://vitaintegral.co/wp-content/uploads/2026/04/13720-Bebida-vegetal-zero-x-1LT-NOTCO-Frente.jpg-595x744.png",
   },
   {
     id: "ES UN BALANCE",
     nombre: "Blondie Arequipe y Chocolate 60gr Es Un Balance",
     peso: "60 g",
-    precio: 12900,
-    anterior: null,
-    badge: "Nuevo",
+    precio: 9900,
+    anterior: 12900,
+    badge: "Oferta",
+    textoBoton: "Comprar",
     img: "https://vitaintegral.co/wp-content/uploads/2026/10/14319-Blondie-Arequipe-y-Chocolate-60gr-Es-Un-Balance-Frente.jpg-595x595.jpeg",
   },
   {
-    id: "PUROVERDE",
+    id: "PUROVERDE_AJIACO",
     nombre: "Ajiaco con pollo 400gr Puro Verde",
     peso: "400 gr",
     precio: 16200,
-    anterior:19900,
-    badge: "Más vendido",
+    anterior: 19900,
+    badge: "Oferta",
+    textoBoton: "Comprar",
     img: "https://vitaintegral.co/wp-content/uploads/2026/09/14309-Ajiaco-con-pollo-400gr-Puro-Verde-Frente.jpg-595x595.jpg",
   },
   {
-    id: "BI-PRO",
+    id: "BI-PRO_COOKIES_225",
     nombre: "Whey protein cookies 225gr Radical Nutrition",
     peso: "225 g",
-    precio: 21900,
-    anterior: null,
-    badge: "Nuevo",
+    precio: 18900,
+    anterior: 21900,
+    badge: "Oferta",
+    textoBoton: "Comprar",
     img: "https://vitaintegral.co/wp-content/uploads/2026/09/14280-Whey-protein-cookies-225gr-Radical-Nutrition-Frente.jpg-595x793.jpeg",
   },
   {
-    id: "BI-PRO",
+    id: "BI-PRO_COOKIES_900",
     nombre: "Whey protein cookies 900gr Radical Nutrition",
     peso: "1 kg",
     precio: 82900,
     anterior: 105900,
     badge: "Oferta",
+    textoBoton: "Comprar",
     img: "https://vitaintegral.co/wp-content/uploads/2026/09/14281-Whey-protein-cookies-900gr-Radical-Nutrition-Frente.jpg-595x793.jpeg",
   },
+
 ];
 
 const PASOS = [
@@ -325,7 +335,12 @@ function Home() {
   };
 
   const manejarAgregar = (producto) => {
-    agregarProducto({ ...producto, precio: producto.precio, cantidad: 1 });
+    agregarProducto({
+       ...producto,
+       imagen: producto.img,
+        precio: producto.precio,
+        cantidad: 1 
+      });
     setCarritoAbierto(true);
   };
 
@@ -349,8 +364,8 @@ function Home() {
             <Link to="/productos" className="home-cta home-cta--primario">
               EXPLORAR PRODUCTOS
             </Link>
-            <Link to="/catalog/frozen" className="home-cta home-cta--secundario">
-              VER CATEGORÍAS
+            <Link to="/discount" className="home-cta home-cta--secundario">
+              DESCUENTOS
             </Link>
           </div>
         </div>
@@ -502,8 +517,8 @@ function Home() {
       <section className="home-seccion home-seccion--blanca">
         <div className="seccion-head">
           <div>
-            <span className="seccion-kicker">FAVORITOS DE LA SEMANA</span>
-            <h2>Lo más elegido</h2>
+            <span className="seccion-kicker">OFERTAS ESPECIALES</span>
+            <h2>Productos con Descuento</h2>
           </div>
           <div className="destacados-controles">
             <button

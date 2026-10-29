@@ -17,6 +17,7 @@ import NotificationsMenu from "./NotificationsMenu";
 const ENLACES = [
   { to: "/productos", texto: "Productos" },
   { texto: "Categorías", menu: "categoria" },
+  { to: "/discount", texto: "descuentos" },
   { to: "/contact", texto: "Sugerencias", soloSesion: true },
   { to: "/nosotros", texto: "Nosotros" },
 ];
@@ -354,14 +355,12 @@ function Navbar() {
           <div>
             <h2>Categorías</h2>
 
-            <Link to="/catalog/frozen"> ❄️ Congelados</Link>
-            <Link to="/catalog/snacks"> 🍫 Snacks</Link>
-            <Link to="/frutas"> 🍎 Frutas</Link>
-            <Link to="/aves-pescado"> 🍗 Aves y Pescados</Link>
-            <Link to="/lacteos-huevos"> 🥛 Lácteos y Huevos</Link>
-            <Link to="/cereales-granos"> 🥣 Cereales y Granos</Link>
-            <Link to="/vitaminas"> 💊 Vitaminas y Bienestar</Link>
-            <Link to="/suplementos"> 🏋️‍♂️ Suplementos en Polvo</Link>
+            <Link to="/catalog/snacks">Snacks</Link>
+            <Link to="/lacteos">Lácteos</Link>
+            <Link to="/cereales-granos">Cereales y granos</Link>
+            <Link to="/vitaminas">vitaminas y bienestar</Link>
+            <Link to="/suplementos">suplementos en polvo</Link>
+            <Link to="/frutos-secos"> frutos secos y semillas</Link>
           </div>
         )}
 

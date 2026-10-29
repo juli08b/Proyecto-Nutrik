@@ -13,7 +13,6 @@ import Product from './Pages/Cliente/Product';
 import Productview from './Pages/Cliente/Productview';
 import Contact from './Pages/Cliente/Contact';
 import About from './Pages/Cliente/About';
-import Newproduct from './Pages/Cliente/Newproduct';
 import Discount from './Pages/Cliente/Discount';
 import Checkout from './Pages/Cliente/Checkout';
 import RoleSelection from "./Pages/Inicio/RoleSelection";
@@ -119,7 +118,6 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/productos" element={<Product />} />
         <Route path="/Productview/:id" element={<Productview />} />
-        <Route path="/newproduct" element={<Newproduct />} />
 
         {/* Cualquier dirección que no exista cae aquí (en vez de pantalla en blanco) */}
         <Route path="*" element={<NotFound />} />

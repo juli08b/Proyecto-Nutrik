@@ -53,7 +53,6 @@ const ENLACES = [
     titulo: "Productos",
     links: [
       { texto: "Catálogo completo", to: "/productos" },
-      { texto: "Novedades", to: "/newproduct" },
       { texto: "Ofertas", to: "/discount" },
       { texto: "Categorías", to: "/catalog/frozen" },
     ],
