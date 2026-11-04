@@ -28,6 +28,7 @@ import FacturaDetalle from './Pages/Vendedor/FacturaDetalle';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import SellerProduct from './Pages/Vendedor/SellerProduct';
 import ConfiguracionVendedor from './Pages/Vendedor/Configuracion';
+import Ventas from './Pages/Vendedor/ventas';
 import Vistaproducto from './Pages/Productview';
 import './index.css';
 import './App.css';
@@ -102,7 +103,7 @@ function App() {
           <Route path="facturas" element={<Invoice />} />
           <Route path="facturas/:id" element={<FacturaDetalle />} />
           <Route path="clientes" element={<div className="vendedor-page"><h1>Clientes</h1><p>Próximamente…</p></div>} />
-          <Route path="ventas" element={<div className="vendedor-page"><h1>Ventas</h1><p>Próximamente…</p></div>} />
+          <Route path="ventas" element={<Ventas />} />
           <Route path="configuracion" element={<ConfiguracionVendedor />} />
         </Route>
         
