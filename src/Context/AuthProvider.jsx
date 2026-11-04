@@ -31,15 +31,16 @@ function AuthProvider({ children }) {
     return mapped;
   };
 
-  const login = async (email, password) => {
-    try {
-      const res = await iniciarSesion(email.trim(), password);
-      const usuario = guardarSesion(res.data);
-      return { ok: true, user: usuario };
-    } catch (error) {
-      return { ok: false, error: error.message };
-    }
-  };
+const login = async (email, password) => {
+  try {
+    const res = await iniciarSesion(email.trim(), password);
+    if (res.token) localStorage.setItem('token', res.token);   // <- nuevo
+    const usuario = guardarSesion(res.data);
+    return { ok: true, user: usuario };
+  } catch (error) {
+    return { ok: false, error: error.message };
+  }
+};
 
   const register = async (role, data) => {
     try {
@@ -65,6 +66,7 @@ function AuthProvider({ children }) {
   const logout = () => {
     setUser(null);
     localStorage.removeItem(STORAGE_SESSION);
+    localStorage.removeItem('token');   // <- nuevo
   };
 
   const existeCuenta = async (email) => {
