@@ -2,10 +2,12 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/authContext";
 import { useCart } from "./Cart";
+import { agregarItemCarrito, vaciarCarrito as vaciarCarritoApi } from "../../api/carrito";
+import { crearPedidoConDetalles } from "../../api/pedidos";
 import "./Checkout.css";
 
 export default function Checkout() {
-  const { user } = useAuth();
+  const { user, updateProfile } = useAuth();
   const { carrito, totalPrecio, totalItems, vaciarCarrito } = useCart();
   const navigate = useNavigate();
 
@@ -18,9 +20,11 @@ export default function Checkout() {
   });
   const [comprado, setComprado] = useState(false);
   const [numeroPedido, setNumeroPedido] = useState("");
+  const [errorPago, setErrorPago] = useState("");
 
   const cambiarCampo = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setErrorPago("");
   };
 
   //Si no hay sesión: letrero centrado para pedir iniciar sesión
@@ -44,12 +48,61 @@ export default function Checkout() {
     );
   }
 
-  const confirmarPago = (e) => {
+  const confirmarPago = async (e) => {
     e.preventDefault();
-    const numero = "NUT-" + Math.floor(100000 + Math.random() * 900000);
-    setNumeroPedido(numero);
-    setComprado(true);
-    vaciarCarrito(); //El carrito queda vacío tras pagar
+    setErrorPago("");
+
+    try {
+      const hoy = new Date();
+      const fechaSalida = hoy.toISOString().slice(0, 10);
+      const fechaLlegada = new Date(hoy.getTime() + 3 * 24 * 60 * 60 * 1000)
+        .toISOString()
+        .slice(0, 10);
+
+      // Guardamos el carrito actual en la tabla carrito_compras.
+      await vaciarCarritoApi(user.id);
+      for (const item of carrito) {
+        await agregarItemCarrito({
+          Id_usuario: user.id,
+          Nombre_producto: item.nombre,
+          Precio_unitario: Number(item.precio),
+          Imagen: item.imagen || null,
+          Cantidad: Number(item.cantidad),
+          Total: Number(item.precio) * Number(item.cantidad),
+        });
+      }
+
+      // Guardamos también los datos de entrega en el perfil del usuario.
+      await updateProfile({
+        telefono: form.telefono.trim(),
+        direccion: form.direccion.trim(),
+        ciudad: form.ciudad.trim(),
+      });
+
+      const pedido = {
+        Estado: "Pendiente",
+        Fecha_salida: fechaSalida,
+        Fecha_Llegada: fechaLlegada,
+        Metodo_pago: form.metodo,
+        Subtotal: totalPrecio,
+        Costo_envio: costoEnvio,
+        Total_pedido: totalFinal,
+        Direccion_envio: form.direccion.trim(),
+        Ciudad_envio: form.ciudad.trim(),
+        Id_usuario: user.id,
+      };
+
+      const { idPedido } = await crearPedidoConDetalles({ pedido, items: carrito });
+
+      setNumeroPedido(`NUT-${String(idPedido).padStart(6, "0")}`);
+      window.dispatchEvent(new Event("nutrik:orders-updated"));
+      setComprado(true);
+      vaciarCarrito();
+    } catch (error) {
+      setErrorPago(
+        error.message || "No pudimos registrar tu pedido. Inténtalo de nuevo."
+      );
+    }
   };
 
   //Pantalla de éxito
@@ -60,8 +113,9 @@ export default function Checkout() {
         <h2>¡Pedido confirmado!</h2>
         <p className="checkout-exito-numero">Número de pedido: <strong>{numeroPedido}</strong></p>
         <p>
-          Gracias, {form.nombre.split(" ")[0]}. Te contactaremos para coordinar la entrega de tu pedido.
+          Gracias, {form.nombre.split(" ")[0]}. Tu pedido quedó registrado y te contactaremos para coordinar la entrega.
         </p>
+        <p className="checkout-demo-aviso">Esta tienda de demostración no procesa cobros en línea.</p>
         <button className="checkout-exito-btn" onClick={() => navigate("/")}>
           Seguir comprando
         </button>
@@ -131,13 +185,15 @@ export default function Checkout() {
 
           <label>
             Nombre completo
-            <input name="nombre" value={form.nombre} onChange={cambiarCampo} required />
+            <input name="nombre" autoComplete="name" value={form.nombre} onChange={cambiarCampo} required />
           </label>
 
           <label>
             Teléfono
             <input
               name="telefono"
+              type="tel"
+              autoComplete="tel"
               value={form.telefono}
               onChange={cambiarCampo}
               placeholder="300 123 4567"
@@ -149,6 +205,7 @@ export default function Checkout() {
             Dirección
             <input
               name="direccion"
+              autoComplete="street-address"
               value={form.direccion}
               onChange={cambiarCampo}
               placeholder="Calle, número, barrio"
@@ -158,27 +215,32 @@ export default function Checkout() {
 
           <label>
             Ciudad
-            <input name="ciudad" value={form.ciudad} onChange={cambiarCampo} required />
+            <input name="ciudad" autoComplete="address-level2" value={form.ciudad} onChange={cambiarCampo} required />
           </label>
 
           <h2>Método de pago</h2>
           <div className="checkout-metodos">
-            <label className="checkout-metodo">
+            <label className={`checkout-metodo ${form.metodo === "contraentrega" ? "seleccionado" : ""}`}>
               <input type="radio" name="metodo" value="contraentrega" checked={form.metodo === "contraentrega"} onChange={cambiarCampo} />
               💵 Pago contra entrega
             </label>
-            <label className="checkout-metodo">
+            <label className={`checkout-metodo ${form.metodo === "nequi" ? "seleccionado" : ""}`}>
               <input type="radio" name="metodo" value="nequi" checked={form.metodo === "nequi"} onChange={cambiarCampo} />
               📱 Nequi
             </label>
-            <label className="checkout-metodo">
+            <label className={`checkout-metodo ${form.metodo === "tarjeta" ? "seleccionado" : ""}`}>
               <input type="radio" name="metodo" value="tarjeta" checked={form.metodo === "tarjeta"} onChange={cambiarCampo} />
               💳 Tarjeta débito/crédito
             </label>
           </div>
 
+          <p className="checkout-demo-aviso">
+            Al confirmar, registraremos el pedido en esta demostración; no se realizará ningún cobro.
+          </p>
+          {errorPago && <p className="checkout-error" role="alert">{errorPago}</p>}
+
           <button type="submit" className="checkout-pagar-btn">
-            Pagar ${totalFinal.toLocaleString("es-CO")}
+            Confirmar pedido · ${totalFinal.toLocaleString("es-CO")}
           </button>
         </form>
       </div>

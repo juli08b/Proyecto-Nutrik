@@ -31,14 +31,14 @@ const LoginVendedor = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const [correo, setCorreo] = useState('');
-  const [contrasena, setContrasena] = useState('');
+  const [correo, setCorreo] = useState('tienda@nutrik.com');
+  const [contrasena, setContrasena] = useState('tienda123');
   const [verClave, setVerClave] = useState(false);
   const [error, setError] = useState('');
 
-  const manejarLogin = (e) => {
+  const manejarLogin = async (e) => {
     e.preventDefault();
-    const res = login(correo, contrasena);
+    const res = await login(correo, contrasena);
     if (!res.ok) {
       setError(res.error);
       return;
@@ -47,7 +47,7 @@ const LoginVendedor = () => {
       setError('Esta cuenta es de cliente. Usa la opción "Quiero Comprar".');
       return;
     }
-    navigate('/vendedor/dashboard');
+    navigate('/vendedor');
   };
 
   return (

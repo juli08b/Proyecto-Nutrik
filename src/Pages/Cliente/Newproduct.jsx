@@ -36,18 +36,19 @@ function Newproduct() {
             <div className="producto-badge nuevo">Nuevo</div>
             <img
               src={producto.imagen}
-              alt={producto.nombre} // Alt adaptado al nombre para accesibilidad y SEO
-              className="img-producto"
+              alt={producto.nombre}
+              className="producto-img"
             />
-            {/* Contenedor de la información escrita y el botón */}
             <div className="producto-info">
               <h3>{producto.nombre}</h3>
               <p className="producto-descripcion">{producto.descripcion}</p>
+
               <div className="producto-precios">
                 <span className="producto-precio">
                   ${formatearPrecio(precioFinal(producto))}
                 </span>
               </div>
+
               <div className="producto-acciones">
                 <Link to={`/Productview/${producto.id}`} className="btn-ver">
                   Ver producto

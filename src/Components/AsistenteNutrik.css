@@ -1,0 +1,555 @@
+/* ============================================================
+   ASISTENTE NUTRIK · Avatar flotante + panel (Modo Claro)
+   Aislado bajo .nutrik-asistente / .nutrik-* para no chocar
+   con el resto de la app.
+   ============================================================ */
+
+.nutrik-asistente {
+  --na-blanco: #ffffff;
+  --na-fondo: #f8fafc;
+  --na-borde: #e2e8f0;
+  --na-acento: #10b981;
+  --na-acento-oscuro: #059669;
+  --na-titulo: #0f172a;
+  --na-texto: #475569;
+  --na-suave: #94a3b8;
+  --na-sombra: 0 20px 45px -18px rgba(15, 23, 42, 0.28);
+
+  position: fixed;
+  width: 62px;
+  height: 62px;
+  z-index: 1200;
+  font-family: inherit;
+  touch-action: none;
+}
+
+.nutrik-asistente *,
+.nutrik-asistente *::before,
+.nutrik-asistente *::after {
+  box-sizing: border-box;
+}
+
+/* ===== AVATAR ===== */
+.nutrik-avatar {
+  position: relative;
+  width: 62px;
+  height: 62px;
+  border: none;
+  border-radius: 50%;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, var(--na-acento) 0%, var(--na-acento-oscuro) 100%);
+  box-shadow: 0 12px 26px -8px rgba(5, 150, 105, 0.65);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.nutrik-avatar.arrastrando {
+  cursor: grabbing;
+  transition: none;
+  transform: scale(1.06);
+}
+
+.nutrik-avatar:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 16px 32px -8px rgba(5, 150, 105, 0.75);
+}
+
+.nutrik-avatar.arrastrando:hover {
+  transform: scale(1.06);
+}
+
+.nutrik-avatar:focus-visible {
+  outline: 3px solid rgba(16, 185, 129, 0.45);
+  outline-offset: 3px;
+}
+
+.nutrik-avatar-cara {
+  font-size: 1.9rem;
+  line-height: 1;
+}
+
+.nutrik-avatar-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #ef4444;
+  border: 2px solid var(--na-blanco);
+}
+
+.nutrik-avatar.pulso::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid var(--na-acento);
+  animation: nutrik-pulso 0.9s ease-out;
+}
+
+@keyframes nutrik-pulso {
+  from {
+    transform: scale(0.85);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+/* ===== PANEL ===== */
+.nutrik-panel {
+  position: absolute;
+  right: 0;
+  bottom: 78px;
+  width: min(360px, calc(100vw - 32px));
+  max-height: min(560px, calc(100vh - 130px));
+  display: flex;
+  flex-direction: column;
+  background: var(--na-blanco);
+  border: 1px solid var(--na-borde);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--na-sombra);
+  animation: nutrik-entrar 0.22s ease;
+}
+
+/* Cuando el avatar está pegado a la izquierda, el panel se abre a la derecha. */
+.nutrik-panel.hacia-derecha {
+  right: auto;
+  left: 0;
+}
+
+@keyframes nutrik-entrar {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.nutrik-panel-cabecera {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: linear-gradient(135deg, #d1fae5 0%, #ecfdf5 100%);
+  border-bottom: 1px solid var(--na-borde);
+}
+
+.nutrik-panel-avatar {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  background: var(--na-blanco);
+  box-shadow: 0 4px 12px -4px rgba(5, 150, 105, 0.4);
+}
+
+.nutrik-panel-cabecera h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--na-titulo);
+}
+
+.nutrik-panel-cabecera p {
+  margin: 2px 0 0;
+  font-size: 0.82rem;
+  color: var(--na-texto);
+}
+
+.nutrik-panel-cerrar {
+  margin-left: auto;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--na-texto);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.nutrik-panel-cerrar:hover {
+  background: var(--na-blanco);
+}
+
+/* ===== TABS ===== */
+.nutrik-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 12px 16px 0;
+}
+
+.nutrik-tabs button {
+  flex: 1;
+  padding: 9px 10px;
+  border: none;
+  border-radius: 10px;
+  background: var(--na-fondo);
+  color: var(--na-texto);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nutrik-tabs button.activo {
+  background: var(--na-acento-oscuro);
+  color: #ffffff;
+}
+
+/* ===== CUERPO ===== */
+.nutrik-panel-cuerpo {
+  padding: 16px;
+  overflow-y: auto;
+}
+
+/* Progreso */
+.nutrik-progreso {
+  margin-bottom: 14px;
+}
+
+.nutrik-progreso-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+  font-size: 0.82rem;
+  color: var(--na-texto);
+  font-weight: 600;
+}
+
+.nutrik-progreso-info strong {
+  color: var(--na-acento-oscuro);
+  font-size: 0.95rem;
+}
+
+.nutrik-progreso-barra {
+  height: 8px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  overflow: hidden;
+}
+
+.nutrik-progreso-barra span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--na-acento) 0%, var(--na-acento-oscuro) 100%);
+  transition: width 0.3s ease;
+}
+
+/* Retos */
+.nutrik-retos {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nutrik-reto {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--na-fondo);
+  border: 1px solid var(--na-borde);
+  border-radius: 14px;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.nutrik-reto.hecho {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+}
+
+.nutrik-reto-icono {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.nutrik-reto-texto {
+  flex: 1;
+  min-width: 0;
+}
+
+.nutrik-reto-texto strong {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--na-titulo);
+}
+
+.nutrik-reto.hecho .nutrik-reto-texto strong {
+  text-decoration: line-through;
+  color: var(--na-suave);
+}
+
+.nutrik-reto-texto small {
+  font-size: 0.74rem;
+  color: var(--na-texto);
+}
+
+.nutrik-reto-boton {
+  flex-shrink: 0;
+  padding: 7px 12px;
+  border: 1px solid var(--na-acento);
+  border-radius: 10px;
+  background: var(--na-blanco);
+  color: var(--na-acento-oscuro);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nutrik-reto-boton:hover {
+  background: var(--na-acento);
+  color: #ffffff;
+}
+
+.nutrik-reto.hecho .nutrik-reto-boton {
+  background: var(--na-acento-oscuro);
+  border-color: var(--na-acento-oscuro);
+  color: #ffffff;
+}
+
+/* Simular notificación */
+.nutrik-simular {
+  width: 100%;
+  padding: 11px;
+  border: 1px dashed var(--na-acento);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--na-acento-oscuro);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.nutrik-simular:hover {
+  background: #ecfdf5;
+}
+
+/* Sugerencias */
+.nutrik-sugerencias-nota {
+  margin: 0 0 12px;
+  font-size: 0.82rem;
+  color: var(--na-texto);
+  line-height: 1.5;
+}
+
+.nutrik-chip {
+  display: inline-block;
+  margin: 2px 4px 2px 0;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: #d1fae5;
+  color: var(--na-acento-oscuro);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+/* Consejos personalizados de NutryBot */
+.nutrik-consejos {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nutrik-consejo {
+  display: flex;
+  gap: 10px;
+  padding: 11px 12px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  color: var(--na-titulo);
+  line-height: 1.45;
+}
+
+.nutrik-consejo-icono {
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+.nutrik-subtitulo {
+  margin: 4px 0 6px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--na-titulo);
+}
+
+.nutrik-sugerencias {  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.nutrik-sugerencia {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  background: var(--na-fondo);
+  border: 1px solid var(--na-borde);
+  border-radius: 14px;
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.nutrik-sugerencia:hover {
+  border-color: var(--na-acento);
+  transform: translateY(-2px);
+}
+
+.nutrik-sugerencia-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70px;
+  border-radius: 10px;
+  background: var(--na-blanco);
+  font-size: 1.8rem;
+  overflow: hidden;
+}
+
+.nutrik-sugerencia-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nutrik-sugerencia-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.nutrik-sugerencia-info strong {
+  font-size: 0.82rem;
+  color: var(--na-titulo);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nutrik-sugerencia-info small {
+  font-size: 0.72rem;
+  color: var(--na-suave);
+}
+
+.nutrik-sugerencia-precio {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--na-acento-oscuro);
+}
+
+.nutrik-vacio {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.85rem;
+  color: var(--na-suave);
+}
+
+/* ===== TOASTS ===== */
+.nutrik-toasts {
+  position: fixed;
+  right: 24px;
+  top: 96px;
+  bottom: auto;
+  z-index: 1300;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.nutrik-toast {
+  display: flex;
+  gap: 10px;
+  width: min(300px, calc(100vw - 32px));
+  padding: 12px 14px;
+  background: var(--na-blanco, #ffffff);
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #10b981;
+  border-radius: 14px;
+  box-shadow: 0 14px 30px -12px rgba(15, 23, 42, 0.3);
+  animation: nutrik-toast-entrar 0.25s ease;
+  pointer-events: auto;
+}
+
+.nutrik-toast.proteina {
+  border-left-color: #f59e0b;
+}
+
+.nutrik-toast.fruta {
+  border-left-color: #ef4444;
+}
+
+.nutrik-toast-avatar {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.nutrik-toast-cuerpo strong {
+  display: block;
+  font-size: 0.78rem;
+  color: #0f172a;
+}
+
+.nutrik-toast-cuerpo p {
+  margin: 2px 0 0;
+  font-size: 0.84rem;
+  color: #475569;
+}
+
+@keyframes nutrik-toast-entrar {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 640px) {
+  .nutrik-panel {
+    bottom: 74px;
+  }
+
+  .nutrik-toasts {
+    right: 16px;
+    top: 84px;
+    bottom: auto;
+  }
+}
