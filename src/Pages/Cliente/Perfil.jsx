@@ -167,7 +167,7 @@ const Perfil = () => {
           )}
         </div>
 
-        {/* ================= COLUMNA DERECHA (CONTENIDO PRINCIPAL) ================= */}
+        
         <div className="perfil-columna-der">
           {mensaje && <div className="perfil-mensaje">{mensaje}</div>}
 

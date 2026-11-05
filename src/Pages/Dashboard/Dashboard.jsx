@@ -184,7 +184,7 @@ const Dashboard = () => {
                             <tbody>
                                 {productosTop.map((prod, index) => (
                                     <tr key={index}>
-                                        <td className="font-bold">{prod.nombre}</td>
+                                        <td className="font-bold">{prod.nombre}</td> //aqui se agrego la clase font-bold para resaltar el nombre del producto
                                         <td><span className="category-tag">{prod.categoria}</span></td>
                                         <td>{prod.unidades}</td>
                                         <td>{prod.total}</td>

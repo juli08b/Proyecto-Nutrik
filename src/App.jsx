@@ -124,7 +124,7 @@ function App() {
       </Routes>
 
       {/* Solo se muestra si NO estamos en login, registro, selección de roles o vistas de vendedor */}
-      {mostrarLayout && <Footer />}
+      {mostrarLayout && pathActual !== '/perfil' && <Footer />}
 
       {/* Asistente Nutrik: avatar flotante con retos, recordatorios y sugerencias */}
       {mostrarLayout && <AsistenteNutrik />}
