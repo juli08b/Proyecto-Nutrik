@@ -18,8 +18,7 @@ const ENLACES = [
   { to: "/productos", texto: "Productos" },
   { texto: "Categorías", menu: "categoria" },
   { to: "/discount", texto: "descuentos" },
-  { to: "/contact", texto: "Sugerencias", soloSesion: true },
-  { to: "/nosotros", texto: "Nosotros" },
+  { to: "/nosotros", texto: "Nosotros", soloSinSesion: true },
 ];
 
 function Navbar() {
@@ -94,7 +93,11 @@ function Navbar() {
 
           <div className="nav-centro">
             <div className="nav-grupo-links">
-              {ENLACES.filter((enlace) => !enlace.soloSesion || user).map(
+              {ENLACES.filter(
+                (enlace) =>
+                  (!enlace.soloSesion || user) &&
+                  (!enlace.soloSinSesion || !user)
+              ).map(
                 (enlace) =>
                   enlace.menu ? (
                     <button
@@ -184,12 +187,20 @@ function Navbar() {
                         🏪 Mi panel
                       </Link>
                     ) : (
-                      <Link
-                        to="/perfil"
-                        onClick={() => setMenuUsuario(false)}
-                      >
-                        👤 Mi perfil
-                      </Link>
+                      <>
+                        <Link
+                          to="/perfil"
+                          onClick={() => setMenuUsuario(false)}
+                        >
+                          👤 Mi perfil
+                        </Link>
+                        <Link
+                          to="/seguimiento"
+                          onClick={() => setMenuUsuario(false)}
+                        >
+                          📦 Seguimiento de pedidos
+                        </Link>
+                      </>
                     )}
                     <button
                       type="button"
@@ -265,7 +276,11 @@ function Navbar() {
           <div className="nav-movil-backdrop" onClick={cerrarMovil} />
           <div className="nav-movil">
             <div className="nav-movil-links">
-              {ENLACES.filter((enlace) => !enlace.soloSesion || user).map(
+              {ENLACES.filter(
+                (enlace) =>
+                  (!enlace.soloSesion || user) &&
+                  (!enlace.soloSinSesion || !user)
+              ).map(
                 (enlace) =>
                   enlace.menu ? (
                     <button

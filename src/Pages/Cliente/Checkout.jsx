@@ -142,66 +142,51 @@ export default function Checkout() {
 
   return (
     <div className="checkout">
-      <h1 className="checkout-titulo">Finalizar compra</h1>
+      <header className="checkout-cabecera">
+        <p className="checkout-etiqueta">COMPRA SEGURA EN NUTRIK</p>
+        <h1 className="checkout-titulo">Finalizar compra</h1>
+        <ol className="checkout-progreso" aria-label="Progreso de compra">
+          <li className="completado"><span>✓</span> Carrito</li>
+          <li className="activo"><span>2</span> Entrega y pago</li>
+          <li><span>3</span> Confirmación</li>
+        </ol>
+      </header>
 
-      <div className="checkout-contenido">
-        {/* Resumen del pedido */}
-        <section className="checkout-resumen">
-          <h2>Tu pedido ({totalItems} productos)</h2>
-          <div className="checkout-items">
-            {carrito.map((item) => (
-              <div className="checkout-item" key={item.id}>
-                <img src={item.imagen} alt={item.nombre} />
-                <div>
-                  <p className="checkout-item-nombre">{item.nombre}</p>
-                  <p className="checkout-item-cantidad">Cantidad: {item.cantidad}</p>
-                </div>
-                <span className="checkout-item-precio">
-                  ${(item.precio * item.cantidad).toLocaleString("es-CO")}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          <div className="checkout-totales">
-            <div className="checkout-total-fila">
-              <span>Subtotal</span>
-              <span>${totalPrecio.toLocaleString("es-CO")}</span>
-            </div>
-            <div className="checkout-total-fila">
-              <span>Envío</span>
-              <span>{costoEnvio === 0 ? "Gratis 🎉" : "$" + costoEnvio.toLocaleString("es-CO")}</span>
-            </div>
-            <div className="checkout-total-fila checkout-total-grande">
-              <span>Total a pagar</span>
-              <span>${totalFinal.toLocaleString("es-CO")}</span>
+      <form className="checkout-contenido" onSubmit={confirmarPago}>
+        <section className="checkout-form" aria-labelledby="checkout-entrega-titulo">
+          <div className="checkout-seccion-cabecera">
+            <span className="checkout-seccion-icono" aria-hidden="true">⌖</span>
+            <div>
+              <h2 id="checkout-entrega-titulo">Datos de entrega</h2>
+              <p>Indícanos dónde y a quién entregamos tu pedido.</p>
             </div>
           </div>
-        </section>
 
-        {/* Datos de entrega y pago */}
-        <form className="checkout-form" onSubmit={confirmarPago}>
-          <h2>Datos de entrega</h2>
-
-          <label>
+          <label className="checkout-campo checkout-campo-completo">
             Nombre completo
             <input name="nombre" autoComplete="name" value={form.nombre} onChange={cambiarCampo} required />
           </label>
 
-          <label>
-            Teléfono
-            <input
-              name="telefono"
-              type="tel"
-              autoComplete="tel"
-              value={form.telefono}
-              onChange={cambiarCampo}
-              placeholder="300 123 4567"
-              required
-            />
-          </label>
+          <div className="checkout-campos-dobles">
+            <label className="checkout-campo">
+              Teléfono
+              <input
+                name="telefono"
+                type="tel"
+                autoComplete="tel"
+                value={form.telefono}
+                onChange={cambiarCampo}
+                placeholder="300 123 4567"
+                required
+              />
+            </label>
+            <label className="checkout-campo">
+              Ciudad
+              <input name="ciudad" autoComplete="address-level2" value={form.ciudad} onChange={cambiarCampo} required />
+            </label>
+          </div>
 
-          <label>
+          <label className="checkout-campo checkout-campo-completo">
             Dirección
             <input
               name="direccion"
@@ -213,37 +198,83 @@ export default function Checkout() {
             />
           </label>
 
-          <label>
-            Ciudad
-            <input name="ciudad" autoComplete="address-level2" value={form.ciudad} onChange={cambiarCampo} required />
-          </label>
+          <div className="checkout-metodos-contenedor">
+            <div className="checkout-seccion-cabecera checkout-pago-cabecera">
+              <span className="checkout-seccion-icono" aria-hidden="true">▣</span>
+              <div>
+                <h2>Método de pago</h2>
+                <p>Selecciona cómo prefieres pagar.</p>
+              </div>
+            </div>
+            <div className="checkout-metodos">
+              <label className={`checkout-metodo ${form.metodo === "contraentrega" ? "seleccionado" : ""}`}>
+                <input type="radio" name="metodo" value="contraentrega" checked={form.metodo === "contraentrega"} onChange={cambiarCampo} />
+                <span className="checkout-metodo-icono" aria-hidden="true">💵</span>
+                <span className="checkout-metodo-texto"><strong>Contra entrega</strong><small>Paga cuando recibas</small></span>
+              </label>
+              <label className={`checkout-metodo ${form.metodo === "nequi" ? "seleccionado" : ""}`}>
+                <input type="radio" name="metodo" value="nequi" checked={form.metodo === "nequi"} onChange={cambiarCampo} />
+                <span className="checkout-metodo-icono" aria-hidden="true">📱</span>
+                <span className="checkout-metodo-texto"><strong>Nequi</strong><small>Pago desde tu celular</small></span>
+              </label>
+              <label className={`checkout-metodo ${form.metodo === "tarjeta" ? "seleccionado" : ""}`}>
+                <input type="radio" name="metodo" value="tarjeta" checked={form.metodo === "tarjeta"} onChange={cambiarCampo} />
+                <span className="checkout-metodo-icono" aria-hidden="true">💳</span>
+                <span className="checkout-metodo-texto"><strong>Tarjeta</strong><small>Débito o crédito</small></span>
+              </label>
+            </div>
+          </div>
+        </section>
 
-          <h2>Método de pago</h2>
-          <div className="checkout-metodos">
-            <label className={`checkout-metodo ${form.metodo === "contraentrega" ? "seleccionado" : ""}`}>
-              <input type="radio" name="metodo" value="contraentrega" checked={form.metodo === "contraentrega"} onChange={cambiarCampo} />
-              💵 Pago contra entrega
-            </label>
-            <label className={`checkout-metodo ${form.metodo === "nequi" ? "seleccionado" : ""}`}>
-              <input type="radio" name="metodo" value="nequi" checked={form.metodo === "nequi"} onChange={cambiarCampo} />
-              📱 Nequi
-            </label>
-            <label className={`checkout-metodo ${form.metodo === "tarjeta" ? "seleccionado" : ""}`}>
-              <input type="radio" name="metodo" value="tarjeta" checked={form.metodo === "tarjeta"} onChange={cambiarCampo} />
-              💳 Tarjeta débito/crédito
-            </label>
+        <aside className="checkout-resumen" aria-labelledby="checkout-resumen-titulo">
+          <div className="checkout-seccion-cabecera checkout-resumen-cabecera">
+            <span className="checkout-seccion-icono" aria-hidden="true">▤</span>
+            <div>
+              <h2 id="checkout-resumen-titulo">Tu pedido</h2>
+              <p>{totalItems} {totalItems === 1 ? "producto" : "productos"} seleccionados</p>
+            </div>
+          </div>
+          <div className="checkout-items">
+            {carrito.map((item) => (
+              <article className="checkout-item" key={item.id}>
+                <img src={item.imagen} alt="" />
+                <div className="checkout-item-info">
+                  <p className="checkout-item-nombre">{item.nombre}</p>
+                  <p className="checkout-item-cantidad">Cantidad: {item.cantidad}</p>
+                </div>
+                <span className="checkout-item-precio">
+                  ${(item.precio * item.cantidad).toLocaleString("es-CO")}
+                </span>
+              </article>
+            ))}
           </div>
 
-          <p className="checkout-demo-aviso">
-            Al confirmar, registraremos el pedido en esta demostración; no se realizará ningún cobro.
-          </p>
-          {errorPago && <p className="checkout-error" role="alert">{errorPago}</p>}
+          <div className="checkout-totales">
+            <div className="checkout-total-fila">
+              <span>Subtotal</span>
+              <span>${totalPrecio.toLocaleString("es-CO")}</span>
+            </div>
+            <div className="checkout-total-fila">
+              <span>Envío</span>
+              <span className={costoEnvio === 0 ? "checkout-envio-gratis" : ""}>
+                {costoEnvio === 0 ? "Gratis 🎉" : "$" + costoEnvio.toLocaleString("es-CO")}
+              </span>
+            </div>
+            <div className="checkout-total-fila checkout-total-grande">
+              <span>Total a pagar</span>
+              <span>${totalFinal.toLocaleString("es-CO")}</span>
+            </div>
+          </div>
 
+          {errorPago && <p className="checkout-error" role="alert">{errorPago}</p>}
           <button type="submit" className="checkout-pagar-btn">
             Confirmar pedido · ${totalFinal.toLocaleString("es-CO")}
           </button>
-        </form>
-      </div>
+          <p className="checkout-demo-aviso">
+            Al confirmar, registraremos tu pedido. Esta tienda de demostración no realizará ningún cobro.
+          </p>
+        </aside>
+      </form>
     </div>
   );
 }

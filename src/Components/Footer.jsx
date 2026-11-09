@@ -8,7 +8,7 @@ import Facebook from "../assets/Facebook.jpg";
 import Colombia from "../assets/Colombia.jpg";
 
 const WHATSAPP =
-  "https://wa.me/?text=Hola%20Nutrik%2C%20quiero%20informaci%C3%B3n%20sobre%20sus%20productos.";
+  "https://wa.me/573336043098?text=Hola%20Nutrik%2C%20quiero%20informaci%C3%B3n%20sobre%20sus%20productos.";
 
 const CONFIANZA = [
   {
@@ -60,19 +60,9 @@ const ENLACES = [
   {
     titulo: "Información corporativa",
     links: [
-      { texto: "Contáctanos", to: "/contact" },
       { texto: "Mi cuenta", to: "/perfil" },
       { texto: "Acceder / Registrarme", to: "/elegir-rol" },
       { texto: "Nuestro catálogo", to: "/productos" },
-    ],
-  },
-  {
-    titulo: "Términos y condiciones",
-    links: [
-      { texto: "Términos y condiciones", to: "/contact" },
-      { texto: "Política de privacidad", to: "/contact" },
-      { texto: "Política de envíos", to: "/contact" },
-      { texto: "Devoluciones", to: "/contact" },
     ],
   },
 ];
@@ -187,7 +177,6 @@ function Footer() {
       </div>
       </div>
 
-      {/* WHATSAPP FLOTANTE */}
       <a
         className="footer-whatsapp"
         href={WHATSAPP}
@@ -206,5 +195,5 @@ function Footer() {
     </footer>
   );
 }
-
+  
 export default Footer;

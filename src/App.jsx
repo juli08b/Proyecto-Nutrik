@@ -9,9 +9,10 @@ import Login from './Pages/Cliente/Login';
 import Register from './Pages/Cliente/Register';
 import ForgotPassword from './Pages/Cliente/ForgotPassword';
 import Perfil from './Pages/Cliente/Perfil';
+import MisPedidos from './Pages/Cliente/MisPedidos';
+import SeguimientoPedido from './Pages/Cliente/SeguimientoPedido';
 import Product from './Pages/Cliente/Product';
 import Productview from './Pages/Cliente/Productview';
-import Contact from './Pages/Cliente/Contact';
 import About from './Pages/Cliente/About';
 import Discount from './Pages/Cliente/Discount';
 import Checkout from './Pages/Cliente/Checkout';
@@ -86,6 +87,8 @@ function App() {
         <Route path="/registro" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/perfil" element={<Perfil />} />
+        <Route path="/mis-pedidos" element={<MisPedidos />} />
+        <Route path="/seguimiento" element={<SeguimientoPedido />} />
         
         {/* Rutas de Vendedor (login y registro sin sidebar) */}
         <Route path="/vendedor/login" element={<LoginVendedor />} />
@@ -111,7 +114,6 @@ function App() {
           <Route path="snacks" element={<Snacks />} />
         </Route>
 
-        <Route path="/contact" element={<Contact />} />
         <Route path="/nosotros" element={<About />} />
         <Route path="/discount" element={<Discount />} />
         <Route path="/descuentos" element={<Discount />} />

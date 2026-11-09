@@ -18,7 +18,7 @@
   position: fixed;
   width: 62px;
   height: 62px;
-  z-index: 1200;
+  z-index: 2500;
   font-family: inherit;
   touch-action: none;
 }
@@ -192,13 +192,14 @@
 /* ===== TABS ===== */
 .nutrik-tabs {
   display: flex;
-  gap: 6px;
+  gap: 5px;
   padding: 12px 16px 0;
 }
 
 .nutrik-tabs button {
   flex: 1;
-  padding: 9px 10px;
+  min-width: 0;
+  padding: 9px 5px;
   border: none;
   border-radius: 10px;
   background: var(--na-fondo);
@@ -398,6 +399,58 @@
   font-size: 1rem;
 }
 
+.nutrik-receta-contexto {
+  margin: 0 0 8px;
+  color: var(--na-texto);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.nutrik-receta h4 {
+  margin: 0 0 16px;
+  color: var(--na-acento-oscuro);
+  font-size: 1.05rem;
+}
+
+.nutrik-receta h5 {
+  margin: 14px 0 6px;
+  color: var(--na-titulo);
+  font-size: 0.82rem;
+}
+
+.nutrik-receta ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--na-texto);
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+.nutrik-receta > p:not(.nutrik-receta-contexto):not(.nutrik-receta-aviso):not(.nutrik-receta-disclaimer) {
+  margin: 0;
+  color: var(--na-texto);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.nutrik-receta-aviso {
+  margin: 12px 0 0;
+  padding: 10px 11px;
+  border-left: 3px solid #d7a33d;
+  border-radius: 8px;
+  background: #fff8e8;
+  color: #674b1b;
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.nutrik-receta-disclaimer {
+  margin: 12px 0 0;
+  color: var(--na-suave);
+  font-size: 0.7rem;
+  line-height: 1.45;
+}
+
 .nutrik-subtitulo {
   margin: 4px 0 6px;
   font-size: 0.88rem;
@@ -528,6 +581,24 @@
   margin: 2px 0 0;
   font-size: 0.84rem;
   color: #475569;
+}
+
+.nutrik-toast-accion {
+  margin-top: 7px;
+  padding: 5px 10px;
+  border: 0;
+  border-radius: 999px;
+  background: #d1fae5;
+  color: #047857;
+  font: inherit;
+  font-size: 0.74rem;
+  font-weight: 800;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.nutrik-toast-accion:hover {
+  background: #a7f3d0;
 }
 
 @keyframes nutrik-toast-entrar {

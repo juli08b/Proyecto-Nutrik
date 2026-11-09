@@ -106,6 +106,8 @@ export const PRODUCTOS = [
     descripcion: "Barra proteica sabor chocolate con maní. Presentación de 15 gr.",
     precio: 9900,
     descuento: 20,
+    fechaInicioDescuento: "2026-11-08",
+    fechaFinDescuento: "2026-11-15",
     imagen: "https://www.thewildfoods.com.co/cdn/shop/files/CHOCO_CACAHUATE_BARRITA.png?v=1707514803&width=480",
     etiqueta: "descuento",
   },
@@ -123,6 +125,8 @@ export const PRODUCTOS = [
     descripcion: "Yogur con frutos rojos. Presentación de 220 g.",
     precio: 26900,
     descuento: 29,
+    fechaInicioDescuento: "2026-11-08",
+    fechaFinDescuento: "2026-12-08",
     imagen: "https://vitaintegral.co/wp-content/uploads/2026/08/1597-Bocadillo-de-frutos-rojos-x220-gr-Frubite-Atras.jpg.jpeg",
     etiqueta: "descuento",
   },
@@ -140,6 +144,8 @@ export const PRODUCTOS = [
     descripcion: "Bebida vegetal sin azúcar. Presentación de 1 LT.",
     precio: 20400,
     descuento: 20,
+    fechaInicioDescuento: "2026-11-08",
+    fechaFinDescuento: "2026-11-15",
     imagen: "https://vitaintegral.co/wp-content/uploads/2026/04/13720-Bebida-vegetal-zero-x-1LT-NOTCO-Frente.jpg-595x744.png",
     etiqueta: "descuento",
   },
@@ -157,6 +163,8 @@ export const PRODUCTOS = [
     descripcion: "Ajiaco con pollo listo para preparar. Presentación de 400 gr.",
     precio: 19900,
     descuento: 19,
+    fechaInicioDescuento: "2026-11-08",
+    fechaFinDescuento: "2026-12-08",
     imagen: "https://vitaintegral.co/wp-content/uploads/2026/09/14309-Ajiaco-con-pollo-400gr-Puro-Verde-Frente.jpg-595x595.jpg",
     etiqueta: "descuento",
   },
@@ -174,6 +182,8 @@ export const PRODUCTOS = [
     descripcion: "Galletas con proteína whey. Presentación de 1 kg.",
     precio: 105900,
     descuento: 30,
+    fechaInicioDescuento: "2026-11-08",
+    fechaFinDescuento: "2026-11-15",
     imagen: "https://vitaintegral.co/wp-content/uploads/2026/09/14281-Whey-protein-cookies-900gr-Radical-Nutrition-Frente.jpg-595x793.jpeg",
     etiqueta: "descuento",
   },
@@ -185,6 +195,8 @@ export const PRODUCTOS = [
       "Añadirlo a tu rutina diaria es un movimiento estratégico para tu bienestar y salud articular. Pureza máxima y rápida absorción.",
     precio: 106000,
     descuento: 22,
+    fechaInicioDescuento: "2026-11-08",
+    fechaFinDescuento: "2026-12-08",
     imagen: "https://effektnutrition.com/cdn/shop/files/Colageno-4.jpg?v=1768606489&width=700",
     etiqueta: "descuento",
   },
@@ -195,14 +207,31 @@ export const PRODUCTOS = [
       "Disfruta de la energía natural sin preocuparte por el azúcar. Nuestras barras son el snack ideal para mantenerte activo y saludable.",
     precio: 36050,
     descuento: 12,
+    fechaInicioDescuento: "2026-11-08",
+    fechaFinDescuento: "2026-11-15",
     imagen: "https://i.pinimg.com/736x/d0/38/ee/d038eeea2a5f64e65cfa0c2756b63b3a.jpg",
     etiqueta: "descuento",
   },
 ];
 
-// Precio final aplicando el descuento (si existe)
+function fechaLocalISO(fecha = new Date()) {
+  const año = fecha.getFullYear();
+  const mes = String(fecha.getMonth() + 1).padStart(2, "0");
+  const dia = String(fecha.getDate()).padStart(2, "0");
+  return `${año}-${mes}-${dia}`;
+}
+
+export const descuentoActivo = (producto, hoy = fechaLocalISO()) =>
+  Number(producto.descuento) > 0 &&
+  (!producto.fechaInicioDescuento || producto.fechaInicioDescuento <= hoy) &&
+  (!producto.fechaFinDescuento || producto.fechaFinDescuento >= hoy);
+
+// Precio final aplicando solo descuentos vigentes.
 export const precioFinal = (p) =>
-  Math.round((p.precio || 0) * (1 - (p.descuento || 0) / 100));
+  Math.round(
+    (p.precio || 0) *
+      (1 - (descuentoActivo(p) ? p.descuento || 0 : 0) / 100)
+  );
 
 // Formato de moneda colombiana: $ 85.000
 export const formatearPrecio = (valor) =>
@@ -212,7 +241,7 @@ export const formatearPrecio = (valor) =>
 export const productosTienda = PRODUCTOS;
 
 export const productosDescuento = PRODUCTOS.filter(
-  (p) => p.etiqueta === "descuento"
+  (p) => p.etiqueta === "descuento" && descuentoActivo(p)
 );
 
 export const buscarProducto = (id) => PRODUCTOS.find((p) => p.id === id);

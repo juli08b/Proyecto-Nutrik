@@ -1,4 +1,5 @@
 import "./Discount.css";
+import { Link } from "react-router-dom";
 import { useCart } from "./Cart";
 import {
   productosDescuento,
@@ -13,6 +14,13 @@ const Descuentos = () => {
     agregarProducto({ ...producto, precio: precioFinal(producto) });
     setCarritoAbierto(true);
   };
+
+  const fechaVisible = (fecha) =>
+    new Date(`${fecha}T12:00:00`).toLocaleDateString("es-CO", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
 
   return (
     <div className="contenedor desc-contenedor">
@@ -37,6 +45,12 @@ const Descuentos = () => {
             <div className="desc-info">
               <h3 className="desc-nombre">{p.nombre}</h3>
               <p className="desc-descripcion">{p.descripcion}</p>
+              {p.fechaFinDescuento && (
+                <p className="desc-vigencia">
+                  Oferta válida hasta el{" "}
+                  <strong>{fechaVisible(p.fechaFinDescuento)}</strong>
+                </p>
+              )}
 
               {/* Precios: original tachado + precio con descuento */}
               <div className="desc-precios">
@@ -53,6 +67,12 @@ const Descuentos = () => {
               </span>
             </div>
 
+            <Link
+              className="desc-ver-producto"
+              to={`/Productview/${p.id}`}
+            >
+              Ver producto y receta
+            </Link>
             <button
               className="botonesproductos1"
               onClick={() => handleAgregar(p)}

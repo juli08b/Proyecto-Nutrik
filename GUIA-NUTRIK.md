@@ -444,7 +444,6 @@ Footer. Esos son "screens completos" que ocupan toda la página.
 | `/catalog` | **`CategoriasLayout`** ← marco de categorías |
 | `/catalog/frozen` | `Frozen` (congelados) |
 | `/catalog/snacks` | `Snacks` |
-| `/contact` | `Contact` (formulario PQR) |
 | `/discount` | `Discount` (productos rebajados) |
 | `/descuentos` | `Discount` (misma pantalla, segundo nombre) |
 | `/checkout` | `Checkout` (pagar) |
@@ -922,23 +921,9 @@ Muestra solo `productosDescuento`, con el precio original tachado, el final y
 ### `Cliente/Newproduct.jsx` — novedades
 Mapea `productosNuevos`. Usa `useEffect` para subir la página al entrar.
 
-### `Cliente/Contact.jsx` — contacto (PQR)
-**Es el único archivo que se conecta a internet de verdad.** Envía el formulario
-a:
-
-```js
-fetch('https://formsubmit.co/ajax/davidalexanderchangosantacruz@gmail.com', {...})
-```
-
-- Estado: `'idle' | 'sending' | 'success' | 'error'`.
-- Incluye un **campo trampa** `name="_honey"` invisible (`className="hidden-field"`)
-  para atrapar robots.
-- Campos ocultos `_subject` y `_template`.
-
-> `await` = "espera a que internet responda". Por eso el botón dice
-> "Enviando...".
-
-> ⚠️ El linter marca `Link` importado y no usado: sobró de una versión anterior.
+### Atención al cliente
+La tienda no incluye una página ni formulario de contacto. El único canal
+disponible para consultas es el botón flotante de WhatsApp.
 
 ## 9.2 Vendedor
 

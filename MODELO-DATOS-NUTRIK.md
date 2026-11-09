@@ -378,8 +378,12 @@ enlaces se generan con un `@foreach`.
 | `fecha_fin` | date | |
 | `activo` | boolean | default true |
 
-Las fechas son lo que hoy **no existe**: en `productosData.js` el `descuento: 22`
-es permanente. Con fechas puedes hacer ofertas de verdad.
+La tabla de descuentos permite que una oferta tenga vigencia limitada. El
+catálogo de muestra del frontend guarda `fechaInicioDescuento` y
+`fechaFinDescuento` por producto en `src/data/productosData.js` y deja de aplicar
+la rebaja al vencer. Para que el vendedor administre estas fechas de forma
+persistente, la API debe implementar esta tabla y sus relaciones; no basta con
+enviar las fechas como campos del producto.
 
 ## 2.8 `descuento_producto` — tabla intermedia
 
@@ -464,12 +468,10 @@ es permanente. Con fechas puedes hacer ofertas de verdad.
 |---|---|---|
 | `direcciones` | Direcciones guardadas del cliente | El checkout pide la dirección cada vez |
 | `favoritos` | Productos marcados con deseo | **Ya existe el ícono de deseo** en `Header.jsx` pero no hace nada |
-| `mensajes` | Solicitudes del formulario PQR | `Cliente/Contact.jsx` (hoy va a un email externo) |
+| `mensajes` | Tabla opcional para una futura integración | No se usa en el frontend; el único canal actual es WhatsApp |
 
-> **`mensajes` NO tiene `user_id` a propósito.** Es un formulario público: lo
-> puede llenar alguien que nunca se ha registrado en Nutrik, por eso guarda su
-> propio `nombre` y `email` en vez de una clave foránea. Por esa misma razón el
-> diagrama de la sección 1.1 no lo conecta con `USERS`.
+> La tabla `mensajes` queda documentada como opción futura, pero Nutrik no ofrece
+> actualmente un formulario de contacto ni almacena solicitudes en esa tabla.
 
 ---
 

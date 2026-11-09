@@ -5,6 +5,7 @@ import {
   productosTienda,
   precioFinal,
   formatearPrecio,
+  descuentoActivo,
 } from "../data/productosData";
 
 const Productos = ({ rutaBase = "/Productview" }) => {
@@ -28,7 +29,7 @@ const Productos = ({ rutaBase = "/Productview" }) => {
       <div className="contenedor-productos">
         {productosTienda.map((producto) => (
           <div className="card-producto" key={producto.id}>
-            {producto.descuento > 0 && (
+            {descuentoActivo(producto) && (
               <div className="producto-badge descuento">
                 -{producto.descuento}% OFF
               </div>

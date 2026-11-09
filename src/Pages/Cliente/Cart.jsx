@@ -15,6 +15,9 @@ export function CartProvider({ children }) {
   const [carritoAbierto, setCarritoAbierto] = useState(false);
 
   const agregarProducto = (producto) => {
+    window.dispatchEvent(
+      new CustomEvent("nutrik:product-added", { detail: producto })
+    );
     setCarrito((prev) => {
       // BUSCA SI EL PRODUCTO YA ESTA EN EL CARRITO COMPARANDO ID
       const existe = prev.find((p) => p.id === producto.id);
