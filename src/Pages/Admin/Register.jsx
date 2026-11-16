@@ -4,7 +4,7 @@ import './Register.css';
 import logo from '../../assets/logoNutrick.png';
 import { useAuth } from '../../Context/authContext';
 
-const RegisterVendedor = () => {
+const RegisterAdmin = () => {
   const navigate = useNavigate();
   const { register } = useAuth();
 
@@ -44,13 +44,13 @@ const RegisterVendedor = () => {
       return;
     }
 
-    const res = await register('vendedor', { ...form, password: form.password });
+    const res = await register('admin', { ...form, password: form.password });
     if (!res.ok) {
       setError(res.error);
       return;
     }
     setExito(true);
-    setTimeout(() => navigate('/vendedor'), 1200);
+    setTimeout(() => navigate('/admin'), 1200);
   };
 
   return (
@@ -146,7 +146,7 @@ const RegisterVendedor = () => {
           </form>
 
           <p className="vendedor-link">
-            ¿Ya tienes tienda registrada? <Link to="/vendedor/login">Inicia sesión aquí</Link>
+            ¿Ya tienes cuenta de administrador? <Link to="/admin/login">Inicia sesión aquí</Link>
           </p>
         </div>
       </div>
@@ -154,4 +154,4 @@ const RegisterVendedor = () => {
   );
 };
 
-export default RegisterVendedor;
+export default RegisterAdmin;

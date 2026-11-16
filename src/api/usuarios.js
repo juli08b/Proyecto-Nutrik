@@ -40,10 +40,10 @@ export function aApi(datos) {
 
 export function desdeApi(usuario) {
   if (!usuario) return null;
-  const esVendedor = usuario.Tipo_usuario === 'vendedor';
+  const esAdmin = usuario.Tipo_usuario === 'admin' || usuario.Tipo_usuario === 'vendedor';
   return {
     id: usuario.Id_usuario,
-    role: esVendedor ? 'vendedor' : 'cliente',
+    role: esAdmin ? 'admin' : 'cliente',
     tipoUsuario: usuario.Tipo_usuario,
     primerNombre: usuario.NombreUno_usuario || '',
     segundoNombre: usuario.NombreDos_usuario || '',
@@ -85,12 +85,12 @@ export const iniciarSesion = (Email, Contrasena) =>
 export function registrarUsuario(role, datos) {
   const body = {
     ...aApi(datos),
-    Tipo_usuario: role === 'vendedor' ? 'vendedor' : 'cliente',
+    Tipo_usuario: role === 'admin' ? 'admin' : 'cliente',
   };
 
-  if (role === 'vendedor') {
+  if (role === 'admin') {
     body.NombreUno_usuario = datos.nombreNegocio;
-    body.ApellidoDos_usuario = 'Vendedor';
+    body.ApellidoDos_usuario = 'Administrador';
   } else {
     body.NombreUno_usuario = datos.primerNombre;
     body.ApellidoDos_usuario = datos.primerApellido;

@@ -1,5 +1,4 @@
 import { fetchApi } from './client';
-import { crearCategoria, crearProducto, listarCategorias, listarProductos } from './productos';
 
 export const listarPedidos = () => fetchApi('/pedidos');
 
@@ -14,63 +13,62 @@ export const crearDetalle = (detalle) =>
 export const eliminarPedido = (id) =>
   fetchApi(`/pedidos/${id}`, { method: 'DELETE' });
 
-// Busca (o crea) el producto de la BD que corresponde a un ítem del carrito.
-// La vitrina usa un catálogo propio con ids de texto, por eso se empareja por nombre.
-async function asegurarProducto(item, productos, categorias) {
-  const nombre = (item.nombre || item.Nombre_producto || 'Producto').trim();
-  const existente = productos.find(
-    (p) => p.Nombre_producto?.toLowerCase() === nombre.toLowerCase()
-  );
-  if (existente) return existente.Id_producto;
+// Id numérico de la tabla productos. No se infiere por nombre.
+export function idProductoDeItem(item) {
+  const bruto = item?.Id_producto ?? item?.idProducto ?? item?.id;
+  const id = Number(bruto);
+  if (!Number.isInteger(id) || id <= 0) {
+    const nombre = item?.nombre || item?.Nombre_producto || 'Un producto';
+    throw new Error(
+      `"${nombre}" no tiene un id de producto de la base de datos.`
+    );
+  }
+  return id;
+}
 
-  let idCategoria = categorias[0]?.Id_categoria;
-  if (!idCategoria) {
-    const nueva = await crearCategoria({
-      Nombre_categoria: 'General',
-      Tipo_producto: 'General',
-      Descripccion: 'Categoría creada automáticamente desde la tienda.',
-    });
-    idCategoria = nueva.data.Id_categoria;
-    categorias.push(nueva.data);
+function lineaDeDetalle(item) {
+  const precio = Number(item.precio ?? item.Precio_unitario);
+  const cantidad = Number(item.cantidad ?? item.Cantidad);
+
+  if (!Number.isFinite(precio) || precio < 0) {
+    throw new Error('Hay un producto con precio inválido.');
+  }
+  if (!Number.isInteger(cantidad) || cantidad <= 0) {
+    throw new Error('Hay un producto con cantidad inválida.');
   }
 
-  const creado = await crearProducto({
-    Nombre_producto: nombre,
-    Precio: Number(item.precio ?? item.Precio_unitario ?? 0),
-    Id_categoria: idCategoria,
-    Descripcion: item.descripcion || null,
-    Stock: 0,
-    Imagen: item.imagen || null,
-    Estado: 'Activo',
-    Vendedor: 'tienda@nutrik.com',
-  });
-
-  const producto = creado.data;
-  productos.push(producto);
-  return producto.Id_producto;
+  return {
+    Id_producto: idProductoDeItem(item),
+    Precio_unitario: precio,
+    Cantidad: cantidad,
+    Subtotal: precio * cantidad,
+  };
 }
 
 export async function crearPedidoConDetalles({ pedido, items }) {
+  if (!Array.isArray(items) || items.length === 0) {
+    throw new Error('El pedido no tiene productos.');
+  }
+
+  // Se resuelven todas las líneas antes de crear el pedido.
+  // Si falta un id, no se inserta nada en pedidos ni en detalle_compras.
+  const lineas = items.map(lineaDeDetalle);
+
   const guardado = await crearPedido(pedido);
-  const idPedido = guardado.data.Id_pedido;
+  const idPedido = guardado?.data?.Id_pedido ?? guardado?.Id_pedido;
+  if (!idPedido) {
+    throw new Error('El servidor no devolvió el id del pedido.');
+  }
 
-  const [productos, categorias] = await Promise.all([
-    listarProductos(),
-    listarCategorias(),
-  ]);
-  const listaProductos = Array.isArray(productos) ? productos : [];
-  const listaCategorias = Array.isArray(categorias) ? categorias : [];
-
-  for (const item of items) {
-    const idProducto = await asegurarProducto(item, listaProductos, listaCategorias);
+  for (const linea of lineas) {
     await crearDetalle({
       Id_pedido: idPedido,
-      Id_producto: idProducto,
-      Precio_unitario: Number(item.precio),
-      Subtotal: Number(item.precio) * Number(item.cantidad),
-      Cantidad: Number(item.cantidad),
+      Id_producto: linea.Id_producto,
+      Precio_unitario: linea.Precio_unitario,
+      Subtotal: linea.Subtotal,
+      Cantidad: linea.Cantidad,
     });
   }
 
-  return { idPedido, data: guardado.data };
+  return { idPedido, data: guardado.data ?? guardado };
 }

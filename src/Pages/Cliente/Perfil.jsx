@@ -116,7 +116,7 @@ const Perfil = () => {
                 <h1 className="perfil-nombre">{user.nombreCompleto || user.primerNombre || 'Usuario'}</h1>
                 <p className="perfil-correo">{user.email}</p>
                 <span className={`perfil-rol ${user.role}`}>
-                  {user.role === 'vendedor' ? '🏪 Vendedor' : '🛒 Cliente Nutrik Pro'}
+                  {user.role === 'admin' ? '🏪 Administrador' : '🛒 Cliente Nutrik Pro'}
                 </span>
               </div>
             </div>

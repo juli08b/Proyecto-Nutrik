@@ -15,7 +15,7 @@ export default function PerfilSeguridad({ onSave }) {
         </div>
         <div className="grid">
           <div className="f"><label htmlFor="n">Nombre</label><input type="text" id="n" defaultValue="Carlos" /></div>
-          <div className="f"><label htmlFor="a">Apellido</label><input type="text" id="a" defaultValue="Vendedor" /></div>
+          <div className="f"><label htmlFor="a">Apellido</label><input type="text" id="a" defaultValue="Administrador" /></div>
           <div className="f"><label htmlFor="e">Correo electrónico</label><input type="email" id="e" defaultValue="carlos@nutrik.co" /></div>
           <div className="f"><label htmlFor="t">Teléfono</label><input type="tel" id="t" defaultValue="+57 300 123 4567" /></div>
         </div>

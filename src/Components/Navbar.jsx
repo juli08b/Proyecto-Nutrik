@@ -50,7 +50,7 @@ function Navbar() {
   const iniciales = (
     user?.nombreCompleto ||
     user?.primerNombre ||
-    (user?.role === "vendedor" ? user?.nombreNegocio : "") ||
+    (user?.role === "admin" ? user?.nombreNegocio : "") ||
     "U"
   )
     .split(" ")
@@ -176,9 +176,9 @@ function Navbar() {
                     className="nav-usuario-menu"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    {user.role === "vendedor" ? (
+                    {user.role === "admin" ? (
                       <Link
-                        to="/vendedor/dashboard"
+                        to="/admin/dashboard"
                         onClick={() => setMenuUsuario(false)}
                       >
                         🏪 Mi panel

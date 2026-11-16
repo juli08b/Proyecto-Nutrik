@@ -20,15 +20,15 @@ import Checkout from './Pages/Cliente/Checkout';
 import RoleSelection from "./Pages/Inicio/RoleSelection";
 import NotFound from './Pages/NotFound';
 
-// Vistas de Vendedor
-import LoginVendedor from './Pages/Vendedor/Login';
-import RegisterVendedor from './Pages/Vendedor/Register';
+// Vistas de Admin
+import LoginAdmin from './Pages/Admin/Login';
+import RegisterAdmin from './Pages/Admin/Register';
 import VendedorLayout from './Components/VendedorLayout';
-import PedidosVendedor from './Pages/Vendedor/Pedidos';
-import FacturaDetalle from './Pages/Vendedor/FacturaDetalle';
-import Dashboard from './Pages/Dashboard/Dashboard';
-import SellerProduct from './Pages/Vendedor/SellerProduct';
-import ConfiguracionVendedor from './Pages/Vendedor/Configuracion';
+import PedidosVendedor from './Pages/Admin/Pedidos';
+import FacturaDetalle from './Pages/Admin/FacturaDetalle';
+import DashboardAdmin from './Pages/Admin/Dashboard';
+import AdminProduct from './Pages/Admin/AdminProduct';
+import ConfiguracionVendedor from './Pages/Admin/Configuracion';
 import Vistaproducto from './Pages/Productview';
 import './index.css';
 import './App.css';
@@ -36,7 +36,7 @@ import './App.css';
 // El carrito del CLIENTE es global
 import { CartProvider, CartPanel } from './Pages/Cliente/Cart';
 
-// El catálogo de productos del VENDEDOR es global
+// El catálogo de productos del administrador es global
 import ProductProvider from './Context/ProductProvider';
 
 // Importamos el layout específico para las categorías
@@ -59,7 +59,7 @@ function App() {
                         !pathActual.includes('registro') && 
                         !pathActual.includes('forgot') && 
                         !pathActual.includes('elegir-rol') && 
-                        !pathActual.includes('vendedor');
+                        !pathActual.includes('admin');
 
   return (
     <ProductProvider>
@@ -67,7 +67,7 @@ function App() {
       
       <CartPanel />
 
-      {/* Solo se muestra si NO estamos en login, registro, selección de roles o vistas de vendedor */}
+      {/* Solo se muestra si NO estamos en login, registro, selección de roles o vistas de admin */}
       {mostrarLayout && (
         <Navbar menuAbierto={menuAbierto} setMenuAbierto={setMenuAbierto} />
       )}
@@ -86,15 +86,15 @@ function App() {
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/seguimiento" element={<SeguimientoPedido />} /> {/* <-- NUEVA VISTA */}
         
-        {/* Rutas de Vendedor (login y registro sin sidebar) */}
-        <Route path="/vendedor/login" element={<LoginVendedor />} />
-        <Route path="/vendedor/registro" element={<RegisterVendedor />} />
+        {/* Rutas de Admin (login y registro sin sidebar) */}
+        <Route path="/admin/login" element={<LoginAdmin />} />
+        <Route path="/admin/registro" element={<RegisterAdmin />} />
 
-        {/* Rutas de Vendedor protegidas (con sidebar) */}
-        <Route path="/vendedor" element={<VendedorLayout />}>
-          <Route index element={<SellerProduct />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="productos" element={<SellerProduct />} />
+        {/* Rutas de Admin protegidas (con sidebar) */}
+        <Route path="/admin" element={<VendedorLayout />}>
+          <Route index element={<AdminProduct />} />
+          <Route path="dashboard" element={<DashboardAdmin />} />
+          <Route path="productos" element={<AdminProduct />} />
           <Route path="productos/:id" element={<Vistaproducto />} />
           <Route path="pedidos" element={<PedidosVendedor />} />
           <Route path="facturas" element={<Invoice />} />
@@ -123,7 +123,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
 
-      {/* Solo se muestra si NO estamos en login, registro, selección de roles o vistas de vendedor */}
+      {/* Solo se muestra si NO estamos en login, registro, selección de roles o vistas de admin */}
       {mostrarLayout && <Footer />}
 
       {/* Asistente Nutrik: avatar flotante con retos, recordatorios y sugerencias */}

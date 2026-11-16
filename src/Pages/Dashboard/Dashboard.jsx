@@ -44,13 +44,13 @@ const productosTop = [
 const Dashboard = () => {
     const { user } = useAuth();
     if (!user) return <Navigate to="/elegir-rol" replace />;
-    if (user.role !== 'vendedor') return <Navigate to="/perfil" replace />;
+    if (user.role !== 'admin') return <Navigate to="/perfil" replace />;
 
     return (
         <div className="dashboard-container">
             <header className="dashboard-header">
                 <div>
-                    <h1>Panel de Vendedor</h1>
+                    <h1>Panel de Administrador</h1>
                     <p>Resumen general de tu tienda</p>
                 </div>
                 <div className="date-filter">01/08/2024 - 25/08/2024</div>

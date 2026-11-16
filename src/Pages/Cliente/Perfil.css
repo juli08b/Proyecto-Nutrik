@@ -202,7 +202,7 @@
   color: var(--pf-acento-oscuro);
 }
 
-.perfil-rol.vendedor {
+.perfil-rol.admin {
   background: #fff1d8;
   color: #9a5b16;
 }

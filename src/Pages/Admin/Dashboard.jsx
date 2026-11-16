@@ -3,17 +3,17 @@ import './Dashboard.css';
 import logo from '../../assets/logoNutrick.png';
 import { useAuth } from '../../Context/authContext';
 
-const DashboardVendedor = () => {
+const DashboardAdmin = () => {
   const { user, logout } = useAuth();
 
   if (!user) return <Navigate to="/elegir-rol" replace />;
-  if (user.role !== 'vendedor') return <Navigate to="/perfil" replace />;
+  if (user.role !== 'admin') return <Navigate to="/perfil" replace />;
 
   return (
     <div className="dashboard-pagina">
       <div className="dashboard-tarjeta">
         <img src={logo} alt="Logo Nutrik" className="dashboard-logo" />
-        <h1>Panel del Vendedor</h1>
+        <h1>Panel del Administrador</h1>
         <p className="dashboard-saludo">
           Bienvenido, <strong>{user.nombreNegocio}</strong> 🏪
         </p>
@@ -48,4 +48,4 @@ const DashboardVendedor = () => {
   );
 };
 
-export default DashboardVendedor;
+export default DashboardAdmin;

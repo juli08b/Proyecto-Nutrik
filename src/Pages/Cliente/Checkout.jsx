@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/authContext";
 import { useCart } from "./Cart";
 import { agregarItemCarrito, vaciarCarrito as vaciarCarritoApi } from "../../api/carrito";
-import { crearPedidoConDetalles } from "../../api/pedidos";
+import { crearPedidoConDetalles, idProductoDeItem } from "../../api/pedidos";
 import "./Checkout.css";
 
 export default function Checkout() {
@@ -59,11 +59,19 @@ export default function Checkout() {
         .toISOString()
         .slice(0, 10);
 
+      // Cada línea debe traer el id de la tabla productos.
+      // Si alguna no lo tiene, se detiene antes de tocar carrito o pedidos.
+      const lineas = carrito.map((item) => ({
+        ...item,
+        Id_producto: idProductoDeItem(item),
+      }));
+
       // Guardamos el carrito actual en la tabla carrito_compras.
       await vaciarCarritoApi(user.id);
-      for (const item of carrito) {
+      for (const item of lineas) {
         await agregarItemCarrito({
           Id_usuario: user.id,
+          Id_producto: item.Id_producto,
           Nombre_producto: item.nombre,
           Precio_unitario: Number(item.precio),
           Imagen: item.imagen || null,
@@ -92,7 +100,7 @@ export default function Checkout() {
         Id_usuario: user.id,
       };
 
-      const { idPedido } = await crearPedidoConDetalles({ pedido, items: carrito });
+      const { idPedido } = await crearPedidoConDetalles({ pedido, items: lineas });
 
       setNumeroPedido(`NUT-${String(idPedido).padStart(6, "0")}`);
       window.dispatchEvent(new Event("nutrik:orders-updated"));

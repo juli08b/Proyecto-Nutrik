@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../../Context/authContext";
 import { useProductos } from "../../Context/productContext";
 import { formatearPrecio } from "../../data/productosData";
-import "./seller-product.css";
+import "./admin-product.css";
 
 const FORM_VACIO = {
   nombre: "",
@@ -15,7 +15,7 @@ const FORM_VACIO = {
   descripcion: "",
 };
 
-const SellerProduct = () => {
+const AdminProduct = () => {
   const { user } = useAuth();
   const {
     categorias,
@@ -33,7 +33,7 @@ const SellerProduct = () => {
   const [form, setForm] = useState(FORM_VACIO);
 
   if (!user) return <Navigate to="/elegir-rol" replace />;
-  if (user.role !== "vendedor") return <Navigate to="/perfil" replace />;
+  if (user.role !== "admin") return <Navigate to="/perfil" replace />;
 
   const vendedorId = user.id || user.email;
   const misProductos = getProductosPorVendedor(vendedorId);
@@ -111,7 +111,7 @@ const SellerProduct = () => {
   };
 
   return (
-    <div className="seller-product">
+    <div className="admin-product">
       <div className="gestion-container">
         {error && (
           <p
@@ -353,4 +353,4 @@ const SellerProduct = () => {
   );
 };
 
-export default SellerProduct;
+export default AdminProduct;

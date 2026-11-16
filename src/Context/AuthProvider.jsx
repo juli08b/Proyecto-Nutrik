@@ -14,7 +14,10 @@ const STORAGE_SESSION = 'nutrik_session_user';
 function usuarioGuardado() {
   try {
     const guardado = JSON.parse(localStorage.getItem(STORAGE_SESSION));
-    if (guardado && guardado.email) return guardado;
+    if (guardado && guardado.email) {
+      if (guardado.role === 'vendedor') guardado.role = 'admin';
+      return guardado;
+    }
   } catch {
     /* sesión vacía o corrupta */
   }

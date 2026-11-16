@@ -27,7 +27,7 @@ const IconoGoogle = () => (
   </svg>
 );
 
-const LoginVendedor = () => {
+const LoginAdmin = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -43,18 +43,18 @@ const LoginVendedor = () => {
       setError(res.error);
       return;
     }
-    if (res.user && res.user.role !== 'vendedor') {
+    if (res.user && res.user.role !== 'admin') {
       setError('Esta cuenta es de cliente. Usa la opción "Quiero Comprar".');
       return;
     }
-    navigate('/vendedor');
+    navigate('/admin');
   };
 
   return (
     <div className="login-page">
       <div className="info-content">
         <img src={logo} alt="Logo Nutrik" className="login-logo" />
-        <h1 className="welcome-text">Portal de Vendedores</h1>
+        <h1 className="welcome-text">Portal de Administradores</h1>
         <p>Expande tu negocio saludable y llega a más clientes</p>
       </div>
 
@@ -63,7 +63,7 @@ const LoginVendedor = () => {
           <h2 className="welcome-card">Bienvenido de nuevo</h2>
 
           <p className="register-link">
-            ¿Aún no registras tu tienda? <Link to="/vendedor/registro">Regístrate aquí</Link>
+            ¿Aún no tienes cuenta? <Link to="/admin/registro">Regístrate aquí</Link>
           </p>
 
           {error && <div className="login-error">{error}</div>}
@@ -110,7 +110,7 @@ const LoginVendedor = () => {
               </button>
             </div>
 
-            <button type="submit" className="btn-login">Iniciar sesión como Vendedor</button>
+            <button type="submit" className="btn-login">Iniciar sesión como Administrador</button>
           </form>
 
           <div className="demo-box">
@@ -135,4 +135,4 @@ const LoginVendedor = () => {
   );
 };
 
-export default LoginVendedor;
+export default LoginAdmin;

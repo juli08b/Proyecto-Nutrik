@@ -24,16 +24,16 @@ const RoleSelection = () => {
             </div>
           </div>
 
-          {/* TARJETA VENDEDOR (VENDER) */}
+          {/* TARJETA ADMIN */}
           <div className="rol-opcion">
             <div className="rol-icono">🏪</div>
-            <h2>Quiero Vender</h2>
+            <h2>Administrador</h2>
             <p className="rol-desc">
-              Expón tus productos y llega a más clientes desde tu tienda.
+              Control total de la plataforma: productos, pedidos, ventas y configuración.
             </p>
             <div className="rol-acciones">
-              <Link to="/vendedor/login" className="rol-boton primario">Iniciar sesión</Link>
-              <Link to="/vendedor/registro" className="rol-boton secundario">Registrar mi tienda</Link>
+              <Link to="/admin/login" className="rol-boton primario">Iniciar sesión</Link>
+              <Link to="/admin/registro" className="rol-boton secundario">Crear cuenta</Link>
             </div>
           </div>
         </div>

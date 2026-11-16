@@ -161,7 +161,7 @@ const Pedidos = () => {
 
   // SOLO PEDE VER ESTA VISTA SI ES VENDEDOR CON SESIÓN
   if (!user) return <Navigate to="/elegir-rol" replace />;
-  if (user.role !== "vendedor") return <Navigate to="/perfil" replace />;
+  if (user.role !== "admin") return <Navigate to="/perfil" replace />;
 
   // Si lo mandaron a enviar, el estado real del pedido pasa a ser "Enviado"
   const estadoReal = (pedido) => (enviados.includes(pedido.id) ? "Enviado" : pedido.estado);

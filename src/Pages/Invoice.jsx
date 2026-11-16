@@ -16,7 +16,7 @@ export default function Invoice() {
   ]);
 
   return (
-    <div className={`invoice-page ${location.pathname.startsWith('/vendedor') ? 'invoice-page-vendedor' : ''}`}>
+    <div className={`invoice-page ${location.pathname.startsWith('/admin') ? 'invoice-page-vendedor' : ''}`}>
       <div className="invoice-container">
         <div className="invoice-header">
           <div>
@@ -56,7 +56,7 @@ export default function Invoice() {
                     <td className="invoice-actions">
                       <button
                         className="invoice-action-button view"
-                        onClick={() => navigate(`${location.pathname.startsWith('/vendedor') ? '/vendedor' : ''}/facturas/${inv.id}`)}
+                        onClick={() => navigate(`${location.pathname.startsWith('/admin') ? '/admin' : ''}/facturas/${inv.id}`)}
                       >
                         Ver
                       </button>

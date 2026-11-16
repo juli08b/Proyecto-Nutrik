@@ -8,7 +8,7 @@ const HeaderVendedor = () => {
     <header className="pedidos-header">
       <div className="header-left">
         <div className="logo-nutrik">
-          <span>Nutrik Vendedor</span>
+          <span>Nutrik Administrador</span>
         </div>
       </div>
 
@@ -17,7 +17,7 @@ const HeaderVendedor = () => {
 
         <div className="header-usuario">
           <span className="header-usuario-nombre">
-            {user?.nombreNegocio || user?.name || 'Vendedor'}
+            {user?.nombreNegocio || user?.name || 'Administrador'}
           </span>
         </div>
       </div>

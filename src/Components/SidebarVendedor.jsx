@@ -20,7 +20,7 @@ const SidebarVendedor = () => {
 
       <nav className="sidebar-nav">
         <NavLink
-          to="/vendedor/dashboard"
+          to="/admin/dashboard"
           className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}
         >
           🏠
@@ -28,7 +28,7 @@ const SidebarVendedor = () => {
         </NavLink>
 
         <NavLink
-          to="/vendedor/productos"
+          to="/admin/productos"
           className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}
         >
           📦
@@ -36,7 +36,7 @@ const SidebarVendedor = () => {
         </NavLink>
 
         <NavLink
-          to="/vendedor/pedidos"
+          to="/admin/pedidos"
           className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}
         >
           🛒
@@ -44,7 +44,7 @@ const SidebarVendedor = () => {
         </NavLink>
 
         <NavLink
-          to="/vendedor/facturas"
+          to="/admin/facturas"
           className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}
         >
           🧾
@@ -52,7 +52,7 @@ const SidebarVendedor = () => {
         </NavLink>
 
         <NavLink
-          to="/vendedor/clientes"
+          to="/admin/clientes"
           className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}
         >
           👥
@@ -60,7 +60,7 @@ const SidebarVendedor = () => {
         </NavLink>
 
         <NavLink
-          to="/vendedor/ventas"
+          to="/admin/ventas"
           className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}
         >
           📊
@@ -68,7 +68,7 @@ const SidebarVendedor = () => {
         </NavLink>
 
         <NavLink
-          to="/vendedor/configuracion"
+          to="/admin/configuracion"
           className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}
         >
           ⚙️
