@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import './Perfil.css';
 import { useAuth } from '../../Context/authContext';
+import { ROLES } from '../../constants/roles';
 
 
 const Perfil = () => {
@@ -116,7 +117,7 @@ const Perfil = () => {
                 <h1 className="perfil-nombre">{user.nombreCompleto || user.primerNombre || 'Usuario'}</h1>
                 <p className="perfil-correo">{user.email}</p>
                 <span className={`perfil-rol ${user.role}`}>
-                  {user.role === 'vendedor' ? '🏪 Vendedor' : '🛒 Cliente Nutrik Pro'}
+                  {user.role === ROLES.ADMIN ? '🛡️ Administrador' : '🛒 Usuario · comprador y vendedor'}
                 </span>
               </div>
             </div>
@@ -153,8 +154,8 @@ const Perfil = () => {
             <div className="perfil-acciones-rapidas">
               <h3 className="perfil-seccion-subtitulo">ACCIONES RÁPIDAS</h3>
               <div className="perfil-acciones-botones">
-                <Link to="/menu" className="perfil-accion-btn">
-                  <span>🍽️</span> Ver Menú Hoy
+                <Link to="/mis-productos" className="perfil-accion-btn">
+                  <span>📦</span> Mis productos y ventas
                 </Link>
                 <button className="perfil-accion-btn" onClick={() => setEditando(true)}>
                   <span>✏️</span> Editar Perfil

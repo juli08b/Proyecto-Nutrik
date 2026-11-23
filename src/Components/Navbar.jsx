@@ -8,16 +8,17 @@ import logoPequeno from "../assets/logoNutrick.png";
 import carritoIcono from "../assets/Carrito03.svg";
 import busquedaIcono from "../assets/Busqueda.svg";
 import usuarioIcono from "../assets/Usuario.svg";
-import deseoIcono from "../assets/Deseo.svg";
 
 import categoria from "../assets/Categoria.svg";
 import dieta from "../assets/Dieta.svg";
 import NotificationsMenu from "./NotificationsMenu";
+import { useModo } from "../Context/useModo";
+import { EnlacesCuenta, IconoCuenta } from "./MenuCuenta";
 
 const ENLACES = [
   { to: "/productos", texto: "Productos" },
   { texto: "Categorías", menu: "categoria" },
-  { to: "/discount", texto: "descuentos" },
+  { to: "/discount", texto: "Descuentos" },
   { to: "/nosotros", texto: "Nosotros", soloSinSesion: true },
 ];
 
@@ -33,7 +34,23 @@ function Navbar() {
   const { user, logout } = useAuth();
   const { totalItems, setCarritoAbierto } = useCart();
   const navigate = useNavigate();
+  const { modo, cambiarModo } = useModo();
   const navUsuarioRef = useRef(null);
+  const navRef = useRef(null);
+
+  useEffect(() => {
+    const nav = navRef.current;
+    const actualizarAltura = () => {
+      document.documentElement.style.setProperty("--nav-alto", `${nav.offsetHeight}px`);
+    };
+    actualizarAltura();
+    const observador = new ResizeObserver(actualizarAltura);
+    observador.observe(nav);
+    return () => {
+      observador.disconnect();
+      document.documentElement.style.removeProperty("--nav-alto");
+    };
+  }, []);
 
   useEffect(() => {
     if (!menuUsuario) return undefined;
@@ -49,7 +66,7 @@ function Navbar() {
   const iniciales = (
     user?.nombreCompleto ||
     user?.primerNombre ||
-    (user?.role === "vendedor" ? user?.nombreNegocio : "") ||
+    user?.nombreNegocio ||
     "U"
   )
     .split(" ")
@@ -59,6 +76,13 @@ function Navbar() {
     .toUpperCase();
 
   const cerrarMovil = () => setMenuMovil(false);
+
+  const seleccionarModo = (nuevo) => {
+    setMenuUsuario(false);
+    if (nuevo !== modo || (nuevo === "vendedor" && !/^\/(vendedor|mis-productos|admin)(\/|$)/i.test(location.pathname))) {
+      cambiarModo(nuevo);
+    }
+  };
 
   const alternarSidebar = (menu) => {
     if (menuVisible && menuAbierto === menu) {
@@ -79,7 +103,7 @@ function Navbar() {
 
   return (
     <>
-      <nav className="navegacion">
+      <nav className="navegacion" ref={navRef}>
         <div className="nav-mercado">
           <div className="nav-logo-min">
             <Link to="/" aria-label="Nutrik — Tu salud empieza aquí">
@@ -120,6 +144,21 @@ function Navbar() {
           </div>
 
           <div className="nav-acciones">
+            {user && (
+              <div className="nav-modo" role="group" aria-label="Cambiar modo">
+                {["comprador", "vendedor"].map((m) => (
+                  <button
+                    key={m}
+                    type="button"
+                    className={`nav-modo-btn ${modo === m ? "activo" : ""}`}
+                    aria-pressed={modo === m}
+                    onClick={() => seleccionarModo(m)}
+                  >
+                    {m === "comprador" ? "Comprador" : "Vendedor"}
+                  </button>
+                ))}
+              </div>
+            )}
             <div className="nav-busqueda">
               {buscadorAbierto && (
                 <form className="nav-busqueda-form" onSubmit={enviarBusqueda}>
@@ -136,7 +175,10 @@ function Navbar() {
               <button
                 type="button"
                 className="nav-icono-btn"
-                onClick={() => setBuscadorAbierto((v) => !v)}
+                onClick={() => {
+                  setMenuMovil(false);
+                  setBuscadorAbierto((v) => !v);
+                }}
                 aria-label="Buscar"
                 aria-expanded={buscadorAbierto}
               >
@@ -144,26 +186,17 @@ function Navbar() {
               </button>
             </div>
 
-            <Link
-              to="/productos"
-              className="nav-icono-btn"
-              aria-label="Favoritos"
-            >
-              <img src={deseoIcono} alt="" />
-            </Link>
-
             <NotificationsMenu />
 
-            {user ? (
+            {user && modo === "comprador" ? (
               <div
                 className="nav-usuario"
                 ref={navUsuarioRef}
-                onClick={() => setMenuUsuario((v) => !v)}
               >
                 <button
                   type="button"
                   className="nav-icono-btn nav-icono-btn--usuario"
-                  aria-haspopup="menu"
+                  onClick={() => setMenuUsuario((v) => !v)}
                   aria-expanded={menuUsuario}
                   aria-label="Perfil de usuario"
                 >
@@ -179,29 +212,7 @@ function Navbar() {
                     className="nav-usuario-menu"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    {user.role === "vendedor" ? (
-                      <Link
-                        to="/vendedor/dashboard"
-                        onClick={() => setMenuUsuario(false)}
-                      >
-                        🏪 Mi panel
-                      </Link>
-                    ) : (
-                      <>
-                        <Link
-                          to="/perfil"
-                          onClick={() => setMenuUsuario(false)}
-                        >
-                          👤 Mi perfil
-                        </Link>
-                        <Link
-                          to="/seguimiento"
-                          onClick={() => setMenuUsuario(false)}
-                        >
-                          📦 Seguimiento de pedidos
-                        </Link>
-                      </>
-                    )}
+                    <EnlacesCuenta user={user} onNavigate={() => setMenuUsuario(false)} />
                     <button
                       type="button"
                       onClick={() => {
@@ -210,12 +221,12 @@ function Navbar() {
                         navigate("/");
                       }}
                     >
-                      🚪 Cerrar sesión
+                      <IconoCuenta nombre="salir" /> Cerrar sesión
                     </button>
                   </div>
                 )}
               </div>
-            ) : (
+            ) : !user ? (
               <Link
                 to="/elegir-rol"
                 className="nav-icono-btn"
@@ -223,7 +234,7 @@ function Navbar() {
               >
                 <img src={usuarioIcono} alt="" />
               </Link>
-            )}
+            ) : null}
 
             <button
               type="button"
@@ -240,7 +251,10 @@ function Navbar() {
             <button
               type="button"
               className="nav-hamburguesa"
-              onClick={() => setMenuMovil((v) => !v)}
+              onClick={() => {
+                setBuscadorAbierto(false);
+                setMenuMovil((v) => !v);
+              }}
               aria-label={menuMovil ? "Cerrar menú" : "Abrir menú"}
               aria-expanded={menuMovil}
             >
@@ -275,6 +289,16 @@ function Navbar() {
         <>
           <div className="nav-movil-backdrop" onClick={cerrarMovil} />
           <div className="nav-movil">
+            {user && (
+              <div className="nav-modo nav-modo--movil" role="group" aria-label="Cambiar modo">
+                {["comprador", "vendedor"].map((m) => (
+                  <button key={m} type="button" className={`nav-modo-btn ${modo === m ? "activo" : ""}`}
+                    aria-pressed={modo === m} onClick={() => { cerrarMovil(); seleccionarModo(m); }}>
+                    {m === "comprador" ? "Comprador" : "Vendedor"}
+                  </button>
+                ))}
+              </div>
+            )}
             <div className="nav-movil-links">
               {ENLACES.filter(
                 (enlace) =>
@@ -310,16 +334,6 @@ function Navbar() {
             </div>
 
             <div className="nav-movil-grupo">
-              <button
-                type="button"
-                className="nav-movil-btn"
-                aria-expanded={menuVisible && menuAbierto === "categoria"}
-                aria-controls="categorias-sidebar"
-                onClick={() => alternarSidebar("categoria")}
-              >
-                <img src={categoria} alt="" width={16} height={16} />
-                CATEGORÍA
-              </button>
               <button
                 type="button"
                 className="nav-movil-btn"
@@ -371,11 +385,12 @@ function Navbar() {
             <h2>Categorías</h2>
 
             <Link to="/catalog/snacks">Snacks</Link>
-            <Link to="/lacteos">Lácteos</Link>
-            <Link to="/cereales-granos">Cereales y granos</Link>
-            <Link to="/vitaminas">vitaminas y bienestar</Link>
-            <Link to="/suplementos">suplementos en polvo</Link>
-            <Link to="/frutos-secos"> frutos secos y semillas</Link>
+            <Link to="/catalog/frutas">Frutas</Link>
+            <Link to="/catalog/aves-pescados">Aves y pescados</Link>
+            <Link to="/catalog/lacteos-huevos">Lácteos y huevos</Link>
+            <Link to="/catalog/cereales-granos">Cereales y granos</Link>
+            <Link to="/catalog/vitaminas">Vitaminas y bienestar</Link>
+            <Link to="/catalog/suplementos">Suplementos en polvo</Link>
           </div>
         )}
 

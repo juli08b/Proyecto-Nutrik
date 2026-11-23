@@ -95,7 +95,7 @@ const Register = () => {
     const nombreCompleto = [form.primerNombre, form.segundoNombre, form.primerApellido, form.segundoApellido]
       .filter(Boolean).join(' ').trim();
 
-    const res = await register('cliente', {
+    const res = await register('usuario', {
       ...form,
       nombreCompleto,
       alergia: form.alergia === 'otro' ? form.otroAlergia : form.alergia,

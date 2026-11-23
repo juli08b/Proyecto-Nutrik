@@ -2,6 +2,7 @@ import './Product.css';
 import { Link, useParams } from "react-router-dom";
 import { useCart } from './Cart';
 import { useAuth } from '../../Context/authContext';
+import { useProductos } from '../../Context/productContext';
 import {
   buscarProducto,
   productosTienda,
@@ -24,8 +25,10 @@ function Productview() {
   const { id } = useParams();
   const { agregarProducto, setCarritoAbierto } = useCart();
   const { user } = useAuth();
+  const { productos } = useProductos();
 
-  const producto = buscarProducto(id);
+  const productoApi = productos.find((item) => String(item.id) === String(id));
+  const producto = buscarProducto(id) || productoApi;
 
   if (!producto) {
     return <h1 className="producto-no-encontrado">Producto no encontrado</h1>;

@@ -84,26 +84,32 @@ const BENEFICIOS = [
 const CATEGORIAS = [
   {
     nombre: "Snacks",
+    slug: "snacks",
     img: "https://i.pinimg.com/1200x/11/5d/d2/115dd21987671c96653e064d0e729ccd.jpg",
   },
   {
     nombre: "Lácteos",
+    slug: "lacteos-huevos",
     img: "https://i.pinimg.com/736x/64/10/ad/6410ad6b63996945be07c809559299b4.jpg",
   },
   {
     nombre: "Cereales y granos",
+    slug: "cereales-granos",
     img: "https://i.pinimg.com/236x/dc/6f/9c/dc6f9ccb19f75c917d6d3bf0fd165af8.jpg",
   },
   {
     nombre: "Vitaminas y bienestar",
+    slug: "vitaminas",
     img: "https://i.pinimg.com/1200x/2f/85/a9/2f85a9e19c7e427ebf65d7623e060fe9.jpg",
   },
   {
     nombre: "Suplementos en polvo",
+    slug: "suplementos",
     img: "https://i.pinimg.com/1200x/c4/a1/d5/c4a1d52cb3638dd539bba6d331b794bb.jpg",
   },
   {
     nombre: "Frutos secos y semillas",
+    slug: "frutas",
     img: "https://i.pinimg.com/736x/2b/49/fb/2b49fb1cbab3746086b4748758254a9a.jpg",
   },
 ];
@@ -428,7 +434,7 @@ function Home() {
         <div className="categorias-track" ref={categoriasRef}>
           {CATEGORIAS.map((cat) => (
             <Link
-              to="/catalog/frozen"
+              to={`/catalog/${cat.slug}`}
               className="categoria-card"
               key={cat.nombre}
             >

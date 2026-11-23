@@ -1,10 +1,18 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../Context/authContext';
-import logo from '../assets/logoNutrick.png';
+import { useModo } from '../Context/useModo';
 import './SidebarVendedor.css';
+import { IconoCuenta } from './MenuCuenta';
+import { enlacesCuenta } from './enlacesCuenta';
+import { ROLES } from '../constants/roles';
 
 const SidebarVendedor = () => {
   const { user, logout } = useAuth();
+  const { modo } = useModo();
+  const items = enlacesCuenta(modo);
+  if (modo === 'vendedor' && user?.role === ROLES.ADMIN) {
+    items.push({ to: '/admin/usuarios', texto: 'Administrar usuarios', icono: 'administracion' });
+  }
   const navigate = useNavigate();
 
   const cerrarSesion = () => {
@@ -14,74 +22,24 @@ const SidebarVendedor = () => {
 
   return (
     <aside className="sidebar-vendedor">
-      <div className="sidebar-logo">
-        <img src={logo} alt="Nutrik" />
-      </div>
-
-      <nav className="sidebar-nav">
-        <NavLink
-          to="/vendedor/dashboard"
-          className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}
-        >
-          🏠
-          <span>Inicio</span>
-        </NavLink>
-
-        <NavLink
-          to="/vendedor/productos"
-          className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}
-        >
-          📦
-          <span>Productos</span>
-        </NavLink>
-
-        <NavLink
-          to="/vendedor/pedidos"
-          className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}
-        >
-          🛒
-          <span>Pedidos</span>
-        </NavLink>
-
-        <NavLink
-          to="/vendedor/facturas"
-          className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}
-        >
-          🧾
-          <span>Facturas</span>
-        </NavLink>
-
-        <NavLink
-          to="/vendedor/clientes"
-          className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}
-        >
-          👥
-          <span>Clientes</span>
-        </NavLink>
-
-        <NavLink
-          to="/vendedor/ventas"
-          className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}
-        >
-          📊
-          <span>Ventas</span>
-        </NavLink>
-
-        <NavLink
-          to="/vendedor/configuracion"
-          className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}
-        >
-          ⚙️
-          <span>Configuración</span>
-        </NavLink>
+      <nav className="sidebar-nav" aria-label={`Menú ${modo}`}>
+        {items.map((item) => (
+          <NavLink
+            key={item.texto}
+            to={item.to}
+            className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`}
+            title={item.texto}
+            aria-label={item.texto}
+          >
+            <IconoCuenta nombre={item.icono} />
+            <span>{item.texto}</span>
+          </NavLink>
+        ))}
       </nav>
 
       <div className="sidebar-footer">
-        {user && (
-          <p className="sidebar-usuario">{user.nombreNegocio || user.name}</p>
-        )}
-        <button className="sidebar-item cerrar-sesion" onClick={cerrarSesion}>
-          🚪
+        <button type="button" className="sidebar-item cerrar-sesion" onClick={cerrarSesion} title="Cerrar sesión" aria-label="Cerrar sesión">
+          <IconoCuenta nombre="salir" />
           <span>Cerrar sesión</span>
         </button>
       </div>
