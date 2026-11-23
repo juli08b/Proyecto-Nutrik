@@ -64,7 +64,7 @@ export const PRODUCTOS = [
     descripcion:
       "Deliciosas galletas veganas, libre de azúcar y elaboradas con ingredientes saludables. Son perfectas para acompañar tus tardes o convertirlas en tu snack preferido, disfruta de su gran sabor y textura.",
     precio: 22000,
-    imagen: "https://vistaintegral.co/wp-content/uploads/2023/09/12768-Galletas-Chips-Algarrobo-Dushi-Frente.jpg-595x785.jpeg",
+    imagen: "https://vitaintegral.co/wp-content/uploads/2023/09/12768-Galletas-Chips-Algarrobo-Dushi-Frente.jpg.jpeg",
     etiqueta: "",
   },
   {

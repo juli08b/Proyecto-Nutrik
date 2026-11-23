@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import OrderStatus from '../../Components/OrderStatus';
 
 const MisPedidos = () => {
