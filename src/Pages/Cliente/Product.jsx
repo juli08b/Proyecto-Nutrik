@@ -1,6 +1,8 @@
 import "./Product.css";
 import { Link } from "react-router-dom";
 import { useCart } from "./Cart";
+import { useAuth } from "../../Context/authContext";
+import { useProductos } from "../../Context/productContext";
 import {
   productosTienda,
   precioFinal,
@@ -10,6 +12,23 @@ import {
 
 const Productos = () => {
   const { agregarProducto, setCarritoAbierto } = useCart();
+  const { user } = useAuth();
+  const { productos } = useProductos();
+
+  const productosMarketplace = productos
+    .filter((producto) => {
+      const esPropio =
+        user && producto.vendedorId && String(producto.vendedorId) === String(user.id);
+      return !esPropio && String(producto.estado).toLowerCase() !== "inactivo";
+    })
+    .map((producto) => ({
+      ...producto,
+      nombre: producto.nombre,
+      imagen: producto.imagen,
+      descripcion: producto.descripcion,
+    }));
+
+  const catalogo = [...productosTienda, ...productosMarketplace];
 
   const manejarAgregar = (producto) => {
     agregarProducto({ ...producto, precio: precioFinal(producto) });
@@ -27,7 +46,7 @@ const Productos = () => {
       </div>
 
       <div className="contenedor-productos">
-        {productosTienda.map((producto) => (
+        {catalogo.map((producto) => (
           <div className="card-producto" key={producto.id}>
             {descuentoActivo(producto) ? (
               <div className="producto-badge descuento">

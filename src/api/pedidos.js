@@ -16,7 +16,7 @@ export const eliminarPedido = (id) =>
 
 // Busca (o crea) el producto de la BD que corresponde a un ítem del carrito.
 // La vitrina usa un catálogo propio con ids de texto, por eso se empareja por nombre.
-async function asegurarProducto(item, productos, categorias) {
+async function asegurarProducto(item, productos, categorias, compradorId) {
   const nombre = (item.nombre || item.Nombre_producto || 'Producto').trim();
   const existente = productos.find(
     (p) => p.Nombre_producto?.toLowerCase() === nombre.toLowerCase()
@@ -34,6 +34,11 @@ async function asegurarProducto(item, productos, categorias) {
     categorias.push(nueva.data);
   }
 
+  const vendedorId = item.vendedorId ?? item.user_id ?? item.Vendedor ?? null;
+  if (vendedorId && String(vendedorId) === String(compradorId)) {
+    throw new Error('No puedes comprar tus propios productos.');
+  }
+
   const creado = await crearProducto({
     Nombre_producto: nombre,
     Precio: Number(item.precio ?? item.Precio_unitario ?? 0),
@@ -42,7 +47,8 @@ async function asegurarProducto(item, productos, categorias) {
     Stock: 0,
     Imagen: item.imagen || null,
     Estado: 'Activo',
-    Vendedor: 'tienda@nutrik.com',
+    user_id: vendedorId,
+    Vendedor: vendedorId,
   });
 
   const producto = creado.data;
@@ -50,7 +56,7 @@ async function asegurarProducto(item, productos, categorias) {
   return producto.Id_producto;
 }
 
-export async function crearPedidoConDetalles({ pedido, items }) {
+export async function crearPedidoConDetalles({ pedido, items, compradorId }) {
   const guardado = await crearPedido(pedido);
   const idPedido = guardado.data.Id_pedido;
 
@@ -62,13 +68,19 @@ export async function crearPedidoConDetalles({ pedido, items }) {
   const listaCategorias = Array.isArray(categorias) ? categorias : [];
 
   for (const item of items) {
-    const idProducto = await asegurarProducto(item, listaProductos, listaCategorias);
+    const idProducto = await asegurarProducto(
+      item,
+      listaProductos,
+      listaCategorias,
+      compradorId
+    );
     await crearDetalle({
       Id_pedido: idPedido,
       Id_producto: idProducto,
       Precio_unitario: Number(item.precio),
       Subtotal: Number(item.precio) * Number(item.cantidad),
       Cantidad: Number(item.cantidad),
+      vendedor_id: item.vendedorId ?? item.user_id ?? item.Vendedor ?? null,
     });
   }
 

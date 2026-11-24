@@ -4,6 +4,7 @@ import { useAuth } from "../../Context/authContext";
 import { useCart } from "./Cart";
 import { agregarItemCarrito, vaciarCarrito as vaciarCarritoApi } from "../../api/carrito";
 import { crearPedidoConDetalles } from "../../api/pedidos";
+import { registrarActividad } from "../../utils/actividad";
 import "./Checkout.css";
 
 export default function Checkout() {
@@ -53,6 +54,15 @@ export default function Checkout() {
     setErrorPago("");
 
     try {
+      const propios = carrito.filter((item) => {
+        const vendedorId = item.vendedorId ?? item.user_id ?? item.Vendedor;
+        return vendedorId && String(vendedorId) === String(user.id);
+      });
+      if (propios.length > 0) {
+        setErrorPago("No puedes comprar productos publicados por tu propia cuenta.");
+        return;
+      }
+
       const hoy = new Date();
       const fechaSalida = hoy.toISOString().slice(0, 10);
       const fechaLlegada = new Date(hoy.getTime() + 3 * 24 * 60 * 60 * 1000)
@@ -90,11 +100,30 @@ export default function Checkout() {
         Direccion_envio: form.direccion.trim(),
         Ciudad_envio: form.ciudad.trim(),
         Id_usuario: user.id,
+        user_id: user.id,
+        comprador_id: user.id,
       };
 
-      const { idPedido } = await crearPedidoConDetalles({ pedido, items: carrito });
+      const { idPedido } = await crearPedidoConDetalles({
+        pedido,
+        items: carrito,
+        compradorId: user.id,
+      });
 
-      setNumeroPedido(`NUT-${String(idPedido).padStart(6, "0")}`);
+      const numero = `NUT-${String(idPedido).padStart(6, "0")}`;
+      setNumeroPedido(numero);
+      registrarActividad({
+        tipo: 'pedido',
+        accion: 'Confirmó un pedido',
+        descripcion: `${numero} por $${Number(totalFinal || 0).toLocaleString('es-CO')}`,
+        usuario: user,
+        detalles: {
+          pedido: numero,
+          productos: carrito.length,
+          total: totalFinal,
+          metodo: form.metodo,
+        },
+      });
       window.dispatchEvent(new Event("nutrik:orders-updated"));
       setComprado(true);
       vaciarCarrito();

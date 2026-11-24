@@ -1704,3 +1704,226 @@
     padding: 74px 12px 40px;
   }
 }
+
+/* =========================================================
+   DETALLE DE PRODUCTO - IDEA YOGUR / NUTRIBOT
+   ========================================================= */
+.producto-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 1800px;
+  margin: 0 auto 18px;
+  color: #6b7c6f;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+.producto-breadcrumb a { color: #3f6a4d; text-decoration: none; }
+.producto-breadcrumb a:hover { color: #14532d; text-decoration: underline; }
+.producto-breadcrumb .actual { color: #1a2e21; font-weight: 700; }
+
+.producto-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: -2px 0 14px;
+  color: #5f6d53;
+  font-size: 0.92rem;
+}
+.producto-rating strong { color: #173c26; font-size: 0.95rem; }
+.producto-rating-estrellas { color: #d7ddd2; font-size: 1rem; letter-spacing: 1px; }
+.producto-rating-estrellas .activa { color: #f0b429; }
+
+.producto-selector-label {
+  margin: 0 0 10px;
+  color: #173c26;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.producto-presentaciones { width: 100%; margin: 0 0 20px; }
+.producto-presentaciones-opciones { display: flex; flex-wrap: wrap; gap: 10px; }
+.producto-presentacion {
+  min-width: 72px;
+  padding: 10px 16px;
+  border: 1px solid #d7e3d2;
+  border-radius: 12px;
+  background: #fff;
+  color: #355542;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.producto-presentacion:hover { border-color: #8fbc8f; background: #f6fbf3; }
+.producto-presentacion.activa {
+  border-color: #14532d;
+  background: #edf7e9;
+  color: #14532d;
+  box-shadow: inset 0 0 0 1px #14532d;
+}
+
+.producto-compra-fila {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  width: 100%;
+  margin: 0 0 12px;
+}
+.producto-cantidad {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 132px;
+  border: 1px solid #d7e3d2;
+  border-radius: 14px;
+  background: #fbfdf9;
+  overflow: hidden;
+}
+.producto-cantidad button {
+  width: 44px;
+  height: 48px;
+  border: 0;
+  background: transparent;
+  color: #245c36;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.producto-cantidad button:hover { background: #eef7e9; }
+.producto-cantidad span {
+  min-width: 32px;
+  text-align: center;
+  color: #173c26;
+  font-weight: 800;
+}
+.producto-preguntar-bot--inline {
+  margin-top: 0;
+  width: 100%;
+  min-height: 48px;
+}
+.producto-envio-nota {
+  margin: 14px 0 0;
+  color: #6c7f71;
+  font-size: 0.84rem;
+}
+
+/* Tabs */
+.producto-tabs-panel {
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid #e4e9df;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 10px 28px rgba(37, 66, 42, 0.05);
+}
+.producto-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e8eee4;
+}
+.producto-tab {
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: #f5f8f2;
+  color: #4f6656;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.producto-tab:hover { background: #edf5e9; color: #245c36; }
+.producto-tab.activa {
+  background: #194b2d;
+  color: #fff;
+  border-color: #194b2d;
+}
+.producto-tab-contenido { color: #425247; font-size: 0.96rem; line-height: 1.75; }
+.producto-tab-contenido p { margin: 0; }
+.producto-tab-vacio { color: #728075; }
+
+.producto-nutricion {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin: 0;
+}
+.producto-nutricion-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid #e7ede3;
+  border-radius: 14px;
+  background: #f8fbf6;
+}
+.producto-nutricion-item dt { margin: 0; color: #607264; font-weight: 600; }
+.producto-nutricion-item dd { margin: 0; color: #173c26; font-weight: 800; }
+
+.producto-ingredientes-lista {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.producto-ingredientes-lista li {
+  position: relative;
+  padding: 12px 14px 12px 38px;
+  border-radius: 12px;
+  background: #f5f8f2;
+  color: #314437;
+  font-weight: 600;
+}
+.producto-ingredientes-lista li::before {
+  content: "✓";
+  position: absolute;
+  left: 14px;
+  top: 12px;
+  color: #2f7a4d;
+  font-weight: 800;
+}
+.producto-receta-acciones { margin-top: 22px; }
+
+@media (max-width: 768px) {
+  .producto-compra-fila { grid-template-columns: 1fr; }
+  .producto-cantidad { width: 100%; max-width: 220px; }
+  .producto-breadcrumb { font-size: 0.82rem; flex-wrap: wrap; }
+}
+
+/* Dos acciones dentro de la tarjeta de receta: agregar ingredientes y
+   continuar con Nutribot. Mismos colores que el resto de la ficha. */
+.producto-receta-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.producto-receta-acciones .producto-receta-boton {
+  margin-top: 0;
+}
+
+.producto-receta-boton-secundario {
+  border-color: #cfe0c9;
+  background: transparent;
+  color: #194b2d;
+  box-shadow: none;
+}
+
+.producto-receta-boton-secundario:hover {
+  border-color: #194b2d;
+  background: #f2f8ef;
+}
+
+@media (max-width: 480px) {
+  .producto-receta-acciones .producto-receta-boton {
+    width: 100%;
+    justify-content: center;
+  }
+}

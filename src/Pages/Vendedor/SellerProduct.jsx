@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../../Context/authContext";
 import { useProductos } from "../../Context/productContext";
 import { formatearPrecio } from "../../data/productosData";
+import { esAdministrador, puedeVender, ROLES } from "../../constants/roles";
 import "./seller-product.css";
 
 const FORM_VACIO = {
@@ -33,10 +34,11 @@ const SellerProduct = () => {
   const [form, setForm] = useState(FORM_VACIO);
 
   if (!user) return <Navigate to="/elegir-rol" replace />;
-  if (user.role !== "vendedor") return <Navigate to="/perfil" replace />;
+  if (![ROLES.USER, ROLES.ADMIN].includes(user.role)) return <Navigate to="/perfil" replace />;
 
-  const vendedorId = user.id || user.email;
-  const misProductos = getProductosPorVendedor(vendedorId);
+  const vendedorId = user.id;
+  const misProductos = getProductosPorVendedor(vendedorId, user);
+  const vendedorActivo = puedeVender(user);
 
   const productosFiltrados = misProductos.filter((producto) => {
     const coincideNombre = producto.nombre
@@ -78,6 +80,10 @@ const SellerProduct = () => {
 
   const guardarProducto = async (e) => {
     e.preventDefault();
+    if (!vendedorActivo && !esAdministrador(user)) {
+      window.alert("Tu cuenta no está activa para publicar productos.");
+      return;
+    }
 
     const datos = {
       nombre: form.nombre.trim(),
@@ -102,9 +108,16 @@ const SellerProduct = () => {
   };
 
   const confirmarEliminar = async (id) => {
-    if (!window.confirm("¿Seguro que deseas eliminar este producto?")) return;
+    const mensaje = esAdministrador(user)
+      ? "¿Retirar esta publicación del catálogo?"
+      : "¿Seguro que deseas eliminar este producto?";
+    if (!window.confirm(mensaje)) return;
     try {
-      await eliminarProducto(id);
+      if (esAdministrador(user)) {
+        await actualizarProducto(id, { estado: "Inactivo" });
+      } else {
+        await eliminarProducto(id);
+      }
     } catch (err) {
       window.alert(err.message);
     }
@@ -131,12 +144,19 @@ const SellerProduct = () => {
           <div>
             <h1 className="gestion-titulo">Productos</h1>
             <p className="gestion-subtitulo">
-              Administra los productos de tu tienda
+              {esAdministrador(user)
+                ? "Supervisa y administra todos los productos del marketplace"
+                : "Administra tus productos publicados en el marketplace"}
             </p>
           </div>
-          <button className="btn-nuevo-producto" onClick={abrirCrear}>
+          {!esAdministrador(user) && vendedorActivo && (
+            <button className="btn-nuevo-producto" onClick={abrirCrear}>
             + Nuevo producto
-          </button>
+            </button>
+          )}
+          {!esAdministrador(user) && !vendedorActivo && (
+            <p role="alert">Tu cuenta está {user.estado}. No puedes publicar productos.</p>
+          )}
         </div>
 
         <div className="controles-tabla">
@@ -218,7 +238,7 @@ const SellerProduct = () => {
                       </button>
                       <button
                         className="btn-icon btn-eliminar"
-                        title="Eliminar"
+                        title={esAdministrador(user) ? "Retirar publicación" : "Eliminar"}
                         onClick={() => confirmarEliminar(producto.id)}
                       >
                         🗑️

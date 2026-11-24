@@ -165,9 +165,7 @@ function limitarPosicion(x, y) {
 }
 
 function posicionSegura(x, y) {
-  const limitada = limitarPosicion(x, y);
-  const libre = evitarWhatsApp(limitada.x, limitada.y);
-  return limitarPosicion(libre.x, libre.y);
+  return limitarPosicion(x, y);
 }
 
 function cargarPosicionGuardada() {
@@ -184,36 +182,6 @@ function cargarPosicionGuardada() {
     /* posición vacía o corrupta */
   }
   return null;
-}
-
-// Evita que NutryBot quede detrás del botón flotante de WhatsApp.
-function evitarWhatsApp(x, y) {
-  const botonWhatsApp = document.querySelector('.footer-whatsapp');
-  const rect = botonWhatsApp?.getBoundingClientRect();
-  const movil = window.innerWidth <= 768;
-  const waLeft = rect?.left ?? window.innerWidth - (movil ? 64 : 280);
-  const waRight = rect?.right ?? window.innerWidth - (movil ? 16 : 24);
-  const waTop =
-    rect?.top ?? window.innerHeight - (movil ? 96 + 48 : 104 + 48);
-  const waBottom = rect?.bottom ?? window.innerHeight - (movil ? 96 : 104);
-  const seCruzan =
-    x < waRight + 12 &&
-    x + 62 > waLeft - 12 &&
-    y < waBottom + 12 &&
-    y + 62 > waTop - 12;
-
-  if (!seCruzan) return { x, y };
-
-  const arriba = waTop - 74;
-  if (arriba >= 8) return { x, y: arriba };
-
-  const izquierda = waLeft - 74;
-  if (izquierda >= 8) return { x: izquierda, y };
-
-  const derecha = waRight + 12;
-  if (derecha + 62 <= window.innerWidth - 8) return { x: derecha, y };
-
-  return { x, y };
 }
 
 // Detecta qué perfiles/preferencias están activos según el usuario.
@@ -458,10 +426,15 @@ function AsistenteNutrik() {
     ? (user.primerNombre || user.nombreCompleto || 'amig@').split(' ')[0]
     : 'invitad@';
 
-  // Si el avatar está pegado a la izquierda, el panel se abre hacia la
-  // derecha para no salirse de la pantalla.
-  const panelDerecha =
-    typeof window !== 'undefined' && pos.x < 380;
+  const anchoPanel = Math.min(360, window.innerWidth - 32);
+  const panelArriba = pos.y >= window.innerHeight / 2;
+  const estiloPanel = {
+    left: Math.max(16, Math.min(pos.x + 62 - anchoPanel, window.innerWidth - anchoPanel - 16)),
+    width: anchoPanel,
+    top: panelArriba ? 'auto' : pos.y + 78,
+    bottom: panelArriba ? window.innerHeight - pos.y + 16 : 'auto',
+    maxHeight: Math.min(560, panelArriba ? pos.y - 32 : window.innerHeight - pos.y - 94),
+  };
 
   return (
     <>
@@ -507,7 +480,10 @@ function AsistenteNutrik() {
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
-          aria-label="Abrir NutryBot"
+          onClick={(event) => {
+            if (event.detail === 0) setAbierto((v) => !v);
+          }}
+          aria-label="Abrir ayuda de Nutrik"
           aria-expanded={abierto}
         >
           <span className="nutrik-avatar-cara">👵</span>
@@ -515,7 +491,8 @@ function AsistenteNutrik() {
         </button>
         {abierto && (
           <div
-            className={`nutrik-panel ${panelDerecha ? 'hacia-derecha' : ''}`}
+            className="nutrik-panel"
+            style={estiloPanel}
             role="dialog"
             aria-label="NutryBot"
           >
@@ -533,6 +510,15 @@ function AsistenteNutrik() {
                 ✕
               </button>
             </header>
+
+            <a
+              className="nutrik-whatsapp"
+              href="https://wa.me/573336043098?text=Hola%20Nutrik%2C%20quiero%20informaci%C3%B3n%20sobre%20sus%20productos."
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Hablar por WhatsApp ↗
+            </a>
 
             <nav className="nutrik-tabs">
               <button

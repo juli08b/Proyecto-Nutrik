@@ -8,6 +8,7 @@ import {
   listarCategorias,
   crearCategoria,
 } from '../api/productos';
+import { esAdministrador } from '../constants/roles';
 
 // Convierte un producto de Laravel (tabla productos) al formato que usa React.
 function desdeApi(p) {
@@ -20,7 +21,7 @@ function desdeApi(p) {
     stock: p.Stock ?? 0,
     imagen: p.Imagen ?? '',
     descripcion: p.Descripcion ?? '',
-    vendedorId: p.Vendedor ?? '',
+    vendedorId: p.user_id ?? p.User_id ?? p.Vendedor ?? p.vendedor_id ?? '',
   };
 }
 
@@ -54,6 +55,7 @@ async function aApi(datos, vendedorId, categorias) {
     Stock: datos.stock ?? 0,
     Imagen: datos.imagen || null,
     Estado: datos.estado || 'Activo',
+    user_id: vendedorId,
     Vendedor: vendedorId,
   };
 }
@@ -96,8 +98,12 @@ function ProductProvider({ children }) {
     };
   }, []);
 
-  const getProductosPorVendedor = (vendedorId) =>
-    productos.filter((producto) => producto.vendedorId === vendedorId);
+  const getProductosPorVendedor = (vendedorId, usuario) => {
+    if (esAdministrador(usuario)) return productos;
+    return productos.filter(
+      (producto) => String(producto.vendedorId) === String(vendedorId)
+    );
+  };
 
   const agregarProducto = async (nuevoProducto) => {
     try {
@@ -115,7 +121,11 @@ function ProductProvider({ children }) {
     try {
       const actual = productos.find((p) => String(p.id) === String(id));
       const vendedorId = cambios.vendedorId ?? actual?.vendedorId;
-      await actualizarProductoApi(id, await aApi(cambios, vendedorId, categorias));
+      const datosActualizados = { ...actual, ...cambios };
+      await actualizarProductoApi(
+        id,
+        await aApi(datosActualizados, vendedorId, categorias)
+      );
       await recargar();
     } catch (e) {
       setError(e.message);

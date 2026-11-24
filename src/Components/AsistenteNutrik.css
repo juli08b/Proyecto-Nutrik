@@ -105,9 +105,7 @@
 
 /* ===== PANEL ===== */
 .nutrik-panel {
-  position: absolute;
-  right: 0;
-  bottom: 78px;
+  position: fixed;
   width: min(360px, calc(100vw - 32px));
   max-height: min(560px, calc(100vh - 130px));
   display: flex;
@@ -118,12 +116,6 @@
   overflow: hidden;
   box-shadow: var(--na-sombra);
   animation: nutrik-entrar 0.22s ease;
-}
-
-/* Cuando el avatar está pegado a la izquierda, el panel se abre a la derecha. */
-.nutrik-panel.hacia-derecha {
-  right: auto;
-  left: 0;
 }
 
 @keyframes nutrik-entrar {
@@ -187,6 +179,22 @@
 
 .nutrik-panel-cerrar:hover {
   background: var(--na-blanco);
+}
+
+.nutrik-whatsapp {
+  margin: 12px 16px 0;
+  padding: 10px 12px;
+  border: 1px solid #b9d3ae;
+  border-radius: 10px;
+  color: #14532d;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+}
+
+.nutrik-whatsapp:hover {
+  background: #f1f7ee;
 }
 
 /* ===== TABS ===== */
@@ -614,10 +622,6 @@
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 640px) {
-  .nutrik-panel {
-    bottom: 74px;
-  }
-
   .nutrik-toasts {
     right: 16px;
     top: 84px;

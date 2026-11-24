@@ -17,10 +17,32 @@ export const PRODUCTOS = [
     id: "yogur",
     nombre: "Yogur Griego Natural",
     descripcion:
-      "Fuente natural de proteína y probióticos, sin azúcares añadidos. Cremoso, versátil y perfecto para desayunos saludables.",
+      "Fuente natural de proteína y probióticos, sin azúcares añadidos. Cremoso y versátil, ideal para desayunos saludables.",
     precio: 12000,
     imagen: "https://i.pinimg.com/1200x/04/40/75/044075ff03f913e906dca4efbafc8821.jpg",
     etiqueta: "",
+    categoria: { nombre: "Lácteos", slug: "lacteos-huevos" },
+    rating: 4.8,
+    resenas: 126,
+    envio: "Envío a toda la ciudad · Producto refrigerado",
+    presentaciones: [
+      { id: "150g", label: "150 g", precio: 12000 },
+      { id: "200g", label: "200 g", precio: 15000 },
+      { id: "1kg", label: "1 kg", precio: 52000 },
+    ],
+    tabs: {
+      descripcion:
+        "Yogur griego natural con textura espesa y sabor suave. Aporta proteína y cultivos activos, y combina bien con fruta, granola o miel. Consérvalo entre 2 y 6 °C.",
+      nutricion: [
+        { label: "Porción", valor: "150 g" },
+        { label: "Calorías", valor: "130 kcal" },
+        { label: "Proteína", valor: "12 g" },
+        { label: "Carbohidratos", valor: "8 g" },
+        { label: "Azúcares", valor: "5 g" },
+        { label: "Grasas totales", valor: "4 g" },
+      ],
+      ingredientes: ["Leche entera pasteurizada", "Cultivos lácticos activos"],
+    },
   },
   {
     id: "detox",

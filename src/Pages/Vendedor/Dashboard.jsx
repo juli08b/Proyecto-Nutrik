@@ -2,20 +2,21 @@ import { Link, Navigate } from 'react-router-dom';
 import './Dashboard.css';
 import logo from '../../assets/logoNutrick.png';
 import { useAuth } from '../../Context/authContext';
+import { ROLES } from '../../constants/roles';
 
 const DashboardVendedor = () => {
   const { user, logout } = useAuth();
 
   if (!user) return <Navigate to="/elegir-rol" replace />;
-  if (user.role !== 'vendedor') return <Navigate to="/perfil" replace />;
+  if (![ROLES.USER, ROLES.ADMIN].includes(user.role)) return <Navigate to="/perfil" replace />;
 
   return (
     <div className="dashboard-pagina">
       <div className="dashboard-tarjeta">
         <img src={logo} alt="Logo Nutrik" className="dashboard-logo" />
-        <h1>Panel del Vendedor</h1>
+        <h1>{user.role === ROLES.ADMIN ? 'Panel de Administración' : 'Panel de Marketplace'}</h1>
         <p className="dashboard-saludo">
-          Bienvenido, <strong>{user.nombreNegocio}</strong> 🏪
+          Bienvenido, <strong>{user.nombreCompleto || user.primerNombre || 'Usuario'}</strong>
         </p>
 
         {user.foto ? (
