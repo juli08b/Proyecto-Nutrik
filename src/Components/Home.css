@@ -64,13 +64,6 @@
   margin-right: auto;
 }
 
-/* Sección crema informativa */
-.home-nutrik #sobre-nosotros {
-  padding-top: clamp(40px, 5vw, 60px);
-  padding-bottom: clamp(40px, 4.5vw, 64px);
-  border-bottom: 1px solid #e8f0e3;
-}
-
 /* Sección de categorías: carrusel de extremo a extremo */
 .home-nutrik #categorias {
   max-width: none;
@@ -89,8 +82,7 @@
 }
 
 .home-nutrik .home-seccion--crema > .seccion-head,
-.home-nutrik .home-seccion--crema > .destacados-track,
-.home-nutrik .home-seccion--crema > .sobre-layout {
+.home-nutrik .home-seccion--crema > .destacados-track {
   max-width: var(--hn-max);
   margin-left: auto;
   margin-right: auto;
@@ -474,202 +466,323 @@
 }
 
 /* ============================================================
-   SOBRE NOSOTROS / CONSEJOS PARA TU DIETA
+   SOBRE NOSOTROS · SECCIÓN NUEVA
    ============================================================ */
-.home-nutrik .sobre-layout {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  align-items: center;
-  gap: clamp(32px, 4.5vw, 68px);
-}
-
-.home-nutrik .sobre-intro {
-  max-width: 560px;
-  text-align: left;
-}
-
-.home-nutrik .sobre-intro .seccion-kicker {
+.home-nutrik #sobre-nosotros {
   position: relative;
-  padding-bottom: 12px;
-}
-
-.home-nutrik .sobre-intro .seccion-kicker::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 42px;
-  height: 3px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--hn-dorado), var(--hn-dorado-claro));
-}
-
-.home-nutrik .sobre-intro h2 {
-  margin: 0 0 18px;
-  color: var(--hn-verde);
-  font-size: clamp(1.5rem, 2.6vw, 2rem);
-  font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-}
-
-.home-nutrik .sobre-intro p {
+  overflow: hidden;
+  max-width: none;
   margin: 0;
-  color: var(--hn-gris);
-  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
-  line-height: 1.7;
+  padding: 80px 24px;
+  background: #f8f5ea;
+  border: 0;
 }
 
-.home-nutrik .sobre-intro .sobre-parrafo {
-  max-width: 540px;
-  line-height: 1.75;
-}
-
-.home-nutrik .sobre-intro .sobre-parrafo + .sobre-parrafo {
-  margin-top: 14px;
-}
-
-.home-nutrik .sobre-stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(20px, 3vw, 40px);
-  margin: clamp(26px, 3vw, 36px) 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.home-nutrik .sobre-stats li {
+.home-nutrik #sobre-nosotros .sobre-nosotros-contenedor {
   position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
+  gap: 48px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.home-nutrik .sobre-stats li + li {
-  padding-left: clamp(20px, 3vw, 40px);
-}
-
-.home-nutrik .sobre-stats li + li::before {
-  content: "";
+.home-nutrik #sobre-nosotros .sobre-hoja {
   position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1px;
-  height: 42px;
-  background: #d9e4d3;
-}
-
-.home-nutrik .sobre-stats strong {
-  color: var(--hn-verde);
-  font-size: clamp(1.6rem, 2.6vw, 2.15rem);
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -0.02em;
-}
-
-.home-nutrik .sobre-stats span {
-  color: #7d8f78;
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* Panel de consejos */
-.home-nutrik .consejos-panel {
-  position: relative;
-  padding: clamp(24px, 3vw, 34px);
-  background: linear-gradient(160deg, #ffffff 0%, #f4f9f1 100%);
-  border: 1px solid #e4eee0;
-  border-radius: 26px;
-  box-shadow: 0 22px 50px rgba(16, 40, 24, 0.1);
-}
-
-.home-nutrik .consejos-panel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 26px;
-  padding: 1px;
-  background: linear-gradient(
-    140deg,
-    rgba(227, 163, 59, 0.4),
-    rgba(31, 106, 61, 0.12) 40%,
-    transparent
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
+  z-index: 0;
+  width: 220px;
+  height: auto;
+  fill: #bfd8b8;
+  opacity: 0.1;
   pointer-events: none;
 }
 
-.home-nutrik .consejos-panel-titulo {
-  display: inline-block;
-  margin-bottom: 18px;
-  color: var(--hn-verde-medio);
-  font-size: 0.74rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
+.home-nutrik #sobre-nosotros .sobre-hoja-vena {
+  fill: none;
+  stroke: #bfd8b8;
+  stroke-width: 2;
+}
+
+.home-nutrik #sobre-nosotros .sobre-hoja--izquierda {
+  top: 24px;
+  left: -72px;
+  transform: rotate(-18deg);
+}
+
+.home-nutrik #sobre-nosotros .sobre-hoja--derecha {
+  right: -86px;
+  bottom: 18px;
+  transform: rotate(158deg);
+}
+
+.home-nutrik #sobre-nosotros .sobre-principal {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.home-nutrik #sobre-nosotros .sobre-foto {
+  width: 100%;
+  height: 540px;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #e8e3d4;
+}
+
+.home-nutrik #sobre-nosotros .sobre-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 24px;
+}
+
+.home-nutrik #sobre-nosotros .sobre-kicker {
+  display: block;
+  color: #123a2b;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
-.home-nutrik .consejos-grid {
-  display: grid;
-  gap: 14px;
+.home-nutrik #sobre-nosotros .sobre-barra {
+  display: block;
+  width: 44px;
+  height: 4px;
+  margin: 12px 0 24px;
+  border-radius: 2px;
+  background: #d9a61f;
+}
+
+.home-nutrik #sobre-nosotros .sobre-titulo {
   margin: 0;
+  color: #123a2b;
+  font-size: 58px;
+  font-weight: 700;
+  line-height: 1.08;
+}
+
+.home-nutrik #sobre-nosotros .sobre-titulo span {
+  display: block;
+}
+
+.home-nutrik #sobre-nosotros .sobre-parrafo {
+  max-width: 46ch;
+  margin: 20px 0 0;
+  color: #5c6a72;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+.home-nutrik #sobre-nosotros .sobre-cifras {
+  display: flex;
+  align-items: flex-start;
+  margin: 32px 0 0;
   padding: 0;
   list-style: none;
 }
 
-.home-nutrik .consejo-card {
+.home-nutrik #sobre-nosotros .sobre-cifras li {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  gap: 14px;
-  padding: 16px 18px;
-  background: #ffffff;
-  border: 1px solid #e9efe6;
-  border-radius: 18px;
-  transition: transform 0.22s ease, box-shadow 0.22s ease,
-    border-color 0.22s ease;
+  padding: 0 24px;
+  border-left: 1px solid rgba(18, 58, 43, 0.15);
 }
 
-.home-nutrik .consejo-card:hover {
-  transform: translateY(-3px);
-  border-color: #cfe1c7;
-  box-shadow: 0 14px 28px rgba(16, 40, 24, 0.1);
+.home-nutrik #sobre-nosotros .sobre-cifras li:first-child {
+  padding-left: 0;
+  border-left: 0;
 }
 
-.home-nutrik .consejo-icono {
+.home-nutrik #sobre-nosotros .sobre-cifras li:last-child {
+  padding-right: 0;
+}
+
+.home-nutrik #sobre-nosotros .sobre-cifras strong {
+  color: #123a2b;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.home-nutrik #sobre-nosotros .sobre-cifras li > span:not(.sobre-cifra-con-estrella) {
+  margin-top: 8px;
+  color: #5c6a72;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.home-nutrik #sobre-nosotros .sobre-cifra-con-estrella {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.home-nutrik #sobre-nosotros .sobre-cifra-con-estrella svg {
+  width: 18px;
+  height: 18px;
+  fill: #d9a61f;
+}
+
+.home-nutrik #sobre-nosotros .sobre-boton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 46px;
-  height: 46px;
-  flex-shrink: 0;
-  border-radius: 14px;
-  background: var(--hn-crema-verde);
-  color: var(--hn-verde-medio);
+  gap: 10px;
+  margin-top: 28px;
+  padding: 16px 28px;
+  border: 0;
+  border-radius: 10px;
+  background: #d9a61f;
+  color: #123a2b;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.home-nutrik .consejo-texto {
+.home-nutrik #sobre-nosotros .sobre-boton:hover {
+  background: #c4941a;
+  transform: translateY(-2px);
+}
+
+.home-nutrik #sobre-nosotros .sobre-boton svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.home-nutrik #sobre-nosotros .sobre-consejos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.home-nutrik #sobre-nosotros .sobre-consejo {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid rgba(18, 58, 43, 0.05);
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(18, 58, 43, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.home-nutrik #sobre-nosotros .sobre-consejo:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(18, 58, 43, 0.12);
+}
+
+.home-nutrik #sobre-nosotros .sobre-consejo-icono {
+  display: inline-flex;
+  flex: 0 0 48px;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  color: #123a2b;
+}
+
+.home-nutrik #sobre-nosotros .sobre-consejo--menta .sobre-consejo-icono {
+  background: #dcead8;
+}
+
+.home-nutrik #sobre-nosotros .sobre-consejo--dorado .sobre-consejo-icono {
+  background: #f7e8c0;
+}
+
+.home-nutrik #sobre-nosotros .sobre-consejo--durazno .sobre-consejo-icono {
+  background: #f7d2cb;
+}
+
+.home-nutrik #sobre-nosotros .sobre-consejo-icono svg {
+  width: 24px;
+  height: 24px;
+}
+
+.home-nutrik #sobre-nosotros .sobre-consejo-texto {
   min-width: 0;
 }
 
-.home-nutrik .consejo-card h3 {
-  margin: 0 0 3px;
-  color: var(--hn-verde);
-  font-size: 1rem;
-  font-weight: 800;
+.home-nutrik #sobre-nosotros .sobre-consejo h3 {
+  margin: 0 0 8px;
+  color: #123a2b;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
 }
 
-.home-nutrik .consejo-card p {
+.home-nutrik #sobre-nosotros .sobre-consejo p {
   margin: 0;
-  color: var(--hn-gris);
-  font-size: 0.88rem;
-  line-height: 1.5;
+  color: #5c6a72;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+@media (max-width: 1024px) {
+  .home-nutrik #sobre-nosotros .sobre-principal {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .home-nutrik #sobre-nosotros .sobre-foto {
+    height: 360px;
+  }
+}
+
+@media (max-width: 900px) {
+  .home-nutrik #sobre-nosotros .sobre-consejos {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-nutrik #sobre-nosotros {
+    padding: 64px 20px;
+  }
+
+  .home-nutrik #sobre-nosotros .sobre-titulo {
+    font-size: 38px;
+  }
+
+  .home-nutrik #sobre-nosotros .sobre-cifras {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .home-nutrik #sobre-nosotros .sobre-cifras li,
+  .home-nutrik #sobre-nosotros .sobre-cifras li:first-child,
+  .home-nutrik #sobre-nosotros .sobre-cifras li:last-child {
+    padding: 0;
+    border-left: 0;
+  }
+
+  .home-nutrik #sobre-nosotros .sobre-boton {
+    width: 100%;
+  }
+
+  .home-nutrik #sobre-nosotros .sobre-hoja {
+    width: 140px;
+  }
 }
 
 /* ============================================================
@@ -1107,17 +1220,20 @@
 }
 
 @media (max-width: 1024px) {
-  .home-nutrik .sobre-layout {
+  .home-nutrik .sobre-nutrik__principal {
     grid-template-columns: 1fr;
-    gap: clamp(28px, 5vw, 44px);
   }
 
-  .home-nutrik .sobre-intro {
-    max-width: 640px;
+  .home-nutrik .sobre-nutrik__foto {
+    height: 360px;
   }
 }
 
 @media (max-width: 900px) {
+  .home-nutrik .sobre-nutrik__tarjetas {
+    grid-template-columns: 1fr;
+  }
+
   .home-nutrik .pasos-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1154,17 +1270,23 @@
     flex-basis: clamp(190px, 60vw, 230px);
   }
 
-  .home-nutrik .sobre-stats {
-    justify-content: space-between;
-    gap: 14px;
+  .home-nutrik .sobre-nutrik__titulo {
+    font-size: 38px;
   }
 
-  .home-nutrik .sobre-stats li + li {
-    padding-left: 14px;
+  .home-nutrik .sobre-nutrik__stats {
+    flex-direction: column;
+    gap: 20px;
   }
 
-  .home-nutrik .sobre-stats li + li::before {
-    height: 34px;
+  .home-nutrik .sobre-nutrik__stat {
+    padding-right: 0;
+    margin-right: 0;
+    border-right: 0;
+  }
+
+  .home-nutrik .sobre-nutrik__boton {
+    width: 100%;
   }
 
   .home-nutrik .destacados-controles {

@@ -255,35 +255,42 @@ const PASOS = [
 
 const CONSEJOS = [
   {
+    tono: "menta",
     icono: (
       <>
-        <path d="M12 2v20" />
-        <path d="M4.9 7.1A13.4 13.4 0 0 1 12 5c2.6 0 5.1.7 7.1 2.1" />
-        <path d="M4.9 16.9A13.4 13.4 0 0 0 12 19c2.6 0 5.1-.7 7.1-2.1" />
+        <path d="M12 8.5c0-2.2 1.5-4 4-4 0 2.2-1.5 4-4 4Z" />
+        <path d="M12 8.5c0-2.2-1.5-4-4-4 0 2.2 1.5 4 4 4Z" />
+        <path d="M12 8.5v11.5" />
+        <path d="M12 12.5c0-1.9 1.2-3.5 3.4-3.5 0 1.9-1.2 3.5-3.4 3.5Z" />
+        <path d="M12 12.5c0-1.9-1.2-3.5-3.4-3.5 0 1.9 1.2 3.5 3.4 3.5Z" />
       </>
     ),
     titulo: "Come con color",
     texto:
-      "Llena tu plato de frutas y verduras variadas. Cada color aporta vitaminas y antioxidantes distintos que tu cuerpo agradece.",
+      "Incluye frutas y verduras de distintos colores. Más nutrientes, más vida en tu plato.",
   },
   {
+    tono: "dorado",
     icono: (
       <>
-        <circle cx="12" cy="12" r="9" />
-        <path d="M12 7v5l3 2" />
+        <path d="M9 3h6" />
+        <path d="M10 3v3.2L7.5 9.3V19a2 2 0 0 0 2 2h5a2 2 0 0 0 2-2V9.3L14 6.2V3" />
+        <path d="M7.5 11.5h9" />
+        <path d="M10 14.5h4" />
       </>
     ),
     titulo: "Hidrátate y respeta horarios",
     texto:
-      "Beber agua y comer a horas regulares mantiene tu energía estable y ayuda a tu metabolismo a trabajar mejor cada día.",
+      "El agua te da energía, mejora tu digestión y ayuda a tu bienestar. Haz pausas y come a tus horas.",
   },
   {
+    tono: "durazno",
     icono: (
-      <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1L12 21l7.7-7.6 1.1-1a5.5 5.5 0 0 0 0-7.8Z" />
+      <path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 0 0-7.1 7.1l1.7 1.7L12 21l7.1-6.6 1.7-1.7a5 5 0 0 0 0-7.1Z" />
     ),
     titulo: "Cuida tu bienestar",
     texto:
-      "Una alimentación equilibrada reduce el riesgo de enfermedades y mejora tu ánimo, tu sueño y tu concentración.",
+      "Una buena alimentación también fortalece tu mente. Escucha tu cuerpo y elige lo que te hace bien.",
   },
 ];
 
@@ -426,9 +433,7 @@ function Home() {
             <span className="seccion-kicker">EXPLORA</span>
             <h2>Encuentra lo mejor para ti</h2>
           </div>
-          <Link to="/catalog/frozen" className="seccion-ver">
-            Ver todas las categorías →
-          </Link>
+
         </div>
 
         <div className="categorias-track" ref={categoriasRef}>
@@ -452,69 +457,106 @@ function Home() {
         </div>
       </section>
 
-      {/* 4.5 · SOBRE NOSOTROS / CONSEJOS PARA TU DIETA */}
+      {/* 4.5 · SOBRE NOSOTROS */}
       <section className="home-seccion home-seccion--crema" id="sobre-nosotros">
-        <div className="sobre-layout">
-          <div className="sobre-intro">
-            <span className="seccion-kicker">SOBRE NOSOTROS</span>
-            <h2>Comer bien también es cuidarte</h2>
-            <p className="sobre-parrafo">
-              En Nutrik creemos que la salud no se improvisa: se cultiva día a
-              día, bocado a bocado. Por eso seleccionamos alimentos frescos,
-              naturales y de origen local, revisando cada producto para que
-              llegue a tu mesa con el sabor y los nutrientes intactos.
-            </p>
-            <p className="sobre-parrafo">
-              Más que una tienda, somos tu aliado para armar una dieta
-              balanceada sin complicaciones. Te acompañamos con opciones
-              accesibles, consejos prácticos y productos pensados para toda la
-              familia, para que comer sano sea fácil, rico y sostenible en el
-              tiempo.
-            </p>
+        <svg
+          className="sobre-hoja sobre-hoja--izquierda"
+          viewBox="0 0 220 300"
+          aria-hidden="true"
+        >
+          <path d="M18 286C6 198 44 93 194 18c18 118-35 224-176 268Z" />
+          <path d="M38 250c43-55 78-103 137-176" className="sobre-hoja-vena" />
+        </svg>
+        <svg
+          className="sobre-hoja sobre-hoja--derecha"
+          viewBox="0 0 220 300"
+          aria-hidden="true"
+        >
+          <path d="M18 286C6 198 44 93 194 18c18 118-35 224-176 268Z" />
+          <path d="M38 250c43-55 78-103 137-176" className="sobre-hoja-vena" />
+        </svg>
 
-            <ul className="sobre-stats">
-              <li>
-                <strong>+120</strong>
-                <span>productos naturales</span>
-              </li>
-              <li>
-                <strong>100%</strong>
-                <span>origen local</span>
-              </li>
-              <li>
-                <strong>4.9★</strong>
-                <span>clientes felices</span>
-              </li>
-            </ul>
-          </div>
+        <div className="sobre-nosotros-contenedor">
+          <div className="sobre-principal">
+            <figure className="sobre-foto">
+              <img
+                src="/caja-rustica.png"
+                alt="Caja rústica de alimentos saludables"
+              />
+            </figure>
 
-          <div className="consejos-panel">
-            <span className="consejos-panel-titulo">Consejos para tu dieta</span>
-            <ul className="consejos-grid">
-              {CONSEJOS.map((consejo) => (
-                <li className="consejo-card" key={consejo.titulo}>
-                  <span className="consejo-icono">
-                    <svg
-                      viewBox="0 0 24 24"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.7"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden="true"
-                    >
-                      {consejo.icono}
+            <div className="sobre-texto">
+              <span className="sobre-kicker">SOBRE NOSOTROS</span>
+              <span className="sobre-barra" aria-hidden="true" />
+
+              <h2 className="sobre-titulo">
+                <span>Comer bien</span>
+                <span>también es</span>
+                <span>cuidarte</span>
+              </h2>
+
+              <p className="sobre-parrafo">
+                En Nutrik creemos que una alimentación consciente transforma tu
+                salud, tu energía y tu vida. Te acompañamos con productos
+                naturales y asesoría para que cada comida sea un paso hacia un
+                mejor tú.
+              </p>
+
+              <ul className="sobre-cifras">
+                <li>
+                  <strong>+120</strong>
+                  <span>PRODUCTOS NATURALES</span>
+                </li>
+                <li>
+                  <strong>100%</strong>
+                  <span>ORIGEN LOCAL</span>
+                </li>
+                <li>
+                  <span className="sobre-cifra-con-estrella">
+                    <strong>4.9</strong>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.4l6.1-.9L12 3Z" />
                     </svg>
                   </span>
-                  <div className="consejo-texto">
-                    <h3>{consejo.titulo}</h3>
-                    <p>{consejo.texto}</p>
-                  </div>
+                  <span>CLIENTES FELICES</span>
                 </li>
-              ))}
-            </ul>
+              </ul>
+
+              <Link to="/productos" className="sobre-boton">
+                Arma tu dieta saludable
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 12h14" />
+                  <path d="m13 6 6 6-6 6" />
+                </svg>
+              </Link>
+            </div>
+          </div>
+
+          <div className="sobre-consejos">
+            {CONSEJOS.map((consejo) => (
+              <article
+                className={`sobre-consejo sobre-consejo--${consejo.tono}`}
+                key={consejo.titulo}
+              >
+                <span className="sobre-consejo-icono">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    {consejo.icono}
+                  </svg>
+                </span>
+                <div className="sobre-consejo-texto">
+                  <h3>{consejo.titulo}</h3>
+                  <p>{consejo.texto}</p>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
