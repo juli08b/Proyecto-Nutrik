@@ -96,6 +96,24 @@ export function desdeApi(usuario) {
 export const iniciarSesion = (Email, Contrasena) =>
   fetchApi('/usuarios/login', { method: 'POST', body: { Email, Contrasena } });
 
+/** Login privado: usa la tabla users de Laravel, nunca credenciales en el bundle. */
+export const iniciarSesionAdmin = (email, password) =>
+  fetchApi('/login', { method: 'POST', body: { email, password } });
+
+/** Convierte el usuario devuelto por /login al shape que usa el frontend. */
+export function desdeApiAdmin(usuario) {
+  if (!usuario) return null;
+  const role = normalizarRol(usuario.role || usuario.Rol || usuario.Tipo_usuario || ROLES.ADMIN);
+  return {
+    id: usuario.id ?? usuario.Id_usuario ?? 'admin-nutrik',
+    role,
+    tipoUsuario: role,
+    estado: ESTADOS_USUARIO.ACTIVO,
+    nombreCompleto: usuario.name || usuario.NombreUno_usuario || 'Administrador Nutrik',
+    email: usuario.email || usuario.Email || '',
+  };
+}
+
 export function registrarUsuario(_role, datos) {
   const body = {
     ...aApi(datos),

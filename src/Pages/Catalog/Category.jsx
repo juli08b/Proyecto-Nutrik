@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import "../Cliente/Product.css";
-import { useCart } from "../Cliente/Cart";
+import "./Product.css";
+import { useCart } from "../checkout/Cart";
 import {
   buscarProducto,
   formatearPrecio,
   precioFinal,
 } from "../../data/productosData";
 
+// Cada ruta de categoría selecciona manualmente IDs del catálogo local.
 const CATEGORIAS = {
   frutas: {
     titulo: "Frutas",

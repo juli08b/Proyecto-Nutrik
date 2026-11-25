@@ -42,6 +42,16 @@
   margin: 0 auto;
 }
 
+/* El logo y el menú lateral comparten el mismo borde de referencia en cuenta. */
+body.con-sidebar .navegacion {
+  padding-left: 28px;
+  box-shadow: none;
+}
+
+body.con-sidebar .nav-mercado {
+  max-width: none;
+}
+
 /* ── LOGO + TEXTO INSTITUCIONAL ── */
 .nav-logo-min {
   display: flex;
@@ -322,12 +332,23 @@
   display: flex;
   flex-direction: column;
   min-width: 190px;
+  max-height: min(70vh, 560px);
   padding: 6px;
-  overflow: hidden;
+  overflow-y: auto;
   background: #fff;
   border: 1px solid #e6ede3;
   border-radius: 14px;
   box-shadow: 0 16px 34px rgba(16, 40, 24, 0.16);
+}
+
+.nav-cuenta-titulo {
+  display: block;
+  padding: 10px 14px 4px;
+  color: #788a7b;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .nav-usuario-menu a,
@@ -643,6 +664,12 @@
 @media (max-width: 720px) {
   .navegacion {
     padding: 8px 18px;
+  }
+
+  @media (max-width: 768px) {
+    body.con-sidebar .navegacion {
+      padding-left: 14px;
+    }
   }
 
   .nav-logo-min img {

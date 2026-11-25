@@ -2,9 +2,6 @@ import { Link, useLocation } from "react-router-dom";
 import "./Footer.css";
 
 import logoNutrik from "../assets/logoNutrick.png";
-import Tiktok from "../assets/Tiktok.jpg";
-import Instagram from "../assets/Instagram.jpg";
-import Facebook from "../assets/Facebook.jpg";
 import Colombia from "../assets/Colombia.jpg";
 
 const CONFIANZA = [
@@ -58,7 +55,7 @@ const ENLACES = [
     titulo: "Información corporativa",
     links: [
       { texto: "Mi cuenta", to: "/perfil" },
-      { texto: "Acceder / Registrarme", to: "/elegir-rol" },
+      { texto: "Acceder / Registrarme", to: "/login" },
       { texto: "Nuestro catálogo", to: "/productos" },
     ],
   },
@@ -145,18 +142,22 @@ function Footer() {
         <div className="footer-section socials-column">
           <h3>Síguenos</h3>
           <div className="footer-socials">
-            <a
-              href="#"
-              className="social-icon-link"
-              aria-label="Instagram"
-            >
-              <img src={Instagram} alt="Instagram" />
+            <a href="#" className="social-icon-link social-instagram" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.4" cy="6.6" r="1" className="social-dot" />
+              </svg>
             </a>
-            <a href="#" className="social-icon-link" aria-label="Facebook">
-              <img src={Facebook} alt="Facebook" />
+            <a href="#" className="social-icon-link social-facebook" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M13.7 21v-8h2.7l.4-3.1h-3.1V8c0-.9.3-1.5 1.6-1.5h1.7V3.7c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2H7.6V13h2.7v8h3.4Z" />
+              </svg>
             </a>
-            <a href="#" className="social-icon-link" aria-label="TikTok">
-              <img src={Tiktok} alt="TikTok" />
+            <a href="#" className="social-icon-link social-tiktok" aria-label="TikTok">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M14.2 3c.2 2 1.3 3.5 3.4 3.8v3.1a7.8 7.8 0 0 1-3.4-.9v5.7a5.2 5.2 0 1 1-4.5-5.1v3.2a2.1 2.1 0 1 0 1.4 2V3h3.1Z" />
+              </svg>
             </a>
           </div>
         </div>
