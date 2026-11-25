@@ -1,7 +1,7 @@
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Navbar from "./Components/Navbar";
-import SidebarVendedor from "./Components/SidebarVendedor";
+// import SidebarVendedor from "./Components/SidebarVendedor"; // ❌ Ya no se usa aquí
 import { useAuth } from "./Context/authContext";
 import AsistenteNutrik from "./Components/AsistenteNutrik";
 import Home from "./Pages/public/Home";
@@ -34,15 +34,9 @@ import Vistaproducto from "./Pages/marketplace/Productview";
 import "./index.css";
 import "./App.css";
 
-// El carrito del CLIENTE es global: el Provider guarda los productos
-// y el Panel es el carrito lateral. Lo usan Navbar, el catálogo y Checkout.
 import { CartProvider, CartPanel } from "./Pages/checkout/Cart";
-
-// El catálogo de productos del VENDEDOR es global: el Provider lo comparte
-// entre el panel de productos (SellerProduct) y cualquier otra vista.
 import ProductProvider from "./Context/ProductProvider";
 
-// Importamos el layout específico para las categorías
 import CatalogLayout from "./layouts/CatalogLayout";
 import Frozen from "./Pages/catalog/Frozen";
 import Snacks from "./Pages/catalog/Snacks";
@@ -53,79 +47,70 @@ function App() {
   const location = useLocation();
   const [menuAbierto, setMenuAbierto] = useState(false);
 
-  // Al cambiar de ruta, subir siempre al inicio de la página.
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [location.pathname]);
 
   const { user } = useAuth();
   const pathActual = location.pathname.toLowerCase();
-  // La ruta determina qué elementos compartidos se muestran alrededor de la vista.
+
   const esPaginaAuth =
     ["login", "registro", "forgot", "elegir-rol"].some((p) =>
       pathActual.includes(p),
     ) || pathActual === "/nutrik/owner";
+
   const esAreaVendedor = /^\/(vendedor|mis-productos|admin)(\/|$)/.test(
     pathActual,
   );
-  const mostrarLayout = !esPaginaAuth && !esAreaVendedor;
-  const mostrarNavbar = !esPaginaAuth;
-  const esCuenta =
-    /^\/(perfil|mis-pedidos|seguimiento|favoritos|vendedor|mis-productos|admin)(\/|$)/.test(
-      pathActual,
-    );
-  const mostrarSidebar = mostrarNavbar && Boolean(user) && esCuenta;
 
-  useEffect(() => {
-    document.body.classList.toggle("con-sidebar", mostrarSidebar);
-    return () => document.body.classList.remove("con-sidebar");
-  }, [mostrarSidebar]);
+  const mostrarLayout = !esPaginaAuth && !esAreaVendedor;
+
+  // ✅ CORRECCIÓN 1: El Navbar global NO se muestra en área de vendedor (el Layout lo pone)
+  const esAreaCuenta =
+    /^\/(perfil|mis-pedidos|seguimiento|favoritos)(\/|$)/.test(pathActual);
+  const mostrarNavbar = !esPaginaAuth && !esAreaVendedor && !esAreaCuenta;
 
   return (
     <ProductProvider>
       <CartProvider>
         <CartPanel />
 
-        {/* La barra superior también se muestra en las áreas de cuenta y marketplace. */}
+        {/* ✅ CORRECCIÓN 2: El Navbar ahora se oculta en las rutas de vendedor/admin */}
         {mostrarNavbar && (
-          <Navbar
-            menuAbierto={menuAbierto}
-            setMenuAbierto={setMenuAbierto}
-            mostrarSidebar={mostrarSidebar}
-          />
+          <Navbar menuAbierto={menuAbierto} setMenuAbierto={setMenuAbierto} />
         )}
-        {mostrarSidebar && <SidebarVendedor />}
+
+        {/* ❌ ELIMINADO: {mostrarSidebar && <SidebarVendedor />} */}
 
         <Routes>
           <Route path="/" element={<Home setMenuAbierto={setMenuAbierto} />} />
           <Route path="/header" element={<Header />} />
 
-          {/* Acceso público unificado */}
           <Route
             path="/elegir-rol"
             element={<Navigate to="/login" replace />}
           />
 
-          {/* Rutas de Cliente */}
           <Route path="/login" element={<Login />} />
           <Route path="/registro" element={<Register />} />
-          {/* Ruta privada sin enlaces públicos: acceso del propietario */}
           <Route path="/nutrik/owner" element={<AdminLogin />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/perfil" element={<Perfil />} />
-          <Route path="/mis-pedidos" element={<MisPedidos />} />
-          <Route path="/seguimiento" element={<SeguimientoPedido />} />
-          <Route
-            path="/favoritos"
-            element={
-              <main className="cuenta-pendiente">
-                <h1>Favoritos</h1>
-                <p>La lista de favoritos aún no está disponible.</p>
-              </main>
-            }
-          />
 
-          {/* Alias heredados: redirigen al acceso público único. */}
+          <Route element={<MarketplaceLayout />}>
+            <Route path="/perfil" element={<Perfil />} />
+            <Route path="/mis-pedidos" element={<MisPedidos />} />
+            <Route path="/seguimiento" element={<SeguimientoPedido />} />
+            <Route
+              path="/favoritos"
+              element={
+                <main className="cuenta-pendiente">
+                  <h1>Favoritos</h1>
+                  <p>La lista de favoritos aún no está disponible.</p>
+                </main>
+              }
+            />
+          </Route>
+
           <Route
             path="/vendedor/login"
             element={<Navigate to="/login" replace />}
@@ -135,7 +120,7 @@ function App() {
             element={<Navigate to="/registro" replace />}
           />
 
-          {/* Panel común de marketplace para user y admin */}
+          {/* ✅ Las rutas de vendedor/admin usan MarketplaceLayout (que ya incluye Navbar + Sidebar) */}
           <Route path="/vendedor" element={<MarketplaceLayout />}>
             <Route index element={<SellerProduct />} />
             <Route path="dashboard" element={<Dashboard />} />
@@ -144,6 +129,7 @@ function App() {
             <Route path="pedidos" element={<PedidosVendedor />} />
             <Route path="facturas" element={<Invoice />} />
             <Route path="facturas/:id" element={<FacturaDetalle />} />
+
             <Route
               path="clientes"
               element={
@@ -179,7 +165,6 @@ function App() {
             <Route path="pedidos" element={<PedidosVendedor />} />
           </Route>
 
-          {/* Rutas anidadas de categorías */}
           <Route path="/catalog" element={<CatalogLayout />}>
             <Route path="frozen" element={<Frozen />} />
             <Route path="snacks" element={<Snacks />} />
@@ -210,17 +195,14 @@ function App() {
           <Route path="/productos" element={<Product />} />
           <Route path="/Productview/:id" element={<Productview />} />
 
-          {/* Cualquier dirección que no exista cae aquí (en vez de pantalla en blanco) */}
           <Route path="*" element={<NotFound />} />
         </Routes>
 
-        {/* Solo se muestra si NO estamos en login, registro, selección de roles o vistas de vendedor */}
         {mostrarLayout &&
           pathActual !== "/perfil" &&
           pathActual !== "/checkout" &&
           pathActual !== "/nosotros" && <Footer />}
 
-        {/* Asistente Nutrik: avatar flotante con retos, recordatorios y sugerencias */}
         {mostrarLayout && <AsistenteNutrik />}
       </CartProvider>
     </ProductProvider>
