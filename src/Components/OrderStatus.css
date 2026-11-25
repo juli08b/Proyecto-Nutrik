@@ -1,0 +1,114 @@
+.order-status {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  list-style: none;
+  margin: 30px 0 0;
+  padding: 0;
+}
+
+.order-status-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  text-align: center;
+}
+
+.order-status-step:not(:last-child)::after {
+  position: absolute;
+  top: 21px;
+  left: calc(50% + 24px);
+  z-index: 0;
+  width: calc(100% - 48px);
+  height: 3px;
+  border-radius: 2px;
+  background: #e4e9e3;
+  content: '';
+}
+
+.order-status-step.complete:not(:last-child)::after {
+  background: #6a9c74;
+}
+
+.order-status-node {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 2px solid #dfe6df;
+  border-radius: 50%;
+  background: #fff;
+  color: #788378;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.order-status-step.complete .order-status-node,
+.order-status-step.active .order-status-node {
+  border-color: #4a8055;
+  background: #4a8055;
+  color: #fff;
+}
+
+.order-status-step.active .order-status-node {
+  box-shadow: 0 0 0 5px #e8f1e7;
+}
+
+.order-status-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 15px 7px 0;
+}
+
+.order-status-copy strong {
+  color: #657166;
+  font-size: 13px;
+}
+
+.order-status-step.complete .order-status-copy strong,
+.order-status-step.active .order-status-copy strong {
+  color: #2c5434;
+}
+
+.order-status-copy small {
+  color: #879087;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+  .order-status {
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: 24px;
+  }
+
+  .order-status-step {
+    min-height: 75px;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 15px;
+    text-align: left;
+  }
+
+  .order-status-step:not(:last-child)::after {
+    top: 44px;
+    bottom: 0;
+    left: 21px;
+    width: 3px;
+    height: auto;
+  }
+
+  .order-status-node {
+    flex: 0 0 44px;
+  }
+
+  .order-status-copy {
+    padding: 3px 0 18px;
+  }
+}

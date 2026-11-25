@@ -1,0 +1,17 @@
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css";
+
+@theme {
+  --color-marca: #4eac36;
+  --color-marca-50: #f1f6ee;
+  --color-marca-100: #e8f5e9;
+  --color-marca-200: #d8e2d4;
+  --color-marca-600: #379754;
+  --color-marca-700: #1f6a3d;
+  --color-marca-texto: #2e7d32;
+  --color-ink: #1a1a2e;
+  --color-muted: #718096;
+  --color-linea: #eef1ec;
+  --color-campo: #f1f1f1;
+  --color-neutra: #4a5d4f;
+}

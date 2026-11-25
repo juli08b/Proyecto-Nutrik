@@ -1,0 +1,763 @@
+/* =====================================================
+   FACTURA
+===================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+.factura-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(0, 167, 119, 0.08), transparent 30%),
+    #f6f9f8;
+  color: #153c35;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+/* =====================================================
+   CONTENEDOR
+===================================================== */
+
+.factura-container {
+  width: min(1450px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 28px 0 50px;
+}
+
+/* =====================================================
+   TOPBAR
+===================================================== */
+
+.factura-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.breadcrumb {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  color: #164f42;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.breadcrumb-muted {
+  color: #8a9b96;
+}
+
+.breadcrumb-separator {
+  color: #b9c7c3;
+}
+
+.topbar-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  height: 42px;
+  border: 0;
+  border-radius: 10px;
+  padding: 0 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.btn-light {
+  color: #31534b;
+  background: #ffffff;
+  border: 1px solid #dce8e4;
+}
+
+.btn-light:hover {
+  background: #f1f7f5;
+}
+
+.btn-primary {
+  color: white;
+  background: #009b6d;
+  box-shadow: 0 5px 15px rgba(0, 155, 109, 0.2);
+}
+
+.btn-primary:hover {
+  background: #008b61;
+  transform: translateY(-1px);
+}
+
+.icon {
+  font-size: 16px;
+}
+
+/* =====================================================
+   FACTURA
+===================================================== */
+
+.invoice-card {
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e2ebe8;
+  border-radius: 22px;
+  box-shadow:
+    0 12px 35px rgba(27, 69, 59, 0.06),
+    0 2px 8px rgba(27, 69, 59, 0.03);
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.invoice-header {
+  min-height: 150px;
+  padding: 27px 34px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  position: relative;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 80% 40%,
+      rgba(35, 195, 143, 0.3),
+      transparent 28%
+    ),
+    linear-gradient(120deg, #007e59, #008d63 60%, #006f50);
+}
+
+.invoice-header::after {
+  content: "";
+  position: absolute;
+  width: 370px;
+  height: 370px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  right: -120px;
+  top: -180px;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  z-index: 2;
+}
+
+.brand-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #00865e;
+  display: grid;
+  place-items: center;
+  font-size: 27px;
+  font-weight: 900;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.brand-section h1 {
+  margin: 0;
+  font-size: 27px;
+  letter-spacing: -1px;
+}
+
+.brand-tag {
+  display: inline-block;
+  margin: 0 0 2px 4px;
+  font-size: 8px;
+  font-weight: 800;
+  background: #53d19e;
+  color: white;
+  border-radius: 5px;
+  padding: 2px 4px;
+}
+
+.brand-description {
+  margin: 1px 0 3px;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.95;
+}
+
+.brand-nit {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.invoice-header-right {
+  position: relative;
+  z-index: 2;
+  text-align: right;
+}
+
+.invoice-label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 2px;
+  opacity: 0.7;
+  font-weight: 700;
+}
+
+.invoice-header-right strong {
+  display: block;
+  font-size: 30px;
+  margin: 1px 0 7px;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 11px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #5ee7ae;
+  box-shadow: 0 0 0 3px rgba(94, 231, 174, 0.12);
+}
+
+.status-divider {
+  opacity: 0.5;
+}
+
+/* =====================================================
+   INFO CARDS
+===================================================== */
+
+.invoice-info-grid {
+  padding: 22px 22px 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.info-card {
+  border: 1px solid #e1ebe8;
+  border-radius: 16px;
+  background: #fbfdfc;
+  padding: 17px;
+}
+
+.info-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.info-icon {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  color: #009b6d;
+  background: #e6f8f1;
+  border-radius: 11px;
+  font-size: 17px;
+}
+
+.section-label {
+  display: block;
+  color: #00976b;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.1px;
+}
+
+.info-card h3 {
+  margin: 1px 0 0;
+  font-size: 13px;
+  color: #254c44;
+}
+
+.client-content {
+  margin-top: 16px;
+}
+
+.client-content h2 {
+  margin: 0 0 8px;
+  font-size: 17px;
+  color: #173d35;
+}
+
+.client-data {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  font-size: 11px;
+  color: #7c8f89;
+}
+
+.data-label {
+  margin-right: 5px;
+  color: #516e67;
+  font-weight: 600;
+}
+
+.client-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.client-status span {
+  color: #00a574;
+}
+
+.invoice-details {
+  margin-top: 13px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 0;
+  border-bottom: 1px solid #edf2f0;
+  color: #8a9b96;
+  font-size: 11px;
+}
+
+.detail-row:last-child {
+  border-bottom: 0;
+}
+
+.detail-row strong {
+  color: #314e47;
+  font-weight: 700;
+}
+
+/* =====================================================
+   PRODUCTOS
+===================================================== */
+
+.products-section {
+  padding: 12px 22px 20px;
+}
+
+.products-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 13px;
+}
+
+.products-title h2 {
+  margin: 2px 0 0;
+  font-size: 19px;
+  color: #173e36;
+}
+
+.products-count {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #789089;
+  font-size: 12px;
+}
+
+.products-count span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00af79;
+}
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.products-table {
+  border: 1px solid #e2ebe8;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.table-head,
+.product-row {
+  display: grid;
+  grid-template-columns: 2.4fr 0.7fr 1fr 0.7fr;
+  align-items: center;
+}
+
+.table-head {
+  min-height: 40px;
+  padding: 0 17px;
+  background: #f8fbfa;
+  color: #82948f;
+  font-size: 9px;
+  letter-spacing: 0.9px;
+  font-weight: 800;
+}
+
+.product-row {
+  min-height: 83px;
+  padding: 0 17px;
+  border-top: 1px solid #e9efed;
+  color: #334f48;
+  font-size: 13px;
+}
+
+.product-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.product-icon {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  color: #00a574;
+  background: #e9faf4;
+  border-radius: 11px;
+  font-size: 18px;
+}
+
+.product-info strong {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.product-info span {
+  display: block;
+  color: #9aaba6;
+  font-size: 11px;
+}
+
+.quantity span {
+  display: inline-flex;
+  min-width: 32px;
+  height: 23px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  background: #f1f5f4;
+  color: #647973;
+  font-size: 11px;
+}
+
+.price {
+  color: #4f655f;
+  font-size: 12px;
+}
+
+.total-price {
+  text-align: right;
+  font-weight: 700;
+  color: #23473f;
+}
+
+/* =====================================================
+   BOTTOM
+===================================================== */
+
+.invoice-bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(330px, 0.85fr);
+  gap: 20px;
+  padding: 0 22px 25px;
+}
+
+.terms-card {
+  min-height: 140px;
+  display: flex;
+  gap: 12px;
+  padding: 17px;
+  border: 1px solid #e1ebe8;
+  border-radius: 15px;
+  background: #fbfdfc;
+}
+
+.terms-icon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: #d8f7e9;
+  color: #009b6d;
+  font-weight: 700;
+}
+
+.terms-card h3 {
+  margin: 2px 0 6px;
+  font-size: 13px;
+  color: #234a42;
+}
+
+.terms-card p {
+  max-width: 670px;
+  margin: 0;
+  color: #778b85;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+/* =====================================================
+   RESUMEN
+===================================================== */
+
+.payment-summary {
+  overflow: hidden;
+  border: 1px solid #bcebd9;
+  border-radius: 16px;
+  background: #f5fcf9;
+}
+
+.summary-header {
+  padding: 11px 15px 7px;
+  color: #00976b;
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  font-weight: 800;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 15px;
+  color: #81938e;
+  font-size: 11px;
+}
+
+.summary-row strong {
+  color: #536b64;
+}
+
+.summary-total {
+  min-height: 66px;
+  margin-top: 5px;
+  padding: 9px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  background: linear-gradient(110deg, #00a271, #00976a);
+}
+
+.summary-total span {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.summary-total strong {
+  display: block;
+  margin-top: 2px;
+  color: white;
+  font-size: 24px;
+}
+
+.paid-icon {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  font-size: 19px;
+}
+
+.currency {
+  padding: 7px 15px 10px;
+  color: #6f8981;
+  font-size: 9px;
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.invoice-footer {
+  padding: 12px 20px 20px;
+  text-align: center;
+  border-top: 1px solid #edf2f0;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  color: #00a271;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.footer-brand span {
+  width: 30px;
+  height: 1px;
+  background: #c6e8dd;
+}
+
+.invoice-footer p {
+  margin: 5px 0 2px;
+  color: #8da09a;
+  font-size: 11px;
+}
+
+.invoice-footer small {
+  color: #b0bfbb;
+  font-size: 9px;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+  .factura-container {
+    width: min(100% - 28px, 1450px);
+  }
+
+  .invoice-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .invoice-bottom {
+    grid-template-columns: 1fr;
+  }
+
+  .payment-summary {
+    width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .factura-container {
+    width: calc(100% - 20px);
+    padding-top: 15px;
+  }
+
+  .factura-topbar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .topbar-actions {
+    width: 100%;
+  }
+
+  .topbar-actions .btn {
+    flex: 1;
+  }
+
+  .invoice-header {
+    padding: 22px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .invoice-header-right {
+    width: 100%;
+    text-align: left;
+  }
+
+  .invoice-header-right strong {
+    font-size: 25px;
+  }
+
+  .table-head {
+    display: none;
+  }
+
+  .product-row {
+    grid-template-columns: 1fr;
+    gap: 13px;
+    padding: 18px;
+  }
+
+  .quantity,
+  .price,
+  .total-price {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  .quantity::before {
+    content: "Cantidad";
+    color: #94a49f;
+    font-size: 11px;
+  }
+
+  .price::before {
+    content: "Precio unitario";
+    color: #94a49f;
+    font-size: 11px;
+  }
+
+  .total-price::before {
+    content: "Total";
+    color: #94a49f;
+    font-size: 11px;
+  }
+
+  .invoice-info-grid,
+  .products-section,
+  .invoice-bottom {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .client-data {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+  }
+}
+
+@media (max-width: 450px) {
+  .brand-section {
+    align-items: flex-start;
+  }
+
+  .brand-logo {
+    width: 42px;
+    height: 42px;
+  }
+
+  .brand-section h1 {
+    font-size: 23px;
+  }
+
+  .invoice-header {
+    min-height: 0;
+  }
+
+  .invoice-card {
+    border-radius: 16px;
+  }
+
+  .terms-card {
+    padding: 14px;
+  }
+}
