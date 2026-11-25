@@ -1,0 +1,143 @@
+.rol-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 10% 15%, rgba(33, 99, 1, 0.07), transparent 40%),
+    radial-gradient(circle at 90% 85%, rgba(33, 99, 1, 0.06), transparent 45%),
+    #ffffff;
+  padding: 30px 16px;
+}
+
+.rol-card {
+  background: #ffffff;
+  border-radius: 26px;
+  padding: 40px 36px 32px;
+  max-width: 760px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid #e6e6e6;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.1);
+}
+
+.rol-logo {
+  width: 86px;
+  margin-bottom: 14px;
+  object-fit: contain;
+}
+
+.rol-titulo {
+  margin: 0 0 6px;
+  color: #111111;
+  font-size: 1.7rem;
+}
+
+.rol-sub {
+  margin: 0 0 26px;
+  color: #6e6e6e;
+}
+
+.rol-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.rol-opcion {
+  border: 1.5px solid #e6e6e6;
+  border-radius: 18px;
+  padding: 24px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fafafa;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.rol-opcion:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  border-color: #216301;
+}
+
+.rol-icono {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid #e6e6e6;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  font-size: 1.7rem;
+  margin-bottom: 12px;
+}
+
+.rol-opcion h2 {
+  margin: 0 0 6px;
+  color: #111111;
+  font-size: 1.25rem;
+}
+
+.rol-desc {
+  margin: 0 0 16px;
+  color: #6e6e6e;
+  font-size: 0.95rem;
+}
+
+.rol-acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.rol-boton {
+  padding: 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  display: block;
+  transition: transform 0.15s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rol-boton.primario {
+  background: #111111;
+  color: #ffffff;
+}
+
+.rol-boton.primario:hover {
+  background: #272727;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.16);
+}
+
+.rol-boton.secundario {
+  background: #ffffff;
+  color: #111111;
+  border: 1.5px solid #111111;
+}
+
+.rol-boton.secundario:hover {
+  background: #f5f5f5;
+}
+
+.rol-volver {
+  display: inline-block;
+  margin-top: 22px;
+  color: #6e6e6e;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.rol-volver:hover {
+  color: #216301;
+}
+
+@media (max-width: 640px) {
+  .rol-grid {
+    grid-template-columns: 1fr;
+  }
+}

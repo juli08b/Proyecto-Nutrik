@@ -1,9 +1,10 @@
-// import React from 'react';
+import { Navigate } from 'react-router-dom';
 import {
     LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
     PieChart, Pie, Cell, Legend
 } from 'recharts';
-import { useNavigate } from "react-router-dom";
+import { useAuth } from '../../Context/authContext';
+import { ROLES } from '../../constants/roles';
 import './Dashboard.css';
 
 // Datos de prueba basados en tu boceto
@@ -28,10 +29,10 @@ const dataCategorias = [
 ];
 
 const ventasRecientes = [
-    { id: '#1052', cliente: 'Josman Chango', fecha: '25/08/2026', total: '$ 180.000', estado: 'Completado', factura: 'ver factura' },
-    { id: '#1051', cliente: 'Carlos López', fecha: '25/08/2026', total: '$ 320.000', estado: 'Enviado', factura: 'ver factura' },
-    { id: '#1050', cliente: 'Lucía Gómez', fecha: '24/08/2026', total: '$ 95.000', estado: 'Pendiente', factura: 'ver factura' },
-    { id: '#1049', cliente: 'Diego Ruiz', fecha: '24/08/2026', total: '$ 210.000', estado: 'Completado', factura: 'ver factura' },
+    { id: '#1052', cliente: 'Ana Martínez', fecha: '25/08/2026', total: '$ 180.000', estado: 'Completado' },
+    { id: '#1051', cliente: 'Carlos López', fecha: '25/08/2026', total: '$ 320.000', estado: 'Enviado' },
+    { id: '#1050', cliente: 'Lucía Gómez', fecha: '24/08/2026', total: '$ 95.000', estado: 'Pendiente' },
+    { id: '#1049', cliente: 'Diego Ruiz', fecha: '24/08/2026', total: '$ 210.000', estado: 'Completado' },
 ];
 
 const productosTop = [
@@ -42,14 +43,16 @@ const productosTop = [
 ];
 
 const Dashboard = () => {
-    const navigate = useNavigate();
+    const { user } = useAuth();
+    if (!user) return <Navigate to="/elegir-rol" replace />;
+    if (![ROLES.USER, ROLES.ADMIN].includes(user.role)) return <Navigate to="/perfil" replace />;
 
     return (
         <div className="dashboard-container">
             <header className="dashboard-header">
                 <div>
-                    <h1>Panel de Vendedor</h1>
-                    <p>Resumen general de tu tienda</p>
+                    <h1>{user.role === ROLES.ADMIN ? 'Panel de Administración' : 'Panel de Marketplace'}</h1>
+                    <p>{user.role === ROLES.ADMIN ? 'Supervisión global de Nutrik' : 'Resumen de tus ventas y productos'}</p>
                 </div>
                 <div className="date-filter">01/08/2024 - 25/08/2024</div>
             </header>
@@ -142,9 +145,6 @@ const Dashboard = () => {
                                     <th>Fecha</th>
                                     <th>Total</th>
                                     <th>Estado</th>
-                                    <th>Factura</th>
-
-
                                 </tr>
                             </thead>
                             <tbody>
@@ -158,26 +158,6 @@ const Dashboard = () => {
                                             <span className={`status-badge ${item.estado.toLowerCase()}`}>
                                                 {item.estado}
                                             </span>
-                                        </td>
-                                        <td>
-                                            <button
-                                                type="button"
-                                                className="factura-badge"
-                                                onClick={() => {
-                                                    // Redirige a FacturaView y envía los datos por el estado de la ruta
-                                                    navigate(`/FacturaView`, {
-                                                        state: {
-                                                            numero: item.id,
-                                                            cliente: item.cliente,
-                                                            fecha: item.fecha,
-                                                            total: item.total,
-                                                            estado: item.estado
-                                                        }
-                                                    });
-                                                }}
-                                            >
-                                                {item.factura}
-                                            </button>
                                         </td>
                                     </tr>
                                 ))}
@@ -205,7 +185,7 @@ const Dashboard = () => {
                             <tbody>
                                 {productosTop.map((prod, index) => (
                                     <tr key={index}>
-                                        <td className="font-bold">{prod.nombre}</td>
+                                        <td className="font-bold">{prod.nombre}</td> //aqui se agrego la clase font-bold para resaltar el nombre del producto
                                         <td><span className="category-tag">{prod.categoria}</span></td>
                                         <td>{prod.unidades}</td>
                                         <td>{prod.total}</td>

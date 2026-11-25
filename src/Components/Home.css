@@ -1,304 +1,1243 @@
-/* =======================================================
-   COLORES DE LA PÁGINA
-   ======================================================= */
-:root {
-  --verde: #14532d;
-  /* principal */
-  --verde-oscuro: #052e16;
-  /* fondo oscuro */
-  --verde-claro: #4ade80;
-  /* acento */
+/* ============================================================
+   HOME · NUTRIK
+   Estructura: Hero carrusel · Beneficios · Categorías ·
+   Destacados · Recetas · Cómo funciona · Valor.
+   Todo aislado bajo .home-nutrik.
+   ============================================================ */
+
+.home-nutrik {
+  --hn-verde: #0f4c2a;
+  --hn-verde-profundo: #092015;
+  --hn-verde-medio: #1f6a3d;
+  --hn-dorado: #e3a33b;
+  --hn-dorado-claro: #f0b652;
+  --hn-crema: #f8f6f0;
+  --hn-crema-verde: #f3f7ef;
+  --hn-tinta: #14261a;
+  --hn-gris: #5b6b5f;
+  --hn-max: 1216px;
+
+  width: 100%;
+  background: #ffffff;
+  color: var(--hn-tinta);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    sans-serif;
 }
 
-/* =======================================================
-   SECCIÓN 1: BIENVENIDA (HERO)
-   ======================================================= */
-.hero {
+.home-nutrik *,
+.home-nutrik *::before,
+.home-nutrik *::after {
+  box-sizing: border-box;
+}
+
+.home-nutrik img {
+  display: block;
+  max-width: 100%;
+}
+
+.home-nutrik .home-seccion {
+  padding: clamp(56px, 7vw, 96px) clamp(20px, 4vw, 48px);
+  max-width: calc(var(--hn-max) + 96px);
+  margin: 0 auto;
+}
+
+.home-nutrik .home-seccion--crema {
+  background: var(--hn-crema-verde);
+  max-width: none;
+  border-top: 1px solid #e8f0e3;
+  border-bottom: 1px solid #e8f0e3;
+}
+
+/* Sección blanca (Lo más elegido): fondo blanco, separada del bloque crema */
+.home-nutrik .home-seccion--blanca {
+  background: #ffffff;
+  max-width: none;
+  padding-top: clamp(32px, 4vw, 52px);
+  padding-bottom: clamp(36px, 4.5vw, 60px);
+  border-top: 1px solid #eef3ea;
+}
+
+.home-nutrik .home-seccion--blanca > .seccion-head,
+.home-nutrik .home-seccion--blanca > .destacados-track {
+  max-width: var(--hn-max);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Sección crema informativa */
+.home-nutrik #sobre-nosotros {
+  padding-top: clamp(40px, 5vw, 60px);
+  padding-bottom: clamp(40px, 4.5vw, 64px);
+  border-bottom: 1px solid #e8f0e3;
+}
+
+/* Sección de categorías: carrusel de extremo a extremo */
+.home-nutrik #categorias {
+  max-width: none;
+  padding-top: clamp(40px, 5vw, 64px);
+  padding-bottom: clamp(40px, 4.5vw, 64px);
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.home-nutrik #categorias > .seccion-head {
+  max-width: var(--hn-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(20px, 4vw, 48px);
+  padding-right: clamp(20px, 4vw, 48px);
+}
+
+.home-nutrik .home-seccion--crema > .seccion-head,
+.home-nutrik .home-seccion--crema > .destacados-track,
+.home-nutrik .home-seccion--crema > .sobre-layout {
+  max-width: var(--hn-max);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ===== ENCABEZADOS DE SECCIÓN ===== */
+.home-nutrik .seccion-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: clamp(28px, 3.5vw, 44px);
+}
+
+.home-nutrik .seccion-head--centrado {
+  justify-content: center;
+  text-align: center;
+}
+
+.home-nutrik .seccion-head--centrado > div {
+  margin: 0 auto;
+}
+
+.home-nutrik .seccion-kicker {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: var(--hn-verde-medio);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.home-nutrik .seccion-head h2 {
+  margin: 0;
+  color: var(--hn-verde);
+  font-size: clamp(1.7rem, 3.4vw, 2.6rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.home-nutrik .seccion-ver {
+  flex-shrink: 0;
+  padding-bottom: 3px;
+  color: var(--hn-verde-medio);
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.home-nutrik .seccion-ver:hover {
+  color: var(--hn-verde-profundo);
+  border-color: var(--hn-dorado);
+}
+
+/* ============================================================
+   HERO CARRUSEL
+   ============================================================ */
+.home-nutrik .hero-banner {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 80px 10%;
-  min-height: 100vh;
-  background: linear-gradient(135deg, var(--verde), var(--verde-oscuro));
-  color: white;
-}
-
-.hero-texto {
-  flex: 1.4;                 /* Hace que el texto ocupe un poco más de ancho */
-  font-family: 'Poppins', sans-serif; /* Tipo de letra moderno para el bloque */
-}
-
-.hero h1 {
-  font-size: 80px;           /* Tamaño de letra gigante para el título */
-  font-weight: 800;          /* Grosor de letra muy grueso y fuerte */
-  line-height: 1.1;          /* Junta un poco los renglones del título */
-  margin-bottom: 20px;       /* Separa el título del párrafo de abajo */
-  font-family: 'Playfair Display', serif; /* Tipo de letra elegante para el h1 */
-  letter-spacing: -1px;      /* Junta un poquito las letras entre sí */
-}
-
-.hero h1 span {
-  color: var(--verde-claro); /* Pone el texto destacado en verde oscuro */
-}
-
-.hero-desc {
-  color: white;              /* Letras del párrafo en color blanco */
-  font-size: 18px;           /* Tamaño de letra mediano para leer bien */
-  margin-bottom: 30px;       /* Separa el párrafo de los botones */
-  line-height: 1.6;          /* Deja un espacio cómodo entre renglones */
-  opacity: 0.9;              /* Hace la letra un poquitico transparente */
-  max-width: 550px;          /* Limita el ancho para que no se estire tanto */
-}
-
-/* BOTONES DE BIENVENIDA */
-.hero-botones .btn-link {
-  display: inline-block;     /* Permite darle forma de botón al enlace */
-  padding: 14px 28px;        /* Tamaño del botón: arriba/abajo y lados */
-  margin-right: 12px;        /* Separa un botón del otro botón */
-  border-radius: 8px;        /* Redondea las esquinas del botón */
-  font-size: 16px;           /* Tamaño de la letra dentro del botón */
-  font-weight: bold;         /* Pone la letra del botón en negrita */
-  text-decoration: none;     /* Quita la línea de subrayado del enlace */
-  transition: all 0.3s ease; /* Hace que los cambios visuales sean suaves */
-}
-
-/* Botón Explorar */
-.btn-primary {
-  background: linear-gradient(90deg, #91b6a5 0%, #e5ffe1 100%); /* Fondo degradado claro */
-  color: var(--verde-oscuro); /* Letra del botón en verde oscuro */
-}
-
-.btn-primary:hover {
-  transform: translateY(-3px); /* Sube el botón un poquito al pasar el mouse */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Le pone una sombra negra suave */
-}
-
-/* Botón Ver planes */
-.btn-outline {
-  border: 2px solid white;   /* Le pone un borde de línea blanca */
-  color: white;              /* Letra del botón en color blanco */
-}
-
-.btn-outline:hover {
-  background: white;         /* Pone el fondo blanco al pasar el mouse */
-  color: var(--verde-oscuro); /* Cambia la letra a verde oscuro al pasar el mouse */
-  transform: translateY(-3px); /* Sube el botón un poquito al pasar el mouse */
-}
-
-/* FOTO PRINCIPAL Y TARJETAS FLOTANTES */
-.hero-img {
-  flex: 1;                   /* Ocupa el espacio que queda libre a la derecha */
-  display: flex;             /* Activa el diseño flexible en este contenedor */
-  justify-content: center;   /* Centra la foto de forma horizontal */
-  align-items: center;       /* Centra la foto de forma vertical */
-  position: relative;        /* Permite acomodar tarjetas encima de la foto */
-}
-
-.circulo {
-  width: 350px;
-  height: 350px;
-  border-radius: 50%;
+  justify-content: center;
+  min-height: 92svh;
+  padding: clamp(130px, 16vh, 175px) clamp(20px, 5vw, 56px)
+    clamp(120px, 15vh, 165px);
   overflow: hidden;
-  background: white;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  background-color: var(--hn-verde-profundo);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #fff;
+  text-align: center;
 }
 
-.circulo img {
-  width: 100%;               /* Hace que la foto ocupe todo el ancho disponible */
-  height: 100%;              /* Hace que la foto ocupe todo el alto disponible */
-  object-fit: cover;         /* Adapta la foto para que llene el círculo sin dañarse */
-}
-
-/* Estilo de las tarjetas pequeñas flotantes */
-.card {
+.home-nutrik .hero-banner::after {
+  content: "";
   position: absolute;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  padding: 10px 15px;
-  border-radius: 10px;
-  font-size: 14px;
-  color: white;
+  inset: 0;
+  background: radial-gradient(
+    120% 90% at 50% 45%,
+    transparent 35%,
+    rgba(5, 18, 11, 0.5) 100%
+  );
+  pointer-events: none;
 }
 
-/* Ubicación de cada tarjeta flotante */
-.card1 { top: 40px; right: 20px; animation-delay: 0s; } /* Arriba a la derecha, arranca ya */
-.card2 { bottom: 40px; left: 20px; animation-delay: 1s; } /* Abajo a la izquierda, espera 1 segundo */
-.card3 { top: 50%; right: -10px; transform: translateY(-50%); animation-delay: 2s; } /* Al medio derecho, espera 2 segundos */
-
-/* Animación para que las tarjetas suban y bajen */
-@keyframes float {
-  0%, 100% { transform: translateY(0); }       /* Empieza en su posición original */
-  50% { transform: translateY(-12px); }        /* Sube 12 píxeles a la mitad del tiempo */
-}
-
-/* =======================================================
-   SECCIÓN 2: BENEFICIOS (¿POR QUÉ ELEGIRNOS?)
-   ======================================================= */
-.beneficios {
-  padding: 28px 8% 50px 8%;
-  text-align: center;
-  background: linear-gradient(180deg, #edf7ef 0%, #ecfdf5 52%, #f8fff9 100%);
-}
-
-.beneficios h2 {
-  font-size: 40px;           /* Tamaño grande para el título de beneficios */
-  margin-bottom: 45px;       /* Deja espacio libre abajo del título */
-  color: var(--verde-oscuro); /* Letras de color verde oscuro */
-  position: relative;        /* Permite colocar la línea decorativa abajo */
-}
-
-/* Línea verde debajo del título */
-.beneficios h2::after {
-  content: "";               /* Obligatorio para que aparezca la línea */
-  width: 60px;               /* Ancho de la línea horizontal */
-  height: 4px;               /* Grosor de la línea horizontal */
-  background: var(--verde-neon); /* Color de la línea decorativa */
-  display: block;            /* Convierte la línea en un bloque sólido */
-  margin: 12px auto 0;       /* La centra horizontalmente y la separa del texto */
-  border-radius: 10px;       /* Redondeas las puntas de la línea */
-}
-
-/* Distribución de las cajas de beneficios */
-.beneficios-grid {
-  display: grid;             /* Activa el modo de rejilla inteligente */
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Acomoda las cajas según el espacio */
-  gap: 30px;                 /* Separa las cajas entre sí por 30px */
-}
-
-/* Caja de beneficio individual */
-.beneficio {
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-  width: 250px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  transition: 0.3s;
-}
-
-.beneficio:hover {
-  transform: translateY(-10px);
-}
-
-.beneficio h3 {
-  font-size: 20px;           /* Tamaño del título del beneficio */
-  margin-bottom: 12px;       /* Espacio entre el título y el texto corto */
-  color: #0b4b24;            /* Color verde pino para el subtítulo */
-}
-
-.beneficio:hover {
-  transform: translateY(-8px); /* Sube la tarjeta suavemente al pasar el mouse */
-  box-shadow: 0 15px 30px rgba(18, 113, 80, 0.15); /* Pone la sombra más intensa */
-  border-color: var(--verde-oscuro); /* Cambia la línea del borde a verde oscuro */
-}
-
-/* =======================================================
-   SECCIÓN 3: PRODUCTOS (LO NUEVO)
-   ======================================================= */
-.productos {
-  text-align: center;
-  color: var(--verde-oscuro);
-  background: linear-gradient(180deg, #ffffff 0%, #edf7ef 42%, #e8f4ea 100%);
-  padding: 34px 4% 24px 4%;
-  margin-bottom: 24px;
+.home-nutrik .hero-content {
   position: relative;
   z-index: 2;
-  border-bottom: 1px solid rgba(18, 113, 80, 0.08);
-}
-
-.productos h2 {
-  font-size: 50px;           /* Título grande de la sección */
-  color: #12280d;            /* Letras de color verde oscuro */
-  margin-bottom: 20px;       /* Espacio libre debajo del h2 */
-  position: relative;        /* Deja listo el lugar para la línea inferior */
-}
-
-.productos h2::after {
-  content: "";
-  width: 60px;
-  height: 4px;
-  background: var(--verde-neon);
-  display: block;
-  margin: 12px auto 0;
-  border-radius: 10px;
-}
-
-.feature-bar-container {
-  max-width: 1200px;
-  margin: -50px auto 50px;
-  /* Sube la barra un poco para que pise el hero */
-  position: relative;
-  z-index: 10;
-  background: var(--verde-oscuro);
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-}
-
-/* La imagen de frutas arriba */
-.feature-image-banner {
   width: 100%;
-  height: 120px;
-  /* Altura de la franja de frutas */
+  max-width: 900px;
+  animation: hero-entrada 0.7s ease both;
 }
 
-.feature-image-banner img {
+.home-nutrik .hero-kicker {
+  display: inline-block;
+  margin-bottom: clamp(16px, 2.4vh, 24px);
+  color: var(--hn-dorado);
+  font-size: clamp(0.66rem, 1.4vw, 0.85rem);
+  font-weight: 700;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+}
+
+.home-nutrik .hero-titulo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.06em;
+  margin: 0;
+  color: #fff;
+  font-size: clamp(2.3rem, 6.4vw, 5rem);
+  font-weight: 900;
+  line-height: 1.02;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  text-shadow: 0 4px 26px rgba(0, 0, 0, 0.35);
+}
+
+.home-nutrik .hero-titulo span {
+  display: block;
+}
+
+.home-nutrik .hero-subtitulo {
+  margin: clamp(18px, 2.6vh, 26px) 0 0;
+  color: var(--hn-dorado);
+  font-size: clamp(0.7rem, 1.4vw, 0.95rem);
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+}
+
+.home-nutrik .hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-top: clamp(30px, 4.5vh, 44px);
+}
+
+.home-nutrik .home-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 210px;
+  padding: 16px 34px;
+  border: 1.5px solid transparent;
+  border-radius: 8px;
+  font-size: clamp(0.72rem, 1.1vw, 0.82rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.home-nutrik .home-cta--primario {
+  background: var(--hn-dorado);
+  border-color: var(--hn-dorado);
+  color: var(--hn-tinta);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.24);
+}
+
+.home-nutrik .home-cta--primario:hover {
+  background: var(--hn-dorado-claro);
+  border-color: var(--hn-dorado-claro);
+  transform: translateY(-2px);
+}
+
+.home-nutrik .home-cta--secundario {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.85);
+  color: #fff;
+}
+
+.home-nutrik .home-cta--secundario:hover {
+  background: #fff;
+  border-color: #fff;
+  color: var(--hn-tinta);
+  transform: translateY(-2px);
+}
+
+.home-nutrik .hero-dots {
+  position: absolute;
+  bottom: clamp(24px, 4vh, 40px);
+  left: 50%;
+  z-index: 3;
+  display: flex;
+  gap: 10px;
+  transform: translateX(-50%);
+}
+
+.home-nutrik .hero-dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: width 0.25s ease, background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.home-nutrik .hero-dot:hover {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.home-nutrik .hero-dot.activo {
+  width: 28px;
+  background: var(--hn-dorado);
+  border-color: var(--hn-dorado);
+}
+
+.home-nutrik .hero-copyright {
+  position: absolute;
+  bottom: clamp(24px, 4vh, 36px);
+  left: clamp(18px, 4vw, 48px);
+  z-index: 3;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   FRANJA DE BENEFICIOS
+   ============================================================ */
+.home-nutrik .features-strip {
+  padding: 18px clamp(20px, 4vw, 48px);
+  margin-bottom: 8px;
+  background: var(--hn-crema);
+  border-bottom: 1px solid #ece7dc;
+}
+
+.home-nutrik #categorias {
+  padding-top: clamp(32px, 4vw, 52px);
+}
+
+.home-nutrik .features-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(12px, 1.6vw, 22px);
+  width: 100%;
+  max-width: var(--hn-max);
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.home-nutrik .features-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  color: var(--hn-verde);
+  font-size: clamp(0.7rem, 0.86vw, 0.82rem);
+  font-weight: 700;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.home-nutrik .feature-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--hn-verde-medio);
+  box-shadow: 0 4px 12px rgba(16, 40, 24, 0.07);
+}
+
+.home-nutrik .feature-texto {
+  white-space: nowrap;
+}
+
+@media (min-width: 900px) {
+  .home-nutrik .features-list li + li {
+    padding-left: clamp(12px, 1.6vw, 26px);
+    border-left: 1px solid #e0dccf;
+  }
+}
+
+/* ============================================================
+   CATEGORÍAS
+   ============================================================ */
+.home-nutrik .categorias-track {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: clamp(16px, 1.8vw, 22px);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: clamp(20px, 4vw, 48px);
+  padding: 8px clamp(20px, 4vw, 48px) 20px;
+  margin: 0;
+  scrollbar-width: thin;
+  scrollbar-color: #c6d8bd transparent;
+}
+
+.home-nutrik .categorias-track::-webkit-scrollbar {
+  height: 8px;
+}
+
+.home-nutrik .categorias-track::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.home-nutrik .categorias-track::-webkit-scrollbar-thumb {
+  background: #c6d8bd;
+  border-radius: 999px;
+}
+
+.home-nutrik .categorias-track::-webkit-scrollbar-thumb:hover {
+  background: #9fc092;
+}
+
+.home-nutrik .categoria-card {
+  position: relative;
+  flex: 0 0 clamp(210px, 18vw, 264px);
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  border-radius: 22px;
+  box-shadow: 0 10px 24px rgba(16, 40, 24, 0.1);
+  text-decoration: none;
+  scroll-snap-align: start;
+}
+
+.home-nutrik .categoria-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
+  transition: transform 0.5s ease;
 }
 
-/* La fila de iconos y textos */
-.feature-content {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  padding: 30px;
-  background: var(--verde-oscuro);
-  /* Mismo verde que el hero */
-  color: white;
-  align-items: center;
+.home-nutrik .categoria-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(9, 32, 20, 0) 40%,
+    rgba(9, 32, 20, 0.78) 100%
+  );
 }
 
-.feature-item {
+.home-nutrik .categoria-card:hover img {
+  transform: scale(1.08);
+}
+
+.home-nutrik .categoria-nombre {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
   display: flex;
   align-items: center;
-  gap: 15px;
-  padding: 0 20px;
+  justify-content: center;
+  min-height: 52px;
+  padding: 12px 14px;
+  color: #fff;
+  font-size: 0.96rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(9, 32, 20, 0.55);
 }
 
-/* Líneas divisorias verticales */
-.feature-item.divider {
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
+/* ============================================================
+   SOBRE NOSOTROS / CONSEJOS PARA TU DIETA
+   ============================================================ */
+.home-nutrik .sobre-layout {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: clamp(32px, 4.5vw, 68px);
 }
 
-.feature-icon {
-  font-size: 2rem;
+.home-nutrik .sobre-intro {
+  max-width: 560px;
+  text-align: left;
 }
 
-.feature-item h4 {
+.home-nutrik .sobre-intro .seccion-kicker {
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.home-nutrik .sobre-intro .seccion-kicker::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 42px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--hn-dorado), var(--hn-dorado-claro));
+}
+
+.home-nutrik .sobre-intro h2 {
+  margin: 0 0 18px;
+  color: var(--hn-verde);
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.home-nutrik .sobre-intro p {
   margin: 0;
-  font-size: 1.1rem;
+  color: var(--hn-gris);
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  line-height: 1.7;
+}
+
+.home-nutrik .sobre-intro .sobre-parrafo {
+  max-width: 540px;
+  line-height: 1.75;
+}
+
+.home-nutrik .sobre-intro .sobre-parrafo + .sobre-parrafo {
+  margin-top: 14px;
+}
+
+.home-nutrik .sobre-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(20px, 3vw, 40px);
+  margin: clamp(26px, 3vw, 36px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-nutrik .sobre-stats li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.home-nutrik .sobre-stats li + li {
+  padding-left: clamp(20px, 3vw, 40px);
+}
+
+.home-nutrik .sobre-stats li + li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 42px;
+  background: #d9e4d3;
+}
+
+.home-nutrik .sobre-stats strong {
+  color: var(--hn-verde);
+  font-size: clamp(1.6rem, 2.6vw, 2.15rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.home-nutrik .sobre-stats span {
+  color: #7d8f78;
+  font-size: 0.78rem;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.feature-item p {
-  margin: 5px 0 0 0;
+/* Panel de consejos */
+.home-nutrik .consejos-panel {
+  position: relative;
+  padding: clamp(24px, 3vw, 34px);
+  background: linear-gradient(160deg, #ffffff 0%, #f4f9f1 100%);
+  border: 1px solid #e4eee0;
+  border-radius: 26px;
+  box-shadow: 0 22px 50px rgba(16, 40, 24, 0.1);
+}
+
+.home-nutrik .consejos-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 26px;
+  padding: 1px;
+  background: linear-gradient(
+    140deg,
+    rgba(227, 163, 59, 0.4),
+    rgba(31, 106, 61, 0.12) 40%,
+    transparent
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.home-nutrik .consejos-panel-titulo {
+  display: inline-block;
+  margin-bottom: 18px;
+  color: var(--hn-verde-medio);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.home-nutrik .consejos-grid {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-nutrik .consejo-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  background: #ffffff;
+  border: 1px solid #e9efe6;
+  border-radius: 18px;
+  transition: transform 0.22s ease, box-shadow 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.home-nutrik .consejo-card:hover {
+  transform: translateY(-3px);
+  border-color: #cfe1c7;
+  box-shadow: 0 14px 28px rgba(16, 40, 24, 0.1);
+}
+
+.home-nutrik .consejo-icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: var(--hn-crema-verde);
+  color: var(--hn-verde-medio);
+}
+
+.home-nutrik .consejo-texto {
+  min-width: 0;
+}
+
+.home-nutrik .consejo-card h3 {
+  margin: 0 0 3px;
+  color: var(--hn-verde);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.home-nutrik .consejo-card p {
+  margin: 0;
+  color: var(--hn-gris);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   PRODUCTOS DESTACADOS
+   ============================================================ */
+.home-nutrik .destacados-controles {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.home-nutrik .destacados-flecha {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid #e0ead9;
+  color: var(--hn-verde);
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(16, 40, 24, 0.08);
+  transition: background-color 0.2s ease, color 0.2s ease,
+    transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.home-nutrik .destacados-flecha:hover {
+  background: var(--hn-verde);
+  border-color: var(--hn-verde);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(15, 76, 42, 0.28);
+}
+
+.home-nutrik .destacados-flecha:focus-visible {
+  outline: 3px solid var(--hn-dorado);
+  outline-offset: 2px;
+}
+
+.home-nutrik .destacados-track {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: clamp(16px, 1.8vw, 24px);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 4px;
+  padding: 6px 4px 16px;
+  margin: 0;
+  scrollbar-width: thin;
+  scrollbar-color: #c6d8bd transparent;
+}
+
+.home-nutrik .destacados-track::-webkit-scrollbar {
+  height: 8px;
+}
+
+.home-nutrik .destacados-track::-webkit-scrollbar-track {
+  background: #eef3ea;
+  border-radius: 999px;
+}
+
+.home-nutrik .destacados-track::-webkit-scrollbar-thumb {
+  background: #c6d8bd;
+  border-radius: 999px;
+}
+
+.home-nutrik .destacados-track::-webkit-scrollbar-thumb:hover {
+  background: #9fc092;
+}
+
+.home-nutrik .destacados-track .producto-card {
+  flex: 0 0 clamp(235px, 25.5vw, 300px);
+  scroll-snap-align: start;
+}
+
+.home-nutrik .producto-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e9efe6;
+  border-radius: 20px;
+  box-shadow: 0 10px 24px rgba(16, 40, 24, 0.06);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.home-nutrik .producto-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 32px rgba(16, 40, 24, 0.12);
+}
+
+.home-nutrik .producto-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  padding: 5px 11px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+}
+
+.home-nutrik .producto-badge--más-vendido,
+.home-nutrik .producto-badge--mas-vendido {
+  background: linear-gradient(135deg, #0f4c2a, #2e9e5b);
+}
+
+.home-nutrik .producto-badge--nuevo {
+  background: linear-gradient(135deg, #1e88e5, #42a5f5);
+}
+
+.home-nutrik .producto-badge--oferta {
+  background: linear-gradient(135deg, #e3a33b, #d98324);
+}
+
+.home-nutrik .producto-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 220px;
+  padding: 18px;
+  overflow: hidden;
+  background: #f7faf5;
+  border-bottom: 1px solid #eef3ea;
+}
+
+.home-nutrik .producto-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.home-nutrik .producto-card:hover .producto-media img {
+  transform: scale(1.05);
+}
+
+.home-nutrik .producto-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 14px 18px;
+  text-align: center;
+}
+
+.home-nutrik .producto-info h3 {
+  margin: 0;
+  min-height: 2.4em;
+  display: flex;
+  align-items: center;
+  color: var(--hn-verde);
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.home-nutrik .producto-peso {
+  color: #8a998e;
+  font-size: 0.72rem;
+}
+
+.home-nutrik .producto-precios {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 1.4em;
+  margin: 8px 0 14px;
+}
+
+.home-nutrik .producto-precio {
+  color: var(--hn-verde);
+  font-size: 1.12rem;
+  font-weight: 900;
+}
+
+.home-nutrik .producto-precio-original {
+  color: #a9b3ab;
+  font-size: 0.82rem;
+  text-decoration: line-through;
+}
+
+.home-nutrik .producto-agregar {
+  margin-top: auto;
+  width: 100%;
+  padding: 11px 18px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #14532d 0%, #1f6a3d 100%);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.home-nutrik .producto-agregar:hover {
+  background: linear-gradient(135deg, #166534 0%, #22804d 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 18px rgba(20, 83, 45, 0.24);
+}
+
+.home-nutrik .producto-agregar:focus-visible {
+  outline: 3px solid var(--hn-dorado);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   BANNER RECETAS Y CONSEJOS
+   ============================================================ */
+.home-nutrik .recetas-banner {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(56px, 8vw, 110px) clamp(20px, 5vw, 64px);
+  background:
+    linear-gradient(120deg, rgba(9, 32, 20, 0.92), rgba(15, 76, 42, 0.82)),
+    url("https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1600&auto=format&fit=crop")
+      center / cover no-repeat;
+  color: #fff;
+  text-align: center;
+}
+
+.home-nutrik .recetas-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    90% 120% at 15% 20%,
+    rgba(227, 163, 59, 0.18),
+    transparent 55%
+  );
+  pointer-events: none;
+}
+
+.home-nutrik .recetas-contenido {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.home-nutrik .recetas-kicker {
+  display: inline-block;
+  margin-bottom: 14px;
+  color: var(--hn-dorado);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.home-nutrik .recetas-banner h2 {
+  margin: 0 0 16px;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.home-nutrik .recetas-banner p {
+  margin: 0 auto 28px;
+  max-width: 52ch;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.home-nutrik .recetas-cta {
+  display: inline-flex;
+  padding: 15px 34px;
+  border-radius: 8px;
+  background: var(--hn-dorado);
+  color: var(--hn-tinta);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.home-nutrik .recetas-cta:hover {
+  background: var(--hn-dorado-claro);
+  transform: translateY(-2px);
+}
+
+.home-nutrik .recetas-hoja {
+  position: absolute;
+  z-index: 1;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.16);
+  pointer-events: none;
+}
+
+.home-nutrik .recetas-hoja--1 {
+  width: 220px;
+  height: 220px;
+  right: -60px;
+  top: -60px;
+}
+
+.home-nutrik .recetas-hoja--2 {
+  width: 150px;
+  height: 150px;
+  left: -40px;
+  bottom: -50px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ============================================================
+   CÓMO FUNCIONA
+   ============================================================ */
+.home-nutrik .pasos-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 26px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: paso;
+}
+
+.home-nutrik .paso-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: clamp(24px, 2.6vw, 34px) clamp(18px, 2vw, 26px);
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #e9efe6;
+  border-radius: 22px;
+  box-shadow: 0 10px 24px rgba(16, 40, 24, 0.05);
+}
+
+.home-nutrik .paso-numero {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: var(--hn-dorado);
+  color: var(--hn-tinta);
   font-size: 0.9rem;
-  opacity: 0.7;
+  font-weight: 900;
+  box-shadow: 0 8px 16px rgba(227, 163, 59, 0.35);
 }
 
-/* Ajuste para móviles */
+.home-nutrik .paso-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: var(--hn-crema-verde);
+  color: var(--hn-verde-medio);
+}
+
+.home-nutrik .paso-card h3 {
+  margin: 4px 0 0;
+  color: var(--hn-verde);
+  font-size: 1.02rem;
+  font-weight: 800;
+}
+
+.home-nutrik .paso-card p {
+  margin: 0;
+  color: var(--hn-gris);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   ANCLAS
+   ============================================================ */
+.home-nutrik #categorias,
+.home-nutrik #sobre-nosotros,
+.home-nutrik #nosotros {
+  scroll-margin-top: 96px;
+}
+
+/* ============================================================
+   ANIMACIÓN
+   ============================================================ */
+@keyframes hero-entrada {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1180px) {
+  .home-nutrik .categoria-card {
+    flex-basis: clamp(200px, 24vw, 250px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .home-nutrik .categoria-card {
+    flex-basis: clamp(195px, 32vw, 240px);
+  }
+
+  .home-nutrik .destacados-track .producto-card {
+    flex: 0 0 clamp(225px, 42vw, 280px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .home-nutrik .sobre-layout {
+    grid-template-columns: 1fr;
+    gap: clamp(28px, 5vw, 44px);
+  }
+
+  .home-nutrik .sobre-intro {
+    max-width: 640px;
+  }
+}
+
+@media (max-width: 900px) {
+  .home-nutrik .pasos-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 768px) {
-  .feature-content {
+  .home-nutrik .hero-banner {
+    min-height: 88svh;
+    padding: 118px 20px 150px;
+  }
+
+  .home-nutrik .hero-dots {
+    bottom: 78px;
+  }
+
+  .home-nutrik .hero-copyright {
+    left: 20px;
+    bottom: 22px;
+  }
+
+  .home-nutrik .seccion-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-nutrik .home-seccion {
+    padding: clamp(44px, 8vw, 60px) 20px;
+  }
+
+  .home-nutrik .categoria-card {
+    flex-basis: clamp(190px, 60vw, 230px);
+  }
+
+  .home-nutrik .sobre-stats {
+    justify-content: space-between;
+    gap: 14px;
+  }
+
+  .home-nutrik .sobre-stats li + li {
+    padding-left: 14px;
+  }
+
+  .home-nutrik .sobre-stats li + li::before {
+    height: 34px;
+  }
+
+  .home-nutrik .destacados-controles {
+    gap: 8px;
+  }
+
+  .home-nutrik .destacados-track .producto-card {
+    flex: 0 0 clamp(215px, 74vw, 255px);
+  }
+
+  .home-nutrik .producto-media {
+    height: 176px;
+  }
+
+  .home-nutrik .producto-info h3 {
+    min-height: auto;
+  }
+
+  .home-nutrik .producto-precios {
+    min-height: auto;
+  }
+
+  .home-nutrik .pasos-grid {
     grid-template-columns: 1fr;
     gap: 20px;
   }
 
-  .feature-item.divider {
-    border: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 20px;
+  .home-nutrik .features-list {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 14px 20px;
+  }
+
+  .home-nutrik .features-list li {
+    font-size: 0.78rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .home-nutrik .hero-titulo {
+    font-size: clamp(2rem, 9.5vw, 2.8rem);
+  }
+
+  .home-nutrik .hero-kicker {
+    letter-spacing: 0.26em;
+  }
+
+  .home-nutrik .hero-subtitulo {
+    letter-spacing: 0.2em;
+  }
+
+  .home-nutrik .hero-ctas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .home-nutrik .home-cta {
+    width: 100%;
+  }
+}
+
+@media (max-width: 380px) {
+  .home-nutrik .hero-copyright {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-nutrik *,
+  .home-nutrik *::before,
+  .home-nutrik *::after {
+    animation: none !important;
+    transition: none !important;
   }
 }

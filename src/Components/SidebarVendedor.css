@@ -1,0 +1,215 @@
+.sidebar-vendedor {
+  position: fixed;
+  top: var(--nav-alto, 73px);
+  left: 0;
+  width: 240px;
+  height: calc(100vh - var(--nav-alto, 73px));
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  border-right: 1px solid #e2e9df;
+}
+
+.sidebar-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 12px;
+  gap: 4px;
+  overflow-y: auto;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  color: #14532d;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border: none;
+  background: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+.sidebar-item:hover {
+  background: #f3f8f0;
+}
+
+.sidebar-item.active {
+  background: #e9f5e6;
+  color: #14532d;
+  font-weight: 700;
+}
+
+.sidebar-footer {
+  padding: 16px 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.sidebar-item svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.cerrar-sesion {
+  color: #b3261e;
+}
+
+.cerrar-sesion:hover {
+  background: rgba(179, 38, 30, 0.12);
+  color: #b3261e;
+}
+
+@media (max-width: 768px) {
+  .sidebar-vendedor {
+    width: 70px;
+  }
+
+  .sidebar-item span {
+    display: none;
+  }
+
+  .sidebar-item {
+    justify-content: center;
+    padding: 14px;
+  }
+
+}
+
+/* Layout del vendedor: sidebar + contenido */
+.vendedor-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.vendedor-main {
+  flex: 1;
+  background: #f5f7fa;
+  min-height: 100vh;
+  padding-top: var(--nav-alto, 73px);
+  min-width: 0;
+}
+
+/* ===== HEADER / NAVBAR SUPERIOR DEL VENDEDOR ===== */
+.pedidos-header {
+  height: 70px;
+  background: white;
+  border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.menu-button {
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  cursor: pointer;
+  color: #333;
+}
+
+.logo-nutrik {
+  color: #1f4d24;
+  font-weight: 800;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.notificacion {
+  position: relative;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.notificacion span {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #e53935;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-usuario {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 20px;
+  border-left: 1px solid #e5e5e5;
+}
+
+.header-usuario-nombre {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.vendedor-content {
+  padding: 24px 30px;
+}
+
+.vendedor-page {
+  padding: 0;
+}
+
+.vendedor-page h1 {
+  color: #1a1a2e;
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+}
+
+.vendedor-page p {
+  color: #718096;
+}
+
+body.con-sidebar {
+  padding-left: 240px;
+}
+
+.cuenta-pendiente {
+  min-height: 65vh;
+  padding: calc(var(--nav-alto, 73px) + 32px) 30px 60px;
+  color: #14532d;
+}
+
+.cuenta-pendiente p {
+  margin-top: 12px;
+  color: #5b6b5f;
+}
+
+@media (max-width: 768px) {
+  body.con-sidebar {
+    padding-left: 70px;
+  }
+}

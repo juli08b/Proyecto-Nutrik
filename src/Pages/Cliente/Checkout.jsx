@@ -1,0 +1,290 @@
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../Context/authContext";
+import { useCart } from "./Cart";
+import { crearPedidoConDetalles } from "../../api/pedidos";
+import "./Checkout.css";
+
+export default function Checkout() {
+  const { user, updateProfile } = useAuth();
+  const { carrito, totalPrecio, totalItems, vaciarCarrito } = useCart();
+  const navigate = useNavigate();
+
+  const [form, setForm] = useState({
+    nombre: user?.nombreCompleto || user?.primerNombre || user?.nombreNegocio || "",
+    telefono: user?.telefono || "",
+    direccion: user?.direccion || "",
+    ciudad: user?.ciudad || "Bogotá",
+    metodo: "contraentrega",
+  });
+  const [comprado, setComprado] = useState(false);
+  const [numeroPedido, setNumeroPedido] = useState("");
+  const [errorPago, setErrorPago] = useState("");
+
+  const cambiarCampo = (e) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setErrorPago("");
+  };
+
+  //Si no hay sesión: letrero centrado para pedir iniciar sesión
+  if (!user) {
+    return (
+      <div className="checkout-sesion-overlay">
+        <div className="checkout-sesion">
+          <span className="checkout-sesion-icono">🔒</span>
+          <h3>Debes iniciar sesión</h3>
+          <p>Para poder pagar tu pedido primero ingresa a tu cuenta de Nutrik.</p>
+          <div className="checkout-sesion-botones">
+            <Link to="/elegir-rol" className="checkout-sesion-btn-primario">
+              Iniciar sesión
+            </Link>
+            <button className="checkout-sesion-btn-cerrar" onClick={() => navigate("/")}>
+              Volver a la tienda
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const confirmarPago = async (e) => {
+    e.preventDefault();
+    setErrorPago("");
+
+    try {
+      const propios = carrito.filter((item) => {
+        const vendedorId = item.vendedorId ?? item.user_id ?? item.Vendedor;
+        return vendedorId && String(vendedorId) === String(user.id);
+      });
+      if (propios.length > 0) {
+        setErrorPago("No puedes comprar productos publicados por tu propia cuenta.");
+        return;
+      }
+
+      const hoy = new Date();
+      const fechaSalida = hoy.toISOString().slice(0, 10);
+      const fechaLlegada = new Date(hoy.getTime() + 3 * 24 * 60 * 60 * 1000)
+        .toISOString()
+        .slice(0, 10);
+
+      // Guardamos también los datos de entrega en el perfil del usuario.
+      await updateProfile({
+        telefono: form.telefono.trim(),
+        direccion: form.direccion.trim(),
+        ciudad: form.ciudad.trim(),
+      });
+
+      const pedido = {
+        Estado: "Pendiente",
+        Fecha_salida: fechaSalida,
+        Fecha_Llegada: fechaLlegada,
+        Metodo_pago: form.metodo,
+        Subtotal: totalPrecio,
+        Costo_envio: costoEnvio,
+        Total_pedido: totalFinal,
+        Direccion_envio: form.direccion.trim(),
+        Ciudad_envio: form.ciudad.trim(),
+        Id_usuario: user.id,
+        user_id: user.id,
+        comprador_id: user.id,
+      };
+
+      const { idPedido } = await crearPedidoConDetalles({
+        pedido,
+        items: carrito,
+        compradorId: user.id,
+      });
+
+      setNumeroPedido(`NUT-${String(idPedido).padStart(6, "0")}`);
+      window.dispatchEvent(new Event("nutrik:orders-updated"));
+      setComprado(true);
+      vaciarCarrito();
+    } catch (error) {
+      setErrorPago(
+        error.message || "No pudimos registrar tu pedido. Inténtalo de nuevo."
+      );
+    }
+  };
+
+  //Pantalla de éxito
+  if (comprado) {
+    return (
+      <div className="checkout-exito">
+        <span className="checkout-exito-icono" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="m5 12.5 4.5 4.5L19 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
+        <h2>¡Pedido confirmado!</h2>
+        <p className="checkout-exito-numero">Número de pedido: <strong>{numeroPedido}</strong></p>
+        <p>
+          Gracias, {form.nombre.split(" ")[0]}. Tu pedido quedó registrado y te contactaremos para coordinar la entrega.
+        </p>
+        <p className="checkout-demo-aviso">Esta tienda de demostración no procesa cobros en línea.</p>
+        <div className="checkout-exito-acciones">
+          <button className="checkout-exito-btn" onClick={() => navigate("/mis-pedidos")}>
+            Ver seguimiento del pedido
+          </button>
+          <button className="checkout-exito-btn" onClick={() => navigate("/")}>
+            Seguir comprando
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  //Carrito vacío (si entra directo sin nada)
+  if (carrito.length === 0) {
+    return (
+      <div className="checkout-vacio">
+        <span className="checkout-vacio-icono">🛒</span>
+        <h2>Tu carrito está vacío</h2>
+        <p>Agrega productos antes de ir a pagar.</p>
+        <button className="checkout-vacio-btn" onClick={() => navigate("/")}>
+          Ir a la tienda
+        </button>
+      </div>
+    );
+  }
+
+  const costoEnvio = totalPrecio >= 100000 ? 0 : 9000;
+  const totalFinal = totalPrecio + costoEnvio;
+
+  return (
+    <div className="checkout">
+      <header className="checkout-cabecera">
+        <p className="checkout-etiqueta">COMPRA SEGURA EN NUTRIK</p>
+        <h1 className="checkout-titulo">Finalizar compra</h1>
+        <ol className="checkout-progreso" aria-label="Progreso de compra">
+          <li className="completado"><span>✓</span> Carrito</li>
+          <li className="activo"><span>2</span> Entrega y pago</li>
+          <li><span>3</span> Confirmación</li>
+        </ol>
+      </header>
+
+      <form className="checkout-contenido" onSubmit={confirmarPago}>
+        <section className="checkout-form" aria-labelledby="checkout-entrega-titulo">
+          <div className="checkout-seccion-cabecera">
+            <span className="checkout-seccion-icono" aria-hidden="true">⌖</span>
+            <div>
+              <h2 id="checkout-entrega-titulo">Datos de entrega</h2>
+              <p>Indícanos dónde y a quién entregamos tu pedido.</p>
+            </div>
+          </div>
+
+          <label className="checkout-campo checkout-campo-completo">
+            Nombre completo
+            <input name="nombre" autoComplete="name" value={form.nombre} onChange={cambiarCampo} required />
+          </label>
+
+          <div className="checkout-campos-dobles">
+            <label className="checkout-campo">
+              Teléfono
+              <input
+                name="telefono"
+                type="tel"
+                autoComplete="tel"
+                value={form.telefono}
+                onChange={cambiarCampo}
+                placeholder="300 123 4567"
+                required
+              />
+            </label>
+            <label className="checkout-campo">
+              Ciudad
+              <input name="ciudad" autoComplete="address-level2" value={form.ciudad} onChange={cambiarCampo} required />
+            </label>
+          </div>
+
+          <label className="checkout-campo checkout-campo-completo">
+            Dirección
+            <input
+              name="direccion"
+              autoComplete="street-address"
+              value={form.direccion}
+              onChange={cambiarCampo}
+              placeholder="Calle, número, barrio"
+              required
+            />
+          </label>
+
+          <div className="checkout-metodos-contenedor">
+            <div className="checkout-seccion-cabecera checkout-pago-cabecera">
+              <span className="checkout-seccion-icono" aria-hidden="true">▣</span>
+              <div>
+                <h2>Método de pago</h2>
+                <p>Selecciona cómo prefieres pagar.</p>
+              </div>
+            </div>
+            <div className="checkout-metodos">
+              <label className={`checkout-metodo ${form.metodo === "contraentrega" ? "seleccionado" : ""}`}>
+                <input type="radio" name="metodo" value="contraentrega" checked={form.metodo === "contraentrega"} onChange={cambiarCampo} />
+                <span className="checkout-metodo-icono" aria-hidden="true">💵</span>
+                <span className="checkout-metodo-texto"><strong>Contra entrega</strong><small>Paga cuando recibas</small></span>
+              </label>
+              <label className={`checkout-metodo ${form.metodo === "nequi" ? "seleccionado" : ""}`}>
+                <input type="radio" name="metodo" value="nequi" checked={form.metodo === "nequi"} onChange={cambiarCampo} />
+                <span className="checkout-metodo-icono" aria-hidden="true">📱</span>
+                <span className="checkout-metodo-texto"><strong>Nequi</strong><small>Pago desde tu celular</small></span>
+              </label>
+              <label className={`checkout-metodo ${form.metodo === "tarjeta" ? "seleccionado" : ""}`}>
+                <input type="radio" name="metodo" value="tarjeta" checked={form.metodo === "tarjeta"} onChange={cambiarCampo} />
+                <span className="checkout-metodo-icono" aria-hidden="true">💳</span>
+                <span className="checkout-metodo-texto"><strong>Tarjeta</strong><small>Débito o crédito</small></span>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <aside className="checkout-resumen" aria-labelledby="checkout-resumen-titulo">
+          <div className="checkout-seccion-cabecera checkout-resumen-cabecera">
+            <span className="checkout-seccion-icono" aria-hidden="true">▤</span>
+            <div>
+              <h2 id="checkout-resumen-titulo">Tu pedido</h2>
+              <p>{totalItems} {totalItems === 1 ? "producto" : "productos"} seleccionados</p>
+            </div>
+          </div>
+          <div className="checkout-items">
+            {carrito.map((item) => (
+              <article className="checkout-item" key={item.id}>
+                <img src={item.imagen} alt="" />
+                <div className="checkout-item-info">
+                  <p className="checkout-item-nombre">{item.nombre}</p>
+                  <p className="checkout-item-cantidad">Cantidad: {item.cantidad}</p>
+                </div>
+                <span className="checkout-item-precio">
+                  ${(item.precio * item.cantidad).toLocaleString("es-CO")}
+                </span>
+              </article>
+            ))}
+          </div>
+
+          <div className="checkout-totales">
+            <div className="checkout-total-fila">
+              <span>Subtotal</span>
+              <span>${totalPrecio.toLocaleString("es-CO")}</span>
+            </div>
+            <div className="checkout-total-fila">
+              <span>Envío</span>
+              <span className={costoEnvio === 0 ? "checkout-envio-gratis" : ""}>
+                {costoEnvio === 0 ? "Gratis 🎉" : "$" + costoEnvio.toLocaleString("es-CO")}
+              </span>
+            </div>
+            <div className="checkout-total-fila checkout-total-grande">
+              <span>Total a pagar</span>
+              <span>${totalFinal.toLocaleString("es-CO")}</span>
+            </div>
+          </div>
+
+          {errorPago && <p className="checkout-error" role="alert">{errorPago}</p>}
+          <button type="submit" className="checkout-pagar-btn">
+            Confirmar pedido · ${totalFinal.toLocaleString("es-CO")}
+          </button>
+          <p className="checkout-demo-aviso">
+            Al confirmar, registraremos tu pedido. Esta tienda de demostración no realizará ningún cobro.
+          </p>
+        </aside>
+      </form>
+    </div>
+  );
+}
