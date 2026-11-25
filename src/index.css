@@ -1,12 +1,22 @@
 :root {
-  --fondo-crema: #f1f5e8;
+  --fondo-crema: #f4f7ef;
   --verde-nutrik: #91c13e;
-  --verde-oscuro: #1b300b;
+  --verde-oscuro: #15331f;
   --verde-medio: #6c8e64;
-  --acento-calido: #b8b3a1;
-  --gris-carbon: #4d4d4d;
-  --fuente-principal: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --acento-calido: #d5a93d;
+  --gris-carbon: #4d5b50;
+  --fuente-principal: "DM Sans", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: #dfecca;
+  color: #15331f;
 }
 
 html,
@@ -17,15 +27,26 @@ body,
 }
 
 body {
-  /* Cambia min-height por min-vh para asegurar que cubra toda la pantalla visual */
-  min-height: 100vh; 
-  background:
-    radial-gradient(circle at top left, rgba(145, 193, 62, 0.12), transparent 28%),
-    linear-gradient(180deg, #fbfcf7 0%, var(--fondo-crema) 100%);
-  background-attachment: fixed; /* Esto hace que el fondo no se corte al hacer scroll */
+  min-height: 100vh;
+  margin: 0;
+  background: #fbfcf9;
+  background-attachment: fixed;
   font-family: var(--fuente-principal);
   color: var(--verde-oscuro);
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 a {
@@ -43,6 +64,65 @@ input,
 select,
 textarea {
   font-family: var(--fuente-principal);
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(145, 193, 62, 0.35);
+  outline-offset: 3px;
+}
+
+input,
+select,
+textarea {
+  min-height: 44px;
+}
+
+.vendedor-layout {
+  min-height: 100vh;
+  background: #f6f8f4;
+}
+
+.vendedor-main {
+  min-height: 100vh;
+}
+
+.vendedor-content {
+  width: 100%;
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.vendedor-page {
+  min-height: 420px;
+  padding: 28px;
+  background: #fff;
+  border: 1px solid #e8ede5;
+  border-radius: 18px;
+  box-shadow: 0 12px 36px rgba(31, 74, 44, 0.06);
+}
+
+.cuenta-pendiente {
+  display: grid;
+  min-height: calc(100vh - var(--nav-alto, 72px));
+  place-content: center;
+  text-align: center;
+  padding: 120px 24px;
+}
+
+@media (max-width: 900px) {
+  .vendedor-content {
+    padding: 20px 16px;
+  }
 }
 
 .main-content-wrapper {

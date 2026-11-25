@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import "../Cliente/Product.css";
-import { useCart } from "../Cliente/Cart";
+import "./Product.css";
+import { useCart } from "../checkout/Cart";
 import granola from "../../assets/granola.svg";
 import frutos from "../../assets/frutos.svg";
 import chia from "../../assets/chia.svg";
@@ -12,7 +12,7 @@ import {
   formatearPrecio,
 } from "../../data/productosData";
 
-// Mostramos imágenes locales en las tarjetas, pero usamos los datos del catálogo
+// La selección usa imágenes locales y consulta precios y datos en el catálogo.
 const productosSnacks = [
   { id: 1, productoId: "granola", nombre: "Granola Natural", imagen: granola },
   { id: 2, productoId: "frutos", nombre: "Mix de Frutos", imagen: frutos },

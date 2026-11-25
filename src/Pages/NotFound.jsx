@@ -1,14 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/authContext";
 
-// Se muestra cuando alguien entra a una dirección que no existe.
-// El Navbar tiene varios links a categorías que todavía no tienen ruta,
-// así que esta página evita que el usuario caiga en una pantalla en blanco.
+// Página de reserva para rutas inexistentes; ofrece un destino según la sesión.
 const NotFound = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // Si es vendedor lo manda a su panel, si no a la tienda
+  // Cualquier usuario con sesión vuelve a su panel; los visitantes van al inicio.
   const destino = user ? "/mis-productos" : "/";
 
   return (

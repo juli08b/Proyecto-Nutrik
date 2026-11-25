@@ -414,23 +414,25 @@ debajo del navbar; la portada y el catálogo no tienen menú lateral.
 |---|---|
 | `/` | `Home` — portada |
 | `/header` | `Header` — encabezado con buscador |
-| `/elegir-rol` | `RoleSelection` — ¿comprar o vender? |
-| `/login` | `Login` (cliente) |
-| `/registro` | `Register` (cliente, 3 pasos) |
+| `/elegir-rol` | Redirección al inicio de sesión único |
+| `/login` | `Login` de usuario |
+| `/registro` | `Register` de usuario (3 pasos) |
 | `/forgot-password` | `ForgotPassword` |
 | `/perfil` | `Perfil` |
 | `/favoritos` | Aviso: la lista de favoritos aún no está disponible |
-| `/vendedor/login` | `LoginVendedor` |
-| `/vendedor/registro` | `RegisterVendedor` |
-| `/vendedor` | **`VendedorLayout`** ← el marco con menú lateral |
-| `/vendedor/dashboard` | `Dashboard` (gráficas) |
-| `/vendedor/productos` | `Productos` (catálogo del vendedor) |
+| `/vendedor/login` | Redirección a `/login` |
+| `/vendedor/registro` | Redirección a `/registro` |
+| `/vendedor` y `/mis-productos` | Productos propios en el panel de cuenta |
+| `/vendedor/dashboard` | `Dashboard` con gráficas de demostración |
+| `/vendedor/productos` | Gestión de productos propios |
 | `/vendedor/productos/:id` | `Vistaproducto` |
-| `/vendedor/pedidos` | `Pedidos` ← lista de pedidos |
-| `/vendedor/facturas` | Placeholder "Próximamente…" |
-| `/vendedor/clientes` | Placeholder |
-| `/vendedor/ventas` | Placeholder |
-| `/vendedor/configuracion` | Placeholder |
+| `/vendedor/pedidos` | Pedidos de ejemplo y datos locales, no ventas reales |
+| `/vendedor/facturas` | Facturas de demostración |
+| `/vendedor/clientes` y `/vendedor/ventas` | Aviso "Próximamente…" |
+| `/vendedor/configuracion` | Configuración de demostración |
+| `/nutrik/owner` | Acceso privado del administrador |
+| `/admin` | Panel administrativo con métricas de demostración |
+| `/admin/usuarios`, `/admin/productos`, `/admin/pedidos`, `/admin/actividad` | Gestión administrativa |
 | `/catalog` | **`CategoriasLayout`** ← marco de categorías |
 | `/catalog/frozen` | `Frozen` (congelados) |
 | `/catalog/snacks` | `Snacks` |
@@ -715,17 +717,19 @@ se recarga sin buscar nada. Es visual.
 
 ## 8.5 `SidebarVendedor.jsx` — el menú de cuenta
 
-El selector del navbar cambia entre comprador y vendedor. En modo comprador, el
-menú del avatar y el lateral ofrecen compras, favoritos y perfil. En modo
-vendedor no se muestra el avatar: productos, ventas, estadísticas, facturas,
-compradores y configuración de tienda están en el lateral. Desde una página de
-exploración se vuelve al panel pulsando «Vendedor» en el selector. `NavLink`
-resalta la página activa y el botón inferior cierra la sesión. En móvil se
-muestran iconos con etiquetas accesibles.
+El menú del avatar y el lateral agrupan las compras y ventas de una misma
+cuenta. No hace falta seleccionar un rol ni crear otra cuenta para publicar:
+los usuarios activos pueden gestionar sus productos desde «Mis productos».
+`NavLink` resalta la página activa; en móvil se muestran iconos con etiquetas
+accesibles.
 
-El estado de aprobación de tiendas y el registro de vendedores todavía no están
-implementados; por ahora se conserva la regla existente para usuarios activos.
-El asistente flotante también ofrece el enlace a WhatsApp.
+El administrador dispone de enlaces separados para supervisar usuarios,
+productos y actividad. La lista de productos del usuario se filtra por su
+identificador; la ruta administrativa muestra el catálogo completo. Estas
+restricciones de interfaz no sustituyen la autorización en la API: el servidor
+debe verificar el rol y la propiedad de cada producto. La actividad solo recoge
+eventos del navegador actual; las estadísticas, facturas y pedidos de venta
+todavía son de demostración o usan datos locales.
 
 ## 8.6 `VendedorLayout.jsx` — el marco del panel
 

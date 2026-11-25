@@ -1,19 +1,13 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../Context/authContext';
-import { useModo } from '../Context/useModo';
 import './SidebarVendedor.css';
 import { IconoCuenta } from './MenuCuenta';
-import { enlacesCuenta } from './enlacesCuenta';
-import { ROLES } from '../constants/roles';
+import { enlacesCuenta, seccionesCuenta } from './enlacesCuenta';
 
 const SidebarVendedor = () => {
   const { user, logout } = useAuth();
-  const { modo } = useModo();
-  const items = enlacesCuenta(modo);
-  if (modo === 'vendedor' && user?.role === ROLES.ADMIN) {
-    items.push({ to: '/admin/usuarios', texto: 'Administrar usuarios', icono: 'administracion' });
-  }
   const navigate = useNavigate();
+  const secciones = seccionesCuenta(user);
 
   const cerrarSesion = () => {
     logout();
@@ -22,18 +16,24 @@ const SidebarVendedor = () => {
 
   return (
     <aside className="sidebar-vendedor">
-      <nav className="sidebar-nav" aria-label={`Menú ${modo}`}>
-        {items.map((item) => (
-          <NavLink
-            key={item.texto}
-            to={item.to}
-            className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`}
-            title={item.texto}
-            aria-label={item.texto}
-          >
-            <IconoCuenta nombre={item.icono} />
-            <span>{item.texto}</span>
-          </NavLink>
+      <nav className="sidebar-nav" aria-label="Menú de cuenta">
+        {secciones.map(({ modo, titulo }) => (
+          <div className="sidebar-grupo" key={modo}>
+            <p className="sidebar-grupo-titulo">{titulo}</p>
+            {enlacesCuenta(modo).map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.to === '/admin'}
+                className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`}
+                title={item.texto}
+                aria-label={item.texto}
+              >
+                <IconoCuenta nombre={item.icono} />
+                <span>{item.texto}</span>
+              </NavLink>
+            ))}
+          </div>
         ))}
       </nav>
 

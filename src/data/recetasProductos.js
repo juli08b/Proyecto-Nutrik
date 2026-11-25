@@ -1,3 +1,5 @@
+import { buscarProducto } from './productosData';
+
 function normalizar(texto = '') {
   return String(texto)
     .normalize('NFD')
@@ -121,4 +123,24 @@ export function recetaParaProducto(producto, user) {
   }
 
   return { ...receta, aviso };
+}
+
+const MAPA_INGREDIENTES = [
+  { patron: /yogur|yogurt/i, id: 'yogur' },
+  { patron: /avena|granola/i, id: 'granola' },
+  { patron: /ch[ií]a/i, id: 'chia' },
+  { patron: /frutos secos|nueces|almendras/i, id: 'frutos' },
+];
+
+// Ingredientes de la receta que existen en el catálogo de Nutrik, para el
+// botón "Agregar ingredientes al carrito" de la ficha de producto.
+export function ingredientesDelCatalogo(receta) {
+  if (!receta?.ingredientes?.length) return [];
+  const texto = receta.ingredientes.join(' ');
+  const ids = MAPA_INGREDIENTES.filter((item) => item.patron.test(texto)).map(
+    (item) => item.id
+  );
+  return [...new Set(ids)]
+    .map((id) => buscarProducto(id))
+    .filter(Boolean);
 }
