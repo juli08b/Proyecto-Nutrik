@@ -8,13 +8,24 @@ import {
   restablecerContrasena,
   verificarCorreo,
 } from '../api/usuarios';
+import {
+  normalizarEstado,
+  normalizarRol,
+  puedeIniciarSesion,
+} from '../constants/roles';
 
 const STORAGE_SESSION = 'nutrik_session_user';
 
 function usuarioGuardado() {
   try {
     const guardado = JSON.parse(localStorage.getItem(STORAGE_SESSION));
-    if (guardado && guardado.email) return guardado;
+    if (guardado && guardado.email) {
+      return {
+        ...guardado,
+        role: normalizarRol(guardado.role || guardado.tipoUsuario),
+        estado: normalizarEstado(guardado.estado),
+      };
+    }
   } catch {
     /* sesión vacía o corrupta */
   }
@@ -36,6 +47,15 @@ const login = async (email, password) => {
     const res = await iniciarSesion(email.trim(), password);
     if (res.token) localStorage.setItem('token', res.token);   // <- nuevo
     const usuario = guardarSesion(res.data);
+    if (!puedeIniciarSesion(usuario)) {
+      setUser(null);
+      localStorage.removeItem(STORAGE_SESSION);
+      localStorage.removeItem('token');
+      return {
+        ok: false,
+        error: 'Esta cuenta está bloqueada. Comunícate con el administrador.',
+      };
+    }
     return { ok: true, user: usuario };
   } catch (error) {
     return { ok: false, error: error.message };
@@ -67,6 +87,8 @@ const login = async (email, password) => {
     setUser(null);
     localStorage.removeItem(STORAGE_SESSION);
     localStorage.removeItem('token');   // <- nuevo
+    localStorage.removeItem('nutrik_modo');
+    window.dispatchEvent(new Event('nutrik-modo'));
   };
 
   const existeCuenta = async (email) => {

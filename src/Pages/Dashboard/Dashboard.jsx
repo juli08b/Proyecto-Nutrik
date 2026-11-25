@@ -4,6 +4,7 @@ import {
     PieChart, Pie, Cell, Legend
 } from 'recharts';
 import { useAuth } from '../../Context/authContext';
+import { ROLES } from '../../constants/roles';
 import './Dashboard.css';
 
 // Datos de prueba basados en tu boceto
@@ -44,14 +45,14 @@ const productosTop = [
 const Dashboard = () => {
     const { user } = useAuth();
     if (!user) return <Navigate to="/elegir-rol" replace />;
-    if (user.role !== 'vendedor') return <Navigate to="/perfil" replace />;
+    if (![ROLES.USER, ROLES.ADMIN].includes(user.role)) return <Navigate to="/perfil" replace />;
 
     return (
         <div className="dashboard-container">
             <header className="dashboard-header">
                 <div>
-                    <h1>Panel de Vendedor</h1>
-                    <p>Resumen general de tu tienda</p>
+                    <h1>{user.role === ROLES.ADMIN ? 'Panel de Administración' : 'Panel de Marketplace'}</h1>
+                    <p>{user.role === ROLES.ADMIN ? 'Supervisión global de Nutrik' : 'Resumen de tus ventas y productos'}</p>
                 </div>
                 <div className="date-filter">01/08/2024 - 25/08/2024</div>
             </header>
@@ -184,7 +185,7 @@ const Dashboard = () => {
                             <tbody>
                                 {productosTop.map((prod, index) => (
                                     <tr key={index}>
-                                        <td className="font-bold">{prod.nombre}</td>
+                                        <td className="font-bold">{prod.nombre}</td> //aqui se agrego la clase font-bold para resaltar el nombre del producto
                                         <td><span className="category-tag">{prod.categoria}</span></td>
                                         <td>{prod.unidades}</td>
                                         <td>{prod.total}</td>

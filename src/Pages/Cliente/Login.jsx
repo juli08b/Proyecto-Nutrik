@@ -43,7 +43,7 @@ const Login = () => {
       setError(res.error);
       return;
     }
-    navigate('/perfil');
+    navigate('/');
   };
 
   return (
@@ -57,6 +57,8 @@ const Login = () => {
       <div className="login-form-side">
         <div className="form-content">
           <h2 className="welcome-card">Bienvenido de nuevo</h2>
+
+          <p className="login-sub">Una sola cuenta para comprar y vender</p>
 
           <p className="register-link">
             ¿No tienes cuenta? <Link to="/registro">Crea una ahora</Link>

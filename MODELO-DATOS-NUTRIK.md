@@ -3,6 +3,80 @@
  diagrama entidad-relación, tablas, migraciones, modelos y endpoints.
 Todo está diseñado a partir del código real de la app React que ya tienes.
 
+## Roles del marketplace
+
+Nutrik maneja únicamente dos roles en `users`:
+
+- `administrador`: administra usuarios y supervisa productos, ventas y pedidos globales.
+- `usuario`: una cuenta con doble función. Puede comprar productos de otros usuarios y
+  publicar, editar, listar y eliminar sus propios productos.
+
+`users.estado` controla el acceso a la publicación: `activo`, `suspendido` o
+`bloqueado`. Solo los usuarios `activo` pueden publicar productos; un usuario
+suspendido o bloqueado puede conservar acceso de compra según la política del
+backend, pero no puede crear ni editar publicaciones.
+
+La función de vendedor no es un rol separado. En `products`, `user_id` identifica
+al usuario que publica el producto. En `orders`, `user_id` (o `comprador_id` en
+las APIs que exponen nombres explícitos) identifica al comprador; cada detalle
+conserva el vendedor del producto para poder calcular y consultar ventas.
+
+Las reglas de autorización deben aplicarse en el backend, además de ocultarse en
+la interfaz:
+
+1. Un `usuario` solo puede modificar o eliminar productos cuyo `products.user_id`
+   sea su propio id.
+2. Un `usuario` no puede crear un pedido que contenga un producto suyo.
+3. Un `administrador` puede consultar y moderar cualquier usuario, producto, venta o
+   pedido.
+
+## Autenticación y permisos
+
+La web pública solo expone un formulario de registro y uno de inicio de sesión
+para `usuario`. El rol `administrador` no se elige durante el registro.
+
+El administrador debe crearse mediante un seeder o comando privado, nunca desde
+la interfaz pública:
+
+```php
+User::updateOrCreate(
+    ['email' => env('NUTRIK_ADMIN_EMAIL')],
+    [
+        'nombre_completo' => 'Administrador Nutrik',
+        'password' => Hash::make(env('NUTRIK_ADMIN_PASSWORD')),
+        'role' => 'administrador',
+        'estado' => 'activo',
+    ]
+);
+```
+
+`NUTRIK_ADMIN_EMAIL` y `NUTRIK_ADMIN_PASSWORD` deben existir únicamente en el
+entorno seguro del backend y nunca en el frontend, el repositorio o la
+documentación pública.
+
+El frontend ofrece `/admin/login` como ruta separada no enlazada desde la web
+pública. Esto no sustituye la autorización server-side: cada endpoint protegido
+debe validar el token, el rol y el estado. Por ejemplo:
+
+```php
+Route::middleware(['auth:sanctum', 'estado.activo'])
+    ->group(function () {
+        Route::post('/productos', [ProductoController::class, 'store']);
+        Route::put('/productos/{producto}', [ProductoController::class, 'update']);
+    });
+
+Route::middleware(['auth:sanctum', 'role:administrador'])
+    ->prefix('admin')
+    ->group(function () {
+        Route::get('/usuarios', [AdminUsuarioController::class, 'index']);
+        Route::patch('/usuarios/{usuario}/estado', [AdminUsuarioController::class, 'updateEstado']);
+    });
+```
+
+El middleware `estado.activo` debe rechazar `suspendido` y `bloqueado` antes de
+ejecutar acciones de publicación. El middleware de rol debe rechazar cualquier
+rol distinto de `administrador`, aunque el botón no exista en la interfaz.
+
 ---
 
 # 0. EL PROBLEMA QUE RESUELVE ESTE MODELO
@@ -60,7 +134,8 @@ erDiagram
         string nombre_completo
         string email UK
         string password
-        enum role "cliente|vendedor|admin"
+        enum role "usuario|administrador"
+        enum estado "activo|suspendido|bloqueado"
         string telefono
         string foto
         timestamp created_at
@@ -189,8 +264,7 @@ erDiagram
 ```
                         ┌──────────────────┐
                         │      USERS       │
-                        │  (todos: cliente, │
-                        │   vendedor, admin)│
+                        │ (usuario, admin.)  │
                         └────────┬─────────┘
           ┌──────────────────────┼──────────────────────┐
           │ 1:1                  │ 1:1                  │ 1:N
@@ -257,7 +331,8 @@ resuelven con **tablas intermedias** (`producto_categoria`, `descuento_producto`
 | `nombre_completo` | string | nullable | `nombreCompleto` |
 | `email` | string | **UNIQUE**, índice | `email` |
 | `password` | string | **HASHED (bcrypt)** | `password` |
-| `role` | enum | `cliente`\|`vendedor`\|`admin` | `role` |
+| `role` | enum | `usuario`\|`administrador` | `role` |
+| `estado` | enum | `activo`\|`suspendido`\|`bloqueado` | `estado` |
 | `telefono` | string | nullable | `telefono` |
 | `foto` | text | nullable (Base64 o ruta) | `foto` |
 | `email_verified_at` | timestamp | nullable | — (nuevo) |
@@ -339,6 +414,7 @@ enlaces se generan con un `@foreach`.
 | Campo | Tipo | Notas |
 |---|---|---|
 | `id` | bigint | PK |
+| `user_id` | bigint | **FK → users.id**, propietario/publicador |
 | `nombre` | string | "Creatina Monohidratada" |
 | `slug` | string | **UNIQUE**, "creatina-monohidratada" |
 | `descripcion` | text | |
@@ -378,8 +454,12 @@ enlaces se generan con un `@foreach`.
 | `fecha_fin` | date | |
 | `activo` | boolean | default true |
 
-Las fechas son lo que hoy **no existe**: en `productosData.js` el `descuento: 22`
-es permanente. Con fechas puedes hacer ofertas de verdad.
+La tabla de descuentos permite que una oferta tenga vigencia limitada. El
+catálogo de muestra del frontend guarda `fechaInicioDescuento` y
+`fechaFinDescuento` por producto en `src/data/productosData.js` y deja de aplicar
+la rebaja al vencer. Para que el vendedor administre estas fechas de forma
+persistente, la API debe implementar esta tabla y sus relaciones; no basta con
+enviar las fechas como campos del producto.
 
 ## 2.8 `descuento_producto` — tabla intermedia
 
@@ -464,12 +544,10 @@ es permanente. Con fechas puedes hacer ofertas de verdad.
 |---|---|---|
 | `direcciones` | Direcciones guardadas del cliente | El checkout pide la dirección cada vez |
 | `favoritos` | Productos marcados con deseo | **Ya existe el ícono de deseo** en `Header.jsx` pero no hace nada |
-| `mensajes` | Solicitudes del formulario PQR | `Cliente/Contact.jsx` (hoy va a un email externo) |
+| `mensajes` | Tabla opcional para una futura integración | No se usa en el frontend; el único canal actual es WhatsApp |
 
-> **`mensajes` NO tiene `user_id` a propósito.** Es un formulario público: lo
-> puede llenar alguien que nunca se ha registrado en Nutrik, por eso guarda su
-> propio `nombre` y `email` en vez de una clave foránea. Por esa misma razón el
-> diagrama de la sección 1.1 no lo conecta con `USERS`.
+> La tabla `mensajes` queda documentada como opción futura, pero Nutrik no ofrece
+> actualmente un formulario de contacto ni almacena solicitudes en esa tabla.
 
 ---
 
@@ -528,7 +606,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['cliente', 'vendedor', 'admin'])->default('cliente');
+            $table->enum('role', ['usuario', 'administrador'])->default('usuario');
+            $table->enum('estado', ['activo', 'suspendido', 'bloqueado'])->default('activo');
             $table->string('telefono')->nullable();
             $table->text('foto')->nullable();
             $table->rememberToken();
@@ -559,6 +638,32 @@ return new class extends Migration
     }
 };
 ```
+
+### Migración de usuarios existentes
+
+Si la tabla `users` ya existe, no se debe editar una migración ejecutada.
+Créese una migración nueva para agregar `estado`, convertir los roles legacy y
+restringir los valores futuros:
+
+```php
+Schema::table('users', function (Blueprint $table) {
+    $table->enum('estado', ['activo', 'suspendido', 'bloqueado'])
+        ->default('activo')
+        ->after('role');
+});
+
+DB::table('users')
+    ->whereIn('role', ['cliente', 'vendedor', 'user'])
+    ->update(['role' => 'usuario']);
+
+DB::table('users')
+    ->where('role', 'admin')
+    ->update(['role' => 'administrador']);
+```
+
+La migración debe ejecutarse antes de desplegar el frontend actualizado. Los
+usuarios migrados quedan `activo` para conservar su acceso; el administrador
+puede cambiar después el estado individualmente.
 
 ## 3.2 Los perfiles
 
@@ -639,6 +744,7 @@ return new class extends Migration
 
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->restrictOnDelete();
             $table->string('nombre');
             $table->string('slug')->unique();
             $table->text('descripcion')->nullable();
@@ -834,7 +940,7 @@ class User extends Authenticatable
     // 'password' SÍ va aquí porque el cast 'hashed' (abajo) se encarga de
     // cifrarla automáticamente. Aun así nunca la muestres en la API (ver $hidden).
     protected $fillable = [
-        'nombre_completo', 'email', 'password', 'role', 'telefono', 'foto',
+        'nombre_completo', 'email', 'password', 'role', 'estado', 'telefono', 'foto',
     ];
 
     // 'password' se oculta al convertir a JSON / array.
@@ -880,9 +986,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Producto::class, 'favoritos')->withTimestamps();
     }
 
-    public function esVendedor(): bool
+    public function puedeVender(): bool
     {
-        return $this->role === 'vendedor';
+        return $this->role === 'administrador'
+            || ($this->role === 'usuario' && $this->estado === 'activo');
     }
 }
 ```
@@ -936,7 +1043,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Producto extends Model
 {
     protected $fillable = [
-        'nombre', 'slug', 'descripcion', 'precio',
+        'user_id', 'nombre', 'slug', 'descripcion', 'precio',
         'imagen', 'stock', 'es_nuevo', 'activo',
     ];
 
@@ -952,6 +1059,11 @@ class Producto extends Model
     public function categorias()
     {
         return $this->belongsToMany(Categoria::class, 'producto_categoria');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function descuentos()
@@ -1207,7 +1319,8 @@ class DemoUsuariosSeeder extends Seeder
             [
                 'nombre_completo' => 'Juliana Gómez Ríos',
                 'password' => Hash::make('juliana123'),
-                'role' => 'cliente',
+                'role' => 'usuario',
+                'estado' => 'activo',
                 'telefono' => '3001234567',
             ]
         );
@@ -1233,7 +1346,8 @@ class DemoUsuariosSeeder extends Seeder
             [
                 'nombre_completo' => 'Tienda Nutrik',
                 'password' => Hash::make('tienda123'),
-                'role' => 'vendedor',
+                'role' => 'usuario',
+                'estado' => 'activo',
                 'telefono' => '3001234567',
             ]
         );
@@ -1427,7 +1541,7 @@ class PedidoController extends Controller
     /** El vendedor ve los pedidos REALES de todos los clientes. */
     public function indexVendedor(Request $request)
     {
-        abort_unless($request->user()->esVendedor(), 403, 'Solo para vendedores');
+        abort_unless($request->user()->puedeVender(), 403, 'La cuenta no puede publicar productos');
 
         $pedidos = Pedido::query()
             ->with(['user', 'items'])          // evita N+1

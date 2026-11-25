@@ -401,23 +401,12 @@ Es el archivo más importante para entender la navegación.
 `CartProvider` envuelve **todo**, para que el carrito esté disponible en
 cualquier pantalla.
 
-### El interruptor `mostrarLayout`
+### Navegación y layout
 
-```jsx
-const pathActual = location.pathname.toLowerCase();
-const mostrarLayout =
-  !pathActual.includes('login') &&
-  !pathActual.includes('registro') &&
-  !pathActual.includes('forgot') &&
-  !pathActual.includes('elegir-rol') &&
-  !pathActual.includes('vendedor');
-```
-
-Si la URL contiene alguna de esas palabras, **no** se dibuja el Navbar ni el
-Footer. Esos son "screens completos" que ocupan toda la página.
-
-> ⚠️ **Trampa:** el chequeo es por *texto*, no por ruta exacta. Cualquier URL
-> futura que contenga la palabra "login" u otra de esas perdería la barra.
+Las pantallas de autenticación no muestran la navegación superior. En el resto
+del sitio, el navbar sirve para explorar y acceder a las acciones rápidas. El
+menú lateral aparece solo con sesión iniciada en páginas de cuenta y del panel,
+debajo del navbar; la portada y el catálogo no tienen menú lateral.
 
 ### Mapa completo de rutas
 
@@ -430,6 +419,7 @@ Footer. Esos son "screens completos" que ocupan toda la página.
 | `/registro` | `Register` (cliente, 3 pasos) |
 | `/forgot-password` | `ForgotPassword` |
 | `/perfil` | `Perfil` |
+| `/favoritos` | Aviso: la lista de favoritos aún no está disponible |
 | `/vendedor/login` | `LoginVendedor` |
 | `/vendedor/registro` | `RegisterVendedor` |
 | `/vendedor` | **`VendedorLayout`** ← el marco con menú lateral |
@@ -444,7 +434,6 @@ Footer. Esos son "screens completos" que ocupan toda la página.
 | `/catalog` | **`CategoriasLayout`** ← marco de categorías |
 | `/catalog/frozen` | `Frozen` (congelados) |
 | `/catalog/snacks` | `Snacks` |
-| `/contact` | `Contact` (formulario PQR) |
 | `/discount` | `Discount` (productos rebajados) |
 | `/descuentos` | `Discount` (misma pantalla, segundo nombre) |
 | `/checkout` | `Checkout` (pagar) |
@@ -724,31 +713,25 @@ El detalle esta en `TAILWIND-CSS.md`.
 ⚠️ El `<form>` del buscador **no tiene acción**: al dar Enter o clic, la página
 se recarga sin buscar nada. Es visual.
 
-## 8.5 `SidebarVendedor.jsx` — el menú del panel de vendedor
+## 8.5 `SidebarVendedor.jsx` — el menú de cuenta
 
-La pieza con la corrección más importante de este proyecto. Usa **`NavLink`** en
-vez de `Link`:
+El selector del navbar cambia entre comprador y vendedor. En modo comprador, el
+menú del avatar y el lateral ofrecen compras, favoritos y perfil. En modo
+vendedor no se muestra el avatar: productos, ventas, estadísticas, facturas,
+compradores y configuración de tienda están en el lateral. Desde una página de
+exploración se vuelve al panel pulsando «Vendedor» en el selector. `NavLink`
+resalta la página activa y el botón inferior cierra la sesión. En móvil se
+muestran iconos con etiquetas accesibles.
 
-```jsx
-<NavLink to="/vendedor/dashboard"
-  className={({ isActive }) => `sidebar-item ${isActive ? "active" : ""}`}>
-```
-
-`NavLink` sabe si **tú estás actualmente** en esa ruta y entrega una función que
-devuelve `true` o `false`. Con eso el ítem activo se pinta distinto.
-
-> Antes usaba `Link` con una clase fija, así que **nada se resaltaba nunca** al
-> navegar. Este archivo se corrigió.
-
-Al final, el botón "Cerrar sesión" llama `logout()` y `navigate('/')`.
+El estado de aprobación de tiendas y el registro de vendedores todavía no están
+implementados; por ahora se conserva la regla existente para usuarios activos.
+El asistente flotante también ofrece el enlace a WhatsApp.
 
 ## 8.6 `VendedorLayout.jsx` — el marco del panel
 
 ```jsx
 <div className="vendedor-layout">
-  <SidebarVendedor />
   <main className="vendedor-main">
-    <HeaderVendedor />
     <div className="vendedor-content">
       <Outlet />       ← aquí entra la página
     </div>
@@ -756,8 +739,8 @@ Al final, el botón "Cerrar sesión" llama `logout()` y `navigate('/')`.
 </div>
 ```
 
-Es el concepto de **layout**: un marcofijo (menú + cabecera) alrededor de una
-página que cambia. Se usa para las 8 rutas `/vendedor/*`.
+El navbar y el lateral se renderizan desde `App`; este layout contiene el
+contenido de las rutas `/vendedor/*`.
 
 ## 8.7 `HeaderVendedor.jsx` — la cabecera del panel
 
@@ -922,23 +905,9 @@ Muestra solo `productosDescuento`, con el precio original tachado, el final y
 ### `Cliente/Newproduct.jsx` — novedades
 Mapea `productosNuevos`. Usa `useEffect` para subir la página al entrar.
 
-### `Cliente/Contact.jsx` — contacto (PQR)
-**Es el único archivo que se conecta a internet de verdad.** Envía el formulario
-a:
-
-```js
-fetch('https://formsubmit.co/ajax/davidalexanderchangosantacruz@gmail.com', {...})
-```
-
-- Estado: `'idle' | 'sending' | 'success' | 'error'`.
-- Incluye un **campo trampa** `name="_honey"` invisible (`className="hidden-field"`)
-  para atrapar robots.
-- Campos ocultos `_subject` y `_template`.
-
-> `await` = "espera a que internet responda". Por eso el botón dice
-> "Enviando...".
-
-> ⚠️ El linter marca `Link` importado y no usado: sobró de una versión anterior.
+### Atención al cliente
+La tienda no incluye una página ni formulario de contacto. El único canal
+disponible para consultas es el botón flotante de WhatsApp.
 
 ## 9.2 Vendedor
 

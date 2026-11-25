@@ -332,6 +332,9 @@
 
 .nav-usuario-menu a,
 .nav-usuario-menu button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   width: 100%;
   padding: 11px 14px;
   background: transparent;
@@ -344,6 +347,12 @@
   text-align: left;
   text-decoration: none;
   cursor: pointer;
+}
+
+.nav-usuario-menu svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 .nav-usuario-menu a:hover,
@@ -380,8 +389,10 @@
 }
 
 .nav-movil {
+  --nav-verde: #14532d;
+  --nav-verde-suave: #e9f5e6;
   position: fixed;
-  top: 76px;
+  top: var(--nav-alto, 73px);
   left: 0;
   right: 0;
   z-index: 1999;
@@ -392,7 +403,7 @@
   background: #fff;
   border-bottom: 1px solid #e6ede3;
   box-shadow: 0 18px 30px rgba(16, 40, 24, 0.14);
-  max-height: calc(100vh - 76px);
+  max-height: calc(100vh - var(--nav-alto, 73px));
   overflow-y: auto;
 }
 
@@ -624,10 +635,6 @@
 }
 
 @media (max-width: 900px) {
-  .nav-busqueda-form {
-    display: none;
-  }
-
   .nav-logo-texto {
     display: none;
   }
@@ -643,8 +650,8 @@
   }
 
   .nav-movil {
-    top: 62px;
-    max-height: calc(100vh - 62px);
+    top: var(--nav-alto, 59px);
+    max-height: calc(100vh - var(--nav-alto, 59px));
   }
 
   .nav-icono-btn {
@@ -663,11 +670,82 @@
 }
 
 @media (max-width: 520px) {
-  .nav-busqueda {
+  .nav-acciones {
+    gap: 4px;
+  }
+}
+
+@media (max-width: 360px) {
+  .navegacion {
+    padding-inline: 10px;
+  }
+
+  .nav-mercado {
+    gap: 8px;
+  }
+}
+
+/* ── SELECTOR COMPRADOR / VENDEDOR ── */
+.nav-modo {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 999px;
+  background: var(--nav-verde-suave, #e9f5e6);
+  border: 1px solid var(--nav-linea, #e2e9df);
+}
+
+.nav-modo--movil {
+  display: none;
+}
+
+.nav-modo-btn {
+  border: 0;
+  background: transparent;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--nav-verde, #14532d);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s;
+}
+
+.nav-modo-btn.activo {
+  background: var(--nav-verde, #14532d);
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .nav-modo-btn {
+    padding: 6px 8px;
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .nav-acciones > .nav-modo {
     display: none;
   }
 
-  .nav-acciones {
-    gap: 8px;
+  .nav-modo--movil {
+    display: inline-flex;
+    align-self: flex-start;
+  }
+
+  .nav-busqueda-form {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 12px;
+    right: 12px;
+    padding: 8px;
+    background: #fff;
+    border: 1px solid #e2e9df;
+    border-radius: 12px;
+    box-shadow: 0 12px 24px rgba(16, 40, 24, 0.14);
+  }
+
+  .nav-busqueda-form input {
+    width: 100%;
   }
 }

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/authContext";
 import { useCart } from "./Cart";
-import { agregarItemCarrito, vaciarCarrito as vaciarCarritoApi } from "../../api/carrito";
 import { crearPedidoConDetalles } from "../../api/pedidos";
 import "./Checkout.css";
 
@@ -53,24 +52,20 @@ export default function Checkout() {
     setErrorPago("");
 
     try {
+      const propios = carrito.filter((item) => {
+        const vendedorId = item.vendedorId ?? item.user_id ?? item.Vendedor;
+        return vendedorId && String(vendedorId) === String(user.id);
+      });
+      if (propios.length > 0) {
+        setErrorPago("No puedes comprar productos publicados por tu propia cuenta.");
+        return;
+      }
+
       const hoy = new Date();
       const fechaSalida = hoy.toISOString().slice(0, 10);
       const fechaLlegada = new Date(hoy.getTime() + 3 * 24 * 60 * 60 * 1000)
         .toISOString()
         .slice(0, 10);
-
-      // Guardamos el carrito actual en la tabla carrito_compras.
-      await vaciarCarritoApi(user.id);
-      for (const item of carrito) {
-        await agregarItemCarrito({
-          Id_usuario: user.id,
-          Nombre_producto: item.nombre,
-          Precio_unitario: Number(item.precio),
-          Imagen: item.imagen || null,
-          Cantidad: Number(item.cantidad),
-          Total: Number(item.precio) * Number(item.cantidad),
-        });
-      }
 
       // Guardamos también los datos de entrega en el perfil del usuario.
       await updateProfile({
@@ -90,9 +85,15 @@ export default function Checkout() {
         Direccion_envio: form.direccion.trim(),
         Ciudad_envio: form.ciudad.trim(),
         Id_usuario: user.id,
+        user_id: user.id,
+        comprador_id: user.id,
       };
 
-      const { idPedido } = await crearPedidoConDetalles({ pedido, items: carrito });
+      const { idPedido } = await crearPedidoConDetalles({
+        pedido,
+        items: carrito,
+        compradorId: user.id,
+      });
 
       setNumeroPedido(`NUT-${String(idPedido).padStart(6, "0")}`);
       window.dispatchEvent(new Event("nutrik:orders-updated"));
@@ -109,16 +110,25 @@ export default function Checkout() {
   if (comprado) {
     return (
       <div className="checkout-exito">
-        <span className="checkout-exito-icono">✅</span>
+        <span className="checkout-exito-icono" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="m5 12.5 4.5 4.5L19 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
         <h2>¡Pedido confirmado!</h2>
         <p className="checkout-exito-numero">Número de pedido: <strong>{numeroPedido}</strong></p>
         <p>
           Gracias, {form.nombre.split(" ")[0]}. Tu pedido quedó registrado y te contactaremos para coordinar la entrega.
         </p>
         <p className="checkout-demo-aviso">Esta tienda de demostración no procesa cobros en línea.</p>
-        <button className="checkout-exito-btn" onClick={() => navigate("/")}>
-          Seguir comprando
-        </button>
+        <div className="checkout-exito-acciones">
+          <button className="checkout-exito-btn" onClick={() => navigate("/mis-pedidos")}>
+            Ver seguimiento del pedido
+          </button>
+          <button className="checkout-exito-btn" onClick={() => navigate("/")}>
+            Seguir comprando
+          </button>
+        </div>
       </div>
     );
   }
@@ -142,66 +152,51 @@ export default function Checkout() {
 
   return (
     <div className="checkout">
-      <h1 className="checkout-titulo">Finalizar compra</h1>
+      <header className="checkout-cabecera">
+        <p className="checkout-etiqueta">COMPRA SEGURA EN NUTRIK</p>
+        <h1 className="checkout-titulo">Finalizar compra</h1>
+        <ol className="checkout-progreso" aria-label="Progreso de compra">
+          <li className="completado"><span>✓</span> Carrito</li>
+          <li className="activo"><span>2</span> Entrega y pago</li>
+          <li><span>3</span> Confirmación</li>
+        </ol>
+      </header>
 
-      <div className="checkout-contenido">
-        {/* Resumen del pedido */}
-        <section className="checkout-resumen">
-          <h2>Tu pedido ({totalItems} productos)</h2>
-          <div className="checkout-items">
-            {carrito.map((item) => (
-              <div className="checkout-item" key={item.id}>
-                <img src={item.imagen} alt={item.nombre} />
-                <div>
-                  <p className="checkout-item-nombre">{item.nombre}</p>
-                  <p className="checkout-item-cantidad">Cantidad: {item.cantidad}</p>
-                </div>
-                <span className="checkout-item-precio">
-                  ${(item.precio * item.cantidad).toLocaleString("es-CO")}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          <div className="checkout-totales">
-            <div className="checkout-total-fila">
-              <span>Subtotal</span>
-              <span>${totalPrecio.toLocaleString("es-CO")}</span>
-            </div>
-            <div className="checkout-total-fila">
-              <span>Envío</span>
-              <span>{costoEnvio === 0 ? "Gratis 🎉" : "$" + costoEnvio.toLocaleString("es-CO")}</span>
-            </div>
-            <div className="checkout-total-fila checkout-total-grande">
-              <span>Total a pagar</span>
-              <span>${totalFinal.toLocaleString("es-CO")}</span>
+      <form className="checkout-contenido" onSubmit={confirmarPago}>
+        <section className="checkout-form" aria-labelledby="checkout-entrega-titulo">
+          <div className="checkout-seccion-cabecera">
+            <span className="checkout-seccion-icono" aria-hidden="true">⌖</span>
+            <div>
+              <h2 id="checkout-entrega-titulo">Datos de entrega</h2>
+              <p>Indícanos dónde y a quién entregamos tu pedido.</p>
             </div>
           </div>
-        </section>
 
-        {/* Datos de entrega y pago */}
-        <form className="checkout-form" onSubmit={confirmarPago}>
-          <h2>Datos de entrega</h2>
-
-          <label>
+          <label className="checkout-campo checkout-campo-completo">
             Nombre completo
             <input name="nombre" autoComplete="name" value={form.nombre} onChange={cambiarCampo} required />
           </label>
 
-          <label>
-            Teléfono
-            <input
-              name="telefono"
-              type="tel"
-              autoComplete="tel"
-              value={form.telefono}
-              onChange={cambiarCampo}
-              placeholder="300 123 4567"
-              required
-            />
-          </label>
+          <div className="checkout-campos-dobles">
+            <label className="checkout-campo">
+              Teléfono
+              <input
+                name="telefono"
+                type="tel"
+                autoComplete="tel"
+                value={form.telefono}
+                onChange={cambiarCampo}
+                placeholder="300 123 4567"
+                required
+              />
+            </label>
+            <label className="checkout-campo">
+              Ciudad
+              <input name="ciudad" autoComplete="address-level2" value={form.ciudad} onChange={cambiarCampo} required />
+            </label>
+          </div>
 
-          <label>
+          <label className="checkout-campo checkout-campo-completo">
             Dirección
             <input
               name="direccion"
@@ -213,37 +208,83 @@ export default function Checkout() {
             />
           </label>
 
-          <label>
-            Ciudad
-            <input name="ciudad" autoComplete="address-level2" value={form.ciudad} onChange={cambiarCampo} required />
-          </label>
+          <div className="checkout-metodos-contenedor">
+            <div className="checkout-seccion-cabecera checkout-pago-cabecera">
+              <span className="checkout-seccion-icono" aria-hidden="true">▣</span>
+              <div>
+                <h2>Método de pago</h2>
+                <p>Selecciona cómo prefieres pagar.</p>
+              </div>
+            </div>
+            <div className="checkout-metodos">
+              <label className={`checkout-metodo ${form.metodo === "contraentrega" ? "seleccionado" : ""}`}>
+                <input type="radio" name="metodo" value="contraentrega" checked={form.metodo === "contraentrega"} onChange={cambiarCampo} />
+                <span className="checkout-metodo-icono" aria-hidden="true">💵</span>
+                <span className="checkout-metodo-texto"><strong>Contra entrega</strong><small>Paga cuando recibas</small></span>
+              </label>
+              <label className={`checkout-metodo ${form.metodo === "nequi" ? "seleccionado" : ""}`}>
+                <input type="radio" name="metodo" value="nequi" checked={form.metodo === "nequi"} onChange={cambiarCampo} />
+                <span className="checkout-metodo-icono" aria-hidden="true">📱</span>
+                <span className="checkout-metodo-texto"><strong>Nequi</strong><small>Pago desde tu celular</small></span>
+              </label>
+              <label className={`checkout-metodo ${form.metodo === "tarjeta" ? "seleccionado" : ""}`}>
+                <input type="radio" name="metodo" value="tarjeta" checked={form.metodo === "tarjeta"} onChange={cambiarCampo} />
+                <span className="checkout-metodo-icono" aria-hidden="true">💳</span>
+                <span className="checkout-metodo-texto"><strong>Tarjeta</strong><small>Débito o crédito</small></span>
+              </label>
+            </div>
+          </div>
+        </section>
 
-          <h2>Método de pago</h2>
-          <div className="checkout-metodos">
-            <label className={`checkout-metodo ${form.metodo === "contraentrega" ? "seleccionado" : ""}`}>
-              <input type="radio" name="metodo" value="contraentrega" checked={form.metodo === "contraentrega"} onChange={cambiarCampo} />
-              💵 Pago contra entrega
-            </label>
-            <label className={`checkout-metodo ${form.metodo === "nequi" ? "seleccionado" : ""}`}>
-              <input type="radio" name="metodo" value="nequi" checked={form.metodo === "nequi"} onChange={cambiarCampo} />
-              📱 Nequi
-            </label>
-            <label className={`checkout-metodo ${form.metodo === "tarjeta" ? "seleccionado" : ""}`}>
-              <input type="radio" name="metodo" value="tarjeta" checked={form.metodo === "tarjeta"} onChange={cambiarCampo} />
-              💳 Tarjeta débito/crédito
-            </label>
+        <aside className="checkout-resumen" aria-labelledby="checkout-resumen-titulo">
+          <div className="checkout-seccion-cabecera checkout-resumen-cabecera">
+            <span className="checkout-seccion-icono" aria-hidden="true">▤</span>
+            <div>
+              <h2 id="checkout-resumen-titulo">Tu pedido</h2>
+              <p>{totalItems} {totalItems === 1 ? "producto" : "productos"} seleccionados</p>
+            </div>
+          </div>
+          <div className="checkout-items">
+            {carrito.map((item) => (
+              <article className="checkout-item" key={item.id}>
+                <img src={item.imagen} alt="" />
+                <div className="checkout-item-info">
+                  <p className="checkout-item-nombre">{item.nombre}</p>
+                  <p className="checkout-item-cantidad">Cantidad: {item.cantidad}</p>
+                </div>
+                <span className="checkout-item-precio">
+                  ${(item.precio * item.cantidad).toLocaleString("es-CO")}
+                </span>
+              </article>
+            ))}
           </div>
 
-          <p className="checkout-demo-aviso">
-            Al confirmar, registraremos el pedido en esta demostración; no se realizará ningún cobro.
-          </p>
-          {errorPago && <p className="checkout-error" role="alert">{errorPago}</p>}
+          <div className="checkout-totales">
+            <div className="checkout-total-fila">
+              <span>Subtotal</span>
+              <span>${totalPrecio.toLocaleString("es-CO")}</span>
+            </div>
+            <div className="checkout-total-fila">
+              <span>Envío</span>
+              <span className={costoEnvio === 0 ? "checkout-envio-gratis" : ""}>
+                {costoEnvio === 0 ? "Gratis 🎉" : "$" + costoEnvio.toLocaleString("es-CO")}
+              </span>
+            </div>
+            <div className="checkout-total-fila checkout-total-grande">
+              <span>Total a pagar</span>
+              <span>${totalFinal.toLocaleString("es-CO")}</span>
+            </div>
+          </div>
 
+          {errorPago && <p className="checkout-error" role="alert">{errorPago}</p>}
           <button type="submit" className="checkout-pagar-btn">
             Confirmar pedido · ${totalFinal.toLocaleString("es-CO")}
           </button>
-        </form>
-      </div>
+          <p className="checkout-demo-aviso">
+            Al confirmar, registraremos tu pedido. Esta tienda de demostración no realizará ningún cobro.
+          </p>
+        </aside>
+      </form>
     </div>
   );
 }

@@ -9,7 +9,7 @@ const NotFound = () => {
   const navigate = useNavigate();
 
   // Si es vendedor lo manda a su panel, si no a la tienda
-  const destino = user?.role === "vendedor" ? "/vendedor/dashboard" : "/";
+  const destino = user ? "/mis-productos" : "/";
 
   return (
     <div className="flex min-h-[70vh] items-center justify-center px-5 py-10">
@@ -28,7 +28,7 @@ const NotFound = () => {
             className="w-full cursor-pointer rounded-xl border-none bg-gradient-to-br from-marca-600 to-marca-700 py-[13px] text-[0.92rem] font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_18px_rgba(31,106,61,0.28)]"
             onClick={() => navigate(destino)}
           >
-            {user?.role === "vendedor" ? "Ir a mi panel" : "Volver al inicio"}
+            {user ? "Ir a mi panel" : "Volver al inicio"}
           </button>
           <button
             className="w-full cursor-pointer rounded-xl border border-marca-200 bg-white py-[13px] text-[0.92rem] font-bold text-neutra transition-all duration-200 hover:bg-marca-50"

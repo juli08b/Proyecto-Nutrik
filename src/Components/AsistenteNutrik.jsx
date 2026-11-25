@@ -1,7 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../Context/authContext';
 import { useProductos } from '../Context/productContext';
+import {
+  buscarProducto,
+  productosTienda,
+} from '../data/productosData';
+import { recetaParaProducto } from '../data/recetasProductos';
 import './AsistenteNutrik.css';
 
 // ---------------------------------------------------------------
@@ -139,7 +144,7 @@ const CONSEJOS_OBJETIVO = [
 ];
 
 const STORAGE_RETOS = 'nutrik_retos_diarios';
-const STORAGE_POS = 'nutrybot_pos';
+const STORAGE_POS = 'nutrybot_pos_v2';
 
 function hoyISO() {
   return new Date().toISOString().slice(0, 10);
@@ -152,6 +157,17 @@ function posicionInicial() {
   return { x: ancho - 86, y: alto - 30 - 62 };
 }
 
+function limitarPosicion(x, y) {
+  return {
+    x: Math.max(8, Math.min(x, window.innerWidth - 70)),
+    y: Math.max(8, Math.min(y, window.innerHeight - 70)),
+  };
+}
+
+function posicionSegura(x, y) {
+  return limitarPosicion(x, y);
+}
+
 function cargarPosicionGuardada() {
   try {
     const guardado = JSON.parse(localStorage.getItem(STORAGE_POS));
@@ -160,28 +176,12 @@ function cargarPosicionGuardada() {
       typeof guardado.x === 'number' &&
       typeof guardado.y === 'number'
     ) {
-      return evitarWhatsApp(guardado.x, guardado.y);
+      return posicionSegura(guardado.x, guardado.y);
     }
   } catch {
     /* posición vacía o corrupta */
   }
   return null;
-}
-
-// Zona ocupada por el botón de WhatsApp (esquina inferior derecha).
-// Si NutryBot entra ahí, se empuja fuera para que nunca se solapen.
-function evitarWhatsApp(x, y) {
-  const waAncho = 60; // ancho aproximado del botón flotante
-  const waLeft = window.innerWidth - (24 + waAncho + 12); // right + ancho + margen
-  const waBottom = 104; // bottom del botón de WhatsApp
-  const waTop = window.innerHeight - waBottom - 12;
-  if (x + 62 > waLeft && y + 62 > waTop) {
-    const distArriba = y + 62 - waTop;
-    const distIzquierda = x + 62 - waLeft;
-    if (distIzquierda < distArriba) return { x: waLeft - 62, y };
-    return { x, y: waTop - 62 };
-  }
-  return { x, y };
 }
 
 // Detecta qué perfiles/preferencias están activos según el usuario.
@@ -229,18 +229,31 @@ function cargarRetosGuardados() {
 }
 
 function AsistenteNutrik() {
+  const location = useLocation();
   const { user } = useAuth();
   const { productos } = useProductos();
 
   const [abierto, setAbierto] = useState(false);
   const [tab, setTab] = useState('retos');
+  const [productoComprado, setProductoComprado] = useState(null);
   const [estado, setEstado] = useState(cargarRetosGuardados);
   const [toasts, setToasts] = useState([]);
   const [pulso, setPulso] = useState(false);
-  const [pos, setPos] = useState(() => cargarPosicionGuardada() || posicionInicial());
+  const [pos, setPos] = useState(() => {
+    const inicial = posicionInicial();
+    return cargarPosicionGuardada() || posicionSegura(inicial.x, inicial.y);
+  });
 
   const idToastRef = useRef(0);
   const panelRef = useRef(null);
+  const idProductoEnRuta = location.pathname.match(/^\/Productview\/([^/]+)/)?.[1];
+  const productoVisto = idProductoEnRuta
+    ? buscarProducto(decodeURIComponent(idProductoEnRuta))
+    : null;
+  const productoParaReceta = productoVisto || productoComprado;
+  const recetaActual = productoParaReceta
+    ? recetaParaProducto(productoParaReceta, user)
+    : null;
 
   // Arrastre del avatar: guardamos el desplazamiento inicial del puntero
   // respecto a la posición del avatar para moverlo suavemente.
@@ -250,11 +263,7 @@ function AsistenteNutrik() {
   // Mantener el avatar dentro de la pantalla al redimensionar.
   useEffect(() => {
     const onResize = () => {
-      setPos((p) => {
-        const x = Math.min(p.x, window.innerWidth - 62 - 8);
-        const y = Math.min(p.y, window.innerHeight - 62 - 8);
-        return evitarWhatsApp(x, y);
-      });
+      setPos((p) => posicionSegura(p.x, p.y));
     };
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
@@ -279,14 +288,10 @@ function AsistenteNutrik() {
   const onPointerMove = (e) => {
     if (!dragRef.current) return;
     const { offsetX, offsetY } = dragRef.current;
-    let x = e.clientX - offsetX;
-    let y = e.clientY - offsetY;
-    // Limitar a los bordes de la ventana (con un pequeño margen).
-    x = Math.max(8, Math.min(x, window.innerWidth - 62 - 8));
-    y = Math.max(8, Math.min(y, window.innerHeight - 62 - 8));
-
-    // Nunca dejar NutryBot encima del botón de WhatsApp.
-    ({ x, y } = evitarWhatsApp(x, y));
+    const { x, y } = posicionSegura(
+      e.clientX - offsetX,
+      e.clientY - offsetY
+    );
 
     if (Math.abs(x - pos.x) > 2 || Math.abs(y - pos.y) > 2) {
       dragRef.current.movido = true;
@@ -348,6 +353,46 @@ function AsistenteNutrik() {
     }, 5000);
   };
 
+  useEffect(() => {
+    const alVerReceta = (event) => {
+      const producto = event.detail;
+      if (!producto?.id) return;
+      setProductoComprado(producto);
+      setTab('receta');
+      setAbierto(true);
+    };
+    const alAgregarProducto = (event) => {
+      const producto = event.detail;
+      if (!producto?.id) return;
+      setProductoComprado(producto);
+      const receta = recetaParaProducto(producto, user);
+      const combinacion = receta.ingredientes
+        .filter(
+          (ingrediente) =>
+            !/producto|porci[oó]n indicada/i.test(ingrediente)
+        )
+        .join(' y ');
+      const texto = `Para ${producto.nombre}: prueba ${receta.titulo.toLowerCase()}${combinacion ? ` con ${combinacion}` : ''}.`;
+      const id = ++idToastRef.current;
+      setToasts((prev) => [
+        ...prev,
+        { id, texto, tipo: 'general', productoId: producto.id },
+      ]);
+      setPulso(true);
+      setTimeout(() => setPulso(false), 900);
+      setTimeout(() => {
+        setToasts((prev) => prev.filter((toast) => toast.id !== id));
+      }, 7000);
+    };
+
+    window.addEventListener('nutrik:show-product-recipe', alVerReceta);
+    window.addEventListener('nutrik:product-added', alAgregarProducto);
+    return () => {
+      window.removeEventListener('nutrik:show-product-recipe', alVerReceta);
+      window.removeEventListener('nutrik:product-added', alAgregarProducto);
+    };
+  }, [user]);
+
   // Recordatorios automáticos al iniciar sesión (solo clientes con sesión).
   useEffect(() => {
     if (!user) return;
@@ -381,10 +426,15 @@ function AsistenteNutrik() {
     ? (user.primerNombre || user.nombreCompleto || 'amig@').split(' ')[0]
     : 'invitad@';
 
-  // Si el avatar está pegado a la izquierda, el panel se abre hacia la
-  // derecha para no salirse de la pantalla.
-  const panelDerecha =
-    typeof window !== 'undefined' && pos.x < 380;
+  const anchoPanel = Math.min(360, window.innerWidth - 32);
+  const panelArriba = pos.y >= window.innerHeight / 2;
+  const estiloPanel = {
+    left: Math.max(16, Math.min(pos.x + 62 - anchoPanel, window.innerWidth - anchoPanel - 16)),
+    width: anchoPanel,
+    top: panelArriba ? 'auto' : pos.y + 78,
+    bottom: panelArriba ? window.innerHeight - pos.y + 16 : 'auto',
+    maxHeight: Math.min(560, panelArriba ? pos.y - 32 : window.innerHeight - pos.y - 94),
+  };
 
   return (
     <>
@@ -396,6 +446,23 @@ function AsistenteNutrik() {
             <div className="nutrik-toast-cuerpo">
               <strong>NutryBot</strong>
               <p>{t.texto}</p>
+              {t.productoId && (
+                <button
+                  type="button"
+                  className="nutrik-toast-accion"
+                  onClick={() => {
+                    setProductoComprado(
+                      productosTienda.find((producto) => producto.id === t.productoId) ||
+                        productoComprado
+                    );
+                    setTab('receta');
+                    setAbierto(true);
+                    setToasts((prev) => prev.filter((toast) => toast.id !== t.id));
+                  }}
+                >
+                  Ver receta
+                </button>
+              )}
             </div>
           </div>
         ))}
@@ -413,7 +480,10 @@ function AsistenteNutrik() {
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
-          aria-label="Abrir NutryBot"
+          onClick={(event) => {
+            if (event.detail === 0) setAbierto((v) => !v);
+          }}
+          aria-label="Abrir ayuda de Nutrik"
           aria-expanded={abierto}
         >
           <span className="nutrik-avatar-cara">👵</span>
@@ -421,7 +491,8 @@ function AsistenteNutrik() {
         </button>
         {abierto && (
           <div
-            className={`nutrik-panel ${panelDerecha ? 'hacia-derecha' : ''}`}
+            className="nutrik-panel"
+            style={estiloPanel}
             role="dialog"
             aria-label="NutryBot"
           >
@@ -440,6 +511,15 @@ function AsistenteNutrik() {
               </button>
             </header>
 
+            <a
+              className="nutrik-whatsapp"
+              href="https://wa.me/573336043098?text=Hola%20Nutrik%2C%20quiero%20informaci%C3%B3n%20sobre%20sus%20productos."
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Hablar por WhatsApp ↗
+            </a>
+
             <nav className="nutrik-tabs">
               <button
                 className={tab === 'retos' ? 'activo' : ''}
@@ -453,6 +533,14 @@ function AsistenteNutrik() {
               >
                 💡 Consejos
               </button>
+              {productoParaReceta && (
+                <button
+                  className={tab === 'receta' ? 'activo' : ''}
+                  onClick={() => setTab('receta')}
+                >
+                  🥣 Receta
+                </button>
+              )}
             </nav>
 
             <div className="nutrik-panel-cuerpo">
@@ -572,6 +660,32 @@ function AsistenteNutrik() {
                     ))}
                   </div>
                 </>
+              )}
+
+              {tab === 'receta' && productoParaReceta && recetaActual && (
+                <section className="nutrik-receta">
+                  <p className="nutrik-receta-contexto">
+                    Para <strong>{productoParaReceta.nombre}</strong>
+                  </p>
+                  <h4>{recetaActual.titulo}</h4>
+                  <h5>Ingredientes</h5>
+                  <ul>
+                    {recetaActual.ingredientes.map((ingrediente) => (
+                      <li key={ingrediente}>{ingrediente}</li>
+                    ))}
+                  </ul>
+                  <h5>Preparación</h5>
+                  <p>{recetaActual.pasos}</p>
+                  {recetaActual.aviso.map((aviso) => (
+                    <p className="nutrik-receta-aviso" key={aviso}>
+                      {aviso}
+                    </p>
+                  ))}
+                  <p className="nutrik-receta-disclaimer">
+                    Revisa los ingredientes y advertencias del empaque. No
+                    reemplaza el consejo de un profesional de salud.
+                  </p>
+                </section>
               )}
             </div>
           </div>

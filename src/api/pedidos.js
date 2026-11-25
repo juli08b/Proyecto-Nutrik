@@ -16,7 +16,7 @@ export const eliminarPedido = (id) =>
 
 // Busca (o crea) el producto de la BD que corresponde a un ítem del carrito.
 // La vitrina usa un catálogo propio con ids de texto, por eso se empareja por nombre.
-async function asegurarProducto(item, productos, categorias) {
+async function asegurarProducto(item, productos, categorias, compradorId) {
   const nombre = (item.nombre || item.Nombre_producto || 'Producto').trim();
   const existente = productos.find(
     (p) => p.Nombre_producto?.toLowerCase() === nombre.toLowerCase()
@@ -34,6 +34,11 @@ async function asegurarProducto(item, productos, categorias) {
     categorias.push(nueva.data);
   }
 
+  const vendedorId = item.vendedorId ?? item.user_id ?? item.Vendedor ?? null;
+  if (vendedorId && String(vendedorId) === String(compradorId)) {
+    throw new Error('No puedes comprar tus propios productos.');
+  }
+
   const creado = await crearProducto({
     Nombre_producto: nombre,
     Precio: Number(item.precio ?? item.Precio_unitario ?? 0),
@@ -42,7 +47,8 @@ async function asegurarProducto(item, productos, categorias) {
     Stock: 0,
     Imagen: item.imagen || null,
     Estado: 'Activo',
-    Vendedor: 'tienda@nutrik.com',
+    user_id: vendedorId,
+    Vendedor: vendedorId,
   });
 
   const producto = creado.data;
@@ -50,27 +56,43 @@ async function asegurarProducto(item, productos, categorias) {
   return producto.Id_producto;
 }
 
-export async function crearPedidoConDetalles({ pedido, items }) {
-  const guardado = await crearPedido(pedido);
-  const idPedido = guardado.data.Id_pedido;
-
+export async function prepararItemsPedido(items, compradorId) {
   const [productos, categorias] = await Promise.all([
     listarProductos(),
     listarCategorias(),
   ]);
   const listaProductos = Array.isArray(productos) ? productos : [];
   const listaCategorias = Array.isArray(categorias) ? categorias : [];
+  const preparados = [];
 
   for (const item of items) {
-    const idProducto = await asegurarProducto(item, listaProductos, listaCategorias);
-    await crearDetalle({
-      Id_pedido: idPedido,
-      Id_producto: idProducto,
-      Precio_unitario: Number(item.precio),
-      Subtotal: Number(item.precio) * Number(item.cantidad),
-      Cantidad: Number(item.cantidad),
-    });
+    const idProducto = await asegurarProducto(
+      item,
+      listaProductos,
+      listaCategorias,
+      compradorId
+    );
+    if (!idProducto) {
+      throw new Error(`No pudimos preparar el producto "${item.nombre || item.Nombre_producto}".`);
+    }
+    preparados.push({ ...item, Id_producto: idProducto });
   }
+
+  return preparados;
+}
+
+export async function crearPedidoConDetalles({ pedido, items, compradorId }) {
+  const itemsPreparados = items.every((item) => item.Id_producto)
+    ? items
+    : await prepararItemsPedido(items, compradorId);
+  const guardado = await crearPedido({
+    ...pedido,
+    items: itemsPreparados.map((item) => ({
+      Id_producto: item.Id_producto,
+      Cantidad: Number(item.cantidad),
+    })),
+  });
+  const idPedido = guardado.data.Id_pedido;
 
   return { idPedido, data: guardado.data };
 }
