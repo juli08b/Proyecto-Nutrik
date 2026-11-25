@@ -8,7 +8,6 @@ import {
   listarCategorias,
   crearCategoria,
 } from '../api/productos';
-import { esAdministrador } from '../constants/roles';
 
 // Convierte un producto de Laravel (tabla productos) al formato que usa React.
 function desdeApi(p) {
@@ -98,8 +97,8 @@ function ProductProvider({ children }) {
     };
   }, []);
 
-  const getProductosPorVendedor = (vendedorId, usuario) => {
-    if (esAdministrador(usuario)) return productos;
+  const getProductosPorVendedor = (vendedorId) => {
+    if (vendedorId == null || vendedorId === '') return [];
     return productos.filter(
       (producto) => String(producto.vendedorId) === String(vendedorId)
     );

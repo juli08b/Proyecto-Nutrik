@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import "../Cliente/Product.css";
-import { useCart } from "../Cliente/Cart";
+import "./Product.css";
+import { useCart } from "../checkout/Cart";
 import {
   buscarProducto,
   precioFinal,
   formatearPrecio,
 } from "../../data/productosData";
 
+// La selección muestra estos productos y consulta sus precios en el catálogo local.
 const productosFrozen = [
   { id: 1, productoId: "silk", nombre: "Silk - Almendra sin Azúcar" },
   { id: 2, productoId: "yogurt-smoothie", nombre: "Yogurt Smoothie" },

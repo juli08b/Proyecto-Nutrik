@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { useState, useRef, useEffect } from "react";
 import { useAuth } from "../Context/authContext";
-import { useCart } from "../Pages/Cliente/Cart";
+import { useCart } from "../Pages/checkout/Cart";
 
 import logoPequeno from "../assets/logoNutrick.png";
 import carritoIcono from "../assets/Carrito03.svg";
@@ -12,7 +12,6 @@ import usuarioIcono from "../assets/Usuario.svg";
 import categoria from "../assets/Categoria.svg";
 import dieta from "../assets/Dieta.svg";
 import NotificationsMenu from "./NotificationsMenu";
-import { useModo } from "../Context/useModo";
 import { EnlacesCuenta, IconoCuenta } from "./MenuCuenta";
 
 const ENLACES = [
@@ -22,7 +21,7 @@ const ENLACES = [
   { to: "/nosotros", texto: "Nosotros", soloSinSesion: true },
 ];
 
-function Navbar() {
+function Navbar({ mostrarSidebar = false }) {
   const location = useLocation();
   const [menuAbierto, setMenuAbierto] = useState("");
   const [rutaMenuAbierto, setRutaMenuAbierto] = useState(location.pathname);
@@ -34,7 +33,6 @@ function Navbar() {
   const { user, logout } = useAuth();
   const { totalItems, setCarritoAbierto } = useCart();
   const navigate = useNavigate();
-  const { modo, cambiarModo } = useModo();
   const navUsuarioRef = useRef(null);
   const navRef = useRef(null);
 
@@ -76,13 +74,6 @@ function Navbar() {
     .toUpperCase();
 
   const cerrarMovil = () => setMenuMovil(false);
-
-  const seleccionarModo = (nuevo) => {
-    setMenuUsuario(false);
-    if (nuevo !== modo || (nuevo === "vendedor" && !/^\/(vendedor|mis-productos|admin)(\/|$)/i.test(location.pathname))) {
-      cambiarModo(nuevo);
-    }
-  };
 
   const alternarSidebar = (menu) => {
     if (menuVisible && menuAbierto === menu) {
@@ -144,21 +135,6 @@ function Navbar() {
           </div>
 
           <div className="nav-acciones">
-            {user && (
-              <div className="nav-modo" role="group" aria-label="Cambiar modo">
-                {["comprador", "vendedor"].map((m) => (
-                  <button
-                    key={m}
-                    type="button"
-                    className={`nav-modo-btn ${modo === m ? "activo" : ""}`}
-                    aria-pressed={modo === m}
-                    onClick={() => seleccionarModo(m)}
-                  >
-                    {m === "comprador" ? "Comprador" : "Vendedor"}
-                  </button>
-                ))}
-              </div>
-            )}
             <div className="nav-busqueda">
               {buscadorAbierto && (
                 <form className="nav-busqueda-form" onSubmit={enviarBusqueda}>
@@ -188,7 +164,7 @@ function Navbar() {
 
             <NotificationsMenu />
 
-            {user && modo === "comprador" ? (
+            {user ? (
               <div
                 className="nav-usuario"
                 ref={navUsuarioRef}
@@ -213,22 +189,24 @@ function Navbar() {
                     onClick={(e) => e.stopPropagation()}
                   >
                     <EnlacesCuenta user={user} onNavigate={() => setMenuUsuario(false)} />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setMenuUsuario(false);
-                        logout();
-                        navigate("/");
-                      }}
-                    >
-                      <IconoCuenta nombre="salir" /> Cerrar sesión
-                    </button>
+                    {!mostrarSidebar && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setMenuUsuario(false);
+                          logout();
+                          navigate("/");
+                        }}
+                      >
+                        <IconoCuenta nombre="salir" /> Cerrar sesión
+                      </button>
+                    )}
                   </div>
                 )}
               </div>
             ) : !user ? (
               <Link
-                to="/elegir-rol"
+                to="/login"
                 className="nav-icono-btn"
                 aria-label="Perfil de usuario"
               >
@@ -289,16 +267,6 @@ function Navbar() {
         <>
           <div className="nav-movil-backdrop" onClick={cerrarMovil} />
           <div className="nav-movil">
-            {user && (
-              <div className="nav-modo nav-modo--movil" role="group" aria-label="Cambiar modo">
-                {["comprador", "vendedor"].map((m) => (
-                  <button key={m} type="button" className={`nav-modo-btn ${modo === m ? "activo" : ""}`}
-                    aria-pressed={modo === m} onClick={() => { cerrarMovil(); seleccionarModo(m); }}>
-                    {m === "comprador" ? "Comprador" : "Vendedor"}
-                  </button>
-                ))}
-              </div>
-            )}
             <div className="nav-movil-links">
               {ENLACES.filter(
                 (enlace) =>
@@ -348,7 +316,7 @@ function Navbar() {
 
             {!user && (
               <Link
-                to="/elegir-rol"
+                to="/login"
                 className="nav-movil-acceder"
                 onClick={cerrarMovil}
               >

@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ROLES } from '../constants/roles';
-import { enlacesCuenta } from './enlacesCuenta';
+import { enlacesCuenta, seccionesCuenta } from './enlacesCuenta';
 
 const iconos = {
   compras: <><path d="M5 8h14l-1 12H6L5 8Z" /><path d="M9 8V6a3 3 0 0 1 6 0v2" /></>,
@@ -25,18 +24,20 @@ export function IconoCuenta({ nombre }) {
 }
 
 export function EnlacesCuenta({ user, onNavigate }) {
+  const secciones = seccionesCuenta(user);
+
   return (
     <>
-      {enlacesCuenta('comprador').map(({ to, texto, icono }) => (
-        <Link key={to} to={to} onClick={onNavigate}>
-          <IconoCuenta nombre={icono} /> {texto}
-        </Link>
+      {secciones.map(({ modo, titulo }) => (
+        <div key={modo} className="nav-cuenta-grupo">
+          <span className="nav-cuenta-titulo">{titulo}</span>
+          {enlacesCuenta(modo).map(({ to, texto, icono }) => (
+            <Link key={to} to={to} onClick={onNavigate}>
+              <IconoCuenta nombre={icono} /> {texto}
+            </Link>
+          ))}
+        </div>
       ))}
-      {user?.role === ROLES.ADMIN && (
-        <Link to="/admin/usuarios" onClick={onNavigate}>
-          <IconoCuenta nombre="administracion" /> Administrar usuarios
-        </Link>
-      )}
     </>
   );
 }

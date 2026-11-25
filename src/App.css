@@ -1,0 +1,154 @@
+/* ============================================================
+   SISTEMA VISUAL COMPARTIDO · NUTRIK
+   Reglas de superficie coherentes para páginas, formularios y
+   paneles que comparten la aplicación.
+   ============================================================ */
+
+#root {
+  isolation: isolate;
+}
+
+main {
+  min-width: 0;
+}
+
+button,
+.btn,
+input[type="submit"] {
+  cursor: pointer;
+}
+
+button:disabled,
+input:disabled,
+select:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.page-shell,
+.login-contenedor,
+.register-contenedor,
+.forgot-password-container,
+.perfil-container,
+.checkout-container,
+.discount-container,
+.about-container {
+  max-width: 1280px;
+  margin-inline: auto;
+}
+
+input,
+select,
+textarea {
+  border-radius: 10px;
+  transition: border-color 180ms ease, box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #2f7d4f;
+  box-shadow: 0 0 0 4px rgba(47, 125, 79, 0.10);
+}
+
+.card,
+.kpi-card,
+.chart-card,
+.table-card,
+.pedido-card,
+.producto-card,
+.card-producto,
+.checkout-resumen,
+.perfil-card,
+.login-caja,
+.register-caja,
+.forgot-password-caja {
+  border: 1px solid rgba(20, 83, 45, 0.09);
+  border-radius: 18px;
+  box-shadow: 0 12px 32px rgba(31, 74, 44, 0.07);
+}
+
+.card,
+.pedido-card,
+.perfil-card,
+.login-caja,
+.register-caja,
+.forgot-password-caja {
+  background: #fff;
+}
+
+.table-responsive,
+.dashboard-container,
+.pedidos-container {
+  min-width: 0;
+}
+
+.dashboard-container table,
+.pedidos-container table,
+.table-card table {
+  border-spacing: 0;
+}
+
+.dashboard-container tbody tr,
+.pedidos-container tbody tr,
+.table-card tbody tr {
+  transition: background-color 160ms ease;
+}
+
+.dashboard-container tbody tr:hover,
+.pedidos-container tbody tr:hover,
+.table-card tbody tr:hover {
+  background: #f7faf5;
+}
+
+.primary-button,
+.btn-primary,
+.cart-btn-pagar,
+.aviso-sesion-btn-primario {
+  min-height: 46px;
+  border: 0;
+  border-radius: 12px;
+  font-weight: 800;
+  transition: transform 180ms ease, box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+.primary-button:hover,
+.btn-primary:hover,
+.cart-btn-pagar:hover,
+.aviso-sesion-btn-primario:hover {
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .vendedor-content {
+    padding: 16px 12px;
+  }
+
+  .kpi-grid,
+  .charts-grid,
+  .tables-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-header,
+  .table-header {
+    align-items: flex-start;
+  }
+
+  .cart-panel {
+    width: min(390px, 100vw);
+  }
+}
