@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/authContext";
 import { useCart } from "./Cart";
-import { agregarItemCarrito, vaciarCarrito as vaciarCarritoApi } from "../../api/carrito";
 import { crearPedidoConDetalles } from "../../api/pedidos";
 import "./Checkout.css";
 
@@ -68,19 +67,6 @@ export default function Checkout() {
         .toISOString()
         .slice(0, 10);
 
-      // Guardamos el carrito actual en la tabla carrito_compras.
-      await vaciarCarritoApi(user.id);
-      for (const item of carrito) {
-        await agregarItemCarrito({
-          Id_usuario: user.id,
-          Nombre_producto: item.nombre,
-          Precio_unitario: Number(item.precio),
-          Imagen: item.imagen || null,
-          Cantidad: Number(item.cantidad),
-          Total: Number(item.precio) * Number(item.cantidad),
-        });
-      }
-
       // Guardamos también los datos de entrega en el perfil del usuario.
       await updateProfile({
         telefono: form.telefono.trim(),
@@ -124,16 +110,25 @@ export default function Checkout() {
   if (comprado) {
     return (
       <div className="checkout-exito">
-        <span className="checkout-exito-icono">✅</span>
+        <span className="checkout-exito-icono" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="m5 12.5 4.5 4.5L19 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
         <h2>¡Pedido confirmado!</h2>
         <p className="checkout-exito-numero">Número de pedido: <strong>{numeroPedido}</strong></p>
         <p>
           Gracias, {form.nombre.split(" ")[0]}. Tu pedido quedó registrado y te contactaremos para coordinar la entrega.
         </p>
         <p className="checkout-demo-aviso">Esta tienda de demostración no procesa cobros en línea.</p>
-        <button className="checkout-exito-btn" onClick={() => navigate("/")}>
-          Seguir comprando
-        </button>
+        <div className="checkout-exito-acciones">
+          <button className="checkout-exito-btn" onClick={() => navigate("/mis-pedidos")}>
+            Ver seguimiento del pedido
+          </button>
+          <button className="checkout-exito-btn" onClick={() => navigate("/")}>
+            Seguir comprando
+          </button>
+        </div>
       </div>
     );
   }

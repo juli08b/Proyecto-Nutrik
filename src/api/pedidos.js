@@ -56,16 +56,14 @@ async function asegurarProducto(item, productos, categorias, compradorId) {
   return producto.Id_producto;
 }
 
-export async function crearPedidoConDetalles({ pedido, items, compradorId }) {
-  const guardado = await crearPedido(pedido);
-  const idPedido = guardado.data.Id_pedido;
-
+export async function prepararItemsPedido(items, compradorId) {
   const [productos, categorias] = await Promise.all([
     listarProductos(),
     listarCategorias(),
   ]);
   const listaProductos = Array.isArray(productos) ? productos : [];
   const listaCategorias = Array.isArray(categorias) ? categorias : [];
+  const preparados = [];
 
   for (const item of items) {
     const idProducto = await asegurarProducto(
@@ -74,15 +72,27 @@ export async function crearPedidoConDetalles({ pedido, items, compradorId }) {
       listaCategorias,
       compradorId
     );
-    await crearDetalle({
-      Id_pedido: idPedido,
-      Id_producto: idProducto,
-      Precio_unitario: Number(item.precio),
-      Subtotal: Number(item.precio) * Number(item.cantidad),
-      Cantidad: Number(item.cantidad),
-      vendedor_id: item.vendedorId ?? item.user_id ?? item.Vendedor ?? null,
-    });
+    if (!idProducto) {
+      throw new Error(`No pudimos preparar el producto "${item.nombre || item.Nombre_producto}".`);
+    }
+    preparados.push({ ...item, Id_producto: idProducto });
   }
+
+  return preparados;
+}
+
+export async function crearPedidoConDetalles({ pedido, items, compradorId }) {
+  const itemsPreparados = items.every((item) => item.Id_producto)
+    ? items
+    : await prepararItemsPedido(items, compradorId);
+  const guardado = await crearPedido({
+    ...pedido,
+    items: itemsPreparados.map((item) => ({
+      Id_producto: item.Id_producto,
+      Cantidad: Number(item.cantidad),
+    })),
+  });
+  const idPedido = guardado.data.Id_pedido;
 
   return { idPedido, data: guardado.data };
 }

@@ -249,6 +249,22 @@
   margin-bottom: 14px;
 }
 
+.checkout-exito-icono {
+  display: grid;
+  width: 64px;
+  height: 64px;
+  place-items: center;
+  margin: 0 auto 18px;
+  border-radius: 18px;
+  background: #e9f5eb;
+  color: #2e7d45;
+}
+
+.checkout-exito-icono svg {
+  width: 36px;
+  height: 36px;
+}
+
 .checkout-exito h2,
 .checkout-vacio h2 {
   color: #14532d;
@@ -270,6 +286,13 @@
 
 .checkout-exito .checkout-demo-aviso {
   margin: 0 0 22px;
+}
+
+.checkout-exito-acciones {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
 }
 
 .checkout-exito-btn,

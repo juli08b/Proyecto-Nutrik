@@ -9,7 +9,7 @@ export function enlacesCuenta(modo) {
         { to: '/vendedor/configuracion', texto: 'Configuración de tienda', icono: 'configuracion' },
       ]
     : [
-        { to: '/seguimiento', texto: 'Mis compras', icono: 'compras' },
+        { to: '/mis-pedidos', texto: 'Seguimiento de pedidos', icono: 'compras' },
         { to: '/favoritos', texto: 'Favoritos', icono: 'favoritos' },
         { to: '/perfil', texto: 'Mi perfil', icono: 'perfil' },
       ];
