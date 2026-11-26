@@ -4,7 +4,7 @@ import { ROLES } from '../constants/roles';
 export function seccionesCuenta(user) {
   return user?.role === ROLES.ADMIN
     ? [{ modo: 'administracion', titulo: 'Administración' }, { modo: 'comprador', titulo: 'Mi cuenta' }]
-    : [{ modo: 'comprador', titulo: 'Mis compras' }, { modo: 'vendedor', titulo: 'Mis ventas' }];
+    : [{ modo: 'comprador', titulo: 'perfil' }, { modo: 'vendedor', titulo: 'Administración' }];
 }
 
 export function enlacesCuenta(modo) {
@@ -28,8 +28,8 @@ export function enlacesCuenta(modo) {
         { to: '/vendedor/configuracion', texto: 'Configuración de tienda', icono: 'configuracion' },
       ]
     : [
-        { to: '/mis-pedidos', texto: 'Seguimiento de pedidos', icono: 'compras' },
-        { to: '/favoritos', texto: 'Favoritos', icono: 'favoritos' },
+        // { to: '/mis-pedidos', texto: 'Seguimiento de pedidos', icono: 'compras' },
+        // { to: '/favoritos', texto: 'Favoritos', icono: 'favoritos' },
         { to: '/perfil', texto: 'Mi perfil', icono: 'perfil' },
       ];
 }

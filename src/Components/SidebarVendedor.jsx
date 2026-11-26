@@ -1,8 +1,8 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/authContext";
 import { IconoCuenta } from "./MenuCuenta";
 import { enlacesCuenta, seccionesCuenta } from "./enlacesCuenta";
-import logoNutrik from "../assets/logoN.svg";
+import logoPequeno from "../assets/logoN.svg";
 
 const SidebarVendedor = () => {
   const { user, logout } = useAuth();
@@ -17,12 +17,27 @@ const SidebarVendedor = () => {
   return (
     <aside className="fixed top-0 left-0 w-64 h-screen bg-white border-r border-gray-200 flex flex-col justify-between z-50">
       {/* Logo de la marca en la parte superior */}
-      <div className="h-20 flex items-center px-11 border-b border-gray-100 shrink-0">
-        <img
-          src={logoNutrik}
-          alt="Nutrik"
-          className="h-19 w-auto max-w-[150px] object-contain"
-        />
+      <div className="h-20 flex items-center px-6 border-b border-gray-100 shrink-0">
+        <Link to="/" aria-label="Nutrik — Tu salud empieza aquí" className="flex items-center gap-3 group">
+
+          {/* Logo (Imagen) */}
+          <img
+            src={logoPequeno}
+            alt="Nutrik"
+            className="block h-15 w-auto max-w-[100px] object-contain transition-transform group-hover:scale-105"
+          />
+
+          {/* Texto del Logo */}
+          <div className="flex flex-col leading-[1.05]">
+            <strong className="text-[#1A4D2E] text-[1.15rem] font-black tracking-[0.14em]">
+              NUTRIK
+            </strong>
+            <span className="text-[#7f8f83] text-[0.58rem] font-bold tracking-[0.14em] uppercase">
+              TU SALUD EMPIEZA AQUÍ
+            </span>
+          </div>
+
+        </Link>
       </div>
 
       {/* Área scrolleable */}
@@ -30,7 +45,6 @@ const SidebarVendedor = () => {
         className="flex-1 overflow-y-auto py-6 px-4"
         aria-label="Menú de cuenta"
       >
-
         {/* Secciones y enlaces */}
         <div className="flex flex-col gap-6">
           {secciones.map(({ modo, titulo }) => (
@@ -38,7 +52,6 @@ const SidebarVendedor = () => {
               <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 px-2">
                 {titulo}
               </p>
-
               <div className="flex flex-col gap-1">
                 {enlacesCuenta(modo).map((item) => (
                   <NavLink
