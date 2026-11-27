@@ -5,7 +5,6 @@ import { useCart } from "../Cliente/Cart";
 import granola from "../../assets/granola.svg";
 import frutos from "../../assets/frutos.svg";
 import chia from "../../assets/chia.svg";
-import coco from "../../assets/coco.svg";
 import {
   buscarProducto,
   precioFinal,
@@ -17,7 +16,7 @@ const productosSnacks = [
   { id: 1, productoId: "granola", nombre: "Granola Natural", imagen: granola },
   { id: 2, productoId: "frutos", nombre: "Mix de Frutos", imagen: frutos },
   { id: 3, productoId: "chia", nombre: "Barras de Chía", imagen: chia },
-  { id: 4, productoId: "coco", nombre: "Chips de Coco", imagen: coco },
+  { id: 4, productoId: "wild-choco-mani", nombre: "wild protein chocolate con maní", imagen: "" },
 ];
 
 function Snacks() {
@@ -46,8 +45,11 @@ function Snacks() {
           const datos = buscarProducto(producto.productoId) || {};
           return (
             <div className="producto-card" key={producto.id}>
-              <div className="producto-badge nuevo">Snack</div>
-              <img src={producto.imagen} alt={producto.nombre} className="producto-img" />
+              <img
+                src={producto.imagen || datos.imagen}
+                alt={producto.nombre}
+                className="producto-img"
+              />
               <div className="producto-info">
                 <h3>{producto.nombre}</h3>
                 <p className="producto-descripcion">

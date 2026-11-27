@@ -10,27 +10,44 @@ import comida from "../assets/comida.jpg";
 
 const FALLBACK = comida;
 
+// Textos del carrusel: cada slide tiene su propio mensaje y sus propios botones.
+// Antes los 3 slides repetían "EXPLORAR PRODUCTOS" y "DESCUENTOS".
 const HEROES = [
   {
     img: hero1,
     kicker: "ALIMENTACIÓN CONSCIENTE",
     titulo: "ALIMENTA TU VIDA",
     titulo2: "DE FORMA NATURAL",
-    sub: "Fresco · Natural · Equilibrado",
+    sub: "Natural · Equilibrado · Consciente",
+    // Botón principal: catálogo. Secundario: descuentos, como pediste.
+    ctaPrimaria: "VER PRODUCTOS",
+    rutaPrimaria: "/productos",
+    ctaSecundaria: "DESCUENTOS",
+    rutaSecundaria: "/discount",
   },
   {
     img: hero2,
-    kicker: "PRODUCTOS FRESCOS",
-    titulo: "DIRECTO DEL CAMPO",
-    titulo2: "A TU MESA",
-    sub: "Calidad · Origen · Bienestar",
+    kicker: "BIENESTAR NATURAL",
+    titulo: "CUIDA TU CUERPO",
+    titulo2: "CADA DÍA",
+    sub: "Calidad · Confianza · Bienestar",
+    // Este slide habla de suplementos y de confianza en la marca.
+    ctaPrimaria: "VER SUPLEMENTOS",
+    rutaPrimaria: "/catalog/suplementos",
+    ctaSecundaria: "CONOCER NUTRIK",
+    rutaSecundaria: "/nosotros",
   },
   {
     img: hero3,
     kicker: "COMER BIEN ES VIVIR BIEN",
     titulo: "NUTRE TU CUERPO",
     titulo2: "CON LO MEJOR",
-    sub: "Sabor · Energía · Salud",
+    sub: "Energía · Salud · Vitalidad",
+    // "Ver catálogo" apunta a productos para que nunca quede una página vacía.
+    ctaPrimaria: "VER CATÁLOGO",
+    rutaPrimaria: "/productos",
+    ctaSecundaria: "DESCUENTOS",
+    rutaSecundaria: "/discount",
   },
 ];
 
@@ -109,7 +126,7 @@ const CATEGORIAS = [
   },
   {
     nombre: "Frutos secos y semillas",
-    slug: "frutas",
+    slug: "frutos-secos-semillas",
     img: "https://i.pinimg.com/736x/2b/49/fb/2b49fb1cbab3746086b4748758254a9a.jpg",
   },
 ];
@@ -373,12 +390,13 @@ function Home() {
             <span>{hero.titulo2}</span>
           </h1>
           <p className="hero-subtitulo">{hero.sub}</p>
+          {/* Botones del slide actual: ahora salen de HEROES, uno por diapositiva. */}
           <div className="hero-ctas">
-            <Link to="/productos" className="home-cta home-cta--primario">
-              EXPLORAR PRODUCTOS
+            <Link to={hero.rutaPrimaria} className="home-cta home-cta--primario">
+              {hero.ctaPrimaria}
             </Link>
-            <Link to="/discount" className="home-cta home-cta--secundario">
-              DESCUENTOS
+            <Link to={hero.rutaSecundaria} className="home-cta home-cta--secundario">
+              {hero.ctaSecundaria}
             </Link>
           </div>
         </div>
@@ -655,18 +673,19 @@ function Home() {
         </div>
       </section>
 
-      {/* 6 · BANNER RECETAS Y CONSEJOS */}
+      {/* 6 · BANNER DE BIENESTAR (antes hablaba de recetas, pero no hay sección de recetas) */}
       <section className="recetas-banner">
         <div className="recetas-overlay" />
         <div className="recetas-contenido">
-          <span className="recetas-kicker">RECETAS Y CONSEJOS</span>
+          {/* Se quitó "RECETAS" porque no existe esa página en el proyecto. */}
+          <span className="recetas-kicker">BIENESTAR NUTRIK</span>
           <h2>DISFRUTA DE UNA ALIMENTACIÓN BALANCEADA</h2>
           <p>
-            Ideas, recetas e inspiración para comer rico y saludable todos los
-            días.
+            Productos y consejos para comer mejor todos los días.
           </p>
+          {/* El botón ahora coincide con la ruta real: /productos. */}
           <Link to="/productos" className="recetas-cta">
-            VER RECETAS →
+            VER PRODUCTOS →
           </Link>
         </div>
         <span className="recetas-hoja recetas-hoja--1" aria-hidden="true" />
