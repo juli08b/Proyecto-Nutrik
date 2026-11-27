@@ -21,7 +21,7 @@
   background: var(--pf-fondo);
   min-height: 100vh;
   box-sizing: border-box;
-  padding: calc(var(--nav-alto, 73px) + 30px) 30px 60px;
+  padding: 0 30px 60px;
 }
 
 .perfil-contenedor *,
@@ -591,13 +591,13 @@
 
 @media (max-width: 900px) {
   .perfil-contenedor {
-    padding: calc(var(--nav-alto, 73px) + 20px) 16px 48px;
+    padding: 0 16px 48px;
   }
 }
 
 @media (max-width: 640px) {
   .perfil-contenedor {
-    padding: calc(var(--nav-alto, 73px) + 16px) 12px 40px;
+    padding:  0 12px 40px;
   }
 
   .perfil-layout {

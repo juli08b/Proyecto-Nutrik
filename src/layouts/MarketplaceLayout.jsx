@@ -10,6 +10,7 @@ import {
   ShoppingBag,
   UserRound,
   X,
+  Home,
 } from 'lucide-react';
 
 import SidebarVendedor from '../Components/SidebarVendedor';
@@ -26,6 +27,7 @@ const MarketplaceLayout = () => {
 
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [busqueda, setBusqueda] = useState("");
   const { pathname } = useLocation();
 
   const esAdmin = /^\/admin(\/|$)/i.test(pathname);
@@ -79,6 +81,26 @@ const MarketplaceLayout = () => {
       : 'text-gray-500 hover:bg-gray-100 hover:text-green-700'
     }`;
 
+  const handleBuscar = (e) => {
+    e.preventDefault(); // Evita que la página se recargue
+
+    if (!busqueda.trim()) return; // Si está vacío, no hace nada
+
+    // Decidimos a dónde enviar al usuario según dónde esté parado
+    const esRutaVentas = pathname.includes('/vendedor') || pathname.includes('/mis-productos');
+
+    if (esRutaVentas) {
+      // Si está en ventas, busca en sus productos
+      navigate(`/vendedor/productos?q=${encodeURIComponent(busqueda)}`);
+    } else {
+      // Si está en perfil o admin, busca en el catálogo general
+      navigate(`/productos?q=${encodeURIComponent(busqueda)}`);
+    }
+
+    // Opcional: Limpiar el buscador después de buscar
+    // setBusqueda(""); 
+  };
+
   const cerrarMenusPerfil = () => setMenuPerfilAbierto(false);
 
   return (
@@ -89,8 +111,10 @@ const MarketplaceLayout = () => {
         {/* Barra superior */}
         <header className="flex h-20 shrink-0 items-center justify-between border-b border-gray-200 bg-white px-8">
           {/* Buscador */}
+          {/* Buscador */}
           <div className="mx-8 w-full max-w-md flex-1">
-            <div className="relative">
+            {/* ✅ Envolvemos en un form para capturar el Enter */}
+            <form onSubmit={handleBuscar} className="relative">
               <Search
                 size={18}
                 aria-hidden="true"
@@ -100,10 +124,13 @@ const MarketplaceLayout = () => {
                 type="search"
                 placeholder="Buscar productos, pedidos..."
                 aria-label="Buscar productos y pedidos"
+                value={busqueda} // ✅ Conectado al estado
+                onChange={(e) => setBusqueda(e.target.value)} // ✅ Actualiza el estado
                 className="w-full rounded-xl border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-4 text-sm
-                  outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500/20"
+        outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500/20"
               />
-            </div>
+            </form>
+
           </div>
 
           {/* Mensajes, notificaciones y perfil */}
@@ -257,6 +284,19 @@ const MarketplaceLayout = () => {
                 <div className="absolute right-0 z-50 mt-2 w-56 rounded-2xl border border-gray-100 bg-white py-2 shadow-xl">
                   <div className="mb-1 border-b border-gray-100 px-4 py-2">
                     <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+                      Accion
+                    </p>
+                  </div>
+                  <Link
+                    to="/"
+                    onClick={cerrarMenusPerfil}
+                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 transition hover:bg-green-50 hover:text-green-700"
+                  >
+                    <Home size={16} className="text-gray-400" />
+                    Volver a la Tienda
+                  </Link>
+                  <div className="mb-1 border-b border-gray-100 px-4 py-2">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">
                       Mi cuenta
                     </p>
                   </div>
@@ -310,8 +350,8 @@ const MarketplaceLayout = () => {
             <Outlet />
           </div>
         </main>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };
 
