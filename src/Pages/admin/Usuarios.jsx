@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../Context/authContext';
-import { listarUsuarios, actualizarEstadoUsuario } from '../../api/usuarios';
+import { listarUsuarios, actualizarEstadoUsuario, eliminarUsuario, desdeApi } from '../../api/usuarios';
 import { ESTADOS_USUARIO, ROLES } from '../../constants/roles';
+import './Dashboard.css';
+import './AdminManagement.css';
 
 const ESTADOS = Object.values(ESTADOS_USUARIO);
 
@@ -15,27 +17,57 @@ export default function Usuarios() {
   const [busqueda, setBusqueda] = useState('');
   const [filtroRol, setFiltroRol] = useState('');
   const [filtroEstado, setFiltroEstado] = useState('');
+  const [procesandoId, setProcesandoId] = useState(null);
 
   useEffect(() => {
-    if (user?.role !== ROLES.ADMIN) return;
+    if (user?.role !== ROLES.ADMIN) return undefined;
+    let vigente = true;
     listarUsuarios()
-      .then(setUsuarios)
-      .catch((e) => setError(e.message))
-      .finally(() => setCargando(false));
-  }, [user]);
+      .then((lista) => {
+        if (vigente) setUsuarios(lista);
+      })
+      .catch((e) => {
+        if (vigente) setError(e.message);
+      })
+      .finally(() => {
+        if (vigente) setCargando(false);
+      });
+    return () => { vigente = false; };
+  }, [user?.role]);
 
   if (!user) return <Navigate to="/login" replace />;
-  if (user.role !== ROLES.ADMIN) return <Navigate to="/mis-productos" replace />;
+  if (user.role !== ROLES.ADMIN) return <Navigate to="/login" replace />;
 
   const cambiarEstado = async (usuario, estado) => {
     setError('');
+    setProcesandoId(usuario.id);
     try {
-      await actualizarEstadoUsuario(usuario.id, estado);
+      const respuesta = await actualizarEstadoUsuario(usuario.id, estado);
+      if (!respuesta?.data || respuesta.data.Id_usuario == null) {
+        throw new Error('Laravel no devolvió el usuario actualizado.');
+      }
+      const actualizado = desdeApi(respuesta.data);
       setUsuarios((actuales) =>
-        actuales.map((item) => (item.id === usuario.id ? { ...item, estado } : item))
+        actuales.map((item) => (item.id === usuario.id ? actualizado : item))
       );
     } catch (e) {
       setError(e.message);
+    } finally {
+      setProcesandoId(null);
+    }
+  };
+
+  const eliminar = async (usuario) => {
+    if (!window.confirm(`¿Eliminar la cuenta de ${usuario.nombreCompleto || usuario.email}?`)) return;
+    setError('');
+    setProcesandoId(usuario.id);
+    try {
+      await eliminarUsuario(usuario.id);
+      setUsuarios((actuales) => actuales.filter((item) => item.id !== usuario.id));
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setProcesandoId(null);
     }
   };
 
@@ -52,15 +84,19 @@ export default function Usuarios() {
   });
 
   return (
-    <section style={{ padding: '24px', maxWidth: '1000px', margin: '0 auto' }}>
-      <h1>Administrar usuarios</h1>
-      <p>Controla quién puede publicar productos en el marketplace.</p>
-      {error && <p role="alert">{error}</p>}
-      {cargando ? (
-        <p>Cargando usuarios...</p>
-      ) : (
-        <>
-          <div>
+    <section className="admin-management">
+      <header className="actividad-header">
+        <div>
+          <p className="actividad-eyebrow">Cuentas</p>
+          <h1>Administrar usuarios</h1>
+          <p>Consulta y gestiona las cuentas registradas en Laravel.</p>
+        </div>
+      </header>
+      {error && <p className="admin-error" role="alert">{error}</p>}
+      <section className="actividad-panel admin-listado">
+        <div className="admin-filtros">
+          <label>
+            Buscar usuario
             <input
               type="search"
               placeholder="Buscar por nombre o correo"
@@ -68,52 +104,81 @@ export default function Usuarios() {
               onChange={(e) => setBusqueda(e.target.value)}
               aria-label="Buscar usuarios"
             />
+          </label>
+          <label>
+            Rol
             <select value={filtroRol} onChange={(e) => setFiltroRol(e.target.value)}>
               <option value="">Todos los roles</option>
               <option value={ROLES.USER}>{ROLES.USER}</option>
               <option value={ROLES.ADMIN}>{ROLES.ADMIN}</option>
             </select>
+          </label>
+          <label>
+            Estado
             <select value={filtroEstado} onChange={(e) => setFiltroEstado(e.target.value)}>
               <option value="">Todos los estados</option>
               {ESTADOS.map((estado) => <option key={estado} value={estado}>{estado}</option>)}
             </select>
+          </label>
+          <span>{usuariosFiltrados.length} usuario(s)</span>
+        </div>
+        {cargando ? (
+          <p role="status">Cargando usuarios...</p>
+        ) : !usuarios.length && error ? (
+          <p>No se pudieron cargar los usuarios.</p>
+        ) : (
+          <div className="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Usuario</th>
+                  <th>Correo</th>
+                  <th>Rol</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {usuariosFiltrados.length ? usuariosFiltrados.map((usuario) => {
+                  const esPropio = String(usuario.id) === String(user.id);
+                  return (
+                    <tr key={usuario.id}>
+                      <td>{usuario.nombreCompleto || usuario.primerNombre || 'Sin nombre'}</td>
+                      <td>{usuario.email}</td>
+                      <td>{usuario.role}</td>
+                      <td>
+                        <select
+                          value={usuario.estado}
+                          disabled={esPropio || procesandoId !== null}
+                          onChange={(e) => cambiarEstado(usuario, e.target.value)}
+                          aria-label={`Estado de ${usuario.email}`}
+                        >
+                          {ESTADOS.map((estado) => (
+                            <option key={estado} value={estado}>{estado}</option>
+                          ))}
+                        </select>
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          className="actividad-btn peligro"
+                          disabled={esPropio || procesandoId !== null}
+                          onClick={() => eliminar(usuario)}
+                          aria-label={`Eliminar ${usuario.email}`}
+                        >
+                          Eliminar
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                }) : (
+                  <tr><td colSpan="5">No se encontraron usuarios.</td></tr>
+                )}
+              </tbody>
+            </table>
           </div>
-          <p>{usuariosFiltrados.length} usuario(s)</p>
-        <table>
-          <thead>
-            <tr>
-              <th>Usuario</th>
-              <th>Correo</th>
-              <th>Rol</th>
-              <th>Estado</th>
-            </tr>
-          </thead>
-          <tbody>
-            {usuariosFiltrados.map((usuario) => (
-              <tr key={usuario.id}>
-                <td>{usuario.nombreCompleto || usuario.primerNombre || 'Sin nombre'}</td>
-                <td>{usuario.email}</td>
-                <td>{usuario.role}</td>
-                <td>
-                  <select
-                    value={usuario.estado}
-                    disabled={usuario.id === user.id}
-                    onChange={(e) => cambiarEstado(usuario, e.target.value)}
-                    aria-label={`Estado de ${usuario.email}`}
-                  >
-                    {ESTADOS.map((estado) => (
-                      <option key={estado} value={estado}>
-                        {estado}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        </>
-      )}
+        )}
+      </section>
     </section>
   );
 }

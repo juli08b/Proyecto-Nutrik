@@ -1,11 +1,16 @@
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import {
     LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
     PieChart, Pie, Cell, Legend
 } from 'recharts';
 import { useAuth } from '../../Context/authContext';
 import { ROLES } from '../../constants/roles';
+import { listarPedidos } from '../../api/pedidos';
+import { listarProductos } from '../../api/productos';
+import { listarUsuarios } from '../../api/usuarios';
 import './Dashboard.css';
+import './AdminManagement.css';
 
 // Gráficos, indicadores y tablas usan datos de demostración, no métricas de la API.
 const dataVentasDia = [
@@ -42,9 +47,189 @@ const productosTop = [
     { nombre: 'Agua de Coco Orgánica', categoria: 'Bebidas', unidades: '65 unids', total: '$ 520.000' },
 ];
 
+const ACCESOS_ADMIN = [
+    { to: '/admin/usuarios', titulo: 'Usuarios', detalle: 'Revisa cuentas y estados.' },
+    { to: '/admin/productos', titulo: 'Productos', detalle: 'Supervisa publicaciones del marketplace.' },
+    { to: '/admin/categorias', titulo: 'Categorías', detalle: 'Organiza el catálogo de Nutrik.' },
+    { to: '/admin/pedidos', titulo: 'Pedidos', detalle: 'Consulta pedidos y sus detalles.' },
+];
+
+const moneda = (valor) => new Intl.NumberFormat('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+    maximumFractionDigits: 0,
+}).format(Number(valor) || 0);
+
+function listarDesde(respuesta) {
+    if (Array.isArray(respuesta)) return respuesta;
+    return Array.isArray(respuesta?.data) ? respuesta.data : [];
+}
+
+function fechaPedido(pedido) {
+    const fecha = pedido.created_at || pedido.Fecha_salida;
+    if (!fecha) return '—';
+    const valor = new Date(fecha);
+    return Number.isNaN(valor.getTime())
+        ? '—'
+        : valor.toLocaleDateString('es-CO');
+}
+
+function nombreCliente(pedido) {
+    const usuario = pedido.usuario;
+    const nombre = [
+        usuario?.NombreUno_usuario,
+        usuario?.NombreDos_usuario,
+        usuario?.ApellidoDos_usuario,
+        usuario?.SegundoApellido,
+    ].filter(Boolean).join(' ');
+    return nombre || usuario?.Email || `Usuario ${pedido.Id_usuario ?? '—'}`;
+}
+
+function AdminDashboard() {
+    const { user } = useAuth();
+    const [resumen, setResumen] = useState({
+        usuarios: [],
+        productos: [],
+        pedidos: [],
+    });
+    const [cargando, setCargando] = useState(true);
+    const [error, setError] = useState('');
+
+    useEffect(() => {
+        if (user?.role !== ROLES.ADMIN) return undefined;
+        let vigente = true;
+
+        Promise.all([listarUsuarios(), listarProductos(), listarPedidos()])
+            .then(([usuarios, productos, pedidos]) => {
+                if (!vigente) return;
+                setResumen({
+                    usuarios: listarDesde(usuarios),
+                    productos: listarDesde(productos),
+                    pedidos: listarDesde(pedidos),
+                });
+            })
+            .catch((e) => {
+                if (vigente) setError(e.message);
+            })
+            .finally(() => {
+                if (vigente) setCargando(false);
+            });
+
+        return () => {
+            vigente = false;
+        };
+    }, [user?.role]);
+
+    if (!user) return <Navigate to="/nutrik/owner" replace />;
+    if (user.role !== ROLES.ADMIN) return <Navigate to="/" replace />;
+
+    const usuariosActivos = resumen.usuarios.filter((usuario) => usuario.estado === 'activo').length;
+    const productosActivos = resumen.productos.filter(
+        (producto) => String(producto.Estado || 'Activo').toLowerCase() === 'activo'
+    ).length;
+    const valorPedidos = resumen.pedidos.reduce(
+        (total, pedido) => total + (Number(pedido.Total_pedido) || 0),
+        0
+    );
+    const pedidosRecientes = [...resumen.pedidos]
+        .sort((a, b) => new Date(b.created_at || b.Fecha_salida || 0) - new Date(a.created_at || a.Fecha_salida || 0))
+        .slice(0, 5);
+
+    return (
+        <div className="dashboard-container admin-dashboard">
+            <header className="dashboard-header">
+                <div>
+                    <p className="actividad-eyebrow">Acceso privado</p>
+                    <h1>Centro de Administración</h1>
+                    <p>Resumen actualizado directamente desde Laravel.</p>
+                </div>
+            </header>
+
+            {error && <p role="alert" className="admin-error">{error}</p>}
+
+            <section className="kpi-grid" aria-label="Resumen del sitio">
+                <article className="kpi-card">
+                    <span>Usuarios</span>
+                    <h2>{cargando ? '…' : error ? '—' : resumen.usuarios.length}</h2>
+                    <small>{error ? 'No disponible' : `${usuariosActivos} cuentas activas`}</small>
+                </article>
+                <article className="kpi-card">
+                    <span>Productos publicados</span>
+                    <h2>{cargando ? '…' : error ? '—' : productosActivos}</h2>
+                    <small>{error ? 'No disponible' : `${resumen.productos.length} en el catálogo`}</small>
+                </article>
+                <article className="kpi-card">
+                    <span>Pedidos registrados</span>
+                    <h2>{cargando ? '…' : error ? '—' : resumen.pedidos.length}</h2>
+                    <small>{error ? 'No disponible' : 'Consultados desde Laravel'}</small>
+                </article>
+                <article className="kpi-card">
+                    <span>Valor total de pedidos</span>
+                    <h2>{cargando ? '…' : error ? '—' : moneda(valorPedidos)}</h2>
+                    <small>{error ? 'No disponible' : 'Suma registrada, sin descontar cancelaciones'}</small>
+                </article>
+            </section>
+
+            <section className="admin-accesos" aria-label="Secciones de administración">
+                {ACCESOS_ADMIN.map((acceso) => (
+                    <Link className="admin-acceso" to={acceso.to} key={acceso.to}>
+                        <strong>{acceso.titulo}</strong>
+                        <span>{acceso.detalle}</span>
+                        <span className="admin-acceso-abrir">Abrir sección →</span>
+                    </Link>
+                ))}
+            </section>
+
+            <section className="table-card admin-recientes">
+                <div className="table-header">
+                    <h3>Pedidos recientes</h3>
+                    <Link className="btn-link" to="/admin/pedidos">Ver todos</Link>
+                </div>
+                {cargando ? (
+                    <p role="status">Cargando datos desde Laravel…</p>
+                ) : error ? (
+                    <p role="status">No se pudieron cargar los pedidos.</p>
+                ) : (
+                    <div className="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Pedido</th>
+                                    <th>Cliente</th>
+                                    <th>Fecha</th>
+                                    <th>Total</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {pedidosRecientes.length ? pedidosRecientes.map((pedido) => (
+                                    <tr key={pedido.Id_pedido}>
+                                        <td className="font-bold">{pedido.Numero_pedido || `#${pedido.Id_pedido}`}</td>
+                                        <td>{nombreCliente(pedido)}</td>
+                                        <td>{fechaPedido(pedido)}</td>
+                                        <td>{moneda(pedido.Total_pedido)}</td>
+                                        <td>{pedido.Estado || 'Sin estado'}</td>
+                                    </tr>
+                                )) : (
+                                    <tr><td colSpan="5">Aún no hay pedidos registrados.</td></tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+            </section>
+            <p className="admin-dashboard-nota">
+                Las métricas se obtienen de las cuentas, productos y pedidos guardados en Laravel. La suma de pedidos incluye todos sus estados.
+            </p>
+        </div>
+    );
+}
+
 // Vista compartida por el panel de marketplace y el de administración.
 const Dashboard = ({ administracion = false }) => {
     const { user } = useAuth();
+    if (administracion) return <AdminDashboard />;
+
     if (!user) return <Navigate to="/login" replace />;
     if (![ROLES.USER, ROLES.ADMIN].includes(user.role)) return <Navigate to="/perfil" replace />;
 

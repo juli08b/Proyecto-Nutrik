@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Navbar from './Components/Navbar';
 import SidebarVendedor from './Components/SidebarVendedor';
 import { useAuth } from './Context/authContext';
+import { ROLES } from './constants/roles';
 import AsistenteNutrik from './Components/AsistenteNutrik';
 import Home from './Pages/public/Home';
 import Header from './Components/Header';
@@ -27,7 +28,9 @@ import FacturaDetalle from './Pages/marketplace/FacturaDetalle';
 import Dashboard from './Pages/admin/Dashboard';
 import Usuarios from './Pages/admin/Usuarios';
 import Actividad from './Pages/admin/Actividad';
-import AdminLogin from './Pages/admin/AdminLogin';
+import AdminLayout from './Pages/admin/AdminLayout';
+import AdminCategorias from './Pages/admin/AdminCategorias';
+import AdminPedidos from './Pages/admin/AdminPedidos';
 import SellerProduct from './Pages/marketplace/SellerProduct';
 import ConfiguracionVendedor from './Pages/marketplace/Configuracion';
 import Vistaproducto from './Pages/marketplace/Productview';
@@ -60,6 +63,7 @@ function App() {
 
   const { user } = useAuth();
   const pathActual = location.pathname.toLowerCase();
+  const esRutaAdmin = /^\/admin(\/|$)/.test(pathActual);
   // La ruta determina qué elementos compartidos se muestran alrededor de la vista.
   const esPaginaAuth =
     ['login', 'registro', 'forgot', 'elegir-rol'].some((p) => pathActual.includes(p)) ||
@@ -68,12 +72,32 @@ function App() {
   const mostrarLayout = !esPaginaAuth && !esAreaVendedor;
   const mostrarNavbar = !esPaginaAuth;
   const esCuenta = /^\/(perfil|mis-pedidos|seguimiento|favoritos|vendedor|mis-productos|admin)(\/|$)/.test(pathActual);
-  const mostrarSidebar = mostrarNavbar && Boolean(user) && esCuenta;
+  const mostrarSidebar = mostrarNavbar && Boolean(user) && esCuenta
+    && !esRutaAdmin && user.role !== ROLES.ADMIN;
 
   useEffect(() => {
     document.body.classList.toggle('con-sidebar', mostrarSidebar);
     return () => document.body.classList.remove('con-sidebar');
   }, [mostrarSidebar]);
+
+  if (esRutaAdmin || user?.role === ROLES.ADMIN) {
+    return (
+      <ProductProvider>
+        <Routes>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<Dashboard administracion />} />
+            <Route path="usuarios" element={<Usuarios />} />
+            <Route path="productos" element={<SellerProduct administracion />} />
+            <Route path="categorias" element={<AdminCategorias />} />
+            <Route path="pedidos" element={<AdminPedidos />} />
+            <Route path="actividad" element={<Actividad />} />
+            <Route path="*" element={<section><h1>Sección no encontrada</h1></section>} />
+          </Route>
+          <Route path="*" element={<Navigate to="/admin" replace />} />
+        </Routes>
+      </ProductProvider>
+    );
+  }
 
   return (
     <ProductProvider>
@@ -97,8 +121,7 @@ function App() {
         {/* Rutas de Cliente */}
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Register />} />
-        {/* Ruta privada sin enlaces públicos: acceso del propietario */}
-        <Route path="/nutrik/owner" element={<AdminLogin />} />
+        <Route path="/nutrik/owner" element={<Navigate to="/login" replace />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/mis-pedidos" element={<MisPedidos />} />
@@ -125,13 +148,6 @@ function App() {
         <Route path="/mis-productos" element={<MarketplaceLayout />}>
           <Route index element={<SellerProduct />} />
           <Route path="ventas" element={<PedidosVendedor />} />
-        </Route>
-        <Route path="/admin" element={<MarketplaceLayout />}>
-          <Route index element={<Dashboard administracion />} />
-          <Route path="actividad" element={<Actividad />} />
-          <Route path="usuarios" element={<Usuarios />} />
-          <Route path="productos" element={<SellerProduct administracion />} />
-          <Route path="pedidos" element={<PedidosVendedor />} />
         </Route>
         
         {/* Rutas anidadas de categorías */}

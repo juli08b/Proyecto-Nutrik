@@ -3,9 +3,37 @@ import axios from 'axios';
 export const API_URL =
   import.meta.env.VITE_API_URL || '/api/v1';
 
-// Lee el token guardado al iniciar sesión
-function obtenerToken() {
-  return localStorage.getItem('token');
+function leerCookie(nombre) {
+  const cookie = document.cookie
+    .split('; ')
+    .find((parte) => parte.startsWith(`${nombre}=`));
+  return cookie ? decodeURIComponent(cookie.slice(nombre.length + 1)) : '';
+}
+
+function urlCookieCsrf() {
+  const api = new URL(API_URL, window.location.origin);
+  const base = api.pathname.replace(/\/api\/v1\/?$/, '').replace(/\/+$/, '');
+  return new URL(`${base}/sanctum/csrf-cookie`, api.origin).toString();
+}
+
+const METODOS_SEGUROS = new Set(['GET', 'HEAD', 'OPTIONS']);
+
+async function obtenerTokenCsrf() {
+  let token = leerCookie('XSRF-TOKEN');
+  if (!token) {
+    const respuesta = await fetch(urlCookieCsrf(), {
+      credentials: 'include',
+      headers: { Accept: 'application/json' },
+    });
+    if (!respuesta.ok) {
+      throw new Error('No se pudo preparar la sesión segura con Laravel.');
+    }
+    token = leerCookie('XSRF-TOKEN');
+  }
+  if (!token) {
+    throw new Error('Laravel no entregó la protección CSRF requerida.');
+  }
+  return token;
 }
 
 function mensajeDeError(data, status) {
@@ -17,14 +45,16 @@ function mensajeDeError(data, status) {
 // fetch
 // ---------------------------------------------------------------------------
 export async function fetchApi(path, { method = 'GET', body } = {}) {
-  const token = obtenerToken();
+  const metodo = method.toUpperCase();
+  const csrf = METODOS_SEGUROS.has(metodo) ? '' : await obtenerTokenCsrf();
 
   const respuesta = await fetch(`${API_URL}${path}`, {
-    method,
+    method: metodo,
+    credentials: 'include',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      ...(token && { Authorization: `Bearer ${token}` }),
+      ...(csrf && { 'X-XSRF-TOKEN': csrf }),
     },
     body: body ? JSON.stringify(body) : undefined,
   });
@@ -45,16 +75,20 @@ export async function fetchApi(path, { method = 'GET', body } = {}) {
 // ---------------------------------------------------------------------------
 export const apiAxios = axios.create({
   baseURL: API_URL,
+  withCredentials: true,
+  withXSRFToken: true,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
 });
 
-// Agrega el token a cada petición
-apiAxios.interceptors.request.use((config) => {
-  const token = obtenerToken();
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+apiAxios.interceptors.request.use(async (config) => {
+  const metodo = (config.method || 'GET').toUpperCase();
+  if (!METODOS_SEGUROS.has(metodo)) {
+    const csrf = await obtenerTokenCsrf();
+    config.headers['X-XSRF-TOKEN'] = csrf;
+  }
   return config;
 });
 

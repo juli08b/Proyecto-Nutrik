@@ -105,8 +105,8 @@ export default function Actividad() {
       <header className="actividad-header">
         <div>
           <p className="actividad-eyebrow">Control interno</p>
-          <h1>Actividad de usuarios</h1>
-          <p>Supervisión privada de ingresos y acciones dentro de la tienda.</p>
+          <h1>Actividad local del navegador</h1>
+          <p>Registro guardado en este dispositivo; no es una auditoría global del sitio.</p>
         </div>
         <div className="actividad-acciones">
           <button type="button" className="actividad-btn" onClick={actualizar}>

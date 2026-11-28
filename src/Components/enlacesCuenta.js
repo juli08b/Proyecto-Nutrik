@@ -13,8 +13,9 @@ export function enlacesCuenta(modo) {
       { to: '/admin', texto: 'Panel de administración', icono: 'administracion' },
       { to: '/admin/usuarios', texto: 'Administrar usuarios', icono: 'compradores' },
       { to: '/admin/productos', texto: 'Supervisar productos', icono: 'productos' },
+      { to: '/admin/categorias', texto: 'Administrar categorías', icono: 'productos' },
       { to: '/admin/pedidos', texto: 'Supervisar pedidos', icono: 'ventas' },
-      { to: '/admin/actividad', texto: 'Actividad', icono: 'estadisticas' },
+      { to: '/admin/actividad', texto: 'Actividad local', icono: 'estadisticas' },
     ];
   }
 

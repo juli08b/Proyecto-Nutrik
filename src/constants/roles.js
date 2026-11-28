@@ -39,5 +39,5 @@ export function puedeVender(usuario) {
 }
 
 export function puedeIniciarSesion(usuario) {
-  return normalizarEstado(usuario?.estado) !== ESTADOS_USUARIO.BLOQUEADO;
+  return normalizarEstado(usuario?.estado) === ESTADOS_USUARIO.ACTIVO;
 }

@@ -19,6 +19,12 @@ export const listarCategorias = () => fetchApi('/categorias');
 export const crearCategoria = (categoria) =>
   fetchApi('/categorias', { method: 'POST', body: categoria });
 
+export const actualizarCategoria = (id, categoria) =>
+  fetchApi(`/categorias/${id}`, { method: 'PUT', body: categoria });
+
+export const eliminarCategoria = (id) =>
+  fetchApi(`/categorias/${id}`, { method: 'DELETE' });
+
 // ---------------------------------------------------------------------------
 // Lo mismo pero con axios (por si prefieres esta forma)
 // ---------------------------------------------------------------------------

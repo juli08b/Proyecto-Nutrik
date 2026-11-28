@@ -8,6 +8,9 @@ export const listarDetalles = () => fetchApi('/detalle-compras');
 export const crearPedido = (pedido) =>
   fetchApi('/pedidos', { method: 'POST', body: pedido });
 
+export const actualizarPedido = (id, pedido) =>
+  fetchApi(`/pedidos/${id}`, { method: 'PATCH', body: pedido });
+
 export const crearDetalle = (detalle) =>
   fetchApi('/detalle-compras', { method: 'POST', body: detalle });
 

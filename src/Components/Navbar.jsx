@@ -192,9 +192,13 @@ function Navbar({ mostrarSidebar = false }) {
                     {!mostrarSidebar && (
                       <button
                         type="button"
-                        onClick={() => {
+                        onClick={async () => {
                           setMenuUsuario(false);
-                          logout();
+                          const resultado = await logout();
+                          if (!resultado?.ok) {
+                            window.alert(resultado?.error || "No se pudo cerrar la sesión con Laravel.");
+                            return;
+                          }
                           navigate("/");
                         }}
                       >

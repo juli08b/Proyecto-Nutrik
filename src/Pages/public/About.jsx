@@ -66,6 +66,18 @@ function About() {
           <div className="about-story-heading">
             <span className="about-kicker">Nuestra esencia</span>
             <h2 id="about-story-title">¿Qué es Nutrik?</h2>
+            <div className="about-story-highlight">
+              <span className="about-story-highlight-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M19.5 4.5c-6.2.3-10.6 2.5-12.2 6.6-1.4 3.5.7 6.8 4.1 7.2 5.2.6 8-5.1 8.1-13.8Z" />
+                  <path d="M5 20c2.4-4.7 6-7.8 11-10" />
+                </svg>
+              </span>
+              <span>
+                <strong>Natural, cercana y consciente</strong>
+                <span>Bienestar para acompañarte cada día.</span>
+              </span>
+            </div>
           </div>
           <div className="about-story-copy">
             <p>

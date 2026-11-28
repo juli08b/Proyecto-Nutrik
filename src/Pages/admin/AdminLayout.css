@@ -1,0 +1,190 @@
+.admin-layout {
+  min-height: 100vh;
+  background: #f5f8f4;
+  color: #23332a;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.admin-barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 76px;
+  padding: 12px 28px;
+  border-bottom: 1px solid #e1ebe2;
+  background: #fff;
+}
+
+.admin-marca,
+.admin-sesion {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-marca img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.admin-marca div {
+  display: grid;
+}
+
+.admin-marca strong {
+  color: #17572f;
+  font-size: 1.1rem;
+}
+
+.admin-marca span {
+  color: #748679;
+  font-size: 0.75rem;
+}
+
+.admin-sesion span {
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.admin-sesion button,
+.admin-sidebar-salir {
+  padding: 9px 13px;
+  border: 1px solid #d5e4d7;
+  border-radius: 9px;
+  background: #fff;
+  color: #265c36;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-sesion button:hover,
+.admin-sidebar-salir:hover {
+  background: #eef7ef;
+}
+
+.admin-cuerpo {
+  display: grid;
+  grid-template-columns: 248px minmax(0, 1fr);
+  min-height: calc(100vh - 76px);
+}
+
+.admin-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 25px 16px;
+  border-right: 1px solid #e1ebe2;
+  background: #fff;
+}
+
+.admin-sidebar > p {
+  padding: 0 12px;
+  color: #829084;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admin-sidebar nav {
+  display: grid;
+  gap: 5px;
+}
+
+.admin-sidebar-enlace {
+  padding: 11px 12px;
+  border-radius: 9px;
+  color: #526657;
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.admin-sidebar-enlace:hover,
+.admin-sidebar-enlace.activo {
+  background: #eaf5e9;
+  color: #226533;
+}
+
+.admin-sidebar-salir {
+  margin-top: auto;
+  text-align: left;
+}
+
+.admin-contenido {
+  min-width: 0;
+  padding: 28px 30px;
+}
+
+.admin-layout-error {
+  margin-bottom: 16px;
+  padding: 12px;
+  border-radius: 9px;
+  background: #fff1f1;
+  color: #9b1c1c;
+}
+
+@media (max-width: 760px) {
+  .admin-barra {
+    gap: 8px;
+    padding: 12px 16px;
+  }
+
+  .admin-marca {
+    flex-shrink: 0;
+  }
+
+  .admin-marca img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .admin-sesion {
+    min-width: 0;
+    gap: 6px;
+  }
+
+  .admin-sesion span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .admin-sesion button {
+    flex-shrink: 0;
+    padding: 8px;
+  }
+
+  .admin-cuerpo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .admin-sidebar {
+    gap: 10px;
+    padding: 14px 16px;
+    border-right: 0;
+    border-bottom: 1px solid #e1ebe2;
+  }
+
+  .admin-sidebar nav {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .admin-sidebar-enlace {
+    padding: 8px 10px;
+  }
+
+  .admin-sidebar-salir {
+    align-self: flex-start;
+  }
+
+  .admin-contenido {
+    padding: 20px 16px;
+  }
+}

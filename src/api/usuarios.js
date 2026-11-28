@@ -2,7 +2,6 @@ import { fetchApi } from './client';
 import {
   ESTADOS_USUARIO,
   normalizarEstado,
-  normalizarRol,
   ROLES,
 } from '../constants/roles';
 
@@ -50,7 +49,9 @@ export function aApi(datos) {
 
 export function desdeApi(usuario) {
   if (!usuario) return null;
-  const role = normalizarRol(usuario.role || usuario.Rol || usuario.Tipo_usuario);
+  const role = usuario.es_administrador === true
+    ? ROLES.ADMIN
+    : ROLES.USER;
   const estado = normalizarEstado(
     usuario.estado || usuario.Estado_usuario || usuario.status
   );
@@ -93,26 +94,11 @@ export function desdeApi(usuario) {
   };
 }
 
-export const iniciarSesion = (Email, Contrasena) =>
-  fetchApi('/usuarios/login', { method: 'POST', body: { Email, Contrasena } });
-
-/** Login privado: usa la tabla users de Laravel, nunca credenciales en el bundle. */
-export const iniciarSesionAdmin = (email, password) =>
+export const iniciarSesion = (email, password) =>
   fetchApi('/login', { method: 'POST', body: { email, password } });
 
-/** Convierte el usuario devuelto por /login al shape que usa el frontend. */
-export function desdeApiAdmin(usuario) {
-  if (!usuario) return null;
-  const role = normalizarRol(usuario.role || usuario.Rol || usuario.Tipo_usuario || ROLES.ADMIN);
-  return {
-    id: usuario.id ?? usuario.Id_usuario ?? 'admin-nutrik',
-    role,
-    tipoUsuario: role,
-    estado: ESTADOS_USUARIO.ACTIVO,
-    nombreCompleto: usuario.name || usuario.NombreUno_usuario || 'Administrador Nutrik',
-    email: usuario.email || usuario.Email || '',
-  };
-}
+export const obtenerUsuarioActual = () => fetchApi('/user');
+export const cerrarSesion = () => fetchApi('/logout', { method: 'POST' });
 
 export function registrarUsuario(_role, datos) {
   const body = {
@@ -134,9 +120,15 @@ export const actualizarUsuario = (id, datos) =>
 
 export const listarUsuarios = async () => {
   const respuesta = await fetchApi('/usuarios');
-  const lista = Array.isArray(respuesta) ? respuesta : respuesta.data;
-  return Array.isArray(lista) ? lista.map(desdeApi) : [];
+  const lista = Array.isArray(respuesta) ? respuesta : respuesta?.data;
+  if (!Array.isArray(lista)) {
+    throw new Error('Laravel devolvió una lista de usuarios no válida.');
+  }
+  return lista.map(desdeApi);
 };
+
+export const eliminarUsuario = (id) =>
+  fetchApi(`/usuarios/${id}`, { method: 'DELETE' });
 
 export const actualizarEstadoUsuario = (id, estado) =>
   fetchApi(`/usuarios/${id}`, {

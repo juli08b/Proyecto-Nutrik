@@ -22,7 +22,7 @@ export default function AdminLogin() {
   const [contrasena, setContrasena] = useState('');
   const [error, setError] = useState('');
 
-  if (user?.role === ROLES.ADMIN) return <Navigate to="/admin/actividad" replace />;
+  if (user?.role === ROLES.ADMIN) return <Navigate to="/admin" replace />;
 
   const enviar = async (e) => {
     e.preventDefault();
@@ -32,11 +32,11 @@ export default function AdminLogin() {
       return;
     }
     if (resultado.user?.role !== ROLES.ADMIN) {
-      logout();
+      await logout();
       setError('Las credenciales no corresponden a una cuenta privada.');
       return;
     }
-    navigate('/admin/actividad', { replace: true });
+    navigate('/admin', { replace: true });
   };
 
   return (

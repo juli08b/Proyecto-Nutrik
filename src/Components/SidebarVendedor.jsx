@@ -9,8 +9,12 @@ const SidebarVendedor = () => {
   const navigate = useNavigate();
   const secciones = seccionesCuenta(user);
 
-  const cerrarSesion = () => {
-    logout();
+  const cerrarSesion = async () => {
+    const resultado = await logout();
+    if (!resultado?.ok) {
+      window.alert(resultado?.error || 'No se pudo cerrar la sesión con Laravel.');
+      return;
+    }
     navigate('/');
   };
 

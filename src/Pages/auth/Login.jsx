@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 import logo from '../../assets/logoNutrick.png';
 import { useAuth } from '../../Context/authContext';
+import { ROLES } from '../../constants/roles';
 
 const IconoCorreo = () => (
   <svg className="campo-icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -18,24 +19,29 @@ const IconoCandado = () => (
   </svg>
 );
 
-// Autentica la cuenta pública y muestra los errores devueltos por AuthProvider.
 const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
-
   const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [verClave, setVerClave] = useState(false);
   const [error, setError] = useState('');
+  const [cargando, setCargando] = useState(false);
 
   const manejarLogin = async (e) => {
     e.preventDefault();
-    const res = await login(correo, contrasena);
-    if (!res.ok) {
-      setError(res.error);
-      return;
+    setError('');
+    setCargando(true);
+    try {
+      const res = await login(correo, contrasena);
+      if (!res.ok) {
+        setError(res.error);
+        return;
+      }
+      navigate(res.user.role === ROLES.ADMIN ? '/admin' : '/', { replace: true });
+    } finally {
+      setCargando(false);
     }
-    navigate('/');
   };
 
   return (
@@ -49,14 +55,12 @@ const Login = () => {
       <div className="login-form-side">
         <div className="form-content">
           <h2 className="welcome-card">Bienvenido a Nutrik</h2>
-
           <p className="login-sub">Accede con tu cuenta para comprar y vender</p>
-
           <p className="register-link">
             ¿No tienes cuenta? <Link to="/registro">Crea una ahora</Link>
           </p>
 
-          {error && <div className="login-error">{error}</div>}
+          {error && <div className="login-error" role="alert">{error}</div>}
 
           <form onSubmit={manejarLogin}>
             <div className="input-field">
@@ -64,6 +68,8 @@ const Login = () => {
               <input
                 type="email"
                 placeholder="Correo electrónico"
+                aria-label="Correo electrónico"
+                autoComplete="username"
                 value={correo}
                 onChange={(e) => setCorreo(e.target.value)}
                 required
@@ -75,6 +81,8 @@ const Login = () => {
               <input
                 type={verClave ? 'text' : 'password'}
                 placeholder="Contraseña"
+                aria-label="Contraseña"
+                autoComplete="current-password"
                 value={contrasena}
                 onChange={(e) => setContrasena(e.target.value)}
                 required
@@ -100,7 +108,9 @@ const Login = () => {
               </button>
             </div>
 
-            <button type="submit" className="btn-login">Iniciar sesión</button>
+            <button type="submit" className="btn-login" disabled={cargando}>
+              {cargando ? 'Ingresando...' : 'Iniciar sesión'}
+            </button>
           </form>
 
           <p className="forgot-pass">

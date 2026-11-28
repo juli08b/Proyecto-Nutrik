@@ -1,18 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AuthContext } from './authContext';
 import {
   actualizarUsuario,
+  cerrarSesion,
   desdeApi,
-  desdeApiAdmin,
   iniciarSesion,
-  iniciarSesionAdmin,
+  obtenerUsuarioActual,
   registrarUsuario,
   restablecerContrasena,
   verificarCorreo,
 } from '../api/usuarios';
 import {
-  normalizarEstado,
-  normalizarRol,
   puedeIniciarSesion,
   ROLES,
 } from '../constants/roles';
@@ -20,24 +18,53 @@ import { registrarActividad } from '../utils/actividad';
 
 const STORAGE_SESSION = 'nutrik_session_user';
 
-function usuarioGuardado() {
-  try {
-    const guardado = JSON.parse(localStorage.getItem(STORAGE_SESSION));
-    if (guardado && guardado.email) {
-      return {
-        ...guardado,
-        role: normalizarRol(guardado.role || guardado.tipoUsuario),
-        estado: normalizarEstado(guardado.estado),
-      };
-    }
-  } catch {
-    /* sesión vacía o corrupta */
+function usuarioDeSesion(respuesta) {
+  const datos = respuesta?.data;
+  if (datos?.user?.Id_usuario == null || typeof datos.es_administrador !== 'boolean') {
+    throw new Error('Laravel devolvió una identidad no reconocida.');
   }
-  return null;
+  return desdeApi({ ...datos.user, es_administrador: datos.es_administrador });
 }
 
 function AuthProvider({ children }) {
-  const [user, setUser] = useState(() => usuarioGuardado());
+  const [user, setUser] = useState(null);
+  const [authReady, setAuthReady] = useState(false);
+  const [sessionError, setSessionError] = useState('');
+
+  useEffect(() => {
+    let vigente = true;
+
+    const validarSesion = async () => {
+      localStorage.removeItem('token');
+
+      try {
+        const usuario = usuarioDeSesion(await obtenerUsuarioActual());
+
+        if (!puedeIniciarSesion(usuario)) {
+          throw new Error('La cuenta no está activa.');
+        }
+        if (!vigente) return;
+        setUser(usuario);
+        localStorage.setItem(STORAGE_SESSION, JSON.stringify(usuario));
+      } catch (error) {
+        if (!vigente) return;
+
+        setUser(null);
+        localStorage.removeItem(STORAGE_SESSION);
+        if (![401, 403].includes(error.status)) {
+          setSessionError('No se pudo validar la sesión con Laravel. Inicia sesión de nuevo.');
+        }
+      } finally {
+        if (vigente) setAuthReady(true);
+      }
+    };
+
+    validarSesion();
+
+    return () => {
+      vigente = false;
+    };
+  }, []);
 
   const guardarSesion = (usuarioApi) => {
     const mapped = desdeApi(usuarioApi);
@@ -52,73 +79,40 @@ function AuthProvider({ children }) {
     return usuario;
   };
 
-const login = async (email, password, opciones = {}) => {
-  const correo = String(email || '').trim();
+  const login = async (email, password) => {
+    const correo = String(email || '').trim();
 
-  // Acceso reservado al propietario: lo valida Laravel, nunca el bundle React.
-  if (opciones.soloAdmin) {
     try {
-      const res = await iniciarSesionAdmin(correo, password);
-      const usuarioApi = res?.data?.user ?? res?.user;
-      if (normalizarRol(usuarioApi?.role) !== ROLES.ADMIN) {
-        return { ok: false, error: 'Las credenciales no corresponden a una cuenta privada.' };
+      const usuario = usuarioDeSesion(await iniciarSesion(correo, password));
+      if (!usuario || !puedeIniciarSesion(usuario)) {
+        return {
+          ok: false,
+          error: 'Esta cuenta no está activa. Comunícate con el administrador.',
+        };
       }
-      const tokenAdmin = res?.data?.token ?? res?.token;
-      if (tokenAdmin) localStorage.setItem('token', tokenAdmin);
-      const admin = guardarSesionDirecta(desdeApiAdmin(usuarioApi));
+
+      const usuarioGuardado = guardarSesionDirecta(usuario);
+      setSessionError('');
       registrarActividad({
         tipo: 'login',
-        accion: 'Inicio de sesión administrativo',
-        descripcion: `${admin.nombreCompleto || admin.email} inició sesión`,
-        usuario: admin,
-        detalles: { correo: admin.email },
+        accion: usuario.role === ROLES.ADMIN ? 'Inicio de sesión administrativo' : 'Inicio de sesión',
+        descripcion: `${usuarioGuardado.nombreCompleto || usuarioGuardado.email} inició sesión`,
+        usuario: usuarioGuardado,
+        detalles: { correo: usuarioGuardado.email },
       });
-      return { ok: true, user: admin };
+      return { ok: true, user: usuarioGuardado };
     } catch (error) {
       return { ok: false, error: error.message };
     }
-  }
-
-  try {
-    const res = await iniciarSesion(correo, password);
-    if (res.token) localStorage.setItem('token', res.token);   // <- nuevo
-    const usuario = guardarSesion(res.data);
-    if (!puedeIniciarSesion(usuario)) {
-      setUser(null);
-      localStorage.removeItem(STORAGE_SESSION);
-      localStorage.removeItem('token');
-      return {
-        ok: false,
-        error: 'Esta cuenta está bloqueada. Comunícate con el administrador.',
-      };
-    }
-
-    // Las cuentas administrativas no se aceptan desde el login público.
-    if (usuario.role === ROLES.ADMIN && !opciones.soloAdmin) {
-      setUser(null);
-      localStorage.removeItem(STORAGE_SESSION);
-      localStorage.removeItem('token');
-      return { ok: false, error: 'Credenciales inválidas.' };
-    }
-
-    registrarActividad({
-      tipo: 'login',
-      accion: 'Inicio de sesión',
-      descripcion: `${usuario.nombreCompleto || usuario.email} inició sesión`,
-      usuario,
-      detalles: { correo: usuario.email },
-    });
-
-    return { ok: true, user: usuario };
-  } catch (error) {
-    return { ok: false, error: error.message };
-  }
-};
+  };
 
   const register = async (role, data) => {
     try {
-      const res = await registrarUsuario(role, data);
-      const usuario = guardarSesion(res.data);
+      await registrarUsuario(role, data);
+      const correo = data.email || data.Email;
+      const contrasena = data.password || data.Contrasena;
+      const res = await iniciarSesion(correo, contrasena);
+      const usuario = guardarSesionDirecta(usuarioDeSesion(res));
       registrarActividad({
         tipo: 'registro',
         accion: 'Registro de cuenta',
@@ -143,7 +137,12 @@ const login = async (email, password, opciones = {}) => {
     }
   };
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      await cerrarSesion();
+    } catch (error) {
+      if (error.status !== 401) return { ok: false, error: error.message };
+    }
     registrarActividad({
       tipo: 'logout',
       accion: 'Cierre de sesión',
@@ -153,9 +152,10 @@ const login = async (email, password, opciones = {}) => {
     });
     setUser(null);
     localStorage.removeItem(STORAGE_SESSION);
-    localStorage.removeItem('token');   // <- nuevo
+    localStorage.removeItem('token');
     localStorage.removeItem('nutrik_modo');
     window.dispatchEvent(new Event('nutrik-modo'));
+    return { ok: true };
   };
 
   const existeCuenta = async (email) => {
@@ -191,7 +191,14 @@ const login = async (email, password, opciones = {}) => {
     <AuthContext.Provider
       value={{ user, login, register, updateProfile, logout, existeCuenta, resetPassword }}
     >
-      {children}
+      {!authReady ? (
+        <div role="status" aria-live="polite">Validando sesión con Laravel…</div>
+      ) : (
+        <>
+          {sessionError && <div role="alert">{sessionError}</div>}
+          {children}
+        </>
+      )}
     </AuthContext.Provider>
   );
 }
