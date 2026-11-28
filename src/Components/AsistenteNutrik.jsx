@@ -2,11 +2,14 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../Context/authContext';
 import { useProductos } from '../Context/productContext';
+import { useCart } from '../Pages/checkout/Cart';
 import {
   buscarProducto,
   productosTienda,
 } from '../data/productosData';
 import { recetaParaProducto } from '../data/recetasProductos';
+// Mascota 3D de NutryBot (SVG local, reemplaza al emoji de la abuela).
+import nutriBotClay from '../assets/nutribot-clay.svg';
 import './AsistenteNutrik.css';
 
 // ---------------------------------------------------------------
@@ -34,6 +37,86 @@ const RETOS_BASE = [
     detalle: 'Incluir proteína en tus comidas',
   },
 ];
+
+// Los 4 retos salen de lo que el cliente elige antes de empezar su racha.
+const RETO_AGUA = {
+  id: 'AGUA',
+  icono: '💧',
+  titulo: 'Tomar 2L de agua',
+  detalle: 'Hidratación del día',
+};
+
+const TIPOS_RETOS = [
+  {
+    id: 'dieta',
+    icono: '🥗',
+    etiqueta: 'Seguir mi dieta',
+    detalle: 'Según tu perfil y alergias',
+    retos: [
+      RETO_AGUA,
+      { id: 'COMIDA', icono: '🥗', titulo: '1 comida equilibrada', detalle: 'Verduras + proteína' },
+      { id: 'FRUTA', icono: '🍎', titulo: 'Snack sin azúcar', detalle: '2 porciones al día' },
+      { id: 'PROTEINA', icono: '🥛', titulo: 'Proteína sin lactosa', detalle: 'Elige opción sin lácteos' },
+    ],
+  },
+  {
+    id: 'comer-bien',
+    icono: '🍎',
+    etiqueta: 'Comer bien',
+    detalle: 'Frutas, proteína y recetas',
+    retos: [
+      RETO_AGUA,
+      { id: 'FRUTA', icono: '🍎', titulo: '2 frutas al día', detalle: 'Una en el desayuno' },
+      { id: 'PROTEINA', icono: '🥚', titulo: 'Proteína en 3 comidas', detalle: 'Incluye una fuente cada comida' },
+      { id: 'RECETA', icono: '🥣', titulo: 'Preparar 1 receta', detalle: 'Idea saludable de NutryBot' },
+    ],
+  },
+  {
+    id: 'hidratacion',
+    icono: '💧',
+    etiqueta: 'Hidratarme más',
+    detalle: 'Tomar agua durante el día',
+    retos: [
+      RETO_AGUA,
+      { id: 'VASO_MANANA', icono: '🌅', titulo: 'Vaso al despertar', detalle: 'Empieza hidratado' },
+      { id: 'VASO_COMIDA', icono: '🍽️', titulo: 'Vaso antes de cada comida', detalle: '3 veces al día' },
+      { id: 'VASO_NOCHE', icono: '🌙', titulo: 'Vaso antes de dormir', detalle: 'Sin excederte' },
+    ],
+  },
+  {
+    id: 'energia',
+    icono: '💪',
+    etiqueta: 'Más energía',
+    detalle: 'Hábitos para tu día a día',
+    retos: [
+      RETO_AGUA,
+      { id: 'CAMINAR', icono: '🚶', titulo: 'Caminar 15 minutos', detalle: 'Muévete un poco' },
+      { id: 'COMIDA', icono: '🥗', titulo: 'Comida equilibrada', detalle: 'Verduras + proteína' },
+      { id: 'DESCANSO', icono: '😴', titulo: 'Dormir 7 horas', detalle: 'Descansa bien' },
+    ],
+  },
+];
+
+// Ajusta los nombres al perfil si el cliente eligió «Seguir mi dieta».
+function retosDelPerfil(perfiles, objetivo, base = RETOS_BASE) {
+  const claves = perfiles.map((p) => p.clave);
+  return base.map((reto) => {
+    if (
+      reto.id === 'FRUTA' &&
+      (claves.includes('azucar') || objetivo?.clave === 'bajar')
+    ) {
+      return { ...reto, titulo: 'Snack sin azúcar', detalle: '2 porciones al día' };
+    }
+    if (reto.id === 'PROTEINA' && claves.includes('lactosa')) {
+      return {
+        ...reto,
+        titulo: 'Proteína sin lactosa',
+        detalle: 'Incluye proteína en tus comidas',
+      };
+    }
+    return reto;
+  });
+}
 
 // Mensajes que dispara NutryBot como recordatorios/consejos flotantes.
 const RECORDATORIOS = [
@@ -143,7 +226,25 @@ const CONSEJOS_OBJETIVO = [
   },
 ];
 
+// Preguntas que el cliente puede tocar en el chat de Consejos.
+const PREGUNTAS_SUGERIDAS = [
+  '¿Qué como para bajar de peso?',
+  'Dame una receta saludable',
+  'Un snack sin azúcar',
+  '¿Qué proteína me sirve?',
+];
+
+// Quita del catálogo los productos que chocan con el perfil del cliente.
+function productosPermitidos(lista, perfiles) {
+  return lista.filter((p) => {
+    const campo = `${p.nombre} ${p.categoria} ${p.descripcion}`.toLowerCase();
+    return !perfiles.some((r) => r.evitar.some((t) => campo.includes(t)));
+  });
+}
+
 const STORAGE_RETOS = 'nutrik_retos_diarios';
+const STORAGE_SEGUIMIENTO = 'nutrik_seguimiento';
+const STORAGE_TIPO = 'nutrybot_tipo_retos';
 const STORAGE_POS = 'nutrybot_pos_v2';
 
 function hoyISO() {
@@ -228,15 +329,56 @@ function cargarRetosGuardados() {
   return {};
 }
 
+function cargarSeguimiento() {
+  const vacio = { racha: 0, ultimo: '', dias: {} };
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_SEGUIMIENTO)) || vacio;
+  } catch {
+    return vacio;
+  }
+}
+
+// Marca el día de hoy y suma la racha solo si el anterior fue consecutivo.
+function guardarDiaCompleto() {
+  const seg = cargarSeguimiento();
+  const hoy = hoyISO();
+  if (seg.dias[hoy]) return seg;
+  const ayer = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  const actualizado = {
+    racha: seg.ultimo === ayer ? seg.racha + 1 : 1,
+    ultimo: hoy,
+    dias: { ...seg.dias, [hoy]: true },
+  };
+  localStorage.setItem(STORAGE_SEGUIMIENTO, JSON.stringify(actualizado));
+  return actualizado;
+}
+
 function AsistenteNutrik() {
   const location = useLocation();
   const { user } = useAuth();
   const { productos } = useProductos();
+  const { agregarProducto, setCarritoAbierto } = useCart();
 
   const [abierto, setAbierto] = useState(false);
   const [tab, setTab] = useState('retos');
+  const [mensajes, setMensajes] = useState([
+    {
+      de: 'bot',
+      texto:
+        '¡Hola! 👋 Cuéntame qué buscas y te recomiendo comidas, recetas o productos de la tienda.',
+    },
+  ]);
+  const [pregunta, setPregunta] = useState('');
   const [productoComprado, setProductoComprado] = useState(null);
   const [estado, setEstado] = useState(cargarRetosGuardados);
+  const [seguimiento, setSeguimiento] = useState(cargarSeguimiento);
+  const [tipo, setTipo] = useState(() => {
+    try {
+      return localStorage.getItem(STORAGE_TIPO) || '';
+    } catch {
+      return '';
+    }
+  });
   const [toasts, setToasts] = useState([]);
   const [pulso, setPulso] = useState(false);
   const [pos, setPos] = useState(() => {
@@ -246,6 +388,7 @@ function AsistenteNutrik() {
 
   const idToastRef = useRef(0);
   const panelRef = useRef(null);
+  const chatFinRef = useRef(null);
   const idProductoEnRuta = location.pathname.match(/^\/Productview\/([^/]+)/)?.[1];
   const productoVisto = idProductoEnRuta
     ? buscarProducto(decodeURIComponent(idProductoEnRuta))
@@ -322,6 +465,11 @@ function AsistenteNutrik() {
 
   const perfiles = useMemo(() => detectarPerfiles(user), [user]);
   const objetivo = useMemo(() => detectarObjetivo(user), [user]);
+  const retos = useMemo(() => {
+    const base =
+      TIPOS_RETOS.find((t) => t.id === tipo)?.retos || TIPOS_RETOS[0].retos;
+    return tipo === 'dieta' ? retosDelPerfil(perfiles, objetivo, base) : base;
+  }, [tipo, perfiles, objetivo]);
 
   // Consejos personalizados (dieta, alergias, enfermedades y objetivo).
   // NutryBot aconseja, no vende: son recomendaciones de hábitos.
@@ -334,14 +482,105 @@ function AsistenteNutrik() {
 
   // Productos (suplementos, no perecederos) que NO le hacen daño según sus
   // restricciones. Si no hay restricciones, se muestran los más recientes.
-  const sugerencias = useMemo(() => {
-    const lista = productos || [];
-    const sugeridos = lista.filter((p) => {
-      const campo = `${p.nombre} ${p.categoria} ${p.descripcion}`.toLowerCase();
-      return !perfiles.some((r) => r.evitar.some((t) => campo.includes(t)));
-    });
-    return sugeridos.slice(0, 4);
-  }, [productos, perfiles]);
+  const sugerencias = useMemo(
+    () => productosPermitidos(productos || [], perfiles).slice(0, 4),
+    [productos, perfiles]
+  );
+
+  // Si la API aún no responde, el chat usa el catálogo local del proyecto.
+  const catalogoChat = useMemo(
+    () =>
+      sugerencias.length
+        ? sugerencias
+        : productosPermitidos(productosTienda, perfiles),
+    [sugerencias, perfiles]
+  );
+
+  // Respuestas preparadas: cuando se conecte la IA, aquí irá la llamada al
+  // backend. Por ahora solo usa el catálogo, el perfil y las recetas actuales.
+  const responderDemo = (texto) => {
+    const pregunta = texto.toLowerCase();
+    const encontrar = (patron) =>
+      catalogoChat
+        .filter((p) => patron.test(`${p.nombre} ${p.descripcion}`))
+        .slice(0, 2);
+
+    if (/receta|preparar|cocinar/.test(pregunta)) {
+      const producto = catalogoChat[0];
+      const receta = producto ? recetaParaProducto(producto, user) : null;
+      return {
+        texto: receta
+          ? `Con ${producto.nombre} puedes preparar ${receta.titulo.toLowerCase()} 🥣`
+          : 'Aún no hay productos disponibles para armar una receta.',
+        productos: receta ? [producto] : [],
+        recetaProducto: receta ? producto : null,
+      };
+    }
+
+    if (/prote[ií]na|m[uú]sculo|fuerza|creatina/.test(pregunta)) {
+      const productos = encontrar(/prote[ií]na|creatina|yogur|col[aá]geno/);
+      return {
+        texto: productos.length
+          ? 'Para músculo y fuerza, combina proteína con una comida equilibrada 💪'
+          : 'No encontré opciones de proteína en el catálogo.',
+        productos,
+      };
+    }
+
+    if (/snack|az[uú]car|dulce|antoj/.test(pregunta)) {
+      const productos = encontrar(
+        /granola|ch[ií]a|frutos|snack|barra|galleta|az[uú]car/
+      );
+      return {
+        texto: productos.length
+          ? 'Estas opciones sirven para un snack sin azúcar añadida 🌱'
+          : 'No encontré snacks sin azúcar en el catálogo.',
+        productos,
+      };
+    }
+
+    if (/bajar|perder|adelgazar|diet/.test(pregunta)) {
+      const consejo = consejos[0] || 'Mantén proteína y fibra en cada comida.';
+      return {
+        texto: `${consejo} Te sirven estas opciones de la tienda 👇`,
+        productos: encontrar(
+          /granola|ch[ií]a|prote[ií]na|avena|t[eé] verde|omega/
+        ),
+      };
+    }
+
+    if (/defensa|vitamina|resfriado|inmun/.test(pregunta)) {
+      return {
+        texto: 'Estas opciones aportan nutrientes para tus defensas 🍊',
+        productos: encontrar(
+          /vitamina|omega|jengibre|t[eé] verde|fruta|naranja/
+        ),
+      };
+    }
+
+    return {
+      texto:
+        'Solo te ayudo con comidas, recetas y productos de Nutrik. Prueba una de las preguntas de abajo 😊',
+      productos: [],
+    };
+  };
+
+  const enviarPregunta = (texto) => {
+    const limpio = texto.trim();
+    if (!limpio) return;
+    setMensajes((prev) => [
+      ...prev,
+      { de: 'cliente', texto: limpio },
+      { de: 'bot', ...responderDemo(limpio) },
+    ]);
+    setPregunta('');
+  };
+
+  useEffect(() => {
+    if (tab === 'sugerencias') {
+      chatFinRef.current?.scrollIntoView({ block: 'nearest' });
+    }
+  }, [mensajes, tab]);
 
   const agregarToast = (texto, tipo = 'general') => {
     const id = ++idToastRef.current;
@@ -416,11 +655,42 @@ function AsistenteNutrik() {
     return () => document.removeEventListener('mousedown', onClick);
   }, [abierto]);
 
-  const toggleReto = (id) =>
-    setEstado((prev) => ({ ...prev, [id]: !prev[id] }));
+  const elegirTipo = (id) => {
+    localStorage.setItem(STORAGE_TIPO, id);
+    setTipo(id);
+  };
 
-  const completados = RETOS_BASE.filter((r) => estado[r.id]).length;
-  const progreso = Math.round((completados / RETOS_BASE.length) * 100);
+  const cambiarTipo = () => {
+    localStorage.removeItem(STORAGE_TIPO);
+    setTipo('');
+  };
+
+  const toggleReto = (id) => {
+    const siguiente = { ...estado, [id]: !estado[id] };
+    setEstado(siguiente);
+    // Al completar los 3 retos: cuenta la racha y marca el día de la semana.
+    if (retos.every((r) => siguiente[r.id]) && !seguimiento.dias[hoyISO()]) {
+      setSeguimiento(guardarDiaCompleto());
+    }
+  };
+
+  const completados = retos.filter((r) => estado[r.id]).length;
+  const progreso = Math.round((completados / retos.length) * 100);
+
+  const nombresDias = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
+  const hoy = hoyISO();
+  const diasSemana = Array.from({ length: 7 }, (_, i) => {
+    const fecha = new Date(Date.parse(hoy) - (6 - i) * 86400000)
+      .toISOString()
+      .slice(0, 10);
+    return {
+      fecha,
+      etiqueta: nombresDias[new Date(`${fecha}T12:00:00`).getDay()],
+      hecho: !!seguimiento.dias[fecha],
+    };
+  });
+  const diasCumplidos = diasSemana.filter((d) => d.hecho).length;
+  const adhesion = Math.round((diasCumplidos / 7) * 100);
 
   const nombreCorto = user
     ? (user.primerNombre || user.nombreCompleto || 'amig@').split(' ')[0]
@@ -442,7 +712,12 @@ function AsistenteNutrik() {
       <div className="nutrik-toasts" aria-live="polite">
         {toasts.map((t) => (
           <div key={t.id} className={`nutrik-toast ${t.tipo}`}>
-            <span className="nutrik-toast-avatar">👵</span>
+            {/* Misma mascota en las notificaciones flotantes */}
+            <img
+              className="nutrik-toast-avatar"
+              src={nutriBotClay}
+              alt="NutryBot"
+            />
             <div className="nutrik-toast-cuerpo">
               <strong>NutryBot</strong>
               <p>{t.texto}</p>
@@ -486,7 +761,12 @@ function AsistenteNutrik() {
           aria-label="Abrir ayuda de Nutrik"
           aria-expanded={abierto}
         >
-          <span className="nutrik-avatar-cara">👵</span>
+          {/* Botón flotante: antes era el emoji 👵 dentro del círculo verde */}
+          <img
+            className="nutrik-avatar-cara"
+            src={nutriBotClay}
+            alt="Abrir ayuda de Nutrik"
+          />
           {user && <span className="nutrik-avatar-badge" />}
         </button>
         {abierto && (
@@ -497,7 +777,10 @@ function AsistenteNutrik() {
             aria-label="NutryBot"
           >
             <header className="nutrik-panel-cabecera">
-              <div className="nutrik-panel-avatar">👵</div>
+              {/* Cabecera del panel: misma mascota para no mezclar imágenes */}
+              <div className="nutrik-panel-avatar">
+                <img src={nutriBotClay} alt="NutryBot" />
+              </div>
               <div>
                 <h3>NutryBot</h3>
                 <p>Hola, {nombreCorto} 👋 ¿te ayudo hoy?</p>
@@ -543,9 +826,14 @@ function AsistenteNutrik() {
               )}
             </nav>
 
-            <div className="nutrik-panel-cuerpo">
-              {tab === 'retos' && (
-                <>
+            <div
+              className={`nutrik-panel-cuerpo ${
+                tab === 'sugerencias' ? 'nutrik-panel-cuerpo-chat' : ''
+              }`}
+            >
+              {tab === 'retos' &&
+                (tipo ? (
+                  <>
                   <div className="nutrik-progreso">
                     <div className="nutrik-progreso-info">
                       <span>Progreso de hoy</span>
@@ -556,8 +844,24 @@ function AsistenteNutrik() {
                     </div>
                   </div>
 
+                  {seguimiento.racha > 0 && (
+                    <p className="nutrik-racha">
+                      🔥 Racha de {seguimiento.racha}{' '}
+                      {seguimiento.racha === 1 ? 'día' : 'días'}
+                    </p>
+                  )}
+
+                  {(perfiles.length > 0 || objetivo) && (
+                    <p className="nutrik-sugerencias-nota">
+                      Retos para ti:{' '}
+                      {[...perfiles.map((p) => p.etiqueta), objetivo?.etiqueta]
+                        .filter(Boolean)
+                        .join(' · ')}
+                    </p>
+                  )}
+
                   <ul className="nutrik-retos">
-                    {RETOS_BASE.map((reto) => (
+                    {retos.map((reto) => (
                       <li
                         key={reto.id}
                         className={`nutrik-reto ${estado[reto.id] ? 'hecho' : ''}`}
@@ -577,6 +881,24 @@ function AsistenteNutrik() {
                     ))}
                   </ul>
 
+                  <div className="nutrik-semana">
+                    <div className="nutrik-semana-info">
+                      <span>📊 Tu dieta esta semana</span>
+                      <strong>{adhesion}%</strong>
+                    </div>
+                    <div className="nutrik-semana-barras">
+                      {diasSemana.map((d) => (
+                        <div key={d.fecha} className="nutrik-semana-dia">
+                          <span className={d.hecho ? 'hecho' : ''} />
+                          <small>{d.etiqueta}</small>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <p className="nutrik-sugerencias-nota">
+                    {diasCumplidos} de 7 días siguiendo tu dieta
+                  </p>
+
                   <button
                     className="nutrik-simular"
                     onClick={() => {
@@ -587,12 +909,37 @@ function AsistenteNutrik() {
                   >
                     🔔 Simular notificación
                   </button>
-                </>
-              )}
+
+                  <button className="nutrik-cambiar" onClick={cambiarTipo}>
+                    Cambiar mi objetivo
+                  </button>
+                  </>
+                ) : (
+                  <div className="nutrik-elegir">
+                    <p>
+                      ¡Hola! 👋 Antes de empezar tu racha, dime ¿qué quieres
+                      trabajar?
+                    </p>
+                    <p>Tu respuesta crea tus 4 retos de hoy.</p>
+                    {TIPOS_RETOS.map((t) => (
+                      <button
+                        key={t.id}
+                        className="nutrik-opcion"
+                        onClick={() => elegirTipo(t.id)}
+                      >
+                        <span className="nutrik-opcion-icono">{t.icono}</span>
+                        <span className="nutrik-opcion-texto">
+                          <strong>{t.etiqueta}</strong>
+                          <small>{t.detalle}</small>
+                        </span>
+                        <span>→</span>
+                      </button>
+                    ))}
+                  </div>
+                ))}
 
               {tab === 'sugerencias' && (
                 <>
-                  {/* Consejos personalizados (NutryBot aconseja, no vende) */}
                   {perfiles.length > 0 || objetivo ? (
                     <p className="nutrik-sugerencias-nota">
                       Consejos según tu perfil:{' '}
@@ -607,57 +954,102 @@ function AsistenteNutrik() {
                     </p>
                   ) : (
                     <p className="nutrik-sugerencias-nota">
-                      Completa tus alergias, dieta y objetivo en tu perfil para
-                      recibir consejos personalizados.
+                      Cuéntame qué buscas: comidas, recetas o productos de la
+                      tienda.
                     </p>
                   )}
 
-                  {consejos.length > 0 && (
-                    <ul className="nutrik-consejos">
-                      {consejos.map((c, i) => (
-                        <li key={i} className="nutrik-consejo">
-                          <span className="nutrik-consejo-icono">💡</span>
-                          <span>{c}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-
-                  <h4 className="nutrik-subtitulo">Productos que te ayudan</h4>
-                  <p className="nutrik-sugerencias-nota">
-                    Suplementos y productos de salud que no incluyen tus
-                    restricciones.
-                  </p>
-
-                  <div className="nutrik-sugerencias">
-                    {sugerencias.length === 0 && (
-                      <p className="nutrik-vacio">
-                        Aún no hay productos disponibles.
-                      </p>
-                    )}
-                    {sugerencias.map((p) => (
-                      <Link
-                        key={p.id}
-                        className="nutrik-sugerencia"
-                        to={`/Productview/${p.id}`}
-                        onClick={() => setAbierto(false)}
-                      >
-                        <div className="nutrik-sugerencia-media">
-                          {p.imagen ? (
-                            <img src={p.imagen} alt={p.nombre} />
-                          ) : (
-                            <span>🧴</span>
+                  <div className="nutrik-chat">
+                    <div className="nutrik-chat-mensajes">
+                      {mensajes.map((m, i) => (
+                        <div
+                          key={i}
+                          className={`nutrik-chat-msj ${
+                            m.de === 'cliente' ? 'cliente' : 'bot'
+                          }`}
+                        >
+                          <p>{m.texto}</p>
+                          {m.productos?.map((p) => (
+                            <div className="nutrik-chat-producto" key={p.id}>
+                              <div className="nutrik-chat-media">
+                                {p.imagen ? (
+                                  <img src={p.imagen} alt={p.nombre} />
+                                ) : (
+                                  <span>🧴</span>
+                                )}
+                              </div>
+                              <div className="nutrik-chat-info">
+                                <Link
+                                  to={`/Productview/${p.id}`}
+                                  onClick={() => setAbierto(false)}
+                                >
+                                  {p.nombre}
+                                </Link>
+                                <small>
+                                  {typeof p.categoria === 'object'
+                                    ? p.categoria?.nombre || 'Nutrik'
+                                    : p.categoria || 'Nutrik'}
+                                </small>
+                                <span>
+                                  ${Number(p.precio || 0).toLocaleString('es-CO')}
+                                </span>
+                              </div>
+                              <button
+                                className="nutrik-chat-agregar"
+                                onClick={() => {
+                                  agregarProducto(p, 1);
+                                  setCarritoAbierto(true);
+                                }}
+                              >
+                                + Carrito
+                              </button>
+                            </div>
+                          ))}
+                          {m.recetaProducto && (
+                            <button
+                              className="nutrik-chat-receta"
+                              onClick={() => {
+                                setProductoComprado(m.recetaProducto);
+                                setTab('receta');
+                              }}
+                            >
+                              🥣 Ver receta →
+                            </button>
                           )}
                         </div>
-                        <div className="nutrik-sugerencia-info">
-                          <strong>{p.nombre}</strong>
-                          <small>{p.categoria || 'Nutrik'}</small>
-                          <span className="nutrik-sugerencia-precio">
-                            ${Number(p.precio || 0).toLocaleString('es-CO')}
-                          </span>
-                        </div>
-                      </Link>
-                    ))}
+                      ))}
+                      <div ref={chatFinRef} />
+                    </div>
+
+                    <div className="nutrik-chat-chips">
+                      {PREGUNTAS_SUGERIDAS.map((p) => (
+                        <button key={p} onClick={() => enviarPregunta(p)}>
+                          {p}
+                        </button>
+                      ))}
+                    </div>
+
+                    <form
+                      className="nutrik-chat-form"
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        enviarPregunta(pregunta);
+                      }}
+                    >
+                      <input
+                        value={pregunta}
+                        onChange={(e) => setPregunta(e.target.value)}
+                        placeholder="Escribe qué buscas..."
+                        aria-label="Pregunta para NutryBot"
+                      />
+                      <button type="submit" aria-label="Enviar pregunta">
+                        ➤
+                      </button>
+                    </form>
+
+                    <p className="nutrik-chat-nota">
+                      Respuestas preparadas · sin IA · no reemplaza consejo médico
+                    </p>
                   </div>
                 </>
               )}

@@ -30,19 +30,21 @@
 }
 
 /* ===== AVATAR ===== */
+/* Sin círculo: solo el muñeco 3D sobre fondo transparente.
+   Se quitaron el borde, el degradado y la sombra redonda del botón. */
 .nutrik-avatar {
   position: relative;
   width: 62px;
   height: 62px;
   border: none;
-  border-radius: 50%;
+  border-radius: 0;
   cursor: grab;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(145deg, var(--na-acento) 0%, var(--na-acento-oscuro) 100%);
-  box-shadow: 0 12px 26px -8px rgba(5, 150, 105, 0.65);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: transparent;
+  box-shadow: none;
+  transition: transform 0.2s ease;
   user-select: none;
   -webkit-user-select: none;
 }
@@ -50,56 +52,62 @@
 .nutrik-avatar.arrastrando {
   cursor: grabbing;
   transition: none;
-  transform: scale(1.06);
+  transform: scale(1.05);
 }
 
 .nutrik-avatar:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 16px 32px -8px rgba(5, 150, 105, 0.75);
+  transform: translateY(-3px) scale(1.04);
 }
 
 .nutrik-avatar.arrastrando:hover {
-  transform: scale(1.06);
+  transform: scale(1.05);
 }
 
 .nutrik-avatar:focus-visible {
-  outline: 3px solid rgba(16, 185, 129, 0.45);
-  outline-offset: 3px;
+  outline: 3px solid rgba(16, 185, 129, 0.35);
+  outline-offset: 4px;
+  border-radius: 14px;
 }
 
+/* Antes era el emoji 👵 dentro de un círculo; ahora es el SVG 3D sin fondo.
+   Se conserva el tamaño ampliado y solo una sombra suave, sin halo. */
 .nutrik-avatar-cara {
-  font-size: 1.9rem;
-  line-height: 1;
+  display: block;
+  width: 62px;
+  height: auto;
+  pointer-events: none;
+  filter: drop-shadow(0 7px 6px rgba(15, 23, 42, 0.24));
+  animation: nutrik-flotar 3.6s ease-in-out infinite;
 }
 
+/* El puntito rojo también se oculta: el cliente pidió solo el muñeco. */
 .nutrik-avatar-badge {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 13px;
-  height: 13px;
-  border-radius: 50%;
-  background: #ef4444;
-  border: 2px solid var(--na-blanco);
+  display: none;
 }
 
-.nutrik-avatar.pulso::before {
-  content: "";
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  border: 2px solid var(--na-acento);
-  animation: nutrik-pulso 0.9s ease-out;
+/* Al llegar una notificación, el muñeco da un salto suave (sin anillos). */
+.nutrik-avatar.pulso .nutrik-avatar-cara {
+  animation: nutrik-mascota-pulso 0.9s ease;
 }
 
-@keyframes nutrik-pulso {
-  from {
-    transform: scale(0.85);
-    opacity: 0.9;
+@keyframes nutrik-flotar {
+  0%, 100% {
+    transform: translateY(0);
   }
-  to {
-    transform: scale(1.35);
-    opacity: 0;
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes nutrik-mascota-pulso {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 
@@ -138,17 +146,21 @@
   border-bottom: 1px solid var(--na-borde);
 }
 
+/* Cabecera: el contenedor ya no es un círculo blanco, solo sostiene al muñeco. */
 .nutrik-panel-avatar {
-  width: 44px;
-  height: 44px;
   flex-shrink: 0;
-  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
-  background: var(--na-blanco);
-  box-shadow: 0 4px 12px -4px rgba(5, 150, 105, 0.4);
+}
+
+/* Misma mascota en la cabecera del panel (antes emoji 👵). */
+.nutrik-panel-avatar img {
+  display: block;
+  width: 46px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 4px rgba(15, 23, 42, 0.18));
 }
 
 .nutrik-panel-cabecera h3 {
@@ -361,6 +373,126 @@
   background: #ecfdf5;
 }
 
+/* Pregunta inicial y cambio de objetivo */
+.nutrik-elegir p {
+  margin: 0 0 10px;
+  font-size: 0.85rem;
+  color: var(--na-texto);
+  line-height: 1.5;
+}
+
+.nutrik-opcion {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 10px;
+  border: 1px solid var(--na-borde);
+  border-radius: 12px;
+  background: var(--na-blanco);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.nutrik-opcion:hover {
+  background: #f0fdf4;
+  border-color: var(--na-acento);
+}
+
+.nutrik-opcion-icono {
+  font-size: 1.3rem;
+}
+
+.nutrik-opcion-texto {
+  flex: 1;
+  min-width: 0;
+}
+
+.nutrik-opcion-texto strong {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--na-titulo);
+}
+
+.nutrik-opcion-texto small {
+  font-size: 0.72rem;
+  color: var(--na-texto);
+}
+
+.nutrik-cambiar {
+  margin-top: 10px;
+  padding: 6px 10px;
+  border: 1px dashed var(--na-acento);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--na-acento-oscuro);
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Racha y seguimiento semanal de la dieta */
+.nutrik-racha {
+  margin: 0 0 12px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: #fff8e8;
+  color: #92400e;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.nutrik-semana {
+  margin: 0 0 8px;
+  padding: 10px;
+  border: 1px solid var(--na-borde);
+  border-radius: 12px;
+  background: var(--na-blanco);
+}
+
+.nutrik-semana-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--na-texto);
+  font-weight: 600;
+}
+
+.nutrik-semana-info strong {
+  color: var(--na-acento-oscuro);
+}
+
+.nutrik-semana-barras {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.nutrik-semana-dia {
+  flex: 1;
+  text-align: center;
+}
+
+.nutrik-semana-dia span {
+  display: block;
+  height: 16px;
+  border-radius: 4px;
+  background: #e2e8f0;
+}
+
+.nutrik-semana-dia span.hecho {
+  background: var(--na-acento);
+}
+
+.nutrik-semana-dia small {
+  font-size: 0.65rem;
+  color: var(--na-suave);
+}
+
 /* Sugerencias */
 .nutrik-sugerencias-nota {
   margin: 0 0 12px;
@@ -405,6 +537,206 @@
 .nutrik-consejo-icono {
   flex-shrink: 0;
   font-size: 1rem;
+}
+
+/* Chat de Consejos (respuestas preparadas, sin IA) */
+.nutrik-panel-cuerpo-chat {
+  padding: 12px 14px;
+}
+
+.nutrik-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nutrik-chat-mensajes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 250px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.nutrik-chat-msj {
+  max-width: 94%;
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.nutrik-chat-msj.bot {
+  align-self: flex-start;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: var(--na-titulo);
+}
+
+.nutrik-chat-msj.cliente {
+  align-self: flex-end;
+  background: var(--na-acento-oscuro);
+  color: #ffffff;
+}
+
+.nutrik-chat-msj p {
+  margin: 0;
+}
+
+.nutrik-chat-msj.cliente p {
+  text-align: right;
+}
+
+.nutrik-chat-producto {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 7px;
+  background: var(--na-blanco);
+  border: 1px solid var(--na-borde);
+  border-radius: 12px;
+}
+
+.nutrik-chat-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--na-fondo);
+  font-size: 1.2rem;
+  overflow: hidden;
+}
+
+.nutrik-chat-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nutrik-chat-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.nutrik-chat-info a {
+  overflow: hidden;
+  color: var(--na-titulo);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nutrik-chat-info a:hover {
+  color: var(--na-acento-oscuro);
+  text-decoration: underline;
+}
+
+.nutrik-chat-info small {
+  color: var(--na-suave);
+  font-size: 0.68rem;
+}
+
+.nutrik-chat-info span {
+  color: var(--na-acento-oscuro);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.nutrik-chat-agregar {
+  flex-shrink: 0;
+  padding: 6px 8px;
+  border: none;
+  border-radius: 9px;
+  background: var(--na-acento-oscuro);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.nutrik-chat-agregar:hover {
+  background: var(--na-acento);
+}
+
+.nutrik-chat-receta {
+  margin-top: 8px;
+  padding: 6px 10px;
+  border: 1px dashed var(--na-acento);
+  border-radius: 9px;
+  background: var(--na-blanco);
+  color: var(--na-acento-oscuro);
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.nutrik-chat-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.nutrik-chat-chips button {
+  flex-shrink: 0;
+  padding: 6px 10px;
+  border: 1px solid var(--na-borde);
+  border-radius: 999px;
+  background: var(--na-blanco);
+  color: var(--na-texto);
+  font-family: inherit;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.nutrik-chat-chips button:hover {
+  background: #f0fdf4;
+  border-color: var(--na-acento);
+}
+
+.nutrik-chat-form {
+  display: flex;
+  gap: 8px;
+}
+
+.nutrik-chat-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 9px 12px;
+  border: 1px solid var(--na-borde);
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 0.82rem;
+}
+
+.nutrik-chat-form button {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--na-acento-oscuro);
+  color: #ffffff;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.nutrik-chat-nota {
+  margin: 0;
+  color: var(--na-suave);
+  font-size: 0.68rem;
+  text-align: center;
 }
 
 .nutrik-receta-contexto {
@@ -574,9 +906,14 @@
   border-left-color: #ef4444;
 }
 
+/* Mascota en las notificaciones (antes emoji 👵), sin círculo de fondo. */
 .nutrik-toast-avatar {
-  font-size: 1.3rem;
+  display: block;
+  width: 34px;
+  height: auto;
+  object-fit: contain;
   flex-shrink: 0;
+  filter: drop-shadow(0 3px 3px rgba(15, 23, 42, 0.18));
 }
 
 .nutrik-toast-cuerpo strong {

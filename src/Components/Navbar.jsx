@@ -353,12 +353,11 @@ function Navbar({ mostrarSidebar = false }) {
             <h2>Categorías</h2>
 
             <Link to="/catalog/snacks">Snacks</Link>
-            <Link to="/catalog/frutas">Frutas</Link>
-            <Link to="/catalog/aves-pescados">Aves y pescados</Link>
-            <Link to="/catalog/lacteos-huevos">Lácteos y huevos</Link>
+            <Link to="/catalog/lacteos-huevos">Lácteos</Link>
             <Link to="/catalog/cereales-granos">Cereales y granos</Link>
             <Link to="/catalog/vitaminas">Vitaminas y bienestar</Link>
             <Link to="/catalog/suplementos">Suplementos en polvo</Link>
+            <Link to="/catalog/frutos-secos-semillas">Frutos secos y semillas</Link>
           </div>
         )}
 

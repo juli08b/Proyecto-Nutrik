@@ -138,12 +138,11 @@ function App() {
         <Route path="/catalog" element={<CatalogLayout />}>
           <Route path="frozen" element={<Frozen />} />
           <Route path="snacks" element={<Snacks />} />
-          <Route path="frutas" element={<Category slug="frutas" />} />
-          <Route path="aves-pescados" element={<Category slug="aves-pescados" />} />
           <Route path="lacteos-huevos" element={<Category slug="lacteos-huevos" />} />
           <Route path="cereales-granos" element={<Category slug="cereales-granos" />} />
           <Route path="vitaminas" element={<Category slug="vitaminas" />} />
           <Route path="suplementos" element={<Category slug="suplementos" />} />
+          <Route path="frutos-secos-semillas" element={<Category slug="frutos-secos-semillas" />} />
         </Route>
 
         <Route path="/nosotros" element={<About />} />

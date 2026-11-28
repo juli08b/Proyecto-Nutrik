@@ -40,7 +40,6 @@ function Frozen() {
           const datos = buscarProducto(producto.productoId) || {};
           return (
             <div className="producto-card" key={producto.id}>
-              <div className="producto-badge nuevo">Congelado</div>
               <img src={datos.imagen} alt={producto.nombre} className="producto-img" />
               <div className="producto-info">
                 <h3>{producto.nombre}</h3>

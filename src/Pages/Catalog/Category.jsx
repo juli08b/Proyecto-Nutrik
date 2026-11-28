@@ -10,35 +10,42 @@ import {
 
 // Cada ruta de categoría selecciona manualmente IDs del catálogo local.
 const CATEGORIAS = {
-  frutas: {
-    titulo: "Frutas",
-    descripcion: "Encuentra opciones naturales para acompañar tu alimentación.",
-    productos: ["frutos", "chia"],
-  },
-  "aves-pescados": {
-    titulo: "Aves y pescados",
-    descripcion: "Alternativas prácticas y nutritivas para tus comidas.",
-    productos: ["puroverde-ajiaco"],
+  snacks: {
+    titulo: "Snacks",
+    descripcion: "Snacks saludables para acompañar tu día.",
+    productos: [
+      "Galletas",
+      "wild-choco-mani",
+      "wild-choco",
+      "blondie-balance",
+      "whey-cookies-225",
+      "whey-cookies-900",
+    ],
   },
   "lacteos-huevos": {
-    titulo: "Lácteos y huevos",
-    descripcion: "Productos ricos en proteína para una alimentación equilibrada.",
-    productos: ["yogur", "frubite-frutos-rojos"],
+    titulo: "Lácteos",
+    descripcion: "Yogures y bebidas refrigeradas para tu alimentación.",
+    productos: ["yogur", "frubite-frutos-rojos", "notco-zero"],
   },
   "cereales-granos": {
     titulo: "Cereales y granos",
     descripcion: "Opciones nutritivas para tus desayunos y snacks.",
-    productos: ["granola", "Galletas", "barra-tosh"],
+    productos: ["granola", "barra-tosh"],
   },
   vitaminas: {
     titulo: "Vitaminas y bienestar",
     descripcion: "Complementos para cuidar tu bienestar todos los días.",
-    productos: ["omega", "colageno", "detox"],
+    productos: ["omega", "detox"],
   },
   suplementos: {
     titulo: "Suplementos en polvo",
     descripcion: "Suplementos para apoyar tu rendimiento y recuperación.",
-    productos: ["creatine", "maca", "colageno-premium"],
+    productos: ["creatine", "colageno", "maca", "colageno-premium"],
+  },
+  "frutos-secos-semillas": {
+    titulo: "Frutos secos y semillas",
+    descripcion: "Snacks naturales ricos en fibra y grasas buenas.",
+    productos: ["frutos", "chia"],
   },
 };
 
@@ -73,8 +80,7 @@ function Category({ slug }) {
 
           return (
             <div className="producto-card" key={producto.id}>
-              <div className="producto-badge nuevo">{categoria.titulo}</div>
-              <img
+                <img
                 src={producto.imagen}
                 alt={producto.nombre}
                 className="producto-img"
