@@ -1,7 +1,6 @@
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Navbar from "./Components/Navbar";
-import { useAuth } from "./Context/authContext";
 import PerfilVendedor from "./Pages/marketplace/PerfilVendedor";
 import AsistenteNutrik from "./Components/AsistenteNutrik";
 import Home from "./Pages/public/Home";
@@ -46,7 +45,6 @@ import Invoice from "./Pages/marketplace/Invoice";
 function App() {
   const location = useLocation();
   const [menuAbierto, setMenuAbierto] = useState(false);
-  const { user } = useAuth();
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });

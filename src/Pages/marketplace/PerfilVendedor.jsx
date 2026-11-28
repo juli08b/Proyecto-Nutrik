@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useAuth } from '../../Context/authContext'; // Ajusta la ruta si es necesario
 import { useProductos } from '../../Context/productContext';
 import { useParams, useNavigate } from 'react-router-dom';
