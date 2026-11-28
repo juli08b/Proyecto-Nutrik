@@ -1,0 +1,1403 @@
+/* ==========================================================================
+   VARIABLES & TOKENS DE DISEÑO (NUTRIK)
+   ========================================================================== */
+:root {
+    --nk-green-950: #052e16;
+    --nk-green-900: #14532d;
+    --nk-green-800: #166534;
+    --nk-green-700: #15803d;
+    --nk-green-600: #16a34a;
+    --nk-green-500: #22c55e;
+    --nk-green-100: #dcfce7;
+    --nk-green-50: #f0fdf4;
+
+    --nk-bg-page: #f8faf9;
+    --nk-surface: #ffffff;
+    --nk-surface-subtle: #f4f7f5;
+
+    --nk-text-main: #0f172a;
+    --nk-text-secondary: #475569;
+    --nk-text-muted: #94a3b8;
+
+    --nk-border: #e2e8f0;
+    --nk-border-light: #f1f5f9;
+
+    --nk-amber: #f59e0b;
+    --nk-amber-light: #fef3c7;
+    --nk-rose: #f43f5e;
+    --nk-red: #ef4444;
+
+    --nk-shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+    --nk-shadow-md: 0 10px 30px -5px rgba(15, 23, 42, 0.06), 0 4px 10px -2px rgba(15, 23, 42, 0.03);
+    --nk-shadow-hover: 0 20px 35px -10px rgba(22, 101, 52, 0.14), 0 8px 16px -6px rgba(15, 23, 42, 0.05);
+    --nk-shadow-green: 0 10px 20px -5px rgba(22, 101, 52, 0.28);
+
+    --nk-radius-sm: 10px;
+    --nk-radius-md: 14px;
+    --nk-radius-lg: 20px;
+    --nk-radius-xl: 26px;
+    --nk-radius-full: 9999px;
+
+    --nk-transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ==========================================================================
+   BASE & LAYOUT PRINCIPAL
+   ========================================================================== */
+.nk-store-page {
+    min-height: 100vh;
+    background-color: var(--nk-bg-page);
+    background-image: radial-gradient(at 0% 0%, rgba(220, 252, 231, 0.35) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(240, 253, 244, 0.5) 0px, transparent 50%);
+    color: var(--nk-text-main);
+    padding-bottom: 4.5rem;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.nk-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem;
+}
+
+/* ==========================================================================
+   ESTADOS DE CARGA Y ERROR
+   ========================================================================== */
+.nk-state-wrapper {
+    min-height: 68vh;
+    background-color: var(--nk-bg-page);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1.5rem;
+    gap: 1rem;
+}
+
+.nk-spinner-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nk-spinner {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 4px solid var(--nk-green-100);
+    border-top-color: var(--nk-green-700);
+    animation: nk-spin 0.85s linear infinite;
+}
+
+.nk-spinner-icon {
+    position: absolute;
+    color: var(--nk-green-700);
+}
+
+@keyframes nk-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.nk-loading-text {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--nk-text-secondary);
+}
+
+.nk-empty-icon-box {
+    width: 68px;
+    height: 68px;
+    border-radius: var(--nk-radius-lg);
+    background: var(--nk-green-50);
+    color: var(--nk-green-700);
+    border: 1px solid var(--nk-green-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.nk-state-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+.nk-state-desc {
+    font-size: 0.9rem;
+    color: var(--nk-text-secondary);
+    max-width: 380px;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   BARRA SUPERIOR DE NAVEGACIÓN
+   ========================================================================== */
+.nk-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.nk-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.9rem;
+    border-radius: var(--nk-radius-md);
+    border: none;
+    background: transparent;
+    color: var(--nk-text-secondary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--nk-transition);
+}
+
+.nk-back-btn:hover {
+    background: var(--nk-green-50);
+    color: var(--nk-green-800);
+    transform: translateX(-2px);
+}
+
+.nk-selection-pill {
+    display: none;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--nk-surface);
+    color: var(--nk-green-800);
+    border: 1px solid var(--nk-green-100);
+    padding: 0.45rem 1rem;
+    border-radius: var(--nk-radius-full);
+    font-size: 0.78rem;
+    font-weight: 700;
+    box-shadow: var(--nk-shadow-sm);
+}
+
+@media (min-width: 640px) {
+    .nk-selection-pill {
+        display: inline-flex;
+    }
+}
+
+/* ==========================================================================
+   HERO / PERFIL DE LA TIENDA
+   ========================================================================== */
+.nk-hero-card {
+    position: relative;
+    background: var(--nk-surface);
+    border-radius: var(--nk-radius-xl);
+    border: 1px solid var(--nk-border-light);
+    box-shadow: var(--nk-shadow-md);
+    overflow: hidden;
+}
+
+.nk-hero-banner {
+    position: relative;
+    height: 140px;
+    background: linear-gradient(125deg, var(--nk-green-950) 0%, var(--nk-green-800) 55%, #059669 100%);
+    overflow: hidden;
+}
+
+.nk-hero-banner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.14), transparent 55%);
+}
+
+@media (min-width: 640px) {
+    .nk-hero-banner {
+        height: 170px;
+    }
+}
+
+.nk-leaf-decor-1 {
+    position: absolute;
+    right: -20px;
+    top: -30px;
+    color: #ffffff;
+    opacity: 0.12;
+    transform: rotate(15deg);
+    pointer-events: none;
+}
+
+.nk-leaf-decor-2 {
+    position: absolute;
+    left: 32%;
+    bottom: -45px;
+    color: var(--nk-green-100);
+    opacity: 0.09;
+    transform: rotate(-15deg);
+    pointer-events: none;
+}
+
+.nk-hero-body {
+    position: relative;
+    padding: 0 1.5rem 1.75rem;
+}
+
+@media (min-width: 640px) {
+    .nk-hero-body {
+        padding: 0 2.5rem 2.25rem;
+    }
+}
+
+.nk-hero-header-row {
+    margin-top: -3.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+    .nk-hero-header-row {
+        margin-top: -3.75rem;
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
+    }
+}
+
+.nk-identity-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+@media (min-width: 640px) {
+    .nk-identity-group {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 1.35rem;
+    }
+}
+
+.nk-avatar {
+    width: 96px;
+    height: 96px;
+    flex-shrink: 0;
+    border-radius: 22px;
+    border: 4px solid var(--nk-surface);
+    background: linear-gradient(135deg, var(--nk-green-500), var(--nk-green-800));
+    color: #ffffff;
+    font-size: 1.75rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 24px -6px rgba(5, 46, 22, 0.25);
+}
+
+@media (min-width: 640px) {
+    .nk-avatar {
+        width: 116px;
+        height: 116px;
+        font-size: 2rem;
+    }
+}
+
+.nk-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 18px;
+    object-fit: cover;
+}
+
+.nk-title-block {
+    padding-top: 0.75rem;
+    padding-bottom: 0.2rem;
+}
+
+.nk-name-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.nk-store-name {
+    font-size: 1.65rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: var(--nk-text-main);
+}
+
+@media (min-width: 640px) {
+    .nk-title-block {
+        font-size: 2rem;
+        padding-top: 3.85rem;
+    }
+}
+
+.nk-verified-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: var(--nk-green-100);
+    color: var(--nk-green-800);
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--nk-radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-top: 0.15rem;
+
+}
+
+.nk-store-motto {
+    margin: 0.45rem 0 0;
+    font-size: 0.92rem;
+    color: var(--nk-text-secondary);
+    max-width: 580px;
+    line-height: 1.55;
+    
+}
+
+/* Botón Seguir Tienda */
+.nk-follow-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--nk-radius-md);
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--nk-transition);
+    border: 2px solid transparent;
+    background: var(--nk-green-800);
+    color: #ffffff;
+    box-shadow: var(--nk-shadow-green);
+}
+
+.nk-follow-btn:hover {
+    background: var(--nk-green-700);
+    transform: translateY(-2px);
+}
+
+.nk-follow-btn.is-following {
+    background: var(--nk-green-50);
+    color: var(--nk-green-800);
+    border-color: var(--nk-green-600);
+    box-shadow: none;
+}
+
+/* Métricas del vendedor */
+.nk-metrics-bar {
+    margin-top: 1.75rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--nk-border-light);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem;
+}
+
+@media (min-width: 768px) {
+    .nk-metrics-bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 2.25rem;
+    }
+}
+
+.nk-metric-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--nk-bg-page);
+    padding: 0.65rem 0.9rem;
+    border-radius: var(--nk-radius-md);
+    border: 1px solid var(--nk-border-light);
+}
+
+@media (min-width: 768px) {
+    .nk-metric-item {
+        background: transparent;
+        padding: 0;
+        border: none;
+    }
+}
+
+.nk-metric-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.nk-metric-icon--amber {
+    background: var(--nk-amber-light);
+    color: var(--nk-amber);
+}
+
+.nk-metric-icon--green {
+    background: var(--nk-green-50);
+    color: var(--nk-green-700);
+    border: 1px solid var(--nk-green-100);
+}
+
+.nk-metric-value {
+    font-size: 0.98rem;
+    font-weight: 800;
+    color: var(--nk-text-main);
+    margin: 0;
+    line-height: 1.1;
+}
+
+.nk-metric-sub {
+    font-weight: 500;
+    font-size: 0.78rem;
+    color: var(--nk-text-muted);
+}
+
+.nk-metric-label {
+    font-size: 0.76rem;
+    color: var(--nk-text-secondary);
+    margin: 0.2rem 0 0;
+}
+
+.nk-location-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--nk-text-secondary);
+    background: var(--nk-bg-page);
+    padding: 0.65rem 0.9rem;
+    border-radius: var(--nk-radius-md);
+    border: 1px solid var(--nk-border-light);
+}
+
+@media (min-width: 768px) {
+    .nk-location-badge {
+        margin-left: auto;
+        background: var(--nk-green-50);
+        border-color: var(--nk-green-100);
+        color: var(--nk-green-900);
+    }
+}
+
+/* ==========================================================================
+   NAVEGACIÓN INTERNA STICKY (TABS)
+   ========================================================================== */
+.nk-tabs-nav {
+    position: sticky;
+    top: 0.75rem;
+    z-index: 30;
+    margin-top: 1.5rem;
+    padding: 0.45rem;
+    border-radius: var(--nk-radius-lg);
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(226, 232, 240, 0.85);
+    box-shadow: var(--nk-shadow-md);
+}
+
+.nk-tabs-list {
+    display: flex;
+    gap: 0.35rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.nk-tabs-list::-webkit-scrollbar {
+    display: none;
+}
+
+.nk-tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.15rem;
+    border-radius: var(--nk-radius-md);
+    border: none;
+    background: transparent;
+    color: var(--nk-text-secondary);
+    font-size: 0.88rem;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: var(--nk-transition);
+}
+
+.nk-tab-btn:hover {
+    background: var(--nk-green-50);
+    color: var(--nk-green-800);
+}
+
+.nk-tab-btn.is-active {
+    background: var(--nk-green-800);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(22, 101, 52, 0.22);
+}
+
+.nk-tab-counter {
+    padding: 0.12rem 0.5rem;
+    border-radius: var(--nk-radius-full);
+    font-size: 0.72rem;
+    font-weight: 800;
+    background: var(--nk-border-light);
+    color: var(--nk-text-secondary);
+}
+
+.nk-tab-btn.is-active .nk-tab-counter {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   SECCIÓN VITRINA (INICIO)
+   ========================================================================== */
+.nk-vitrina-stack {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.nk-promo-banner {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--nk-radius-xl);
+    background: linear-gradient(135deg, var(--nk-green-950) 0%, var(--nk-green-900) 45%, var(--nk-green-700) 100%);
+    padding: 2rem;
+    color: #ffffff;
+    box-shadow: var(--nk-shadow-md);
+}
+
+@media (min-width: 640px) {
+    .nk-promo-banner {
+        padding: 3rem;
+    }
+}
+
+.nk-promo-content {
+    position: relative;
+    z-index: 2;
+    max-width: 540px;
+}
+
+.nk-promo-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 0.35rem 0.9rem;
+    border-radius: var(--nk-radius-full);
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--nk-green-100);
+}
+
+.nk-promo-title {
+    margin: 0.9rem 0 0;
+    font-size: 1.65rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+@media (min-width: 640px) {
+    .nk-promo-title {
+        font-size: 2.1rem;
+    }
+}
+
+.nk-promo-desc {
+    margin: 0.75rem 0 0;
+    font-size: 0.94rem;
+    color: rgba(220, 252, 231, 0.9);
+    line-height: 1.6;
+}
+
+.nk-promo-cta {
+    margin-top: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #ffffff;
+    color: var(--nk-green-900);
+    border: none;
+    padding: 0.8rem 1.45rem;
+    border-radius: var(--nk-radius-md);
+    font-size: 0.9rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transition: var(--nk-transition);
+}
+
+.nk-promo-cta:hover {
+    background: var(--nk-green-50);
+    transform: translateY(-2px);
+}
+
+.nk-promo-leaf {
+    position: absolute;
+    right: -25px;
+    bottom: -40px;
+    color: rgba(255, 255, 255, 0.08);
+    transform: rotate(12deg);
+    pointer-events: none;
+}
+
+/* Encabezado de sección */
+.nk-section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.nk-eyebrow {
+    font-size: 0.74rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--nk-green-700);
+    margin: 0 0 0.3rem;
+}
+
+.nk-section-title {
+    font-size: 1.55rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+@media (min-width: 640px) {
+    .nk-section-title {
+        font-size: 1.85rem;
+    }
+}
+
+.nk-link-all {
+    display: none;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--nk-green-700);
+    font-size: 0.88rem;
+    font-weight: 700;
+    padding-bottom: 0.2rem;
+    cursor: pointer;
+    transition: var(--nk-transition);
+}
+
+@media (min-width: 640px) {
+    .nk-link-all {
+        display: inline-block;
+    }
+}
+
+.nk-link-all:hover {
+    color: var(--nk-green-900);
+    border-bottom-color: var(--nk-green-700);
+}
+
+/* ==========================================================================
+   GRID Y TARJETAS DE PRODUCTO
+   ========================================================================== */
+.nk-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+}
+
+@media (min-width: 600px) {
+    .nk-grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .nk-grid-4 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.nk-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+}
+
+@media (min-width: 600px) {
+    .nk-grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .nk-grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.nk-product-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--nk-surface);
+    border-radius: var(--nk-radius-lg);
+    border: 1px solid var(--nk-border-light);
+    box-shadow: var(--nk-shadow-sm);
+    overflow: hidden;
+    transition: var(--nk-transition);
+}
+
+.nk-product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--nk-shadow-hover);
+    border-color: var(--nk-green-100);
+}
+
+.nk-product-media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: linear-gradient(180deg, #f8faf9 0%, #f1f5f3 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.nk-product-placeholder {
+    width: 84px;
+    height: 84px;
+    border-radius: 22px;
+    background: var(--nk-surface);
+    color: var(--nk-green-700);
+    border: 1px solid var(--nk-border-light);
+    box-shadow: var(--nk-shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nk-product-card:hover .nk-product-placeholder {
+    transform: scale(1.1) rotate(-3deg);
+}
+
+.nk-product-badge {
+    position: absolute;
+    top: 0.85rem;
+    left: 0.85rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--nk-radius-full);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    box-shadow: var(--nk-shadow-sm);
+}
+
+.nk-product-badge--promo {
+    background: var(--nk-red);
+    color: #ffffff;
+}
+
+.nk-product-badge--new {
+    background: var(--nk-green-100);
+    color: var(--nk-green-800);
+}
+
+.nk-product-badge--default {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--nk-green-800);
+    border: 1px solid var(--nk-green-100);
+}
+
+.nk-fav-btn {
+    position: absolute;
+    top: 0.85rem;
+    right: 0.85rem;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--nk-border-light);
+    color: var(--nk-text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--nk-shadow-sm);
+    transition: var(--nk-transition);
+}
+
+.nk-fav-btn:hover,
+.nk-fav-btn.is-fav {
+    color: var(--nk-rose);
+    transform: scale(1.08);
+}
+
+.nk-product-info {
+    padding: 1.25rem 1.25rem 0.5rem;
+}
+
+.nk-product-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nk-product-cat {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--nk-green-700);
+}
+
+.nk-product-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--nk-text-main);
+}
+
+.nk-product-title {
+    margin: 0.45rem 0 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--nk-text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.2s;
+}
+
+.nk-product-card:hover .nk-product-title {
+    color: var(--nk-green-800);
+}
+
+.nk-product-sub {
+    margin: 0.25rem 0 0;
+    font-size: 0.8rem;
+    color: var(--nk-text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nk-product-footer {
+    padding: 0.65rem 1.25rem 1.25rem;
+}
+
+.nk-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.nk-price-current {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: var(--nk-green-800);
+}
+
+.nk-price-old {
+    font-size: 0.8rem;
+    color: var(--nk-text-muted);
+    text-decoration: line-through;
+}
+
+.nk-card-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.nk-btn-view {
+    flex: 1;
+    padding: 0.65rem;
+    border-radius: 12px;
+    background: var(--nk-bg-page);
+    border: 1px solid var(--nk-border);
+    color: var(--nk-text-main);
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--nk-transition);
+}
+
+.nk-btn-view:hover {
+    background: var(--nk-green-50);
+    border-color: var(--nk-green-200);
+    color: var(--nk-green-800);
+}
+
+.nk-btn-add {
+    flex: 1.3;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.65rem;
+    border-radius: 12px;
+    background: var(--nk-green-800);
+    border: none;
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(22, 101, 52, 0.18);
+    transition: var(--nk-transition);
+}
+
+.nk-btn-add:hover {
+    background: var(--nk-green-700);
+}
+
+/* ==========================================================================
+   GARANTÍAS DE LA TIENDA
+   ========================================================================== */
+.nk-trust-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+    .nk-trust-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.nk-trust-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    background: var(--nk-surface);
+    border: 1px solid var(--nk-border-light);
+    border-radius: var(--nk-radius-lg);
+    padding: 1.35rem;
+    box-shadow: var(--nk-shadow-sm);
+}
+
+.nk-trust-icon {
+    padding: 0.6rem;
+    border-radius: 12px;
+    background: var(--nk-green-50);
+    color: var(--nk-green-700);
+    flex-shrink: 0;
+}
+
+.nk-trust-title {
+    margin: 0;
+    font-size: 0.92rem;
+    font-weight: 700;
+}
+
+.nk-trust-desc {
+    margin: 0.3rem 0 0;
+    font-size: 0.8rem;
+    color: var(--nk-text-secondary);
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   RESEÑAS Y CALIFICACIONES
+   ========================================================================== */
+.nk-reviews-layout {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+    .nk-reviews-layout {
+        grid-template-columns: 310px minmax(0, 1fr);
+    }
+}
+
+.nk-rating-summary {
+    height: fit-content;
+    background: var(--nk-surface);
+    border-radius: var(--nk-radius-xl);
+    border: 1px solid var(--nk-border-light);
+    padding: 1.65rem;
+    box-shadow: var(--nk-shadow-md);
+}
+
+.nk-rating-big-row {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nk-rating-number {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--nk-green-800);
+    line-height: 1;
+}
+
+.nk-stars-row {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    color: #e2e8f0;
+}
+
+.nk-star-filled {
+    fill: #facc15;
+    color: #facc15;
+}
+
+.nk-bars-list {
+    margin-top: 1.35rem;
+    padding-top: 1.15rem;
+    border-top: 1px solid var(--nk-border-light);
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--nk-text-secondary);
+}
+
+.nk-bar-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.nk-bar-track {
+    flex: 1;
+    height: 8px;
+    border-radius: var(--nk-radius-full);
+    background: var(--nk-border-light);
+    overflow: hidden;
+}
+
+.nk-bar-fill {
+    height: 100%;
+    background: #facc15;
+    border-radius: var(--nk-radius-full);
+}
+
+.nk-reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.nk-review-card {
+    background: var(--nk-surface);
+    border: 1px solid var(--nk-border-light);
+    border-radius: var(--nk-radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--nk-shadow-sm);
+}
+
+.nk-review-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.nk-review-author-box {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.nk-review-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--nk-green-500), var(--nk-green-700));
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nk-verified-purchase {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--nk-green-700);
+    margin: 0.15rem 0 0;
+}
+
+.nk-review-comment {
+    margin: 0.85rem 0 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--nk-text-secondary);
+}
+
+/* ==========================================================================
+   CATÁLOGO, FILTROS Y BÚSQUEDA
+   ========================================================================== */
+.nk-catalog-layout {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+}
+
+@media (min-width: 1024px) {
+    .nk-catalog-layout {
+        grid-template-columns: 260px minmax(0, 1fr);
+    }
+}
+
+.nk-sidebar {
+    display: none;
+    height: fit-content;
+    background: var(--nk-surface);
+    border: 1px solid var(--nk-border-light);
+    border-radius: var(--nk-radius-xl);
+    padding: 1.5rem;
+    box-shadow: var(--nk-shadow-md);
+}
+
+@media (min-width: 1024px) {
+    .nk-sidebar {
+        display: block;
+    }
+}
+
+.nk-sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.15rem;
+}
+
+.nk-filter-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--nk-text-muted);
+    margin-bottom: 0.65rem;
+}
+
+.nk-cat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.nk-cat-btn {
+    width: 100%;
+    text-align: left;
+    padding: 0.65rem 0.9rem;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    background: transparent;
+    color: var(--nk-text-secondary);
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--nk-transition);
+}
+
+.nk-cat-btn:hover {
+    background: var(--nk-bg-page);
+    color: var(--nk-text-main);
+}
+
+.nk-cat-btn.is-selected {
+    background: var(--nk-green-50);
+    border-color: var(--nk-green-600);
+    color: var(--nk-green-800);
+    font-weight: 700;
+}
+
+.nk-divider {
+    height: 1px;
+    background: var(--nk-border-light);
+    margin: 1.25rem 0;
+}
+
+.nk-contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-size: 0.8rem;
+    color: var(--nk-text-secondary);
+}
+
+.nk-contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin: 0;
+    word-break: break-all;
+}
+
+/* Pills móviles */
+.nk-mobile-cats {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 1024px) {
+    .nk-mobile-cats {
+        display: none;
+    }
+}
+
+.nk-pill-btn {
+    flex-shrink: 0;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    border: 2px solid var(--nk-border);
+    background: var(--nk-surface);
+    color: var(--nk-text-secondary);
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.nk-pill-btn.is-selected {
+    background: var(--nk-green-50);
+    border-color: var(--nk-green-600);
+    color: var(--nk-green-800);
+}
+
+/* Toolbar de búsqueda y orden */
+.nk-catalog-toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .nk-catalog-toolbar {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.nk-controls-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+@media (min-width: 640px) {
+    .nk-controls-row {
+        flex-direction: row;
+    }
+}
+
+.nk-search-box {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--nk-surface);
+    border: 1px solid var(--nk-border);
+    border-radius: 12px;
+    padding: 0.55rem 0.85rem;
+    box-shadow: var(--nk-shadow-sm);
+    transition: var(--nk-transition);
+}
+
+.nk-search-box:focus-within {
+    border-color: var(--nk-green-600);
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
+}
+
+.nk-search-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.88rem;
+    width: 100%;
+    min-width: 180px;
+}
+
+.nk-clear-search {
+    background: none;
+    border: none;
+    color: var(--nk-text-muted);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+}
+
+.nk-sort-box {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: var(--nk-surface);
+    border: 1px solid var(--nk-border);
+    border-radius: 12px;
+    padding: 0.55rem 0.85rem;
+    font-size: 0.85rem;
+    box-shadow: var(--nk-shadow-sm);
+}
+
+.nk-sort-select {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-weight: 700;
+    color: var(--nk-text-main);
+    cursor: pointer;
+}
+
+/* Estado sin resultados */
+.nk-no-results {
+    background: var(--nk-surface);
+    border: 1px solid var(--nk-border-light);
+    border-radius: var(--nk-radius-xl);
+    padding: 3.5rem 1.5rem;
+    text-align: center;
+    box-shadow: var(--nk-shadow-md);
+}
+
+.nk-reset-btn {
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+    background: var(--nk-green-50);
+    border: 1px solid var(--nk-green-200);
+    color: var(--nk-green-800);
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--nk-transition);
+}
+
+.nk-reset-btn:hover {
+    background: var(--nk-green-100);
+}

@@ -52,6 +52,7 @@ export const PRODUCTOS = [
     precio: 18000,
     imagen: "https://i.pinimg.com/736x/76/0c/30/760c30841b4c4e0313ff087ef2dcc749.jpg",
     etiqueta: "",
+    
   },
   {
     id: "omega",

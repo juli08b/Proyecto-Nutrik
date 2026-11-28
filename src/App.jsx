@@ -1,8 +1,8 @@
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Navbar from "./Components/Navbar";
-// import SidebarVendedor from "./Components/SidebarVendedor"; // ❌ Ya no se usa aquí
 import { useAuth } from "./Context/authContext";
+import PerfilVendedor from "./Pages/marketplace/PerfilVendedor";
 import AsistenteNutrik from "./Components/AsistenteNutrik";
 import Home from "./Pages/public/Home";
 import Header from "./Components/Header";
@@ -46,41 +46,52 @@ import Invoice from "./Pages/marketplace/Invoice";
 function App() {
   const location = useLocation();
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const { user } = useAuth();
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [location.pathname]);
 
-  const { user } = useAuth();
   const pathActual = location.pathname.toLowerCase();
 
+  // 1. Declarar primero todas las banderas de ruta
   const esPaginaAuth =
     ["login", "registro", "forgot", "elegir-rol"].some((p) =>
-      pathActual.includes(p),
+      pathActual.includes(p)
     ) || pathActual === "/nutrik/owner";
 
-  const esAreaVendedor = /^\/(vendedor|mis-productos|admin)(\/|$)/.test(
-    pathActual,
+  const esAreaVendedor =
+    pathActual.startsWith("/vendedor") ||
+    pathActual.startsWith("/admin") ||
+    pathActual.startsWith("/mis-productos");
+
+  const esAreaCuenta = ["/perfil", "/mis-pedidos", "/seguimiento", "/favoritos"].some(
+    (ruta) => pathActual.startsWith(ruta)
   );
 
-  const mostrarLayout = !esPaginaAuth && !esAreaVendedor;
+  const esPerfilPublicoVendedor =
+    /^\/(tienda|vendedor)\/[a-zA-Z0-9_-]+$/.test(pathActual) &&
+    !pathActual.includes("/productos") &&
+    !pathActual.includes("/pedidos") &&
+    !pathActual.includes("/facturas") &&
+    !pathActual.includes("/configuracion") &&
+    !pathActual.includes("/dashboard") &&
+    !pathActual.includes("/clientes") &&
+    !pathActual.includes("/ventas");
 
-  // ✅ CORRECCIÓN 1: El Navbar global NO se muestra en área de vendedor (el Layout lo pone)
-  const esAreaCuenta =
-    /^\/(perfil|mis-pedidos|seguimiento|favoritos)(\/|$)/.test(pathActual);
-  const mostrarNavbar = !esPaginaAuth && !esAreaVendedor && !esAreaCuenta;
+  // 2. Calcular visibilidad usando variables ya definidas
+  const mostrarLayout = !esPaginaAuth && !esAreaVendedor;
+  const mostrarNavbar =
+    !esPaginaAuth && (!esAreaVendedor || esPerfilPublicoVendedor) && !esAreaCuenta;
 
   return (
     <ProductProvider>
       <CartProvider>
         <CartPanel />
 
-        {/* ✅ CORRECCIÓN 2: El Navbar ahora se oculta en las rutas de vendedor/admin */}
         {mostrarNavbar && (
           <Navbar menuAbierto={menuAbierto} setMenuAbierto={setMenuAbierto} />
         )}
-
-        {/* ❌ ELIMINADO: {mostrarSidebar && <SidebarVendedor />} */}
 
         <Routes>
           <Route path="/" element={<Home setMenuAbierto={setMenuAbierto} />} />
@@ -120,7 +131,8 @@ function App() {
             element={<Navigate to="/registro" replace />}
           />
 
-          {/* ✅ Las rutas de vendedor/admin usan MarketplaceLayout (que ya incluye Navbar + Sidebar) */}
+          <Route path="/vendedor/:id" element={<PerfilVendedor />} />
+
           <Route path="/vendedor" element={<MarketplaceLayout />}>
             <Route index element={<SellerProduct />} />
             <Route path="dashboard" element={<Dashboard />} />
@@ -129,7 +141,7 @@ function App() {
             <Route path="pedidos" element={<PedidosVendedor />} />
             <Route path="facturas" element={<Invoice />} />
             <Route path="facturas/:id" element={<FacturaDetalle />} />
-
+            <Route path="configuracion" element={<ConfiguracionVendedor />} />
             <Route
               path="clientes"
               element={
@@ -148,12 +160,13 @@ function App() {
                 </div>
               }
             />
-            <Route path="configuracion" element={<ConfiguracionVendedor />} />
           </Route>
+
           <Route path="/mis-productos" element={<MarketplaceLayout />}>
             <Route index element={<SellerProduct />} />
             <Route path="ventas" element={<PedidosVendedor />} />
           </Route>
+
           <Route path="/admin" element={<MarketplaceLayout />}>
             <Route index element={<Dashboard administracion />} />
             <Route path="actividad" element={<Actividad />} />

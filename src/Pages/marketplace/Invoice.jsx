@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import logoNutrick from '../../assets/logoNutrick.png';
-import '../../App.css';
+
 import './Invoice.css';
 
 const LOGO_NUTRIK_URL = logoNutrick;

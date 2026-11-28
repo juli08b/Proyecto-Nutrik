@@ -1,4 +1,4 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/authContext";
 import { IconoCuenta } from "./MenuCuenta";
 import { enlacesCuenta, seccionesCuenta } from "./enlacesCuenta";
@@ -6,8 +6,15 @@ import logoPequeno from "../assets/logoN.svg";
 
 const SidebarVendedor = () => {
   const { user, logout } = useAuth();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const secciones = seccionesCuenta(user);
+  const estaEnVendedor = /^\/vendedor(\/|$)/i.test(pathname);
+  const tieneSeccionVendedor = secciones.some(({ modo }) => modo === "vendedor");
+  const seccionesVisibles =
+    estaEnVendedor && !tieneSeccionVendedor
+      ? [...secciones, { modo: "vendedor", titulo: "Administración" }]
+      : secciones;
 
   const cerrarSesion = () => {
     logout();
@@ -47,7 +54,7 @@ const SidebarVendedor = () => {
       >
         {/* Secciones y enlaces */}
         <div className="flex flex-col gap-6">
-          {secciones.map(({ modo, titulo }) => (
+          {seccionesVisibles.map(({ modo, titulo }) => (
             <div key={modo}>
               <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 px-2">
                 {titulo}
